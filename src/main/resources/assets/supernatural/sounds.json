@@ -1,0 +1,240 @@
+{
+  "vampire_idle": {
+    "category": "hostile",
+    "subtitle": "subtitles.vampire_idle",
+    "sounds": [
+      {
+        "name": "supernatural:vampire_idle_1",
+        "stream": false
+      },
+      {
+        "name": "supernatural:vampire_idle_2",
+        "stream": false
+      },
+      {
+        "name": "supernatural:vampire_idle_3",
+        "stream": false
+      },
+      {
+        "name": "supernatural:vampire_idle_4",
+        "stream": false
+      },
+      {
+        "name": "supernatural:vampire_idle_5",
+        "stream": false
+      },
+      {
+        "name": "supernatural:vampire_idle_6",
+        "stream": false
+      }
+    ]
+  },
+  "vampire_celebrate": {
+    "category": "hostile",
+    "subtitle": "subtitles.vampire_celebrate",
+    "sounds": [
+      {
+        "name": "supernatural:vampire_celebrate_1",
+        "stream": false
+      },
+      {
+        "name": "supernatural:vampire_celebrate_2",
+        "stream": false
+      },
+      {
+        "name": "supernatural:vampire_celebrate_3",
+        "stream": false
+      },
+      {
+        "name": "supernatural:vampire_celebrate_4",
+        "stream": false
+      }
+    ]
+  },
+  "vampire_hurt": {
+    "category": "hostile",
+    "subtitle": "subtitles.vampire_hurt",
+    "sounds": [
+      {
+        "name": "supernatural:vampire_hurt_1",
+        "stream": false
+      },
+      {
+        "name": "supernatural:vampire_hurt_2",
+        "stream": false
+      },
+      {
+        "name": "supernatural:vampire_hurt_3",
+        "stream": false
+      },
+      {
+        "name": "supernatural:vampire_hurt_4",
+        "stream": false
+      }
+    ]
+  },
+  "vampire_death": {
+    "category": "hostile",
+    "subtitle": "subtitles.vampire_death",
+    "sounds": [
+      {
+        "name": "supernatural:vampire_death_4",
+        "stream": false
+      },
+      {
+        "name": "supernatural:vampire_death_3",
+        "stream": false
+      },
+      {
+        "name": "supernatural:vampire_death_2",
+        "stream": false
+      },
+      {
+        "name": "supernatural:vampire_death_1",
+        "stream": false
+      }
+    ]
+  },
+  "armor_death": {
+    "category": "hostile",
+    "subtitle": "subtitles.armor_death",
+    "sounds": [
+      {
+        "name": "supernatural:armor_death_1",
+        "stream": false
+      },
+      {
+        "name": "supernatural:armor_death_2",
+        "stream": false
+      },
+      {
+        "name": "supernatural:armor_death_3",
+        "stream": false
+      }
+    ]
+  },
+  "armor_hurt": {
+    "category": "hostile",
+    "subtitle": "subtitles.armor_hurt",
+    "sounds": [
+      {
+        "name": "supernatural:armor_hurt_1",
+        "stream": false
+      },
+      {
+        "name": "supernatural:armor_hurt_2",
+        "stream": false
+      },
+      {
+        "name": "supernatural:armor_hurt_3",
+        "stream": false
+      }
+    ]
+  },
+  "merland_death": {
+    "category": "hostile",
+    "subtitle": "subtitles.merland_death",
+    "sounds": [
+      {
+        "name": "supernatural:merland_death_1",
+        "stream": false
+      },
+      {
+        "name": "supernatural:merland_death_2",
+        "stream": false
+      }
+    ]
+  },
+  "merland_hurt": {
+    "category": "hostile",
+    "subtitle": "subtitles.merland_hurt",
+    "sounds": [
+      {
+        "name": "supernatural:merland_hurt_1",
+        "stream": false
+      },
+      {
+        "name": "supernatural:merland_hurt_2",
+        "stream": false
+      },
+      {
+        "name": "supernatural:merland_hurt_3",
+        "stream": false
+      }
+    ]
+  },
+  "merland_idle": {
+    "category": "hostile",
+    "subtitle": "subtitles.merland_idle",
+    "sounds": [
+      {
+        "name": "supernatural:merland_idle_1",
+        "stream": false
+      },
+      {
+        "name": "supernatural:merland_idle_2",
+        "stream": false
+      }
+    ]
+  },
+  "merwater_death": {
+    "category": "hostile",
+    "subtitle": "subtitles.merwater_death",
+    "sounds": [
+      {
+        "name": "supernatural:merfolk_water_death_1",
+        "stream": false
+      },
+      {
+        "name": "supernatural:merfolk_water_death_2",
+        "stream": false
+      }
+    ]
+  },
+  "merwater_hurt": {
+    "category": "hostile",
+    "subtitle": "subtitles.merwater_hurt",
+    "sounds": [
+      {
+        "name": "supernatural:merfolk_water_hurt_1",
+        "stream": false
+      },
+      {
+        "name": "supernatural:merfolk_water_hurt_2",
+        "stream": false
+      },
+      {
+        "name": "supernatural:merfolk_water_hurt_3",
+        "stream": false
+      }
+    ]
+  },
+  "merwater_idle": {
+    "category": "hostile",
+    "subtitle": "subtitles.merwater_idle",
+    "sounds": [
+      {
+        "name": "supernatural:merfolk_water_idle_1",
+        "stream": false
+      },
+      {
+        "name": "supernatural:merfolk_water_idle_2",
+        "stream": false
+      },
+      {
+        "name": "supernatural:merfolk_water_idle_3",
+        "stream": false
+      }
+    ]
+  },
+  "spook_poof": {
+    "category": "hostile",
+    "subtitle": "subtitles.spook_poof",
+    "sounds": [
+      {
+        "name": "supernatural:spook_poof",
+        "stream": false
+      }
+    ]
+  }
+}
