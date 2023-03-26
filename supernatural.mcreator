@@ -1,0 +1,480 @@
+{
+  "mod_elements": [
+    {
+      "name": "Vampirism",
+      "type": "potioneffect",
+      "sortid": 19,
+      "compiles": true,
+      "locked_code": true,
+      "registry_name": "vampirism"
+    },
+    {
+      "name": "Vampire",
+      "type": "livingentity",
+      "sortid": 1,
+      "compiles": true,
+      "locked_code": true,
+      "registry_name": "vampire",
+      "metadata": {
+        "files": [
+          "src/main/java/net/salju/supernatural/entity/VampireEntity.java",
+          "src/main/java/net/salju/supernatural/client/renderer/VampireRenderer.java"
+        ]
+      }
+    },
+    {
+      "name": "Bleeding",
+      "type": "potioneffect",
+      "sortid": 22,
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "bleeding",
+      "metadata": {
+        "files": [
+          "src/main/java/net/salju/supernatural/potion/BleedingMobEffect.java"
+        ]
+      }
+    },
+    {
+      "name": "VampireCurse",
+      "type": "command",
+      "sortid": 25,
+      "compiles": true,
+      "locked_code": true,
+      "registry_name": "vampire_curse",
+      "metadata": {
+        "files": [
+          "src/main/java/net/salju/supernatural/command/VampireCurseCommand.java"
+        ]
+      }
+    },
+    {
+      "name": "Possession",
+      "type": "potioneffect",
+      "sortid": 26,
+      "compiles": true,
+      "locked_code": true,
+      "registry_name": "possession"
+    },
+    {
+      "name": "PossessedArmor",
+      "type": "livingentity",
+      "sortid": 3,
+      "compiles": true,
+      "locked_code": true,
+      "registry_name": "possessed_armor",
+      "metadata": {
+        "files": [
+          "src/main/java/net/salju/supernatural/client/renderer/PossessedArmorRenderer.java",
+          "src/main/java/net/salju/supernatural/entity/PossessedArmorEntity.java"
+        ]
+      }
+    },
+    {
+      "name": "Spooky",
+      "type": "livingentity",
+      "sortid": 4,
+      "compiles": true,
+      "locked_code": true,
+      "registry_name": "spooky",
+      "metadata": {
+        "files": [
+          "src/main/java/net/salju/supernatural/entity/SpookyEntity.java",
+          "src/main/java/net/salju/supernatural/client/renderer/SpookyRenderer.java"
+        ]
+      }
+    },
+    {
+      "name": "NewVex",
+      "type": "livingentity",
+      "sortid": 28,
+      "compiles": true,
+      "locked_code": true,
+      "registry_name": "new_vex"
+    },
+    {
+      "name": "MerAmethyst",
+      "type": "livingentity",
+      "sortid": 5,
+      "compiles": true,
+      "locked_code": true,
+      "registry_name": "mer_amethyst",
+      "metadata": {
+        "files": [
+          "src/main/java/net/salju/supernatural/client/renderer/MerAmethystRenderer.java",
+          "src/main/java/net/salju/supernatural/entity/MerAmethystEntity.java",
+          "src/main/resources/data/supernatural/forge/biome_modifier/mer_amethyst_biome_modifier.json"
+        ]
+      }
+    },
+    {
+      "name": "MerEmerald",
+      "type": "livingentity",
+      "sortid": 29,
+      "compiles": true,
+      "locked_code": true,
+      "registry_name": "mer_emerald"
+    },
+    {
+      "name": "MerDiamond",
+      "type": "livingentity",
+      "sortid": 30,
+      "compiles": true,
+      "locked_code": true,
+      "registry_name": "mer_diamond"
+    },
+    {
+      "name": "Necromancer",
+      "type": "livingentity",
+      "sortid": 2,
+      "compiles": true,
+      "locked_code": true,
+      "registry_name": "necromancer",
+      "metadata": {
+        "files": [
+          "src/main/java/net/salju/supernatural/entity/NecromancerEntity.java",
+          "src/main/java/net/salju/supernatural/client/renderer/NecromancerRenderer.java"
+        ]
+      }
+    },
+    {
+      "name": "SupernaturalHelpers",
+      "type": "procedure",
+      "sortid": 31,
+      "compiles": true,
+      "locked_code": true,
+      "registry_name": "supernatural_helpers",
+      "metadata": {
+        "files": [
+          "src/main/java/net/salju/supernatural/procedures/SupernaturalHelpersProcedure.java"
+        ],
+        "dependencies": [
+          {
+            "name": "entity",
+            "type": "entity"
+          }
+        ]
+      }
+    },
+    {
+      "name": "SupernaturalEvents",
+      "type": "procedure",
+      "sortid": 32,
+      "compiles": true,
+      "locked_code": true,
+      "registry_name": "supernatural_events",
+      "metadata": {
+        "files": [
+          "src/main/java/net/salju/supernatural/procedures/SupernaturalEventsProcedure.java"
+        ],
+        "dependencies": [
+          {
+            "name": "entity",
+            "type": "entity"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Angel",
+      "type": "livingentity",
+      "sortid": 33,
+      "compiles": true,
+      "locked_code": true,
+      "registry_name": "angel",
+      "metadata": {
+        "files": [
+          "src/main/java/net/salju/supernatural/entity/AngelEntity.java",
+          "src/main/java/net/salju/supernatural/client/renderer/AngelRenderer.java"
+        ]
+      }
+    }
+  ],
+  "variable_elements": [
+    {
+      "name": "isVampire",
+      "type": "logic",
+      "scope": "player_persistent",
+      "value": "false"
+    },
+    {
+      "name": "isEvil",
+      "type": "logic",
+      "scope": "world",
+      "value": "false"
+    }
+  ],
+  "sound_elements": [
+    {
+      "name": "vampire_idle",
+      "files": [
+        "vampire_idle_1",
+        "vampire_idle_2",
+        "vampire_idle_3",
+        "vampire_idle_4",
+        "vampire_idle_5",
+        "vampire_idle_6"
+      ],
+      "category": "hostile",
+      "subtitle": "*angry villager honk*"
+    },
+    {
+      "name": "vampire_celebrate",
+      "files": [
+        "vampire_celebrate_1",
+        "vampire_celebrate_2",
+        "vampire_celebrate_3",
+        "vampire_celebrate_4"
+      ],
+      "category": "hostile",
+      "subtitle": "Why am I even here?"
+    },
+    {
+      "name": "vampire_hurt",
+      "files": [
+        "vampire_hurt_1",
+        "vampire_hurt_2",
+        "vampire_hurt_3",
+        "vampire_hurt_4"
+      ],
+      "category": "hostile",
+      "subtitle": "*generic vampire bleh*"
+    },
+    {
+      "name": "vampire_death",
+      "files": [
+        "vampire_death_4",
+        "vampire_death_3",
+        "vampire_death_2",
+        "vampire_death_1"
+      ],
+      "category": "hostile",
+      "subtitle": "*ded*"
+    },
+    {
+      "name": "armor_death",
+      "files": [
+        "armor_death_1",
+        "armor_death_2",
+        "armor_death_3"
+      ],
+      "category": "hostile",
+      "subtitle": "*clunk*"
+    },
+    {
+      "name": "armor_hurt",
+      "files": [
+        "armor_hurt_1",
+        "armor_hurt_2",
+        "armor_hurt_3"
+      ],
+      "category": "hostile",
+      "subtitle": "*clink*"
+    },
+    {
+      "name": "merland_death",
+      "files": [
+        "merland_death_1",
+        "merland_death_2"
+      ],
+      "category": "hostile",
+      "subtitle": "Bleh!!!"
+    },
+    {
+      "name": "merland_hurt",
+      "files": [
+        "merland_hurt_1",
+        "merland_hurt_2",
+        "merland_hurt_3"
+      ],
+      "category": "hostile",
+      "subtitle": "*needs water*"
+    },
+    {
+      "name": "merland_idle",
+      "files": [
+        "merland_idle_1",
+        "merland_idle_2"
+      ],
+      "category": "hostile",
+      "subtitle": "*hisses*"
+    },
+    {
+      "name": "merwater_death",
+      "files": [
+        "merfolk_water_death_1",
+        "merfolk_water_death_2"
+      ],
+      "category": "hostile",
+      "subtitle": "*bleh*"
+    },
+    {
+      "name": "merwater_hurt",
+      "files": [
+        "merfolk_water_hurt_1",
+        "merfolk_water_hurt_2",
+        "merfolk_water_hurt_3"
+      ],
+      "category": "hostile",
+      "subtitle": "*ow*"
+    },
+    {
+      "name": "merwater_idle",
+      "files": [
+        "merfolk_water_idle_1",
+        "merfolk_water_idle_2",
+        "merfolk_water_idle_3"
+      ],
+      "category": "hostile",
+      "subtitle": "*hisses*"
+    },
+    {
+      "name": "spook_poof",
+      "files": [
+        "spook_poof"
+      ],
+      "category": "hostile",
+      "subtitle": "*poof*"
+    }
+  ],
+  "language_map": {
+    "en_us": {
+      "item.supernatural.necro_template": "Necromancer Armor Trim Template",
+      "subtitles.merwater_idle": "*hisses*",
+      "entity.supernatural.mer_diamond": "Merfolk Captain",
+      "entity.supernatural.necromancer": "Necromancer",
+      "subtitles.merland_hurt": "*needs water*",
+      "subtitles.vampire_idle": "*angry villager honk*",
+      "death.attack.vampire.wood.player": "%1$s was staked by %2$s\u0027s Wooden Sword",
+      "itemGroup.supernatural_tab": "Supernatural",
+      "item.supernatural.gothic_template": "Gothic Helmet Upgrade Template",
+      "advancements.become_vampire.title": "Hello Darkness, My Old Friend",
+      "item.supernatural.spooky_spawn_egg": "Spook Spawn Egg",
+      "item.supernatural.gothic_netherite_helmet": "Gothic Netherite Helmet",
+      "item.supernatural.gothic_golden_helmet": "Gothic Golden Helmet",
+      "effect.supernatural.possession": "Possession",
+      "trim_pattern.supernatural.necro": "Necromancer",
+      "entity.supernatural.spooky": "Spook",
+      "block.supernatural.grave_soil": "Grave Soil",
+      "subtitles.merland_death": "Bleh!!!",
+      "subtitles.merwater_death": "*bleh*",
+      "subtitles.vampire_death": "*ded*",
+      "item.supernatural.player_blood": "Player Blood",
+      "death.attack.vampire.wood": "%1$s was staked by a Wooden Sword",
+      "advancements.become_vampire.descr": "Become a Vampire",
+      "item.supernatural.gothic_iron_helmet": "Gothic Iron Helmet",
+      "subtitles.spook_poof": "*poof*",
+      "item.supernatural.vampire_dust": "Vampire Dust",
+      "effect.supernatural.vampirism": "Vampiris",
+      "entity.supernatural.mer_emerald": "Merfolk Seadog",
+      "subtitles.merland_idle": "*hisses*",
+      "subtitles.merwater_hurt": "*ow*",
+      "item.supernatural.angel_spawn_egg": "Angel Spawn Egg",
+      "subtitles.vampire_celebrate": "Why am I even here?",
+      "entity.supernatural.vampire": "Vampire",
+      "entity.supernatural.angel": "Angel",
+      "subtitles.armor_hurt": "*clink*",
+      "item.supernatural.ectoplasm": "Ectoplasm",
+      "item.supernatural.vampire_spawn_egg": "Vampire Spawn Egg",
+      "subtitles.vampire_hurt": "*generic vampire bleh*",
+      "entity.supernatural.mer_amethyst": "Merfolk",
+      "item.supernatural.villager_blood": "Villager Blood",
+      "advancements.vampire_slayer.title": "Vampire Slayer",
+      "item.supernatural.necromancer_spawn_egg": "Necromancer Spawn Egg",
+      "entity.supernatural.new_vex": "Vex",
+      "item.supernatural.gothic_diamond_helmet": "Gothic Diamond Helmet",
+      "entity.supernatural.possessed_armor": "Possessed Armor",
+      "advancements.vampire_slayer.descr": "Slay a Vampire with a Wooden Sword",
+      "death.attack.vampire.sun.player": "%1$s discovers that the sun is a deadly laser while fighting %2$s",
+      "enchantment.supernatural.leeching": "Leeching",
+      "item.supernatural.animal_blood": "Animal Blood",
+      "effect.supernatural.bleeding": "Bleeding",
+      "subtitles.armor_death": "*clunk*",
+      "death.attack.vampire.sun": "%1$s discovers that the sun is a deadly laser",
+      "item.supernatural.mer_amethyst_spawn_egg": "Merfolk Spawn Egg",
+      "enchantment.supernatural.leeching.desc": "Applies the bleed effect to the target and gives blood to the user",
+      "item.supernatural.possessed_armor_spawn_egg": "Possessed Armor Spawn Egg"
+    },
+    "zh_cn": {
+      "item.supernatural.necro_template": "死灵盔甲纹饰锻造模版",
+      "subtitles.merwater_idle": "人鱼：嘶嘶",
+      "entity.supernatural.mer_diamond": "三叉戟人鱼队长",
+      "entity.supernatural.necromancer": "死灵法师",
+      "subtitles.merland_hurt": "人鱼：干渴",
+      "subtitles.vampire_idle": "吸血鬼：生气地嘟囔",
+      "itemGroup.supernatural_tab": "超自然",
+      "death.attack.vampire.wood.player": "%1$s 被 %2$s的木剑刺穿了心脏",
+      "item.supernatural.gothic_template": "哥特式头盔升级锻造模板",
+      "advancements.become_vampire.title": "你好，黑暗，我的老朋友",
+      "item.supernatural.spooky_spawn_egg": "惊魂刷怪蛋",
+      "item.supernatural.gothic_netherite_helmet": "哥特式下界合金头盔",
+      "item.supernatural.gothic_golden_helmet": "哥特式金头盔",
+      "effect.supernatural.possession": "附灵",
+      "trim_pattern.supernatural.necro": "死灵盔甲纹饰",
+      "entity.supernatural.spooky": "惊魂",
+      "block.supernatural.grave_soil": "墓土",
+      "subtitles.merland_death": "人鱼：干旱而死",
+      "subtitles.merwater_death": "人鱼：死亡",
+      "subtitles.vampire_death": "吸血鬼：死亡",
+      "item.supernatural.player_blood": "玩家血瓶",
+      "death.attack.vampire.wood": "%1$s 被木剑刺穿了心脏",
+      "advancements.become_vampire.descr": "成为吸血鬼",
+      "item.supernatural.gothic_iron_helmet": "哥特式铁头盔",
+      "subtitles.spook_poof": "惊魂：噗",
+      "item.supernatural.vampire_dust": "吸血鬼尘",
+      "effect.supernatural.vampirism": "吸血鬼化",
+      "entity.supernatural.mer_emerald": "老练三叉戟人鱼",
+      "subtitles.merland_idle": "人鱼：嘶嘶",
+      "subtitles.merwater_hurt": "人鱼：受伤",
+      "item.supernatural.angel_spawn_egg": "Angel Spawn Egg",
+      "subtitles.vampire_celebrate": "吸血鬼：欢呼",
+      "entity.supernatural.vampire": "吸血鬼",
+      "entity.supernatural.angel": "Angel",
+      "subtitles.armor_hurt": "附灵盔甲：受伤",
+      "item.supernatural.ectoplasm": "灵质",
+      "item.supernatural.vampire_spawn_egg": "吸血鬼刷怪蛋",
+      "subtitles.vampire_hurt": "吸血鬼：受伤",
+      "entity.supernatural.mer_amethyst": "三叉戟人鱼",
+      "item.supernatural.villager_blood": "村民血瓶",
+      "advancements.vampire_slayer.title": "吸血鬼猎人",
+      "item.supernatural.necromancer_spawn_egg": "死灵法师刷怪蛋",
+      "entity.supernatural.new_vex": "恼鬼",
+      "item.supernatural.gothic_diamond_helmet": "哥特式钻石头盔",
+      "entity.supernatural.possessed_armor": "附灵盔甲",
+      "advancements.vampire_slayer.descr": "使用木剑刺穿一只吸血鬼的心脏",
+      "death.attack.vampire.sun.player": "%1$s 在试图逃离%2$s时发现阳光是一道致命的激光",
+      "enchantment.supernatural.leeching": "水蛭之力",
+      "item.supernatural.animal_blood": "动物血瓶",
+      "effect.supernatural.bleeding": "流血",
+      "subtitles.armor_death": "附灵盔甲：死亡",
+      "death.attack.vampire.sun": "%1$s 发现阳光是一道致命的激光",
+      "item.supernatural.mer_amethyst_spawn_egg": "三叉戟人鱼刷怪蛋",
+      "enchantment.supernatural.leeching.desc": "允许对敌施加流血效果并获取其血液",
+      "item.supernatural.possessed_armor_spawn_egg": "附灵盔甲刷怪蛋"
+    }
+  },
+  "foldersRoot": {
+    "name": "~",
+    "children": []
+  },
+  "workspaceSettings": {
+    "modid": "supernatural",
+    "modName": "Supernatural",
+    "version": "2.5.6",
+    "description": "Adds Supernatural mobs like vampires and spirits.",
+    "author": "Jusey1",
+    "websiteURL": "https://discord.gg/s7QaYGUzZU",
+    "license": "MIT License",
+    "disableForgeVersionCheck": true,
+    "serverSideOnly": false,
+    "requiredMods": [],
+    "dependencies": [],
+    "dependants": [],
+    "mcreatorDependencies": [],
+    "currentGenerator": "forge-1.19.2",
+    "credits": "Jusey1, Piero, nojustgavin, AuraBraixen_4412",
+    "modElementsPackage": "net.salju.supernatural",
+    "lockBaseModFiles": true
+  },
+  "mcreatorVersion": 202300110219
+}
