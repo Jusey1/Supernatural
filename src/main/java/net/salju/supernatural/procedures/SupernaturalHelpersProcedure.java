@@ -60,4 +60,4 @@ public class SupernaturalHelpersProcedure {
 		target.discard();
 		return armor;
 	}
-}
+}

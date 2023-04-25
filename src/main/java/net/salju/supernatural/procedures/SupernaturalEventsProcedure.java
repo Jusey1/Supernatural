@@ -48,8 +48,6 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.damagesource.DamageTypes;
-import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.util.RandomSource;
 import net.minecraft.util.Mth;
 import net.minecraft.tags.TagKey;
@@ -57,7 +55,6 @@ import net.minecraft.tags.ItemTags;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.network.chat.Component;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.core.BlockPos;
 import net.minecraft.advancements.AdvancementProgress;
@@ -94,14 +91,9 @@ public class SupernaturalEventsProcedure {
 					if (!world.isClientSide() && world instanceof ServerLevel lvl && lvl.isDay() && world.canSeeSkyFromBelowWater(BlockPos.containing(x, y, z)) && !world.getLevelData().isThundering() && !world.getLevelData().isRaining()
 							&& (SupernaturalConfig.SUN.get() == false)) {
 						if (helmet == (ItemStack.EMPTY)) {
-							if (player.getRemainingFireTicks() <= 10) {
+							if (player.getRemainingFireTicks() <= 10 && !(player.isInWater())) {
 								player.setSecondsOnFire(3);
-								player.hurt(new DamageSource(player.level.registryAccess().registryOrThrow(Registries.DAMAGE_TYPE).getHolderOrThrow(DamageTypes.MAGIC)) {
-									@Override
-									public Component getLocalizedDeathMessage(LivingEntity enty) {
-										return Component.translatable("death.attack." + "vampire.sun");
-									}
-								}, 4);
+								player.hurt(player.damageSources().inFire(), 4);
 							}
 						} else if (Mth.nextDouble(RandomSource.create(), 0, 10 * EnchantmentHelper.getItemEnchantmentLevel(Enchantments.UNBREAKING, helmet) + 20) <= 2) {
 							if (helmet.hurt(1, RandomSource.create(), null)) {

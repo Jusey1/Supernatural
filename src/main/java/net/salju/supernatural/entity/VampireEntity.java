@@ -1,5 +1,4 @@
-
-package net.salju.supernatural.entity;
+package net.salju.supernatural.entity;
 
 import net.salju.supernatural.init.SupernaturalModSounds;
 import net.salju.supernatural.init.SupernaturalModEntities;
@@ -41,16 +40,13 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.Difficulty;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.network.chat.Component;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.core.registries.Registries;
 
 import javax.annotation.Nullable;
 
@@ -104,12 +100,7 @@ public class VampireEntity extends AbstractIllager {
 			boolean flag = this.isSunBurnTick();
 			if (flag) {
 				this.setSecondsOnFire(8);
-				this.hurt(new DamageSource(this.level.registryAccess().registryOrThrow(Registries.DAMAGE_TYPE).getHolderOrThrow(DamageTypes.MAGIC)) {
-					@Override
-					public Component getLocalizedDeathMessage(LivingEntity enty) {
-						return Component.translatable("death.attack." + "vampire.sun");
-					}
-				}, 4);
+				this.hurt(this.damageSources().inFire(), 4);
 			}
 		}
 		super.aiStep();
@@ -226,4 +217,4 @@ public class VampireEntity extends AbstractIllager {
 		builder = builder.add(Attributes.ATTACK_DAMAGE, 3);
 		return builder;
 	}
-}
+}
