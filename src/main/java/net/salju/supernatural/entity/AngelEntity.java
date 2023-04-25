@@ -1,7 +1,8 @@
-package net.salju.supernatural.entity;
+package net.salju.supernatural.entity;
 
 import net.salju.supernatural.procedures.SupernaturalHelpersProcedure;
 import net.salju.supernatural.init.SupernaturalModEntities;
+import net.salju.supernatural.init.SupernaturalConfig;
 
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.network.PlayMessages;
@@ -21,13 +22,15 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionHand;
+import net.minecraft.util.Mth;
 import net.minecraft.tags.TagKey;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.core.Registry;
+import net.minecraft.core.registries.Registries;
 
 public class AngelEntity extends Mob {
 	public AngelEntity(PlayMessages.SpawnEntity packet, Level world) {
@@ -60,14 +63,13 @@ public class AngelEntity extends Mob {
 					stone.setCount(stone.getCount() + 1);
 				}
 			} else {
-				this.setYRot(player.getYRot());
-				this.setXRot(player.getXRot());
-				this.setYBodyRot(player.yBodyRot);
-				this.setYHeadRot(player.yHeadRot);
-				this.yRotO = player.yRotO;
-				this.xRotO = player.xRotO;
-				this.yBodyRotO = player.yBodyRotO;
-				this.yHeadRotO = player.yHeadRotO;
+				float rot = (float) Mth.floor((Mth.wrapDegrees(player.getYRot() - 180.0F) + 22.5F) / 45.0F) * 45.0F;
+				this.setYRot(rot);
+				this.setYBodyRot(rot);
+				this.setYHeadRot(rot);
+				this.yRotO = rot;
+				this.yBodyRotO = rot;
+				this.yHeadRotO = rot;
 			}
 			return InteractionResult.SUCCESS;
 		}
@@ -76,13 +78,13 @@ public class AngelEntity extends Mob {
 
 	@Override
 	public boolean hurt(DamageSource source, float amount) {
-		if (source.getDirectEntity() instanceof Player player) {
+		if (source.getDirectEntity() instanceof LivingEntity player) {
 			ItemStack axe = player.getMainHandItem();
 			if (axe.getItem() instanceof PickaxeItem) {
 				return super.hurt(source, amount);
 			}
 		}
-		if (source.isBypassInvul())
+		if (source.is(DamageTypes.OUT_OF_WORLD) || source.is(DamageTypes.EXPLOSION))
 			return super.hurt(source, amount);
 		return false;
 	}
@@ -94,11 +96,11 @@ public class AngelEntity extends Mob {
 		double x = this.getX();
 		double y = this.getY();
 		double z = this.getZ();
-		if (!this.level.isClientSide && this.isAlive() && this.isEffectiveAi()) {
+		if (!this.level.isClientSide && this.isAlive() && this.isEffectiveAi() && (SupernaturalConfig.FURIA.get() == true)) {
 			for (LivingEntity target : world.getEntitiesOfClass(LivingEntity.class, this.getBoundingBox().inflate(12.0D))) {
 				if (target instanceof Vex ghost) {
 					ghost.setLimitedLife(0);
-				} else if (SupernaturalHelpersProcedure.isVampire(target) || (target.getMobType() == MobType.UNDEAD) || target.getType().is(TagKey.create(Registry.ENTITY_TYPE_REGISTRY, new ResourceLocation("supernatural:is_vampire")))) {
+				} else if (SupernaturalHelpersProcedure.isVampire(target) || (target.getMobType() == MobType.UNDEAD) || target.getType().is(TagKey.create(Registries.ENTITY_TYPE, new ResourceLocation("supernatural:is_vampire")))) {
 					if (!target.isOnFire() && !(target instanceof SpookyEntity) && !target.fireImmune()) {
 						target.setSecondsOnFire(3);
 					}
@@ -172,4 +174,4 @@ public class AngelEntity extends Mob {
 		builder = builder.add(Attributes.KNOCKBACK_RESISTANCE, 1);
 		return builder;
 	}
-}
+}

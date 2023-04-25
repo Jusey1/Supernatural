@@ -1,5 +1,4 @@
-
-package net.salju.supernatural.item;
+package net.salju.supernatural.item;
 
 import net.salju.supernatural.procedures.SupernaturalHelpersProcedure;
 
@@ -75,4 +74,4 @@ public class BloodItem extends Item {
 			return stack;
 		}
 	}
-}
+}

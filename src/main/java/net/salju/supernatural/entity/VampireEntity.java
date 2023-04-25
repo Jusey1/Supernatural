@@ -1,8 +1,10 @@
-package net.salju.supernatural.entity;
+
+package net.salju.supernatural.entity;
 
 import net.salju.supernatural.init.SupernaturalModSounds;
 import net.salju.supernatural.init.SupernaturalModEntities;
 import net.salju.supernatural.init.SupernaturalEnchantments;
+import net.salju.supernatural.init.SupernaturalConfig;
 
 import net.minecraftforge.network.PlayMessages;
 
@@ -39,13 +41,16 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.Difficulty;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.network.chat.Component;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.core.registries.Registries;
 
 import javax.annotation.Nullable;
 
@@ -95,10 +100,17 @@ public class VampireEntity extends AbstractIllager {
 	}
 
 	public void aiStep() {
-		boolean flag = this.isSunBurnTick();
-		if (flag) {
-			this.setSecondsOnFire(8);
-			this.hurt(new DamageSource("vampire.sun").bypassArmor(), 4);
+		if (SupernaturalConfig.SUN.get() == false) {
+			boolean flag = this.isSunBurnTick();
+			if (flag) {
+				this.setSecondsOnFire(8);
+				this.hurt(new DamageSource(this.level.registryAccess().registryOrThrow(Registries.DAMAGE_TYPE).getHolderOrThrow(DamageTypes.MAGIC)) {
+					@Override
+					public Component getLocalizedDeathMessage(LivingEntity enty) {
+						return Component.translatable("death.attack." + "vampire.sun");
+					}
+				}, 4);
+			}
 		}
 		super.aiStep();
 	}
@@ -173,8 +185,10 @@ public class VampireEntity extends AbstractIllager {
 	public void baseTick() {
 		super.baseTick();
 		if (this.isAggressive()) {
-			this.addEffect(new MobEffectInstance(MobEffects.DAMAGE_BOOST, 1200, 0, (false), (false)));
-			this.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 1200, 0, (false), (false)));
+			if (SupernaturalConfig.STRENGTH.get() == true)
+				this.addEffect(new MobEffectInstance(MobEffects.DAMAGE_BOOST, 1200, 0, (false), (false)));
+			if (SupernaturalConfig.SPEED.get() == true)
+				this.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 1200, 0, (false), (false)));
 		}
 	}
 
@@ -212,4 +226,4 @@ public class VampireEntity extends AbstractIllager {
 		builder = builder.add(Attributes.ATTACK_DAMAGE, 3);
 		return builder;
 	}
-}
+}

@@ -7,7 +7,6 @@ package net.salju.supernatural.init;
 import net.salju.supernatural.entity.VampireEntity;
 import net.salju.supernatural.entity.SpookyEntity;
 import net.salju.supernatural.entity.PossessedArmorEntity;
-import net.salju.supernatural.entity.NewVexEntity;
 import net.salju.supernatural.entity.NecromancerEntity;
 import net.salju.supernatural.entity.MerEmeraldEntity;
 import net.salju.supernatural.entity.MerDiamondEntity;
@@ -50,10 +49,6 @@ public class SupernaturalModEntities {
 			EntityType.Builder.<MerAmethystEntity>of(MerAmethystEntity::new, MobCategory.MONSTER).setShouldReceiveVelocityUpdates(true).setTrackingRange(64).setUpdateInterval(3).setCustomClientFactory(MerAmethystEntity::new)
 
 					.sized(0.6f, 1.95f));
-	public static final RegistryObject<EntityType<NewVexEntity>> NEW_VEX = register("new_vex",
-			EntityType.Builder.<NewVexEntity>of(NewVexEntity::new, MobCategory.MONSTER).setShouldReceiveVelocityUpdates(true).setTrackingRange(64).setUpdateInterval(3).setCustomClientFactory(NewVexEntity::new)
-
-					.sized(0.4f, 0.6f));
 	public static final RegistryObject<EntityType<MerEmeraldEntity>> MER_EMERALD = register("mer_emerald",
 			EntityType.Builder.<MerEmeraldEntity>of(MerEmeraldEntity::new, MobCategory.MONSTER).setShouldReceiveVelocityUpdates(true).setTrackingRange(64).setUpdateInterval(3).setCustomClientFactory(MerEmeraldEntity::new)
 
@@ -79,7 +74,6 @@ public class SupernaturalModEntities {
 			PossessedArmorEntity.init();
 			SpookyEntity.init();
 			MerAmethystEntity.init();
-			NewVexEntity.init();
 			MerEmeraldEntity.init();
 			MerDiamondEntity.init();
 			AngelEntity.init();
@@ -93,7 +87,6 @@ public class SupernaturalModEntities {
 		event.put(POSSESSED_ARMOR.get(), PossessedArmorEntity.createAttributes().build());
 		event.put(SPOOKY.get(), SpookyEntity.createAttributes().build());
 		event.put(MER_AMETHYST.get(), MerAmethystEntity.createAttributes().build());
-		event.put(NEW_VEX.get(), NewVexEntity.createAttributes().build());
 		event.put(MER_EMERALD.get(), MerEmeraldEntity.createAttributes().build());
 		event.put(MER_DIAMOND.get(), MerDiamondEntity.createAttributes().build());
 		event.put(ANGEL.get(), AngelEntity.createAttributes().build());

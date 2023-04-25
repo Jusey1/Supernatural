@@ -7,7 +7,6 @@ package net.salju.supernatural.init;
 import net.salju.supernatural.client.renderer.VampireRenderer;
 import net.salju.supernatural.client.renderer.SpookyRenderer;
 import net.salju.supernatural.client.renderer.PossessedArmorRenderer;
-import net.salju.supernatural.client.renderer.NewVexRenderer;
 import net.salju.supernatural.client.renderer.NecromancerRenderer;
 import net.salju.supernatural.client.renderer.MerEmeraldRenderer;
 import net.salju.supernatural.client.renderer.MerDiamondRenderer;
@@ -28,7 +27,6 @@ public class SupernaturalModEntityRenderers {
 		event.registerEntityRenderer(SupernaturalModEntities.POSSESSED_ARMOR.get(), PossessedArmorRenderer::new);
 		event.registerEntityRenderer(SupernaturalModEntities.SPOOKY.get(), SpookyRenderer::new);
 		event.registerEntityRenderer(SupernaturalModEntities.MER_AMETHYST.get(), MerAmethystRenderer::new);
-		event.registerEntityRenderer(SupernaturalModEntities.NEW_VEX.get(), NewVexRenderer::new);
 		event.registerEntityRenderer(SupernaturalModEntities.MER_EMERALD.get(), MerEmeraldRenderer::new);
 		event.registerEntityRenderer(SupernaturalModEntities.MER_DIAMOND.get(), MerDiamondRenderer::new);
 		event.registerEntityRenderer(SupernaturalModEntities.ANGEL.get(), AngelRenderer::new);

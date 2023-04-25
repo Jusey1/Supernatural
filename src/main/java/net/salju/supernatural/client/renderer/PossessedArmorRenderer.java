@@ -12,8 +12,7 @@ import net.salju.supernatural.client.model.PossessedModel;
 public class PossessedArmorRenderer extends HumanoidMobRenderer<PossessedArmorEntity, PossessedModel<PossessedArmorEntity>> {
 	public PossessedArmorRenderer(EntityRendererProvider.Context context) {
 		super(context, new PossessedModel(context.bakeLayer(ModelLayers.PLAYER)), 0.5f);
-		this.addLayer(new HumanoidArmorLayer(this, new PossessedModel(context.bakeLayer(ModelLayers.PLAYER_INNER_ARMOR)),
-				new PossessedModel(context.bakeLayer(ModelLayers.PLAYER_OUTER_ARMOR))));
+		this.addLayer(new HumanoidArmorLayer(this, new PossessedModel(context.bakeLayer(ModelLayers.PLAYER_INNER_ARMOR)), new PossessedModel(context.bakeLayer(ModelLayers.PLAYER_OUTER_ARMOR)), context.getModelManager()));
 	}
 
 	@Override

@@ -1,9 +1,11 @@
-package net.salju.supernatural.entity;
+
+package net.salju.supernatural.entity;
 
 import net.salju.supernatural.procedures.SupernaturalHelpersProcedure;
 import net.salju.supernatural.init.SupernaturalModSounds;
 import net.salju.supernatural.init.SupernaturalModMobEffects;
 import net.salju.supernatural.init.SupernaturalModEntities;
+import net.salju.supernatural.init.SupernaturalConfig;
 
 import net.minecraftforge.network.PlayMessages;
 import net.minecraftforge.event.ForgeEventFactory;
@@ -54,8 +56,8 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.core.Registry;
 import net.minecraft.core.BlockPos;
 
 import javax.annotation.Nullable;
@@ -102,8 +104,7 @@ public class SpookyEntity extends Monster {
 		this.goalSelector.addGoal(4, new WaterAvoidingRandomFlyingGoal(this, 1.2));
 		this.goalSelector.addGoal(5, new LookAtPlayerGoal(this, LivingEntity.class, 8.0F));
 		this.targetSelector.addGoal(0, new HurtByTargetGoal(this));
-		this.targetSelector.addGoal(1, new NearestAttackableTargetGoal(this, ArmorStand.class, true, true));
-		this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, LivingEntity.class, 12, true, true, new SpookyEntity.SpookAttackSelector(this)));
+		this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, LivingEntity.class, 12, true, true, new SpookyEntity.SpookAttackSelector(this)));
 	}
 
 	@Override
@@ -163,56 +164,58 @@ public class SpookyEntity extends Monster {
 	@Override
 	public void baseTick() {
 		super.baseTick();
-		for (ArmorStand target : this.level.getEntitiesOfClass(ArmorStand.class, this.getBoundingBox().inflate(0.85D))) {
-			LevelAccessor world = target.level;
-			double x = target.getX();
-			double y = target.getY();
-			double z = target.getZ();
-			if (!(target.getItemBySlot(EquipmentSlot.HEAD) == ItemStack.EMPTY) && !(target.getItemBySlot(EquipmentSlot.CHEST) == ItemStack.EMPTY) && !(target.getItemBySlot(EquipmentSlot.LEGS) == ItemStack.EMPTY)
-					&& !(target.getItemBySlot(EquipmentSlot.FEET) == ItemStack.EMPTY)) {
-				this.playSound(SupernaturalModSounds.SPOOK_POOF.get(), 1.0F, 1.0F);
-				if (world instanceof ServerLevel lvl) {
-					PossessedArmorEntity armor = SupernaturalHelpersProcedure.convertArmor(target, SupernaturalModEntities.POSSESSED_ARMOR.get(), true);
-					ForgeEventFactory.onLivingConvert(target, armor);
-					double r = this.random.nextGaussian() * 0.02D;
-					lvl.sendParticles(ParticleTypes.POOF, this.getRandomX(1.0D), this.getRandomY(), this.getRandomZ(1.0D), 10, r, r, r, 0.25);
-					this.discard();
-				}
-			} else {
-				if (!(target.getItemBySlot(EquipmentSlot.HEAD) == ItemStack.EMPTY)) {
+		if (SupernaturalConfig.ARMOR.get() == true) {
+			for (ArmorStand target : this.level.getEntitiesOfClass(ArmorStand.class, this.getBoundingBox().inflate(0.85D))) {
+				LevelAccessor world = target.level;
+				double x = target.getX();
+				double y = target.getY();
+				double z = target.getZ();
+				if (!(target.getItemBySlot(EquipmentSlot.HEAD) == ItemStack.EMPTY) && !(target.getItemBySlot(EquipmentSlot.CHEST) == ItemStack.EMPTY) && !(target.getItemBySlot(EquipmentSlot.LEGS) == ItemStack.EMPTY)
+						&& !(target.getItemBySlot(EquipmentSlot.FEET) == ItemStack.EMPTY)) {
+					this.playSound(SupernaturalModSounds.SPOOK_POOF.get(), 1.0F, 1.0F);
+					if (world instanceof ServerLevel lvl) {
+						PossessedArmorEntity armor = SupernaturalHelpersProcedure.convertArmor(target, SupernaturalModEntities.POSSESSED_ARMOR.get(), true);
+						ForgeEventFactory.onLivingConvert(target, armor);
+						double r = this.random.nextGaussian() * 0.02D;
+						lvl.sendParticles(ParticleTypes.POOF, this.getRandomX(1.0D), this.getRandomY(), this.getRandomZ(1.0D), 10, r, r, r, 0.25);
+						this.discard();
+					}
+				} else {
+					if (!(target.getItemBySlot(EquipmentSlot.HEAD) == ItemStack.EMPTY)) {
+						if (world instanceof Level lvl && !lvl.isClientSide()) {
+							ItemEntity armor = new ItemEntity(lvl, x, y, z, (target.getItemBySlot(EquipmentSlot.HEAD)));
+							armor.setPickUpDelay(10);
+							lvl.addFreshEntity(armor);
+						}
+					}
+					if (!(target.getItemBySlot(EquipmentSlot.CHEST) == ItemStack.EMPTY)) {
+						if (world instanceof Level lvl && !lvl.isClientSide()) {
+							ItemEntity armor = new ItemEntity(lvl, x, y, z, (target.getItemBySlot(EquipmentSlot.CHEST)));
+							armor.setPickUpDelay(10);
+							lvl.addFreshEntity(armor);
+						}
+					}
+					if (!(target.getItemBySlot(EquipmentSlot.LEGS) == ItemStack.EMPTY)) {
+						if (world instanceof Level lvl && !lvl.isClientSide()) {
+							ItemEntity armor = new ItemEntity(lvl, x, y, z, (target.getItemBySlot(EquipmentSlot.LEGS)));
+							armor.setPickUpDelay(10);
+							lvl.addFreshEntity(armor);
+						}
+					}
+					if (!(target.getItemBySlot(EquipmentSlot.FEET) == ItemStack.EMPTY)) {
+						if (world instanceof Level lvl && !lvl.isClientSide()) {
+							ItemEntity armor = new ItemEntity(lvl, x, y, z, (target.getItemBySlot(EquipmentSlot.FEET)));
+							armor.setPickUpDelay(10);
+							lvl.addFreshEntity(armor);
+						}
+					}
+					target.playSound(SoundEvents.ARMOR_STAND_BREAK, 1.0F, 1.0F);
+					target.discard();
 					if (world instanceof Level lvl && !lvl.isClientSide()) {
-						ItemEntity armor = new ItemEntity(lvl, x, y, z, (target.getItemBySlot(EquipmentSlot.HEAD)));
+						ItemEntity armor = new ItemEntity(lvl, x, y, z, new ItemStack(Items.ARMOR_STAND));
 						armor.setPickUpDelay(10);
 						lvl.addFreshEntity(armor);
 					}
-				}
-				if (!(target.getItemBySlot(EquipmentSlot.CHEST) == ItemStack.EMPTY)) {
-					if (world instanceof Level lvl && !lvl.isClientSide()) {
-						ItemEntity armor = new ItemEntity(lvl, x, y, z, (target.getItemBySlot(EquipmentSlot.CHEST)));
-						armor.setPickUpDelay(10);
-						lvl.addFreshEntity(armor);
-					}
-				}
-				if (!(target.getItemBySlot(EquipmentSlot.LEGS) == ItemStack.EMPTY)) {
-					if (world instanceof Level lvl && !lvl.isClientSide()) {
-						ItemEntity armor = new ItemEntity(lvl, x, y, z, (target.getItemBySlot(EquipmentSlot.LEGS)));
-						armor.setPickUpDelay(10);
-						lvl.addFreshEntity(armor);
-					}
-				}
-				if (!(target.getItemBySlot(EquipmentSlot.FEET) == ItemStack.EMPTY)) {
-					if (world instanceof Level lvl && !lvl.isClientSide()) {
-						ItemEntity armor = new ItemEntity(lvl, x, y, z, (target.getItemBySlot(EquipmentSlot.FEET)));
-						armor.setPickUpDelay(10);
-						lvl.addFreshEntity(armor);
-					}
-				}
-				target.playSound(SoundEvents.ARMOR_STAND_BREAK, 1.0F, 1.0F);
-				target.discard();
-				if (world instanceof Level lvl && !lvl.isClientSide()) {
-					ItemEntity armor = new ItemEntity(lvl, x, y, z, new ItemStack(Items.ARMOR_STAND));
-					armor.setPickUpDelay(10);
-					lvl.addFreshEntity(armor);
 				}
 			}
 		}
@@ -220,7 +223,7 @@ public class SpookyEntity extends Monster {
 			double x = this.getX();
 			double y = this.getY();
 			double z = this.getZ();
-			if (!this.level.isClientSide() && this.level.isDay() && this.level.canSeeSkyFromBelowWater(new BlockPos(x, y, z))) {
+			if (!this.level.isClientSide() && this.level.isDay() && this.level.canSeeSkyFromBelowWater(BlockPos.containing(x, y, z))) {
 				this.playSound(SupernaturalModSounds.SPOOK_POOF.get(), 1.0F, 1.0F);
 				this.discard();
 				if (this.level instanceof ServerLevel lvl) {
@@ -284,8 +287,8 @@ public class SpookyEntity extends Monster {
 		}
 
 		public boolean test(@Nullable LivingEntity target) {
-			if (!target.hasEffect(SupernaturalModMobEffects.POSSESSION.get()) && !target.hasEffect(MobEffects.GLOWING) && !target.getType().is(TagKey.create(Registry.ENTITY_TYPE_REGISTRY, new ResourceLocation("supernatural:spook_no_possess")))) {
-				return (target instanceof Animal || target instanceof Enemy);
+			if (!target.hasEffect(SupernaturalModMobEffects.POSSESSION.get()) && !target.hasEffect(MobEffects.GLOWING) && !target.getType().is(TagKey.create(Registries.ENTITY_TYPE, new ResourceLocation("supernatural:spook_no_possess")))) {
+				return (target instanceof Animal || target instanceof Enemy || target instanceof ArmorStand && (SupernaturalConfig.ARMOR.get() == true));
 			}
 			return false;
 		}

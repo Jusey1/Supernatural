@@ -2,8 +2,6 @@ package net.salju.supernatural.entity;
 
 import net.salju.supernatural.init.SupernaturalModSounds;
 
-import net.minecraftforge.network.NetworkHooks;
-
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.level.pathfinder.Path;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
@@ -46,7 +44,6 @@ import net.minecraft.util.Mth;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundEvent;
-import net.minecraft.network.protocol.Packet;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.core.BlockPos;
 
@@ -65,11 +62,6 @@ public class AbstractMerEntity extends Monster implements RangedAttackMob {
 	}
 
 	@Override
-	public Packet<?> getAddEntityPacket() {
-		return NetworkHooks.getEntitySpawningPacket(this);
-	}
-
-	@Override
 	protected void registerGoals() {
 		super.registerGoals();
 		this.goalSelector.addGoal(1, new AbstractMerEntity.MerTridentAttackGoal(this, 1.0D, 40, 10.0F));
@@ -78,8 +70,7 @@ public class AbstractMerEntity extends Monster implements RangedAttackMob {
 		this.goalSelector.addGoal(4, new LookAtPlayerGoal(this, LivingEntity.class, (float) 6));
 		this.goalSelector.addGoal(4, new RandomLookAroundGoal(this));
 		this.targetSelector.addGoal(1, new HurtByTargetGoal(this));
-		this.targetSelector.addGoal(2,
-				new NearestAttackableTargetGoal<>(this, LivingEntity.class, 12, true, true, new AbstractMerEntity.MerAttackSelector(this)));
+		this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, LivingEntity.class, 12, true, true, new AbstractMerEntity.MerAttackSelector(this)));
 	}
 
 	@Override
@@ -191,7 +182,7 @@ public class AbstractMerEntity extends Monster implements RangedAttackMob {
 			this.setAirSupply(air - 1);
 			if (this.getAirSupply() == -20) {
 				this.setAirSupply(0);
-				this.hurt(DamageSource.DROWN, 2.0F);
+				this.hurt(this.damageSources().drown(), 2.0F);
 			}
 		} else {
 			this.setAirSupply(300);
@@ -260,8 +251,7 @@ public class AbstractMerEntity extends Monster implements RangedAttackMob {
 	}
 
 	@Override
-	public SpawnGroupData finalizeSpawn(ServerLevelAccessor world, DifficultyInstance difficulty, MobSpawnType reason,
-			@Nullable SpawnGroupData livingdata, @Nullable CompoundTag tag) {
+	public SpawnGroupData finalizeSpawn(ServerLevelAccessor world, DifficultyInstance difficulty, MobSpawnType reason, @Nullable SpawnGroupData livingdata, @Nullable CompoundTag tag) {
 		SpawnGroupData retval = super.finalizeSpawn(world, difficulty, reason, livingdata, tag);
 		if (!(this instanceof MerAmethystEntity)) {
 			ItemStack trident = new ItemStack(Items.TRIDENT);
@@ -303,11 +293,9 @@ public class AbstractMerEntity extends Monster implements RangedAttackMob {
 					this.mer.setYRot(this.rotlerp(this.mer.getYRot(), f1, 90.0F));
 					this.mer.yBodyRot = this.mer.getYRot();
 					if (this.mer.isAggressive()) {
-						this.mer.setDeltaMovement(this.mer.getDeltaMovement().add((double) this.mer.getSpeed() * (d0 / d3) * 0.06D, 0.0D,
-								(double) this.mer.getSpeed() * (d2 / d3) * 0.06D));
+						this.mer.setDeltaMovement(this.mer.getDeltaMovement().add((double) this.mer.getSpeed() * (d0 / d3) * 0.06D, 0.0D, (double) this.mer.getSpeed() * (d2 / d3) * 0.06D));
 					} else {
-						this.mer.setDeltaMovement(this.mer.getDeltaMovement().add((double) this.mer.getSpeed() * (d0 / d3) * 0.035D, 0.0D,
-								(double) this.mer.getSpeed() * (d2 / d3) * 0.035D));
+						this.mer.setDeltaMovement(this.mer.getDeltaMovement().add((double) this.mer.getSpeed() * (d0 / d3) * 0.035D, 0.0D, (double) this.mer.getSpeed() * (d2 / d3) * 0.035D));
 					}
 				}
 			} else {
@@ -365,4 +353,4 @@ public class AbstractMerEntity extends Monster implements RangedAttackMob {
 			return (target instanceof Player || target instanceof Drowned || target instanceof GlowSquid);
 		}
 	}
-}
+}

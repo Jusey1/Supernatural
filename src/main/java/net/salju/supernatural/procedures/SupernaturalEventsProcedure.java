@@ -4,9 +4,9 @@ import net.salju.supernatural.init.SupernaturalModMobEffects;
 import net.salju.supernatural.init.SupernaturalModEntities;
 import net.salju.supernatural.init.SupernaturalItems;
 import net.salju.supernatural.init.SupernaturalEnchantments;
+import net.salju.supernatural.init.SupernaturalConfig;
 import net.salju.supernatural.entity.VampireEntity;
 import net.salju.supernatural.entity.SpookyEntity;
-import net.salju.supernatural.entity.NewVexEntity;
 import net.salju.supernatural.entity.NecromancerEntity;
 import net.salju.supernatural.entity.MerEmeraldEntity;
 import net.salju.supernatural.entity.MerDiamondEntity;
@@ -15,9 +15,9 @@ import net.salju.supernatural.entity.MerAmethystEntity;
 import net.minecraftforge.items.ItemHandlerHelper;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
-import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.EntityStruckByLightningEvent;
 import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.event.TickEvent;
@@ -48,6 +48,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.util.RandomSource;
 import net.minecraft.util.Mth;
@@ -56,7 +57,8 @@ import net.minecraft.tags.ItemTags;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.core.Registry;
+import net.minecraft.network.chat.Component;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.core.BlockPos;
 import net.minecraft.advancements.AdvancementProgress;
 import net.minecraft.advancements.Advancement;
@@ -75,9 +77,12 @@ public class SupernaturalEventsProcedure {
 			double y = player.getY();
 			double z = player.getZ();
 			if (SupernaturalHelpersProcedure.isVampire(player)) {
-				player.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 999999, 0, (false), (false)));
-				player.addEffect(new MobEffectInstance(MobEffects.DAMAGE_BOOST, 999999, 0, (false), (false)));
-				player.addEffect(new MobEffectInstance(MobEffects.DIG_SPEED, 999999, 0, (false), (false)));
+				if (SupernaturalConfig.SPEED.get() == true)
+					player.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 999999, 0, (false), (false)));
+				if (SupernaturalConfig.STRENGTH.get() == true)
+					player.addEffect(new MobEffectInstance(MobEffects.DAMAGE_BOOST, 999999, 0, (false), (false)));
+				if (SupernaturalConfig.HASTE.get() == true)
+					player.addEffect(new MobEffectInstance(MobEffects.DIG_SPEED, 999999, 0, (false), (false)));
 				if (!player.getAbilities().instabuild) {
 					if ((player.getHealth() < player.getMaxHealth()) && (player.getFoodData().getFoodLevel() >= 16)) {
 						player.getFoodData().setSaturation(1);
@@ -86,11 +91,17 @@ public class SupernaturalEventsProcedure {
 					} else {
 						player.getFoodData().setSaturation(0);
 					}
-					if (!world.isClientSide() && world instanceof ServerLevel lvl && lvl.isDay() && world.canSeeSkyFromBelowWater(new BlockPos(x, y, z)) && !world.getLevelData().isThundering() && !world.getLevelData().isRaining()) {
+					if (!world.isClientSide() && world instanceof ServerLevel lvl && lvl.isDay() && world.canSeeSkyFromBelowWater(BlockPos.containing(x, y, z)) && !world.getLevelData().isThundering() && !world.getLevelData().isRaining()
+							&& (SupernaturalConfig.SUN.get() == false)) {
 						if (helmet == (ItemStack.EMPTY)) {
 							if (player.getRemainingFireTicks() <= 10) {
 								player.setSecondsOnFire(3);
-								player.hurt(new DamageSource("vampire.sun").bypassArmor(), 4);
+								player.hurt(new DamageSource(player.level.registryAccess().registryOrThrow(Registries.DAMAGE_TYPE).getHolderOrThrow(DamageTypes.MAGIC)) {
+									@Override
+									public Component getLocalizedDeathMessage(LivingEntity enty) {
+										return Component.translatable("death.attack." + "vampire.sun");
+									}
+								}, 4);
 							}
 						} else if (Mth.nextDouble(RandomSource.create(), 0, 10 * EnchantmentHelper.getItemEnchantmentLevel(Enchantments.UNBREAKING, helmet) + 20) <= 2) {
 							if (helmet.hurt(1, RandomSource.create(), null)) {
@@ -122,7 +133,7 @@ public class SupernaturalEventsProcedure {
 	}
 
 	@SubscribeEvent
-	public static void onEntityAttacked(LivingAttackEvent event) {
+	public static void onEntityAttacked(LivingHurtEvent event) {
 		if (event != null && event.getEntity() != null) {
 			LivingEntity target = event.getEntity();
 			LevelAccessor world = target.level;
@@ -133,10 +144,10 @@ public class SupernaturalEventsProcedure {
 				Entity damage = event.getSource().getDirectEntity();
 				if (damage instanceof LivingEntity source) {
 					ItemStack weapon = source.getMainHandItem();
-					if (SupernaturalHelpersProcedure.isVampire(target) || target.getType().is(TagKey.create(Registry.ENTITY_TYPE_REGISTRY, new ResourceLocation("supernatural:is_vampire")))) {
+					if (SupernaturalHelpersProcedure.isVampire(target) || target.getType().is(TagKey.create(Registries.ENTITY_TYPE, new ResourceLocation("supernatural:is_vampire")))) {
 						if (weapon.getItem() == Items.WOODEN_SWORD) {
-							if (target.getHealth() <= (target.getMaxHealth() * 0.6)) {
-								target.hurt(new DamageSource("vampire.wood").bypassArmor(), 999);
+							if (target.getHealth() <= (target.getMaxHealth() * SupernaturalConfig.WOOD.get())) {
+								event.setAmount(Float.MAX_VALUE);
 								if (world instanceof ServerLevel lvl) {
 									Mob bat = new Bat(EntityType.BAT, lvl);
 									bat.copyPosition(target);
@@ -155,7 +166,7 @@ public class SupernaturalEventsProcedure {
 							}
 						}
 					} else if (!target.isBlocking()) {
-						if (SupernaturalHelpersProcedure.isVampire(source) || source.getType().is(TagKey.create(Registry.ENTITY_TYPE_REGISTRY, new ResourceLocation("supernatural:is_vampire")))) {
+						if (SupernaturalHelpersProcedure.isVampire(source) || source.getType().is(TagKey.create(Registries.ENTITY_TYPE, new ResourceLocation("supernatural:is_vampire")))) {
 							ItemStack bottle = new ItemStack(Items.GLASS_BOTTLE);
 							if (target instanceof Player player && !(SupernaturalHelpersProcedure.isVampire(player))) {
 								if (!player.hasEffect(SupernaturalModMobEffects.VAMPIRISM.get()) && (player.getArmorValue() < 12)) {
@@ -264,20 +275,10 @@ public class SupernaturalEventsProcedure {
 		double z = target.getZ();
 		if (!world.isClientSide() && world instanceof ServerLevel lvl) {
 			if (target instanceof Vindicator raidyr && !(lvl.isDay()) && !(raidyr.isPassenger()) && !(raidyr.isPatrolLeader())) {
-				Raid raid = raidyr.getCurrentRaid();
-				if (raid != null && (Math.random() <= 0.25)) {
-					Mob vampire = new VampireEntity(SupernaturalModEntities.VAMPIRE.get(), lvl);
-					vampire.copyPosition(raidyr);
-					vampire.finalizeSpawn(lvl, world.getCurrentDifficultyAt(vampire.blockPosition()), MobSpawnType.EVENT, null, null);
-					world.addFreshEntity(vampire);
-					raid.removeFromRaid(raidyr, true);
-					event.setCanceled(true);
-				}
-			} else if (target instanceof Evoker raidyr && !(lvl.isDay()) && !(raidyr.isPassenger()) && !(raidyr.isPatrolLeader())) {
-				Raid raid = raidyr.getCurrentRaid();
-				if (raid != null && (Math.random() <= 0.15)) {
-					if (!(!world.getEntitiesOfClass(NecromancerEntity.class, AABB.ofSize(new Vec3(x, y, z), 64, 64, 64), e -> true).isEmpty())) {
-						Mob vampire = new NecromancerEntity(SupernaturalModEntities.NECROMANCER.get(), lvl);
+				if (SupernaturalConfig.RAIDERS.get() == false) {
+					Raid raid = raidyr.getCurrentRaid();
+					if (raid != null && (Math.random() <= 0.25)) {
+						Mob vampire = new VampireEntity(SupernaturalModEntities.VAMPIRE.get(), lvl);
 						vampire.copyPosition(raidyr);
 						vampire.finalizeSpawn(lvl, world.getCurrentDifficultyAt(vampire.blockPosition()), MobSpawnType.EVENT, null, null);
 						world.addFreshEntity(vampire);
@@ -285,12 +286,24 @@ public class SupernaturalEventsProcedure {
 						event.setCanceled(true);
 					}
 				}
-			} else if (target instanceof Vex && !(target instanceof NewVexEntity)) {
-				Mob ghost = new NewVexEntity(SupernaturalModEntities.NEW_VEX.get(), lvl);
-				ghost.copyPosition(target);
-				ghost.finalizeSpawn(lvl, world.getCurrentDifficultyAt(ghost.blockPosition()), MobSpawnType.MOB_SUMMONED, null, null);
-				world.addFreshEntity(ghost);
-				event.setCanceled(true);
+			} else if (target instanceof Evoker raidyr && !(lvl.isDay()) && !(raidyr.isPassenger()) && !(raidyr.isPatrolLeader())) {
+				if (SupernaturalConfig.RAIDERS.get() == false) {
+					Raid raid = raidyr.getCurrentRaid();
+					if (raid != null && (Math.random() <= 0.15)) {
+						if (!(!world.getEntitiesOfClass(NecromancerEntity.class, AABB.ofSize(new Vec3(x, y, z), 64, 64, 64), e -> true).isEmpty())) {
+							Mob vampire = new NecromancerEntity(SupernaturalModEntities.NECROMANCER.get(), lvl);
+							vampire.copyPosition(raidyr);
+							vampire.finalizeSpawn(lvl, world.getCurrentDifficultyAt(vampire.blockPosition()), MobSpawnType.EVENT, null, null);
+							world.addFreshEntity(vampire);
+							raid.removeFromRaid(raidyr, true);
+							event.setCanceled(true);
+						}
+					}
+				}
+			} else if (target instanceof Vex ghost) {
+				if (ghost.getOwner() == null)
+					ghost.setBoundOrigin(BlockPos.containing(x, y, z));
+				ghost.setLimitedLife(2000);
 			} else if (target instanceof MerAmethystEntity merry && (merry.merTick = true)) {
 				if (Math.random() >= 0.85) {
 					Mob mer = new MerDiamondEntity(SupernaturalModEntities.MER_DIAMOND.get(), lvl);

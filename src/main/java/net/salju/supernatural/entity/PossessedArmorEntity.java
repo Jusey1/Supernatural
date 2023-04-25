@@ -1,4 +1,5 @@
-package net.salju.supernatural.entity;
+
+package net.salju.supernatural.entity;
 
 import net.salju.supernatural.init.SupernaturalModSounds;
 import net.salju.supernatural.init.SupernaturalModMobEffects;
@@ -31,6 +32,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.DifficultyInstance;
@@ -84,11 +86,7 @@ public class PossessedArmorEntity extends Monster {
 
 	@Override
 	public boolean hurt(DamageSource source, float amount) {
-		if (source == DamageSource.FALL)
-			return false;
-		if (source == DamageSource.CACTUS)
-			return false;
-		if (source == DamageSource.DROWN)
+		if (source.is(DamageTypes.FALL) || source.is(DamageTypes.CACTUS) || source.is(DamageTypes.DROWN))
 			return false;
 		return super.hurt(source, amount);
 	}
@@ -169,4 +167,4 @@ public class PossessedArmorEntity extends Monster {
 		builder = builder.add(Attributes.KNOCKBACK_RESISTANCE, 0.5);
 		return builder;
 	}
-}
+}
