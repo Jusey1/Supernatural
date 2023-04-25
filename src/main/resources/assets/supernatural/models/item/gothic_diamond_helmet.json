@@ -1,7 +1,7 @@
 {
   "parent": "item/generated",
   "textures": {
-  	"layer0": "supernatural:items/gothic_feather",
-    "layer1": "supernatural:items/gothic_diamond_helmet"
+  	"layer0": "supernatural:item/gothic_feather",
+    "layer1": "supernatural:item/gothic_diamond_helmet"
   }
 }

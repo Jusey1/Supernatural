@@ -1,6 +1,6 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "supernatural:items/vampire_dust"
+    "layer0": "supernatural:item/vampire_dust"
   }
 }
