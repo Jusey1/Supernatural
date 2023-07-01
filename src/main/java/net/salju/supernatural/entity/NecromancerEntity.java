@@ -96,7 +96,7 @@ public class NecromancerEntity extends SpellcasterIllager {
 
 	protected void customServerAiStep() {
 		if (!this.isNoAi() && GoalUtils.hasGroundPathNavigation(this)) {
-			boolean flag = ((ServerLevel) this.level).isRaided(this.blockPosition());
+			boolean flag = ((ServerLevel) this.level()).isRaided(this.blockPosition());
 			((GroundPathNavigation) this.getNavigation()).setCanOpenDoors(flag);
 		}
 		super.customServerAiStep();
@@ -197,7 +197,7 @@ public class NecromancerEntity extends SpellcasterIllager {
 
 	@Override
 	public boolean hurt(DamageSource source, float amount) {
-		for (Vex bobs : this.level.getEntitiesOfClass(Vex.class, this.getBoundingBox().inflate(16.0D))) {
+		for (Vex bobs : this.level().getEntitiesOfClass(Vex.class, this.getBoundingBox().inflate(16.0D))) {
 			bobs.hurt(source, (amount * 0.45F));
 			return super.hurt(source, (amount * 0.3F));
 		}
@@ -236,7 +236,7 @@ public class NecromancerEntity extends SpellcasterIllager {
 
 		protected void performSpellCasting() {
 			LivingEntity target = NecromancerEntity.this.getTarget();
-			LevelAccessor world = target.getLevel();
+			LevelAccessor world = target.level();
 			double x = Math.floor(target.getX());
 			double y = Math.floor(target.getY());
 			double z = Math.floor(target.getZ());
@@ -345,7 +345,7 @@ public class NecromancerEntity extends SpellcasterIllager {
 			if (!super.canUse()) {
 				return false;
 			} else {
-				int i = NecromancerEntity.this.level.getNearbyEntities(Vex.class, this.vexCountTargeting, NecromancerEntity.this, NecromancerEntity.this.getBoundingBox().inflate(16.0D)).size();
+				int i = NecromancerEntity.this.level().getNearbyEntities(Vex.class, this.vexCountTargeting, NecromancerEntity.this, NecromancerEntity.this.getBoundingBox().inflate(16.0D)).size();
 				return NecromancerEntity.this.random.nextInt(8) + 1 > i;
 			}
 		}
@@ -359,12 +359,12 @@ public class NecromancerEntity extends SpellcasterIllager {
 		}
 
 		protected void performSpellCasting() {
-			ServerLevel serverlevel = (ServerLevel) NecromancerEntity.this.level;
+			ServerLevel serverlevel = (ServerLevel) NecromancerEntity.this.level();
 			for (int i = 0; i < 3; ++i) {
 				BlockPos blockpos = NecromancerEntity.this.blockPosition().offset(-2 + NecromancerEntity.this.random.nextInt(5), 1, -2 + NecromancerEntity.this.random.nextInt(5));
-				Vex vex = EntityType.VEX.create(NecromancerEntity.this.level);
+				Vex vex = EntityType.VEX.create(NecromancerEntity.this.level());
 				vex.moveTo(blockpos, 0.0F, 0.0F);
-				vex.finalizeSpawn(serverlevel, NecromancerEntity.this.level.getCurrentDifficultyAt(blockpos), MobSpawnType.MOB_SUMMONED, (SpawnGroupData) null, (CompoundTag) null);
+				vex.finalizeSpawn(serverlevel, NecromancerEntity.this.level().getCurrentDifficultyAt(blockpos), MobSpawnType.MOB_SUMMONED, (SpawnGroupData) null, (CompoundTag) null);
 				vex.setOwner(NecromancerEntity.this);
 				vex.setBoundOrigin(blockpos);
 				vex.setLimitedLife(20 * (30 + NecromancerEntity.this.random.nextInt(90)));
@@ -391,14 +391,14 @@ public class NecromancerEntity extends SpellcasterIllager {
 		}
 
 		public boolean canUse() {
-			for (NecromancerEntity target : bob.getLevel().getEntitiesOfClass(NecromancerEntity.class, bob.getBoundingBox().inflate(32.0D))) {
+			for (NecromancerEntity target : bob.level().getEntitiesOfClass(NecromancerEntity.class, bob.getBoundingBox().inflate(32.0D))) {
 				return target != null && target.getTarget() != null && this.canAttack(target.getTarget(), this.copyOwnerTargeting);
 			}
 			return false;
 		}
 
 		public void start() {
-			for (NecromancerEntity target : bob.getLevel().getEntitiesOfClass(NecromancerEntity.class, bob.getBoundingBox().inflate(32.0D))) {
+			for (NecromancerEntity target : bob.level().getEntitiesOfClass(NecromancerEntity.class, bob.getBoundingBox().inflate(32.0D))) {
 				bob.setTarget(target.getTarget());
 			}
 			super.start();

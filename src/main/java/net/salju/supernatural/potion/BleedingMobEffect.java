@@ -1,14 +1,10 @@
-
-package net.salju.supernatural.potion;
+package net.salju.supernatural.potion;
 
 import net.minecraftforge.client.extensions.common.IClientMobEffectExtensions;
 
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.effect.MobEffect;
-import net.minecraft.client.gui.screens.inventory.EffectRenderingInventoryScreen;
-
-import com.mojang.blaze3d.vertex.PoseStack;
 
 public class BleedingMobEffect extends MobEffect {
 	public BleedingMobEffect() {
@@ -34,15 +30,9 @@ public class BleedingMobEffect extends MobEffect {
 			}
 
 			@Override
-			public boolean renderInventoryText(MobEffectInstance instance, EffectRenderingInventoryScreen<?> screen, PoseStack poseStack, int x,
-					int y, int blitOffset) {
-				return false;
-			}
-
-			@Override
 			public boolean isVisibleInGui(MobEffectInstance effect) {
 				return false;
 			}
 		});
 	}
-}
+}

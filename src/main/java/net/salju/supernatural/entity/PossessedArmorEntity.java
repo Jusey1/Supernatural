@@ -94,7 +94,7 @@ public class PossessedArmorEntity extends Monster {
 	@Override
 	public void die(DamageSource source) {
 		super.die(source);
-		LevelAccessor world = this.level;
+		LevelAccessor world = this.level();
 		ItemStack empty = (ItemStack.EMPTY);
 		empty.setCount(1);
 		double x = this.getX();

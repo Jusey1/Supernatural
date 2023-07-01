@@ -14,29 +14,29 @@ import net.minecraft.world.food.FoodData;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.client.player.LocalPlayer;
-import net.minecraft.client.gui.GuiComponent;
 import net.minecraft.client.Minecraft;
 
 import java.util.Random;
-
-import com.mojang.blaze3d.systems.RenderSystem;
+import com.mojang.blaze3d.systems.RenderSystem;
+import net.minecraft.client.gui.GuiGraphics;
 
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
 public class SupernaturalBloodBar {
-	public static final ResourceLocation ICONS_LOCATION = new ResourceLocation("supernatural:textures/gui/generic_icons.png");
+	public static final ResourceLocation texture = new ResourceLocation("supernatural:textures/gui/generic_icons.png");
 	public static final Random luck = new Random();
 
 	@OnlyIn(Dist.CLIENT)
 	@SubscribeEvent(receiveCanceled = true)
 	public void onOverlayRender(RenderGuiOverlayEvent.Pre event) {
 		Minecraft mc = Minecraft.getInstance();
+		GuiGraphics gui = event.getGuiGraphics();
 
 		if (event.getOverlay().equals(VanillaGuiOverlay.FOOD_LEVEL.type()) && SupernaturalHelpersProcedure.isVampire(mc.player)) {
 			if (mc.player.isCreative() || mc.player.isSpectator()) {
 				return;
 			}
 			event.setCanceled(true);
-			RenderSystem.setShaderTexture(0, ICONS_LOCATION);
+			RenderSystem.setShaderTexture(0, texture);
 			int width = event.getWindow().getGuiScaledWidth();
 			int height = event.getWindow().getGuiScaledHeight();
 			LocalPlayer localPlayer = mc.player;
@@ -65,15 +65,15 @@ public class SupernaturalBloodBar {
 				if (localPlayer.getFoodData().getSaturationLevel() <= 0.0F && mc.gui.getGuiTicks() % (level * 3 + 1) == 0) {
 					y = top + luck.nextInt(3) - 1;
 				}
-				mc.gui.blit(event.getPoseStack(), x, y, 0, 0, 9, 9);
+				gui.blit(texture, x, y, 0, 0, 9, 9);
 				if (idx < level) {
-					mc.gui.blit(event.getPoseStack(), x, y, icon + -7, 0, 9, 9);
+					gui.blit(texture, x, y, icon + -7, 0, 9, 9);
 				} else if (idx == level) {
-					mc.gui.blit(event.getPoseStack(), x, y, icon + 2, 0, 9, 9);
+					gui.blit(texture, x, y, icon + 2, 0, 9, 9);
 				}
 			}
 			RenderSystem.disableBlend();
-			RenderSystem.setShaderTexture(0, GuiComponent.GUI_ICONS_LOCATION);
+			//RenderSystem.setShaderTexture(0, GuiComponent.GUI_ICONS_LOCATION);
 		}
 	}
 }

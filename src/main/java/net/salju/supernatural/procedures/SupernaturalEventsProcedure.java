@@ -69,17 +69,17 @@ public class SupernaturalEventsProcedure {
 		if (event.phase == TickEvent.Phase.END) {
 			Player player = event.player;
 			ItemStack helmet = player.getItemBySlot(EquipmentSlot.HEAD);
-			LevelAccessor world = player.level;
+			LevelAccessor world = player.level();
 			double x = player.getX();
 			double y = player.getY();
 			double z = player.getZ();
 			if (SupernaturalHelpersProcedure.isVampire(player)) {
 				if (SupernaturalConfig.SPEED.get() == true)
-					player.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 999999, 0, (false), (false)));
+					player.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 999999, 0, false, false));
 				if (SupernaturalConfig.STRENGTH.get() == true)
-					player.addEffect(new MobEffectInstance(MobEffects.DAMAGE_BOOST, 999999, 0, (false), (false)));
+					player.addEffect(new MobEffectInstance(MobEffects.DAMAGE_BOOST, 999999, 0, false, false));
 				if (SupernaturalConfig.HASTE.get() == true)
-					player.addEffect(new MobEffectInstance(MobEffects.DIG_SPEED, 999999, 0, (false), (false)));
+					player.addEffect(new MobEffectInstance(MobEffects.DIG_SPEED, 999999, 0, false, false));
 				if (!player.getAbilities().instabuild) {
 					if ((player.getHealth() < player.getMaxHealth()) && (player.getFoodData().getFoodLevel() >= 16)) {
 						player.getFoodData().setSaturation(1);
@@ -102,7 +102,7 @@ public class SupernaturalEventsProcedure {
 							}
 						}
 					} else if (player.isShiftKeyDown()) {
-						player.addEffect(new MobEffectInstance(MobEffects.INVISIBILITY, 10, 0, (false), (false)));
+						player.addEffect(new MobEffectInstance(MobEffects.INVISIBILITY, 10, 0, false, false));
 					}
 				}
 			}
@@ -128,7 +128,7 @@ public class SupernaturalEventsProcedure {
 	public static void onEntityAttacked(LivingHurtEvent event) {
 		if (event != null && event.getEntity() != null) {
 			LivingEntity target = event.getEntity();
-			LevelAccessor world = target.level;
+			LevelAccessor world = target.level();
 			double x = target.getX();
 			double y = target.getY();
 			double z = target.getZ();
@@ -161,9 +161,9 @@ public class SupernaturalEventsProcedure {
 						if (SupernaturalHelpersProcedure.isVampire(source) || source.getType().is(TagKey.create(Registries.ENTITY_TYPE, new ResourceLocation("supernatural:is_vampire")))) {
 							ItemStack bottle = new ItemStack(Items.GLASS_BOTTLE);
 							if (target instanceof Player player && !(SupernaturalHelpersProcedure.isVampire(player))) {
-								if (!player.hasEffect(SupernaturalModMobEffects.VAMPIRISM.get()) && (player.getArmorValue() < 12)) {
-									player.addEffect(new MobEffectInstance(SupernaturalModMobEffects.VAMPIRISM.get(), 24000, 0, (false), (false)));
-									player.addEffect(new MobEffectInstance(MobEffects.CONFUSION, 120, 0, (false), (false)));
+								if (!player.hasEffect(SupernaturalModMobEffects.VAMPIRISM.get()) && (player.getArmorValue() < SupernaturalConfig.VAMPIRE.get())) {
+									player.addEffect(new MobEffectInstance(SupernaturalModMobEffects.VAMPIRISM.get(), 24000, 0, false, false));
+									player.addEffect(new MobEffectInstance(MobEffects.CONFUSION, 120, 0, false, false));
 								}
 								if (source.getOffhandItem().getItem() == Items.GLASS_BOTTLE && (!player.hasEffect(SupernaturalModMobEffects.BLEEDING.get()))) {
 									player.addEffect(new MobEffectInstance(SupernaturalModMobEffects.BLEEDING.get(), 1200, 0));
@@ -214,7 +214,7 @@ public class SupernaturalEventsProcedure {
 	public static void onEntityStruckByLightning(EntityStruckByLightningEvent event) {
 		if (event != null && event.getEntity() != null) {
 			Entity target = event.getEntity();
-			LevelAccessor world = target.level;
+			LevelAccessor world = target.level();
 			double x = target.getX();
 			double y = target.getY();
 			double z = target.getZ();
@@ -226,7 +226,7 @@ public class SupernaturalEventsProcedure {
 					player.removeEffect(MobEffects.DIG_SPEED);
 					player.removeEffect(MobEffects.MOVEMENT_SPEED);
 					player.getInventory().clearOrCountMatchingItems(p -> totem.getItem() == p.getItem(), 1, player.inventoryMenu.getCraftSlots());
-					player.level.broadcastEntityEvent(player, (byte) 35);
+					player.level().broadcastEntityEvent(player, (byte) 35);
 				}
 			}
 		}
@@ -235,7 +235,7 @@ public class SupernaturalEventsProcedure {
 	@SubscribeEvent
 	public static void onEntityDrops(LivingDropsEvent event) {
 		LivingEntity target = event.getEntity();
-		LevelAccessor world = target.level;
+		LevelAccessor world = target.level();
 		double x = target.getX();
 		double y = target.getY();
 		double z = target.getZ();

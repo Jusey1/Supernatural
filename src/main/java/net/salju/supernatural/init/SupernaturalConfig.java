@@ -7,6 +7,7 @@ public class SupernaturalConfig {
 	public static final ForgeConfigSpec CONFIG;
 
 	public static final ForgeConfigSpec.DoubleValue WOOD;
+	public static final ForgeConfigSpec.DoubleValue VAMPIRE;
 	public static final ForgeConfigSpec.BooleanValue SPEED;
 	public static final ForgeConfigSpec.BooleanValue STRENGTH;
 	public static final ForgeConfigSpec.BooleanValue HASTE;
@@ -21,18 +22,19 @@ public class SupernaturalConfig {
 	static {
 		BUILDER.push("Vampirism");
 		WOOD = BUILDER.comment("How much health does a Vampire needs to be finished off by a Wooden Sword?").defineInRange("Wooden Stake Health", 0.6, 0.0, 1.0);
-		SPEED = BUILDER.comment("Should vampires have the Speed effect? default is true.").define("Vampire's Speed", true);
-		STRENGTH = BUILDER.comment("Should vampires have the Strength effect? default is true.").define("Vampire's Strength", true);
-		HASTE = BUILDER.comment("Should vampires have the Haste effect? default is true.").define("Vampire's Haste", true);
-		SUN = BUILDER.comment("Should vampires be immune to sun damage? default is false.").define("Twilight Vampires", false);
-		RAIDERS = BUILDER.comment("Should vampires be removed from raids at night? default is false.").define("No Raiding Vampires", false);
+		VAMPIRE = BUILDER.comment("How much armor does the player need to prevent catching Vampirism?").defineInRange("Armor Prevent Vampirism", 12.0, 0.0, 20.0);
+		SPEED = BUILDER.comment("Should vampires have the Speed effect?").define("Vampire's Speed", true);
+		STRENGTH = BUILDER.comment("Should vampires have the Strength effect?").define("Vampire's Strength", true);
+		HASTE = BUILDER.comment("Should vampires have the Haste effect?").define("Vampire's Haste", true);
+		SUN = BUILDER.comment("Should vampires be immune to sun damage?").define("Twilight Vampires", false);
+		RAIDERS = BUILDER.comment("Should vampires be removed from raids at night?").define("No Raiding Vampires", false);
 		BUILDER.pop();
 		BUILDER.push("Spirits");
-		VEX = BUILDER.comment("Should Vexes spawn from Grave Soil blocks? default is true.").define("Vexation Graves", true);
-		ARMOR = BUILDER.comment("Should Spooks target armor stands? default is true.").define("Possessed Armor", true);
+		VEX = BUILDER.comment("Should Vexes spawn from Grave Soil blocks?").define("Vexation Graves", true);
+		ARMOR = BUILDER.comment("Should Spooks target armor stands?").define("Possessed Armor", true);
 		BUILDER.pop();
 		BUILDER.push("Angels");
-		FURIA = BUILDER.comment("Should Angels have a holy aura that burns nearby vampires and undead? default is true.").define("Holy Blessing", true);
+		FURIA = BUILDER.comment("Should Angels have a holy aura that burns nearby vampires and undead?").define("Holy Blessing", true);
 		BUILDER.pop();
 		CONFIG = BUILDER.build();
 	}

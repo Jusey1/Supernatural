@@ -75,7 +75,7 @@ public class MerModel<T extends AbstractMerEntity> extends EntityModel<T> implem
 		this.LowerTail.xRot = 0.1627F;
 		this.UpperTail.xRot += Mth.cos(ageInTicks * 0.2F) * 0.18F;
 		this.LowerTail.xRot += Mth.cos(ageInTicks * 0.2F) * 0.26F;
-		if (mer.isOnGround() && !mer.isInWater() || this.riding) {
+		if (mer.onGround() && !mer.isInWater() || this.riding) {
 			this.UpperTail.xRot = -1.3963F;
 			this.LowerTail.xRot = -1.4399F;
 		}

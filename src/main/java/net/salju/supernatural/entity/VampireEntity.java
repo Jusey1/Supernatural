@@ -89,7 +89,7 @@ public class VampireEntity extends AbstractIllager {
 
 	protected void customServerAiStep() {
 		if (!this.isNoAi() && GoalUtils.hasGroundPathNavigation(this)) {
-			boolean flag = ((ServerLevel) this.level).isRaided(this.blockPosition());
+			boolean flag = ((ServerLevel) this.level()).isRaided(this.blockPosition());
 			((GroundPathNavigation) this.getNavigation()).setCanOpenDoors(flag);
 		}
 		super.customServerAiStep();

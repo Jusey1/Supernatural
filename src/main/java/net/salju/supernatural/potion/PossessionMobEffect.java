@@ -48,7 +48,7 @@ public class PossessionMobEffect extends MobEffect {
 	@Override
 	public void removeAttributeModifiers(LivingEntity target, AttributeMap map, int str) {
 		super.removeAttributeModifiers(target, map, str);
-		LevelAccessor world = target.level;
+		LevelAccessor world = target.level();
 		double x = target.getX();
 		double y = target.getY();
 		double z = target.getZ();

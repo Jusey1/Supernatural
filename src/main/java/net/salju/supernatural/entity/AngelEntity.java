@@ -84,7 +84,7 @@ public class AngelEntity extends Mob {
 				return super.hurt(source, amount);
 			}
 		}
-		if (source.is(DamageTypes.OUT_OF_WORLD) || source.is(DamageTypes.EXPLOSION))
+		if (source.is(DamageTypes.FELL_OUT_OF_WORLD) || source.is(DamageTypes.EXPLOSION))
 			return super.hurt(source, amount);
 		return false;
 	}
@@ -92,11 +92,11 @@ public class AngelEntity extends Mob {
 	@Override
 	public void baseTick() {
 		super.baseTick();
-		LevelAccessor world = this.level;
+		LevelAccessor world = this.level();
 		double x = this.getX();
 		double y = this.getY();
 		double z = this.getZ();
-		if (!this.level.isClientSide && this.isAlive() && this.isEffectiveAi() && (SupernaturalConfig.FURIA.get() == true)) {
+		if (!world.isClientSide() && this.isAlive() && this.isEffectiveAi() && (SupernaturalConfig.FURIA.get() == true)) {
 			for (LivingEntity target : world.getEntitiesOfClass(LivingEntity.class, this.getBoundingBox().inflate(12.0D))) {
 				if (target instanceof Vex ghost) {
 					ghost.setLimitedLife(0);

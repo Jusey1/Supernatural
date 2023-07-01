@@ -86,14 +86,14 @@ public class AbstractMerEntity extends Monster implements RangedAttackMob {
 	@Override
 	public void performRangedAttack(LivingEntity target, float tri) {
 		if (this.getMainHandItem().getItem() instanceof TridentItem) {
-			ThrownTrident throwntrident = new ThrownTrident(this.level, this, new ItemStack(Items.TRIDENT));
+			ThrownTrident throwntrident = new ThrownTrident(this.level(), this, new ItemStack(Items.TRIDENT));
 			double d0 = target.getX() - this.getX();
 			double d1 = target.getY(0.3333333333333333D) - throwntrident.getY();
 			double d2 = target.getZ() - this.getZ();
 			double d3 = Math.sqrt(d0 * d0 + d2 * d2);
-			throwntrident.shoot(d0, d1 + d3 * (double) 0.2F, d2, 1.6F, (float) (14 - this.level.getDifficulty().getId() * 4));
+			throwntrident.shoot(d0, d1 + d3 * (double) 0.2F, d2, 1.6F, (float) (14 - this.level().getDifficulty().getId() * 4));
 			this.playSound(SoundEvents.DROWNED_SHOOT, 1.0F, 1.0F / (this.getRandom().nextFloat() * 0.4F + 0.8F));
-			this.level.addFreshEntity(throwntrident);
+			this.level().addFreshEntity(throwntrident);
 		}
 	}
 
@@ -150,7 +150,7 @@ public class AbstractMerEntity extends Monster implements RangedAttackMob {
 
 	@Override
 	public void updateSwimming() {
-		if (!this.level.isClientSide) {
+		if (!this.level().isClientSide) {
 			if (this.isEffectiveAi() && this.isInWater() && this.wantsToSwim()) {
 				this.setSwimming(true);
 			} else {

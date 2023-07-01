@@ -4,8 +4,7 @@ import net.salju.supernatural.init.SupernaturalModEntities;
 import net.salju.supernatural.init.SupernaturalConfig;
 import net.salju.supernatural.entity.SpookyEntity;
 
-import net.minecraft.world.level.material.MaterialColor;
-import net.minecraft.world.level.material.Material;
+import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.SoundType;
@@ -21,7 +20,7 @@ import net.minecraft.core.BlockPos;
 
 public class GraveSoilBlock extends Block {
 	public GraveSoilBlock() {
-		super(BlockBehaviour.Properties.of(Material.DIRT, MaterialColor.PODZOL).sound(SoundType.SOUL_SOIL).strength(1.2f, 8f).requiresCorrectToolForDrops().randomTicks());
+		super(BlockBehaviour.Properties.of().mapColor(MapColor.PODZOL).sound(SoundType.SOUL_SOIL).strength(1.2f, 8f).requiresCorrectToolForDrops().randomTicks());
 	}
 
 	@Override

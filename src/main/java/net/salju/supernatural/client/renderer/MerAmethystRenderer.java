@@ -33,7 +33,7 @@ public class MerAmethystRenderer extends MobRenderer<MerAmethystEntity, MerModel
 	@Override
 	public void render(MerAmethystEntity mer, float f1, float f2, PoseStack stack, MultiBufferSource buffer, int inty) {
 		stack.pushPose();
-		if (mer.isOnGround() && !mer.isInWater()) {
+		if (mer.onGround() && !mer.isInWater()) {
 			stack.translate(0, -0.5, 0);
 		} else {
 			stack.translate(0, 0, 0);

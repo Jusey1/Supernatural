@@ -36,7 +36,7 @@ public class SupernaturalHelpersProcedure {
 	}
 
 	public static <T extends Mob> T convertArmor(ArmorStand target, EntityType<T> type, boolean equip) {
-		T armor = type.create(target.level);
+		T armor = type.create(target.level());
 		armor.copyPosition(target);
 		if (target.hasCustomName()) {
 			armor.setCustomName(target.getCustomName());
@@ -56,7 +56,7 @@ public class SupernaturalHelpersProcedure {
 				}
 			}
 		}
-		target.level.addFreshEntity(armor);
+		target.level().addFreshEntity(armor);
 		target.discard();
 		return armor;
 	}

@@ -29,19 +29,18 @@ import java.util.AbstractMap;
 @Mod("supernatural")
 public class SupernaturalMod {
 	public static final String MODID = "supernatural";
-	public static SupernaturalBloodBar blood;
 
 	public SupernaturalMod() {
 		MinecraftForge.EVENT_BUS.register(this);
+		MinecraftForge.EVENT_BUS.register(new SupernaturalBloodBar());
 		IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
 		SupernaturalModSounds.REGISTRY.register(bus);
 		SupernaturalBlocks.REGISTRY.register(bus);
 		SupernaturalItems.REGISTRY.register(bus);
+		SupernaturalTabs.REGISTRY.register(bus);
 		SupernaturalModEntities.REGISTRY.register(bus);
 		SupernaturalModMobEffects.REGISTRY.register(bus);
 		SupernaturalEnchantments.REGISTRY.register(bus);
-		blood = new SupernaturalBloodBar();
-		MinecraftForge.EVENT_BUS.register(blood);
 		ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, SupernaturalConfig.CONFIG, "supernatural-common.toml");
 	}
 

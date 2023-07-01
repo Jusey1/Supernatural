@@ -149,10 +149,10 @@ public class SpookyEntity extends Monster {
 				target.addEffect(new MobEffectInstance(SupernaturalModMobEffects.POSSESSION.get(), 3000, 0));
 				target.addEffect(new MobEffectInstance(MobEffects.BLINDNESS, 32, 0, (false), (false)));
 			}
-			if (!this.level.isClientSide()) {
+			if (!this.level().isClientSide()) {
 				this.playSound(SupernaturalModSounds.SPOOK_POOF.get(), 1.0F, 1.0F);
 				this.discard();
-				if (this.level instanceof ServerLevel lvl) {
+				if (this.level() instanceof ServerLevel lvl) {
 					double r = this.random.nextGaussian() * 0.02D;
 					lvl.sendParticles(ParticleTypes.POOF, this.getRandomX(1.0D), this.getRandomY(), this.getRandomZ(1.0D), 10, r, r, r, 0.25);
 				}
@@ -165,8 +165,8 @@ public class SpookyEntity extends Monster {
 	public void baseTick() {
 		super.baseTick();
 		if (SupernaturalConfig.ARMOR.get() == true) {
-			for (ArmorStand target : this.level.getEntitiesOfClass(ArmorStand.class, this.getBoundingBox().inflate(0.85D))) {
-				LevelAccessor world = target.level;
+			for (ArmorStand target : this.level().getEntitiesOfClass(ArmorStand.class, this.getBoundingBox().inflate(0.85D))) {
+				LevelAccessor world = target.level();
 				double x = target.getX();
 				double y = target.getY();
 				double z = target.getZ();
@@ -223,10 +223,10 @@ public class SpookyEntity extends Monster {
 			double x = this.getX();
 			double y = this.getY();
 			double z = this.getZ();
-			if (!this.level.isClientSide() && this.level.isDay() && this.level.canSeeSkyFromBelowWater(BlockPos.containing(x, y, z))) {
+			if (!this.level().isClientSide() && this.level().isDay() && this.level().canSeeSkyFromBelowWater(BlockPos.containing(x, y, z))) {
 				this.playSound(SupernaturalModSounds.SPOOK_POOF.get(), 1.0F, 1.0F);
 				this.discard();
-				if (this.level instanceof ServerLevel lvl) {
+				if (this.level() instanceof ServerLevel lvl) {
 					double r = this.random.nextGaussian() * 0.02D;
 					lvl.sendParticles(ParticleTypes.POOF, this.getRandomX(1.0D), this.getRandomY(), this.getRandomZ(1.0D), 10, r, r, r, 0.25);
 				}
@@ -240,7 +240,7 @@ public class SpookyEntity extends Monster {
 		double x = this.getX();
 		double y = this.getY();
 		double z = this.getZ();
-		for (LivingEntity target : this.level.getEntitiesOfClass(LivingEntity.class, this.getBoundingBox().inflate(0.56D))) {
+		for (LivingEntity target : this.level().getEntitiesOfClass(LivingEntity.class, this.getBoundingBox().inflate(0.56D))) {
 			if (target instanceof Player || target instanceof Animal || target instanceof Monster billy && billy.isPersistenceRequired()) {
 				this.setPersistenceRequired();
 			}
