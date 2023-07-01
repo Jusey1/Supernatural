@@ -1,22 +1,20 @@
 modLoader="javafml"
-loaderVersion="[45,)"
+loaderVersion="[47,)"
 license="MIT License"
 
 [[mods]]
 modId="supernatural"
-version="2.7.3"
+version="2.8.0"
 displayName="Supernatural"
 credits="Jusey1, Piero, nojustgavin, AuraBraixen_4412"
 displayURL="https://discord.gg/s7QaYGUzZU"
 authors="Jusey1"
-description='''
-Adds Supernatural mobs like vampires and spirits.
-'''
+description="Adds Supernatural mobs like vampires and spirits."
 
 [[dependencies.supernatural]]
     modId="minecraft"
     mandatory=true
-    versionRange="[1.19.4]"
+    versionRange="[1.20.1]"
     ordering="NONE"
     side="BOTH"
 
