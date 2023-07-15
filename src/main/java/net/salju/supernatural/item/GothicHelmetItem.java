@@ -1,6 +1,5 @@
 package net.salju.supernatural.item;
 
-import net.salju.supernatural.init.SupernaturalItems;
 import net.salju.supernatural.client.model.GothicKoboldArmorModel;
 import net.salju.supernatural.client.model.GothicArmorModel;
 
@@ -24,8 +23,11 @@ import net.minecraft.client.model.HumanoidModel;
 import java.util.function.Consumer;
 
 public class GothicHelmetItem extends DyeableArmorItem {
-	public GothicHelmetItem(ArmorMaterial material, ArmorItem.Type type, Item.Properties properties) {
+	private String texture;
+
+	public GothicHelmetItem(ArmorMaterial material, ArmorItem.Type type, Item.Properties properties, String text) {
 		super(material, type, properties);
+		this.texture = text;
 	}
 
 	@Override
@@ -45,14 +47,6 @@ public class GothicHelmetItem extends DyeableArmorItem {
 
 	@Override
 	public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlot slot, String layer) {
-		if (stack.getItem() == SupernaturalItems.GOTHIC_IRON_HELMET.get()) {
-			return "supernatural:textures/models/armor/gothic_iron.png";
-		} else if (stack.getItem() == SupernaturalItems.GOTHIC_DIAMOND_HELMET.get()) {
-			return "supernatural:textures/models/armor/gothic_diamond.png";
-		} else if (stack.getItem() == SupernaturalItems.GOTHIC_GOLDEN_HELMET.get()) {
-			return "supernatural:textures/models/armor/gothic_golden.png";
-		} else {
-			return "supernatural:textures/models/armor/gothic_netherite.png";
-		}
+		return this.texture;
 	}
 }
