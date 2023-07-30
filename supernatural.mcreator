@@ -1,41 +1,6 @@
 {
   "mod_elements": [
     {
-      "name": "Vampirism",
-      "type": "potioneffect",
-      "sortid": 19,
-      "compiles": true,
-      "locked_code": true,
-      "registry_name": "vampirism"
-    },
-    {
-      "name": "Vampire",
-      "type": "livingentity",
-      "sortid": 1,
-      "compiles": true,
-      "locked_code": true,
-      "registry_name": "vampire",
-      "metadata": {
-        "files": [
-          "src/main/java/net/salju/supernatural/entity/VampireEntity.java",
-          "src/main/java/net/salju/supernatural/client/renderer/VampireRenderer.java"
-        ]
-      }
-    },
-    {
-      "name": "Bleeding",
-      "type": "potioneffect",
-      "sortid": 22,
-      "compiles": true,
-      "locked_code": true,
-      "registry_name": "bleeding",
-      "metadata": {
-        "files": [
-          "src/main/java/net/salju/supernatural/potion/BleedingMobEffect.java"
-        ]
-      }
-    },
-    {
       "name": "VampireCurse",
       "type": "command",
       "sortid": 25,
@@ -45,139 +10,6 @@
       "metadata": {
         "files": [
           "src/main/java/net/salju/supernatural/command/VampireCurseCommand.java"
-        ]
-      }
-    },
-    {
-      "name": "Possession",
-      "type": "potioneffect",
-      "sortid": 26,
-      "compiles": true,
-      "locked_code": true,
-      "registry_name": "possession"
-    },
-    {
-      "name": "PossessedArmor",
-      "type": "livingentity",
-      "sortid": 3,
-      "compiles": true,
-      "locked_code": true,
-      "registry_name": "possessed_armor",
-      "metadata": {
-        "files": [
-          "src/main/java/net/salju/supernatural/client/renderer/PossessedArmorRenderer.java",
-          "src/main/java/net/salju/supernatural/entity/PossessedArmorEntity.java"
-        ]
-      }
-    },
-    {
-      "name": "Spooky",
-      "type": "livingentity",
-      "sortid": 4,
-      "compiles": true,
-      "locked_code": true,
-      "registry_name": "spooky",
-      "metadata": {
-        "files": [
-          "src/main/java/net/salju/supernatural/entity/SpookyEntity.java",
-          "src/main/java/net/salju/supernatural/client/renderer/SpookyRenderer.java"
-        ]
-      }
-    },
-    {
-      "name": "MerAmethyst",
-      "type": "livingentity",
-      "sortid": 5,
-      "compiles": true,
-      "locked_code": true,
-      "registry_name": "mer_amethyst",
-      "metadata": {
-        "files": [
-          "src/main/java/net/salju/supernatural/client/renderer/MerAmethystRenderer.java",
-          "src/main/java/net/salju/supernatural/entity/MerAmethystEntity.java",
-          "src/main/resources/data/supernatural/forge/biome_modifier/mer_amethyst_biome_modifier.json"
-        ]
-      }
-    },
-    {
-      "name": "MerEmerald",
-      "type": "livingentity",
-      "sortid": 29,
-      "compiles": true,
-      "locked_code": true,
-      "registry_name": "mer_emerald"
-    },
-    {
-      "name": "MerDiamond",
-      "type": "livingentity",
-      "sortid": 30,
-      "compiles": true,
-      "locked_code": true,
-      "registry_name": "mer_diamond"
-    },
-    {
-      "name": "Necromancer",
-      "type": "livingentity",
-      "sortid": 2,
-      "compiles": true,
-      "locked_code": true,
-      "registry_name": "necromancer",
-      "metadata": {
-        "files": [
-          "src/main/java/net/salju/supernatural/entity/NecromancerEntity.java",
-          "src/main/java/net/salju/supernatural/client/renderer/NecromancerRenderer.java"
-        ]
-      }
-    },
-    {
-      "name": "Angel",
-      "type": "livingentity",
-      "sortid": 33,
-      "compiles": true,
-      "locked_code": true,
-      "registry_name": "angel",
-      "metadata": {
-        "files": [
-          "src/main/java/net/salju/supernatural/entity/AngelEntity.java",
-          "src/main/java/net/salju/supernatural/client/renderer/AngelRenderer.java"
-        ]
-      }
-    },
-    {
-      "name": "SupernaturalEvents",
-      "type": "procedure",
-      "sortid": 35,
-      "compiles": true,
-      "locked_code": true,
-      "registry_name": "supernatural_events",
-      "metadata": {
-        "files": [
-          "src/main/java/net/salju/supernatural/procedures/SupernaturalEventsProcedure.java"
-        ],
-        "dependencies": [
-          {
-            "name": "entity",
-            "type": "entity"
-          }
-        ]
-      }
-    },
-    {
-      "name": "SupernaturalHelpers",
-      "type": "procedure",
-      "sortid": 36,
-      "compiles": true,
-      "locked_code": true,
-      "registry_name": "supernatural_helpers",
-      "metadata": {
-        "files": [
-          "src/main/java/net/salju/supernatural/procedures/SupernaturalHelpersProcedure.java"
-        ],
-        "dependencies": [
-          {
-            "name": "entity",
-            "type": "entity"
-          }
         ]
       }
     }
@@ -336,7 +168,7 @@
       "entity.supernatural.necromancer": "Necromancer",
       "entity.supernatural.mer_diamond": "Merfolk Captain",
       "subtitles.merland_hurt": "*needs water*",
-      "desc.supernatural.helm": "Gothic",
+      "desc.supernatural.helm": "Gothic Upgrade",
       "subtitles.vampire_idle": "*angry villager honk*",
       "desc.supernatural.helm.apply": "Helmet",
       "item.supernatural.gothic_template": "Smithing Template",
@@ -344,9 +176,8 @@
       "item.supernatural.angel_statue": "Angel Statue",
       "item.supernatural.spooky_spawn_egg": "Spook Spawn Egg",
       "item.supernatural.gothic_netherite_helmet": "Gothic Netherite Helmet",
-      "effect.supernatural.possession": "Possession",
       "item.supernatural.gothic_golden_helmet": "Gothic Golden Helmet",
-      "trim_pattern.supernatural.necro": "Necromancer",
+      "effect.supernatural.possession": "Possession",
       "desc.supernatural.helm.slot.add": "Put a feather here",
       "entity.supernatural.spooky": "Spook",
       "block.supernatural.grave_soil": "Grave Soil",
@@ -379,13 +210,71 @@
       "entity.supernatural.possessed_armor": "Possessed Armor",
       "advancements.vampire_slayer.descr": "Slay a Vampire with a Wooden Sword",
       "enchantment.supernatural.leeching": "Leeching",
+      "trim_pattern.minecraft.necro": "Necromancer Armor Trim",
       "desc.supernatural.helm.slot.base": "Put a helmet here",
       "item.supernatural.animal_blood": "Animal Blood",
-      "effect.supernatural.bleeding": "Bleeding",
       "subtitles.armor_death": "*clunk*",
+      "effect.supernatural.bleeding": "Bleeding",
       "item.supernatural.mer_amethyst_spawn_egg": "Merfolk Spawn Egg",
       "enchantment.supernatural.leeching.desc": "Applies the bleed effect to the target and gives blood to the user",
       "item.supernatural.possessed_armor_spawn_egg": "Possessed Armor Spawn Egg"
+    },
+    "uk_ua": {
+      "item.supernatural.necro_template": "Ковальський шаблон",
+      "subtitles.merwater_idle": "*шипіння*",
+      "entity.supernatural.necromancer": "Некромант",
+      "entity.supernatural.mer_diamond": "Мерфолк-капітан",
+      "subtitles.merland_hurt": "*потребує води*",
+      "desc.supernatural.helm": "Готичне покращення",
+      "subtitles.vampire_idle": "*зле селянське хмикання*",
+      "desc.supernatural.helm.apply": "Шолом",
+      "item.supernatural.gothic_template": "Ковальський шаблон",
+      "advancements.become_vampire.title": "Привіт",
+      "item.supernatural.angel_statue": "Статуя ангела",
+      "item.supernatural.spooky_spawn_egg": "Яйце виклику страшика",
+      "item.supernatural.gothic_netherite_helmet": "Готичний незеритовий шолом",
+      "item.supernatural.gothic_golden_helmet": "Готичний золотий шолом",
+      "effect.supernatural.possession": "Одержимість",
+      "desc.supernatural.helm.slot.add": "Розмістіть перо",
+      "entity.supernatural.spooky": "Страшик",
+      "block.supernatural.grave_soil": "Могильний ґрунт",
+      "subtitles.merland_death": "Бла!!!",
+      "subtitles.merwater_death": "*бла*",
+      "subtitles.vampire_death": "*смерть*",
+      "item.supernatural.player_blood": "Кров гравця",
+      "advancements.become_vampire.descr": "Стати вампіром",
+      "item.supernatural.gothic_iron_helmet": "Готичний залізний шолом",
+      "subtitles.spook_poof": "*пуф*",
+      "item.supernatural.vampire_dust": "Вампірський пил",
+      "effect.supernatural.vampirism": "Вампіризм",
+      "entity.supernatural.mer_emerald": "Мерфолк морський вовк",
+      "subtitles.merland_idle": "*шипіння*",
+      "subtitles.merwater_hurt": "*ай*",
+      "subtitles.vampire_celebrate": "Чому я взагалі тут?",
+      "entity.supernatural.vampire": "Вампір",
+      "entity.supernatural.angel": "Ангел",
+      "subtitles.armor_hurt": "*дзенькіт*",
+      "item.supernatural.ectoplasm": "Ектоплазма",
+      "item.supernatural.vampire_spawn_egg": "Яйце виклику вампіра",
+      "subtitles.vampire_hurt": "*звичайний вампірячий бла*",
+      "entity.supernatural.mer_amethyst": "Мерфолк",
+      "item.supernatural.villager_blood": "Кров селянина",
+      "advancements.vampire_slayer.title": "Убивця вампірів",
+      "desc.supernatural.helm.ingredients": "Пера",
+      "item.supernatural.necromancer_spawn_egg": "Яйце виклику некроманта",
+      "itemGroup.supernatural": "Supernatural",
+      "item.supernatural.gothic_diamond_helmet": "Готичний діамантовий шолом",
+      "entity.supernatural.possessed_armor": "Одержимі обладунки",
+      "advancements.vampire_slayer.descr": "Убийте вампіра дерев\u0027яним мечем",
+      "enchantment.supernatural.leeching": "П\u0027явки",
+      "trim_pattern.minecraft.necro": "Орнамент обладунків «Некромант»",
+      "desc.supernatural.helm.slot.base": "Розмістіть шолом",
+      "item.supernatural.animal_blood": "Кров тварини",
+      "subtitles.armor_death": "*брязкіт*",
+      "effect.supernatural.bleeding": "Кровотеча",
+      "item.supernatural.mer_amethyst_spawn_egg": "Яйце викилку мерфолка",
+      "enchantment.supernatural.leeching.desc": "Застосовує ефект кровотечі на цілі та дає кров власнику",
+      "item.supernatural.possessed_armor_spawn_egg": "Яйце виклику одержимих обладунків"
     },
     "zh_cn": {
       "item.supernatural.necro_template": "锻造模板",
@@ -393,17 +282,16 @@
       "entity.supernatural.necromancer": "死灵法师",
       "entity.supernatural.mer_diamond": "三叉戟人鱼队长",
       "subtitles.merland_hurt": "人鱼：干渴",
-      "desc.supernatural.helm": "哥特",
       "subtitles.vampire_idle": "吸血鬼：生气地嘟囔",
+      "desc.supernatural.helm": "哥特",
       "desc.supernatural.helm.apply": "头盔",
       "item.supernatural.gothic_template": "锻造模板",
       "advancements.become_vampire.title": "你好，黑暗，我的老朋友",
       "item.supernatural.angel_statue": "天使雕像",
       "item.supernatural.spooky_spawn_egg": "惊魂刷怪蛋",
       "item.supernatural.gothic_netherite_helmet": "哥特式下界合金头盔",
-      "effect.supernatural.possession": "附灵",
       "item.supernatural.gothic_golden_helmet": "哥特式金头盔",
-      "trim_pattern.supernatural.necro": "死灵盔甲纹饰",
+      "effect.supernatural.possession": "附灵",
       "desc.supernatural.helm.slot.add": "在这里放一根羽毛",
       "entity.supernatural.spooky": "惊魂",
       "block.supernatural.grave_soil": "墓土",
@@ -436,13 +324,71 @@
       "entity.supernatural.possessed_armor": "附灵盔甲",
       "advancements.vampire_slayer.descr": "使用木剑刺穿一只吸血鬼的心脏",
       "enchantment.supernatural.leeching": "水蛭之力",
+      "trim_pattern.minecraft.necro": "死灵盔甲纹饰",
       "desc.supernatural.helm.slot.base": "把头盔放在这里",
       "item.supernatural.animal_blood": "动物血瓶",
-      "effect.supernatural.bleeding": "流血",
       "subtitles.armor_death": "附灵盔甲：死亡",
+      "effect.supernatural.bleeding": "流血",
       "item.supernatural.mer_amethyst_spawn_egg": "三叉戟人鱼刷怪蛋",
       "enchantment.supernatural.leeching.desc": "允许对敌施加流血效果并获取其血液",
       "item.supernatural.possessed_armor_spawn_egg": "附灵盔甲刷怪蛋"
+    },
+    "fr_fr": {
+      "item.supernatural.necro_template": "Modèle de Forge",
+      "subtitles.merwater_idle": "*Siffle*",
+      "entity.supernatural.necromancer": "Nécromancien",
+      "entity.supernatural.mer_diamond": "Capitaine Merfolk",
+      "subtitles.merland_hurt": "*Besoin d\u0027eau*",
+      "desc.supernatural.helm": "Amélioration Gothique",
+      "subtitles.vampire_idle": "*Cri de villageois en colère*",
+      "desc.supernatural.helm.apply": "Casque",
+      "item.supernatural.gothic_template": "Modèle de Forge",
+      "advancements.become_vampire.title": "Hello Darkness",
+      "item.supernatural.angel_statue": "Statue d\u0027Ange",
+      "item.supernatural.spooky_spawn_egg": "Oeuf d\u0027Apparition de Fantôme",
+      "item.supernatural.gothic_netherite_helmet": "Casque Gothique en Netherite",
+      "item.supernatural.gothic_golden_helmet": "Casque Gothique en Or",
+      "effect.supernatural.possession": "Possession",
+      "desc.supernatural.helm.slot.add": "Mettez une plume ici",
+      "entity.supernatural.spooky": "Fantôme",
+      "block.supernatural.grave_soil": "Terre de Tombe",
+      "subtitles.merland_death": "Bleh!!!",
+      "subtitles.merwater_death": "*bleh*",
+      "subtitles.vampire_death": "*ded*",
+      "item.supernatural.player_blood": "Sang de Joueur",
+      "advancements.become_vampire.descr": "Deviens un Vampire",
+      "item.supernatural.gothic_iron_helmet": "Caque Gothique en Fer",
+      "subtitles.spook_poof": "*poof*",
+      "item.supernatural.vampire_dust": "Poussière de Vampire",
+      "effect.supernatural.vampirism": "Vampirisation",
+      "entity.supernatural.mer_emerald": "Phoque de Merfolk",
+      "subtitles.merland_idle": "*hisses*",
+      "subtitles.merwater_hurt": "*ow*",
+      "subtitles.vampire_celebrate": "Pourquoi suis-je ici ?",
+      "entity.supernatural.vampire": "Vampire",
+      "entity.supernatural.angel": "Ange",
+      "subtitles.armor_hurt": "*Choc*",
+      "item.supernatural.ectoplasm": "Ectoplasme",
+      "item.supernatural.vampire_spawn_egg": "Oeuf d\u0027Apparition de Vampire",
+      "subtitles.vampire_hurt": "*Cri de Vampire*",
+      "entity.supernatural.mer_amethyst": "Merfolk",
+      "item.supernatural.villager_blood": "Sang de Villageois",
+      "advancements.vampire_slayer.title": "Tueur de Vampire",
+      "desc.supernatural.helm.ingredients": "Plumes",
+      "item.supernatural.necromancer_spawn_egg": "Oeuf d\u0027Apparition de Nécromancien",
+      "itemGroup.supernatural": "Supernatural",
+      "item.supernatural.gothic_diamond_helmet": "Casque Gothique en Diamant",
+      "entity.supernatural.possessed_armor": "Armure Possédé",
+      "advancements.vampire_slayer.descr": "Tuer un Vampire avec une Épée en Bois",
+      "enchantment.supernatural.leeching": "Soif de Sang",
+      "trim_pattern.minecraft.necro": "Armure de Nécromancien",
+      "desc.supernatural.helm.slot.base": "Mettez un casque ici",
+      "item.supernatural.animal_blood": "Sang d\u0027Animaux",
+      "subtitles.armor_death": "*Claquement*",
+      "effect.supernatural.bleeding": "Saignement",
+      "item.supernatural.mer_amethyst_spawn_egg": "Oeuf d\u0027Apparition de Merfolk",
+      "enchantment.supernatural.leeching.desc": "Applique un Saignement à la cible et rend du sang au joueur",
+      "item.supernatural.possessed_armor_spawn_egg": "Oeuf d\u0027Apparition d\u0027Armure Possédé"
     }
   },
   "foldersRoot": {
@@ -452,13 +398,14 @@
   "workspaceSettings": {
     "modid": "supernatural",
     "modName": "Supernatural",
-    "version": "2.8.0",
+    "version": "2.8.5",
     "description": "Adds Supernatural mobs like vampires and spirits.",
     "author": "Jusey1",
     "websiteURL": "https://discord.gg/s7QaYGUzZU",
     "license": "MIT License",
     "disableForgeVersionCheck": true,
     "serverSideOnly": false,
+    "modPicture": "supernaturalicon",
     "requiredMods": [],
     "dependencies": [],
     "dependants": [],

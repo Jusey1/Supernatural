@@ -1,0 +1,9 @@
+{
+  "_fv": 43,
+  "_type": "command",
+  "definition": {
+    "commandName": "vampirism",
+    "permissionLevel": "4",
+    "argsxml": "<xml xmlns=\"https://developers.google.com/blockly/xml\"><block type=\"args_start\" deletable=\"false\" x=\"40\" y=\"40\"><next><block type=\"literal\"><field name=\"name\">give</field><statement name=\"args\"><block type=\"entity\"><field name=\"name\">give</field><field name=\"type\">players</field><statement name=\"args\"><block type=\"call_procedure\"><field name=\"procedure\">SupernaturalHelpers</field></block></statement></block></statement><next><block type=\"literal\"><field name=\"name\">cure</field><statement name=\"args\"><block type=\"entity\"><field name=\"name\">cure</field><field name=\"type\">players</field><statement name=\"args\"><block type=\"call_procedure\"><field name=\"procedure\">SupernaturalHelpers</field></block></statement></block></statement></block></next></block></next></block></xml>"
+  }
+}
