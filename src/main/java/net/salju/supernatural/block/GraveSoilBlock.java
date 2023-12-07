@@ -23,7 +23,7 @@ public class GraveSoilBlock extends Block {
 	public void tick(BlockState block, ServerLevel lvl, BlockPos pos, RandomSource random) {
 		super.tick(block, lvl, pos, random);
 		BlockPos poz = BlockPos.containing(pos.getX() + 0.5, pos.getY() + 2, pos.getZ() + 0.5);
-		if (lvl.getBrightness(LightLayer.BLOCK, pos) < 6 && (lvl.getBrightness(LightLayer.SKY, pos) < 6 || !lvl.isDay()) && !(lvl.getDifficulty() == Difficulty.PEACEFUL)) {
+		if ((lvl.getBrightness(LightLayer.SKY, pos) < 3 || !lvl.isDay()) && lvl.getBrightness(LightLayer.BLOCK, pos) < 3  && !(lvl.getDifficulty() == Difficulty.PEACEFUL)) {
 			if (Math.random() <= 0.05 && Math.random() <= 0.15) {
 				if (Math.random() <= 0.45 || !SupernaturalConfig.VEX.get()) {
 					SupernaturalMobs.SPOOKY.get().spawn(lvl, poz, MobSpawnType.MOB_SUMMONED);
