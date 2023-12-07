@@ -1,0 +1,13 @@
+{
+  "parent": "block/cube",
+  "textures": {
+    "down": "supernatural:block/grave_soil",
+    "up": "supernatural:block/grave_soil",
+    "north": "supernatural:block/grave_soil",
+    "east": "supernatural:block/grave_soil",
+    "south": "supernatural:block/grave_soil",
+    "west": "supernatural:block/grave_soil",
+    "particle": "supernatural:block/grave_soil"
+  },
+  "render_type": "solid"
+}
