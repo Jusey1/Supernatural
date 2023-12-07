@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:smithing_transform",
+  "addition": {
+    "item": "minecraft:feather"
+  },
+  "base": {
+    "item": "minecraft:netherite_helmet"
+  },
+  "result": {
+    "item": "supernatural:gothic_netherite_helmet"
+  },
+  "template": {
+    "item": "supernatural:gothic_template"
+  }
+}
