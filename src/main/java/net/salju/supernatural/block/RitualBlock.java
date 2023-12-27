@@ -6,7 +6,7 @@ import net.salju.supernatural.init.SupernaturalItems;
 import net.salju.supernatural.init.SupernaturalEnchantments;
 import net.salju.supernatural.init.SupernaturalConfig;
 import net.salju.supernatural.init.SupernaturalBlockEntities;
-import net.salju.supernatural.events.SupernaturalHelpers;
+import net.salju.supernatural.events.SupernaturalManager;
 
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraft.world.phys.shapes.Shapes;
@@ -59,9 +59,9 @@ public class RitualBlock extends BaseEntityBlock {
 			} else if (!target.isEmpty()) {
 				if (world instanceof ServerLevel lvl) {
 					if (stack.is(SupernaturalItems.SOULGEM.get()) && target.getItem(0).isEnchantable() && (player.experienceLevel >= 30 || player.isCreative())) {
-						int i = SupernaturalHelpers.getSoulLevel(SupernaturalHelpers.getSoulgem(stack));
+						int i = SupernaturalManager.getSoulLevel(SupernaturalManager.getSoulgem(stack));
 						target.setItem(0, EnchantmentHelper.enchantItem(lvl.getRandom(), target.getItem(0), (i * SupernaturalConfig.SOULPOWER.get()), true));
-						if (SupernaturalHelpers.isVampire(player)) {
+						if (SupernaturalManager.isVampire(player)) {
 							int e = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.FIRE_ASPECT, target.getItem(0));
 							if (e > 0) {
 								Map<Enchantment, Integer> enchs = EnchantmentHelper.getEnchantments(target.getItem(0));
@@ -75,9 +75,9 @@ public class RitualBlock extends BaseEntityBlock {
 							player.giveExperienceLevels(-i);
 							stack.shrink(1);
 						}
-					} else if (stack.getItem() instanceof ContractItem item && SupernaturalHelpers.getUUID(stack) != null && target.getItem(0).is(item.getRitualItem())) {
-						Contracts.doContract(item.getContractType(), stack, lvl, lvl.getPlayerByUUID(SupernaturalHelpers.getUUID(stack)), player, pos);
-					} else if (SupernaturalHelpers.isVampire(player)) {
+					} else if (stack.getItem() instanceof ContractItem item && SupernaturalManager.getUUID(stack) != null && target.getItem(0).is(item.getRitualItem())) {
+						Contracts.doContract(item.getContractType(), stack, lvl, lvl.getPlayerByUUID(SupernaturalManager.getUUID(stack)), player, pos);
+					} else if (SupernaturalManager.isVampire(player)) {
 						Rituals.doRitual(stack, lvl, player, pos);
 					} else {
 						target.dropItem(0);

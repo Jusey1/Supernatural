@@ -1,6 +1,6 @@
 package net.salju.supernatural.item;
 
-import net.salju.supernatural.events.SupernaturalHelpers;
+import net.salju.supernatural.events.SupernaturalManager;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.ItemStack;
@@ -17,9 +17,9 @@ public class SoulgemItem extends Item {
 	@Override
 	public void appendHoverText(ItemStack stack, Level world, List<Component> list, TooltipFlag flag) {
 		super.appendHoverText(stack, world, list, flag);
-		if (SupernaturalHelpers.getSoul(stack) != "") {
-			list.add(Component.translatable(SupernaturalHelpers.getSoul(stack)).withStyle(ChatFormatting.GOLD));
-			list.add(Component.translatable(SupernaturalHelpers.getSoulgem(stack)).withStyle(ChatFormatting.DARK_PURPLE));
+		if (SupernaturalManager.getSoul(stack) != "") {
+			list.add(Component.translatable(SupernaturalManager.getSoul(stack)).withStyle(ChatFormatting.GOLD));
+			list.add(Component.translatable(SupernaturalManager.getSoulgem(stack)).withStyle(ChatFormatting.DARK_PURPLE));
 		}
 	}
 }

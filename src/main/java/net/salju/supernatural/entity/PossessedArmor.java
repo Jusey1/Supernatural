@@ -3,7 +3,7 @@
 import net.salju.supernatural.init.SupernaturalModSounds;
 import net.salju.supernatural.init.SupernaturalItems;
 import net.salju.supernatural.init.SupernaturalEffects;
-import net.salju.supernatural.events.SupernaturalHelpers;
+import net.salju.supernatural.events.SupernaturalManager;
 
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.Level;
@@ -154,7 +154,7 @@ public class PossessedArmor extends AbstractGolem {
 	@Override
 	public void baseTick() {
 		super.baseTick();
-		if (!this.hasEffect(SupernaturalEffects.POSSESSION.get()) || !SupernaturalHelpers.hasArmor(this)) {
+		if (!this.hasEffect(SupernaturalEffects.POSSESSION.get()) || !SupernaturalManager.hasArmor(this)) {
 			this.kill();
 		}
 		if (this.isAlive() && this.isTamed() && this.getEffect(SupernaturalEffects.POSSESSION.get()).getDuration() <= 10) {
@@ -208,4 +208,4 @@ public class PossessedArmor extends AbstractGolem {
 			return (target instanceof Player);
 		}
 	}
-}
+}

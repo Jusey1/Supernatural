@@ -1,8 +1,8 @@
 package net.salju.supernatural.entity;
 
 import net.salju.supernatural.init.SupernaturalItems;
-import net.salju.supernatural.init.SupernaturalEffects;
 import net.salju.supernatural.init.SupernaturalConfig;
+import net.salju.supernatural.events.SupernaturalManager;
 
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.level.block.state.BlockState;
@@ -39,8 +39,8 @@ import net.minecraft.core.BlockPos;
 import java.util.List;
 
 public class Angel extends Mob {
-	private static final EntityDataAccessor<Integer> POSE = SynchedEntityData.defineId(Angel.class, EntityDataSerializers.INT);
-	private static final EntityDataAccessor<Boolean> CURSED = SynchedEntityData.defineId(Angel.class, EntityDataSerializers.BOOLEAN);
+	public static final EntityDataAccessor<Integer> POSE = SynchedEntityData.defineId(Angel.class, EntityDataSerializers.INT);
+	public static final EntityDataAccessor<Boolean> CURSED = SynchedEntityData.defineId(Angel.class, EntityDataSerializers.BOOLEAN);
 
 	public Angel(EntityType<Angel> type, Level world) {
 		super(type, world);
@@ -113,7 +113,7 @@ public class Angel extends Mob {
 		if (this.level() instanceof ServerLevel lvl && this.isAlive() && this.isEffectiveAi()) {
 			if (this.isCursed()) {
 				Player player = lvl.getNearestPlayer(this, 32);
-				if (player != null && !player.isCreative() && !player.isSpectator()) {
+				if (player != null && !player.isCreative() && !player.isSpectator() && !SupernaturalManager.isVampire(player)) {
 					if (player.isCloseEnough(this, 1)) {
 						if (player.isAlive()) {
 							this.getEntityData().set(POSE, 0);
@@ -126,10 +126,12 @@ public class Angel extends Mob {
 						int i = 0;
 						List<ServerPlayer> list = lvl.getPlayers(LivingEntity::isAlive);
 						for (ServerPlayer ply : list) {
-							if (this.isLookingAtMe(ply)) {
-								++i;
-							} else {
-								--i;
+							if (!SupernaturalManager.isVampire(ply)) {
+								if (this.isLookingAtMe(ply)) {
+									++i;
+								} else {
+									--i;
+								}
 							}
 							if (i <= 0) {
 								this.getNavigation().moveTo(player, 1.2);
@@ -139,8 +141,6 @@ public class Angel extends Mob {
 						}
 					}
 				}
-			} else if (this.hasEffect(SupernaturalEffects.VAMPIRISM.get())) {
-				this.getEntityData().set(CURSED, true);
 			} else if (SupernaturalConfig.FURIA.get()) {
 				for (Mob target : this.level().getEntitiesOfClass(Mob.class, this.getBoundingBox().inflate(12.0))) {
 					if (target instanceof Vex ghost) {

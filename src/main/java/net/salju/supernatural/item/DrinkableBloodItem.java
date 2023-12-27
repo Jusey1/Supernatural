@@ -1,6 +1,6 @@
 package net.salju.supernatural.item;
 
-import net.salju.supernatural.events.SupernaturalHelpers;
+import net.salju.supernatural.events.SupernaturalManager;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.item.UseAnim;
 import net.minecraft.world.item.Items;
@@ -51,7 +51,7 @@ public class DrinkableBloodItem extends Item {
 	@Override
 	public InteractionResultHolder<ItemStack> use(Level world, Player player, InteractionHand hand) {
 		ItemStack stack = player.getItemInHand(hand);
-		if (SupernaturalHelpers.isVampire(player) && player.canEat(stack.getFoodProperties(player).canAlwaysEat())) {
+		if (SupernaturalManager.isVampire(player) && player.canEat(stack.getFoodProperties(player).canAlwaysEat())) {
 			player.startUsingItem(hand);
 			return InteractionResultHolder.consume(stack);
 		}

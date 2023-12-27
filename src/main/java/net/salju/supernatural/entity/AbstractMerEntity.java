@@ -1,5 +1,6 @@
 package net.salju.supernatural.entity;
 
+import net.salju.supernatural.init.SupernaturalTags;
 import net.salju.supernatural.init.SupernaturalModSounds;
 
 import net.minecraft.world.phys.Vec3;
@@ -16,7 +17,7 @@ import net.minecraft.world.entity.projectile.ThrownTrident;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.monster.RangedAttackMob;
 import net.minecraft.world.entity.monster.Monster;
-import net.minecraft.world.entity.monster.Drowned;
+import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.ai.navigation.WaterBoundPathNavigation;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
@@ -33,23 +34,27 @@ import net.minecraft.world.entity.MoverType;
 import net.minecraft.world.entity.MobType;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.GlowSquid;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.util.Mth;
-import net.minecraft.tags.FluidTags;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.core.BlockPos;
 
 import javax.annotation.Nullable;
 import java.util.function.Predicate;
+import java.util.UUID;
 
 public class AbstractMerEntity extends Monster implements RangedAttackMob {
+	private ItemStack trident = new ItemStack(Items.TRIDENT);
+	private UUID thrownTrident;
+	private int cooldown;
+
 	public AbstractMerEntity(EntityType<? extends Monster> type, Level world) {
 		super(type, world);
 		this.xpReward = 5;
@@ -70,6 +75,33 @@ public class AbstractMerEntity extends Monster implements RangedAttackMob {
 	}
 
 	@Override
+	public void addAdditionalSaveData(CompoundTag tag) {
+		super.addAdditionalSaveData(tag);
+		tag.put("Trident", this.trident.save(new CompoundTag()));
+		if (this.thrownTrident != null) {
+			tag.putUUID("TridentUUID", this.thrownTrident);
+		}
+		tag.putInt("CD", this.cooldown);
+	}
+
+	@Override
+	public void readAdditionalSaveData(CompoundTag tag) {
+		super.readAdditionalSaveData(tag);
+		if (tag.contains("Trident")) {
+			ItemStack stack = ItemStack.of(tag.getCompound("Trident"));
+			this.trident = stack;
+		}
+		if (tag.contains("TridentUUID")) {
+			UUID saved = tag.getUUID("TridentUUID");
+			this.thrownTrident = saved;
+		}
+		if (tag.contains("CD")) {
+			int saved = tag.getInt("CD");
+			this.cooldown = saved;
+		}
+	}
+
+	@Override
 	public double getMyRidingOffset() {
 		return this.isBaby() ? 0.0D : -0.15D;
 	}
@@ -82,14 +114,17 @@ public class AbstractMerEntity extends Monster implements RangedAttackMob {
 	@Override
 	public void performRangedAttack(LivingEntity target, float tri) {
 		if (this.getMainHandItem().getItem() instanceof TridentItem) {
-			ThrownTrident throwntrident = new ThrownTrident(this.level(), this, new ItemStack(Items.TRIDENT));
+			ThrownTrident proj = new ThrownTrident(this.level(), this, new ItemStack(Items.TRIDENT));
 			double d0 = target.getX() - this.getX();
-			double d1 = target.getY(0.3333333333333333D) - throwntrident.getY();
+			double d1 = target.getY(0.3333333333333333D) - proj.getY();
 			double d2 = target.getZ() - this.getZ();
 			double d3 = Math.sqrt(d0 * d0 + d2 * d2);
-			throwntrident.shoot(d0, d1 + d3 * (double) 0.2F, d2, 1.6F, (float) (14 - this.level().getDifficulty().getId() * 4));
+			proj.shoot(d0, d1 + d3 * (double) 0.2F, d2, 1.6F, (float) (14 - this.level().getDifficulty().getId() * 4));
 			this.playSound(SoundEvents.DROWNED_SHOOT, 1.0F, 1.0F / (this.getRandom().nextFloat() * 0.4F + 0.8F));
-			this.level().addFreshEntity(throwntrident);
+			this.level().addFreshEntity(proj);
+			this.setItemInHand(InteractionHand.MAIN_HAND, ItemStack.EMPTY);
+			this.thrownTrident = proj.getUUID();
+			this.setCD(1200);
 		}
 	}
 
@@ -107,6 +142,12 @@ public class AbstractMerEntity extends Monster implements RangedAttackMob {
 	public void baseTick() {
 		super.baseTick();
 		this.handleAirSupply(this.getAirSupply());
+		if (!this.level().isClientSide() && this.isAlive() && this.isEffectiveAi()) {
+			this.checkTrident();
+			if (this.cooldown > 0) {
+				--this.cooldown;
+			}
+		}
 	}
 
 	@Override
@@ -149,6 +190,29 @@ public class AbstractMerEntity extends Monster implements RangedAttackMob {
 		}
 	}
 
+	protected void checkTrident() {
+		if (this.thrownTrident != null && this.level() instanceof ServerLevel lvl && this.cooldown <= 1180) {
+			if (lvl.getEntity(this.thrownTrident) instanceof ThrownTrident proj && proj.getOwner().is(this)) {
+				if (this.distanceTo(proj) < 2.0D || this.cooldown == 1) {
+					this.giveTrident(proj);
+				} else if (this.distanceTo(proj) < 32.0D && this.getTarget() == null) {
+					this.getNavigation().moveTo(proj, 1.0F);
+				}
+			} else if (lvl.getEntity(this.thrownTrident) == null && this.cooldown <= 1) {
+				this.giveTrident(null);
+			}
+		}
+	}
+
+	protected void giveTrident(@Nullable ThrownTrident proj) {
+		this.setItemInHand(InteractionHand.MAIN_HAND, this.trident);
+		this.thrownTrident = null;
+		if (this.cooldown > 1 && proj != null) {
+			this.setCD(0);
+			proj.discard();
+		}
+	}
+
 	protected boolean closeToNextPos() {
 		Path path = this.getNavigation().getPath();
 		if (path != null) {
@@ -161,6 +225,14 @@ public class AbstractMerEntity extends Monster implements RangedAttackMob {
 			}
 		}
 		return false;
+	}
+
+	public void setCD(int i) {
+		this.cooldown = i;
+	}
+
+	public int getCD() {
+		return this.cooldown;
 	}
 
 	protected boolean canRandomSwim() {
@@ -219,10 +291,18 @@ public class AbstractMerEntity extends Monster implements RangedAttackMob {
 	}
 
 	@Override
-	public SpawnGroupData finalizeSpawn(ServerLevelAccessor world, DifficultyInstance souls, MobSpawnType reason, @Nullable SpawnGroupData data, @Nullable CompoundTag tag) {
-		if (!(this instanceof MerA)) {
-			this.setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(Items.TRIDENT));
+	public void die(DamageSource source) {
+		if (this.level() instanceof ServerLevel lvl && this.getMainHandItem().isEmpty() && Math.random() >= 0.95) {
+			ItemEntity item = new ItemEntity(lvl, this.getX(), this.getY(), this.getZ(), this.trident);
+			item.setPickUpDelay(10);
+			lvl.addFreshEntity(item);
 		}
+		super.die(source);
+	}
+
+	@Override
+	public SpawnGroupData finalizeSpawn(ServerLevelAccessor world, DifficultyInstance souls, MobSpawnType reason, @Nullable SpawnGroupData data, @Nullable CompoundTag tag) {
+		this.setItemInHand(InteractionHand.MAIN_HAND, this.trident);
 		return super.finalizeSpawn(world, souls, reason, data, tag);
 	}
 
@@ -235,9 +315,6 @@ public class AbstractMerEntity extends Monster implements RangedAttackMob {
 		}
 
 		public void tick() {
-			if (this.mer.isEyeInFluid(FluidTags.WATER)) {
-				this.mer.setDeltaMovement(this.mer.getDeltaMovement().add(0.0D, 0.0D, 0.0D));
-			}
 			if (this.operation == MoveControl.Operation.MOVE_TO && !this.mer.getNavigation().isDone()) {
 				float f = (float) (this.speedModifier * this.mer.getAttributeValue(Attributes.MOVEMENT_SPEED));
 				this.mer.setSpeed(Mth.lerp(0.125F, this.mer.getSpeed(), f));
@@ -314,7 +391,7 @@ public class AbstractMerEntity extends Monster implements RangedAttackMob {
 		}
 
 		public boolean test(@Nullable LivingEntity target) {
-			return (target instanceof Player || target instanceof Drowned || target instanceof GlowSquid);
+			return (target instanceof Player || target.getType().is(SupernaturalTags.MERRY));
 		}
 	}
 }

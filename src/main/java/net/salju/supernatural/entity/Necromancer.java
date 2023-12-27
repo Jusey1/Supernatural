@@ -174,15 +174,6 @@ public class Necromancer extends SpellcasterIllager {
 		return super.finalizeSpawn(world, difficulty, reason, livingdata, tag);
 	}
 
-	@Override
-	public boolean hurt(DamageSource source, float amount) {
-		for (Vex bobs : this.level().getEntitiesOfClass(Vex.class, this.getBoundingBox().inflate(16.0D))) {
-			bobs.hurt(source, (amount * 0.45F));
-			return super.hurt(source, (amount * 0.3F));
-		}
-		return super.hurt(source, (amount * 0.75F));
-	}
-
 	public static AttributeSupplier.Builder createAttributes() {
 		AttributeSupplier.Builder builder = Mob.createMobAttributes();
 		builder = builder.add(Attributes.MOVEMENT_SPEED, 0.35);

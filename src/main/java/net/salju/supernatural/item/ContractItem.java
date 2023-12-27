@@ -1,9 +1,8 @@
 package net.salju.supernatural.item;
 
 import net.salju.supernatural.init.SupernaturalConfig;
-import net.salju.supernatural.events.SupernaturalHelpers;
-
-import net.minecraft.world.level.Level;
+import net.salju.supernatural.events.SupernaturalManager;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Item;
@@ -14,8 +13,7 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.ChatFormatting;
-
-import java.util.UUID;
+import java.util.UUID;
 import java.util.List;
 import java.lang.reflect.Type;
 
@@ -34,7 +32,7 @@ public class ContractItem extends Item {
 	@Override
 	public void appendHoverText(ItemStack stack, Level world, List<Component> list, TooltipFlag flag) {
 		super.appendHoverText(stack, world, list, flag);
-		UUID target = SupernaturalHelpers.getUUID(stack);
+		UUID target = SupernaturalManager.getUUID(stack);
 		list.add(Component.translatable(this.name).withStyle(ChatFormatting.DARK_PURPLE));
 		if (Screen.hasShiftDown()) {
 			list.add(Component.empty());
@@ -55,15 +53,15 @@ public class ContractItem extends Item {
 	@Override
 	public InteractionResultHolder<ItemStack> use(Level world, Player player, InteractionHand hand) {
 		ItemStack stack = player.getItemInHand(hand);
-		if (SupernaturalHelpers.getUUID(stack) == null) {
-			if (SupernaturalHelpers.getUUID(player.getOffhandItem()) != null) {
-				Player blood = world.getPlayerByUUID(SupernaturalHelpers.getUUID(player.getOffhandItem()));
-				SupernaturalHelpers.setUUID(stack, blood);
+		if (SupernaturalManager.getUUID(stack) == null) {
+			if (SupernaturalManager.getUUID(player.getOffhandItem()) != null) {
+				Player blood = world.getPlayerByUUID(SupernaturalManager.getUUID(player.getOffhandItem()));
+				SupernaturalManager.setUUID(stack, blood);
 				player.playSound(SoundEvents.INK_SAC_USE);
 				return InteractionResultHolder.consume(stack);
-			} else if (!SupernaturalHelpers.isVampire(player)) {
+			} else if (!SupernaturalManager.isVampire(player)) {
 				player.hurt(player.damageSources().generic(), 1.0F);
-				SupernaturalHelpers.setUUID(stack, player);
+				SupernaturalManager.setUUID(stack, player);
 				player.playSound(SoundEvents.INK_SAC_USE);
 				return InteractionResultHolder.consume(stack);
 			}

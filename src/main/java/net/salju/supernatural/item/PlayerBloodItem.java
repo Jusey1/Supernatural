@@ -1,6 +1,6 @@
 package net.salju.supernatural.item;
 
-import net.salju.supernatural.events.SupernaturalHelpers;
+import net.salju.supernatural.events.SupernaturalManager;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.Items;
@@ -8,8 +8,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Item;
 import net.minecraft.network.chat.Component;
 import net.minecraft.ChatFormatting;
-
-import java.util.UUID;
+import java.util.UUID;
 import java.util.List;
 
 public class PlayerBloodItem extends Item {
@@ -20,7 +19,7 @@ public class PlayerBloodItem extends Item {
 	@Override
 	public void appendHoverText(ItemStack stack, Level world, List<Component> list, TooltipFlag flag) {
 		super.appendHoverText(stack, world, list, flag);
-		UUID target = SupernaturalHelpers.getUUID(stack);
+		UUID target = SupernaturalManager.getUUID(stack);
 		if (target != null) {
 			list.add(Component.literal(world.getPlayerByUUID(target).getName().getString()).withStyle(ChatFormatting.DARK_RED));
 		}

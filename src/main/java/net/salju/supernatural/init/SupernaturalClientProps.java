@@ -1,14 +1,12 @@
 package net.salju.supernatural.init;
 
-import net.salju.supernatural.events.SupernaturalHelpers;
+import net.salju.supernatural.events.SupernaturalManager;
 import net.salju.supernatural.SupernaturalMod;
-
-import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
+import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.api.distmarker.Dist;
-
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.client.renderer.item.ClampedItemPropertyFunction;
 
@@ -20,6 +18,6 @@ public class SupernaturalClientProps {
 	}
 
 	private static final ClampedItemPropertyFunction SIGNED = (stack, world, target, i) -> {
-		return SupernaturalHelpers.getUUID(stack) != null ? 0.1F : 0.0F;
+		return SupernaturalManager.getUUID(stack) != null ? 0.1F : 0.0F;
 	};
 }

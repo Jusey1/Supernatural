@@ -5,7 +5,7 @@ import net.salju.supernatural.init.SupernaturalModSounds;
 import net.salju.supernatural.init.SupernaturalMobs;
 import net.salju.supernatural.init.SupernaturalEffects;
 import net.salju.supernatural.init.SupernaturalConfig;
-import net.salju.supernatural.events.SupernaturalHelpers;
+import net.salju.supernatural.events.SupernaturalManager;
 import net.minecraftforge.event.ForgeEventFactory;
 
 import net.minecraft.world.level.ServerLevelAccessor;
@@ -158,10 +158,10 @@ public class Spooky extends PathfinderMob {
 				double x = target.getX();
 				double y = target.getY();
 				double z = target.getZ();
-				if (SupernaturalHelpers.hasArmor(target)) {
+				if (SupernaturalManager.hasArmor(target)) {
 					this.playSound(SupernaturalModSounds.SPOOK_POOF.get(), 1.0F, 1.0F);
 					if (target.level() instanceof ServerLevel lvl) {
-						PossessedArmor armor = SupernaturalHelpers.convertArmor(target, SupernaturalMobs.POSSESSED_ARMOR.get(), true);
+						PossessedArmor armor = SupernaturalManager.convertArmor(target, SupernaturalMobs.POSSESSED_ARMOR.get(), true);
 						ForgeEventFactory.onLivingConvert(target, armor);
 						if (this.getOwner() != null) {
 							ItemStack sword = new ItemStack(Items.IRON_SWORD);
@@ -244,7 +244,7 @@ public class Spooky extends PathfinderMob {
 		public boolean test(@Nullable LivingEntity target) {
 			if (!target.hasEffect(SupernaturalEffects.POSSESSION.get()) && !target.hasEffect(MobEffects.GLOWING)) {
 				if (target instanceof ArmorStand) {
-					return (SupernaturalHelpers.hasArmor(target) && (SupernaturalConfig.ARMOR.get() == true));
+					return (SupernaturalManager.hasArmor(target) && (SupernaturalConfig.ARMOR.get() == true));
 				}
 				return (target.getType().is(SupernaturalTags.SPOOKY));
 			}

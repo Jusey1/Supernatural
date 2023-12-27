@@ -9,6 +9,7 @@ public class SupernaturalConfig {
 	public static final ForgeConfigSpec.DoubleValue WOOD;
 	public static final ForgeConfigSpec.IntValue DAMAGE;
 	public static final ForgeConfigSpec.IntValue SPEED;
+	public static final ForgeConfigSpec.IntValue IRON;
 	public static final ForgeConfigSpec.IntValue LEECH;
 	public static final ForgeConfigSpec.BooleanValue SUN;
 	public static final ForgeConfigSpec.BooleanValue RAIDERS;
@@ -28,10 +29,11 @@ public class SupernaturalConfig {
 	public static final ForgeConfigSpec.BooleanValue FURIA;
 	
 	static {
-		BUILDER.push("Vampirism");
+		BUILDER.push("Supernatural");
+		DAMAGE = BUILDER.comment("How much extra damage does a Supernatural do?").defineInRange("Supernatural Damage", 3, 0, Integer.MAX_VALUE);
+		SPEED = BUILDER.comment("How much extra speed does a Supernatural have in percentage?").defineInRange("Supernatural Speed", 15, 0, Integer.MAX_VALUE);
+		IRON = BUILDER.comment("How much extra damage does a Werewolf take from iron in percentage?").defineInRange("Werewolf Weakness", 50, 0, Integer.MAX_VALUE);
 		RAIDERS = BUILDER.comment("Should vampires spawn within raids at night?").define("Vampiric Raiders", true);
-		DAMAGE = BUILDER.comment("How much extra damage does a Vampire do?").defineInRange("Vampiric Damage", 3, 0, Integer.MAX_VALUE);
-		SPEED = BUILDER.comment("How much extra speed does a Vampire have in percentage?").defineInRange("Vampiric Speed", 15, 0, Integer.MAX_VALUE);
 		LEECH = BUILDER.comment("How strong is the heal effect for the Leeching Enchantment?").defineInRange("Vampiric Leech", 1, 0, Integer.MAX_VALUE);
 		SUN = BUILDER.comment("Should vampires be immune to sun damage?").define("Vampiric Sunlight", false);
 		WOOD = BUILDER.comment("How much health does a Vampire needs to be at in percentage to die instantly to a Wooden Sword?").defineInRange("Vampiric Weakness", 0.6, 0.0, 1.0);

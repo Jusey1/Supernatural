@@ -1,9 +1,8 @@
 package net.salju.supernatural.block;
 
 import net.salju.supernatural.init.SupernaturalItems;
-import net.salju.supernatural.init.SupernaturalEffects;
 import net.salju.supernatural.init.SupernaturalBlocks;
-import net.salju.supernatural.events.SupernaturalHelpers;
+import net.salju.supernatural.events.SupernaturalManager;
 import net.salju.supernatural.entity.Angel;
 import net.salju.supernatural.SupernaturalMod;
 
@@ -19,7 +18,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.npc.Villager;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.Mob;
-import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.util.Mth;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.sounds.SoundEvents;
@@ -38,7 +36,7 @@ public class Rituals {
 			BlockPos bot = BlockPos.containing((pos.getX() - 3), (pos.getY() - 1), (pos.getZ() - 3));
 			if (offer.is(SupernaturalItems.SOULGEM.get()) && lvl.getBrightness(LightLayer.BLOCK, pos) < 6 && (lvl.getBrightness(LightLayer.SKY, pos) < 6 || !lvl.isDay())) {
 				int i = getPower(lvl, pos);
-				int e = SupernaturalHelpers.getSoulLevel(SupernaturalHelpers.getSoulgem(offer));
+				int e = SupernaturalManager.getSoulLevel(SupernaturalManager.getSoulgem(offer));
 				if (i == 28 && e >= 5 && stack.is(Items.TOTEM_OF_UNDYING)) {
 					defaultResult(target, stack, lvl, player, pos);
 					List<Item> list = getContracts();
@@ -77,8 +75,8 @@ public class Rituals {
 							});
 						}
 					}
-					if (randy != null && !SupernaturalHelpers.isVampire(randy)) {
-						target.cloneItem(SupernaturalHelpers.setUUID(new ItemStack(SupernaturalItems.PLAYER_BLOOD.get()), randy));
+					if (randy != null && !SupernaturalManager.isVampire(randy)) {
+						target.cloneItem(SupernaturalManager.setUUID(new ItemStack(SupernaturalItems.PLAYER_BLOOD.get()), randy));
 					}
 				} else if (i == 4 && e >= 1 && stack.is(SupernaturalItems.VAMPIRE_DUST.get())) {
 					defaultResult(target, stack, lvl, player, pos);
@@ -90,10 +88,6 @@ public class Rituals {
 				} else {
 					target.dropItem(0);
 				}
-			} else if (stack.is(Items.TOTEM_OF_UNDYING) && offer.is(SupernaturalItems.PLAYER_BLOOD.get()) && SupernaturalHelpers.getUUID(offer) != null && lvl.getPlayerByUUID(SupernaturalHelpers.getUUID(offer)) == player) {
-				defaultResult(target, stack, lvl, player, pos);
-				SupernaturalHelpers.setVampire(player, false);
-				lvl.broadcastEntityEvent(player, (byte) 35);
 			} else {
 				target.dropItem(0);
 			}
@@ -109,7 +103,7 @@ public class Rituals {
 		}
 		for (Angel statue : lvl.getEntitiesOfClass(Angel.class, target.getRenderBoundingBox().inflate(64.85D))) {
 			if (Mth.nextInt(lvl.getRandom(), 0, 25) >= 24 && !statue.isCursed()) {
-				statue.addEffect(new MobEffectInstance(SupernaturalEffects.VAMPIRISM.get(), Integer.MAX_VALUE, 0, false, false));
+				statue.getEntityData().set(Angel.CURSED, true);
 			}
 		}
 	}
