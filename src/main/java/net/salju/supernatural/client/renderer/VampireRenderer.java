@@ -1,5 +1,6 @@
 package net.salju.supernatural.client.renderer;
 
+import net.salju.supernatural.init.SupernaturalConfig;
 import net.salju.supernatural.entity.Vampire;
 
 import net.minecraft.resources.ResourceLocation;
@@ -11,8 +12,7 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.model.IllagerModel;
-
-import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.PoseStack;
 
 public class VampireRenderer extends IllagerRenderer<Vampire> {
 	public VampireRenderer(EntityRendererProvider.Context context) {
@@ -24,10 +24,9 @@ public class VampireRenderer extends IllagerRenderer<Vampire> {
 			}
 		});
 		this.addLayer(new ItemInHandLayer<Vampire, IllagerModel<Vampire>>(this, context.getItemInHandRenderer()) {
-			public void render(PoseStack pose, MultiBufferSource buffer, int inty, Vampire vampy, float f1, float f2, float f3, float f4,
-					float f5, float f6) {
+			public void render(PoseStack pose, MultiBufferSource buffer, int i, Vampire vampy, float f1, float f2, float f3, float f4, float f5, float f6) {
 				if (vampy.isAggressive()) {
-					super.render(pose, buffer, inty, vampy, f1, f2, f3, f4, f5, f6);
+					super.render(pose, buffer, i, vampy, f1, f2, f3, f4, f5, f6);
 				}
 			}
 		});
@@ -35,10 +34,8 @@ public class VampireRenderer extends IllagerRenderer<Vampire> {
 
 	@Override
 	public ResourceLocation getTextureLocation(Vampire vampy) {
-		if ((vampy.getDisplayName().getString()).equals("Bob")) {
-			return new ResourceLocation("supernatural:textures/entities/vampire_bob.png");
-		} else if ((vampy.getDisplayName().getString()).equals("Johnny")) {
-			return new ResourceLocation("supernatural:textures/entities/vampire_johnny.png");
+		if (SupernaturalConfig.ORIGINAL.get()) {
+			return new ResourceLocation("supernatural:textures/entities/vampire_original.png");
 		} else {
 			return new ResourceLocation("supernatural:textures/entities/vampire_normal.png");
 		}

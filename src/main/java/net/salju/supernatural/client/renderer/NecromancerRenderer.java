@@ -1,5 +1,6 @@
 package net.salju.supernatural.client.renderer;
 
+import net.salju.supernatural.init.SupernaturalConfig;
 import net.salju.supernatural.entity.Necromancer;
 
 import net.minecraft.resources.ResourceLocation;
@@ -11,8 +12,7 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.model.IllagerModel;
-
-import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.PoseStack;
 
 public class NecromancerRenderer extends IllagerRenderer<Necromancer> {
 	public NecromancerRenderer(EntityRendererProvider.Context context) {
@@ -24,8 +24,7 @@ public class NecromancerRenderer extends IllagerRenderer<Necromancer> {
 			}
 		});
 		this.addLayer(new ItemInHandLayer<Necromancer, IllagerModel<Necromancer>>(this, context.getItemInHandRenderer()) {
-			public void render(PoseStack pose, MultiBufferSource buffer, int inty, Necromancer vampy, float f1, float f2, float f3, float f4,
-					float f5, float f6) {
+			public void render(PoseStack pose, MultiBufferSource buffer, int inty, Necromancer vampy, float f1, float f2, float f3, float f4, float f5, float f6) {
 				if (vampy.isAggressive()) {
 					super.render(pose, buffer, inty, vampy, f1, f2, f3, f4, f5, f6);
 				}
@@ -36,6 +35,10 @@ public class NecromancerRenderer extends IllagerRenderer<Necromancer> {
 
 	@Override
 	public ResourceLocation getTextureLocation(Necromancer vampy) {
-		return new ResourceLocation("supernatural:textures/entities/vampire_necromancer.png");
+		if (SupernaturalConfig.ORIGINAL.get()) {
+			return new ResourceLocation("supernatural:textures/entities/vampire_necromancer_original.png");
+		} else {
+			return new ResourceLocation("supernatural:textures/entities/vampire_necromancer.png");
+		}
 	}
 }

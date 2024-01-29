@@ -4,7 +4,6 @@ import net.salju.supernatural.init.SupernaturalItems;
 import net.salju.supernatural.init.SupernaturalBlocks;
 import net.salju.supernatural.events.SupernaturalManager;
 import net.salju.supernatural.entity.Angel;
-import net.salju.supernatural.SupernaturalMod;
 
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.level.block.state.BlockState;
@@ -24,62 +23,36 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.BlockPos;
-
-import java.util.List;
+import java.util.List;
 import com.google.common.collect.Lists;
 
 public class Rituals {
-	public static void doRitual(ItemStack stack, ServerLevel lvl, Player player, BlockPos pos) {
+	public static void doRitual(ItemStack stack, ItemStack offer, ServerLevel lvl, Player player, BlockPos pos) {
 		if (lvl.getBlockEntity(pos) instanceof RitualBlockEntity target) {
-			ItemStack offer = target.getItem(0);
 			BlockPos top = BlockPos.containing((pos.getX() + 3), (pos.getY() - 1), (pos.getZ() + 3));
 			BlockPos bot = BlockPos.containing((pos.getX() - 3), (pos.getY() - 1), (pos.getZ() - 3));
-			if (offer.is(SupernaturalItems.SOULGEM.get()) && lvl.getBrightness(LightLayer.BLOCK, pos) < 6 && (lvl.getBrightness(LightLayer.SKY, pos) < 6 || !lvl.isDay())) {
+			if (lvl.getBrightness(LightLayer.BLOCK, pos) < 6 && (lvl.getBrightness(LightLayer.SKY, pos) < 6 || !lvl.isDay())) {
 				int i = getPower(lvl, pos);
 				int e = SupernaturalManager.getSoulLevel(SupernaturalManager.getSoulgem(offer));
 				if (i == 28 && e >= 5 && stack.is(Items.TOTEM_OF_UNDYING)) {
-					defaultResult(target, stack, lvl, player, pos);
+					defaultResult(target, offer, lvl, player, pos);
 					List<Item> list = getContracts();
 					int r = Mth.nextInt(lvl.random, 0, (list.size() - 1));
 					target.setItem(0, new ItemStack(list.get(r)));
-				} else if (i == 12 && e >= 3 && stack.is(Items.TOTEM_OF_UNDYING)) {
-					defaultResult(target, stack, lvl, player, pos);
-					List<Mob> mobs = getSacrifice(lvl, target.getRenderBoundingBox().inflate(12.85D));
+				} else if (i == 20 && e >= 4 && stack.is(Items.GLASS_BOTTLE)) {
+					defaultResult(target, offer, lvl, player, pos);
 					Player randy = lvl.getRandomPlayer();
-					int a = 0;
-					int v = 0;
-					for (Mob bob : mobs) {
-						if (bob instanceof Animal) {
-							a = (a + (int) bob.getHealth());
-							bob.hurt(bob.damageSources().magic(), Float.MAX_VALUE);
-						} else if (bob instanceof Villager) {
-							v = (v + (int) bob.getHealth());
-							bob.hurt(bob.damageSources().magic(), Float.MAX_VALUE);
-						}
+					if (randy != null) {
+						target.setItem(0, SupernaturalManager.setUUID(new ItemStack(SupernaturalItems.PLAYER_BLOOD.get()), randy));
 					}
-					if (a > 0) {
-						a = (a / 10);
-						for (int r = 0; r < a; ++r) {
-							SupernaturalMod.queueServerWork((r * 10), () -> {
-								lvl.sendParticles(ParticleTypes.SOUL, (pos.getX() + 0.5), (pos.getY() + 0.5), (pos.getZ() + 0.5), 4, 0.35, 1, 0.35, 0);
-								target.cloneItem(new ItemStack(SupernaturalItems.ANIMAL_BLOOD.get()));
-							});
-						}
-					}
-					if (v > 0) {
-						v = (v / 10);
-						for (int r = 0; r < v; ++r) {
-							SupernaturalMod.queueServerWork((r * 10), () -> {
-								lvl.sendParticles(ParticleTypes.SOUL, (pos.getX() + 0.5), (pos.getY() + 0.5), (pos.getZ() + 0.5), 4, 0.35, 1, 0.35, 0);
-								target.cloneItem(new ItemStack(SupernaturalItems.VILLAGER_BLOOD.get()));
-							});
-						}
-					}
-					if (randy != null && !SupernaturalManager.isVampire(randy)) {
-						target.cloneItem(SupernaturalManager.setUUID(new ItemStack(SupernaturalItems.PLAYER_BLOOD.get()), randy));
-					}
+				} else if (i == 12 && e >= 3 && stack.is(Items.IRON_INGOT)) {
+					defaultResult(target, offer, lvl, player, pos);
+					target.setItem(0, new ItemStack(Items.GOLD_INGOT));
+				} else if (i == 12 && e >= 2 && stack.is(Items.COPPER_INGOT)) {
+					defaultResult(target, offer, lvl, player, pos);
+					target.setItem(0, new ItemStack(Items.IRON_INGOT));
 				} else if (i == 4 && e >= 1 && stack.is(SupernaturalItems.VAMPIRE_DUST.get())) {
-					defaultResult(target, stack, lvl, player, pos);
+					defaultResult(target, offer, lvl, player, pos);
 					for (BlockPos poz : BlockPos.betweenClosed(top, bot)) {
 						if (lvl.getBlockState(poz).is(Blocks.SOUL_SAND) || lvl.getBlockState(poz).is(Blocks.SOUL_SOIL)) {
 							lvl.setBlock(poz, SupernaturalBlocks.GRAVE_SOIL.get().defaultBlockState(), 3);

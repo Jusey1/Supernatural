@@ -41,7 +41,7 @@ public class Contracts {
 	public static void doContract(ContractItem.Type contract, ItemStack stack, ServerLevel lvl, Player player, Player user, BlockPos pos) {
 		if (lvl.getBlockEntity(pos) instanceof RitualBlockEntity target && !target.isEmpty() && player != null && lvl.getBrightness(LightLayer.BLOCK, pos) <= 6 && (lvl.getBrightness(LightLayer.SKY, pos) <= 6 || !lvl.isDay())) {
 			ItemStack offer = target.getItem(0).copy();
-			if (contract == ContractItem.Types.VAMPIRISM && SupernaturalConfig.VAMPIRISM.get() && !player.hasEffect(SupernaturalEffects.SUPERNATURAL.get()) && player.getHealth() == player.getMaxHealth()) {
+			if (contract == ContractItem.Types.VAMPIRISM && SupernaturalConfig.VAMPIRISM.get() && !player.hasEffect(SupernaturalEffects.SUPERNATURAL.get()) && !player.isHurt()) {
 				defaultResult(target, stack, lvl, player, user, pos);
 				target.setItem(0, SupernaturalManager.setUUID(new ItemStack(SupernaturalItems.PLAYER_BLOOD.get()), player));
 				player.hurt(player.damageSources().magic(), 0.25F);

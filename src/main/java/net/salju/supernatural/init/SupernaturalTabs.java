@@ -26,14 +26,12 @@ public class SupernaturalTabs {
 				tabData.accept(SupernaturalBlocks.GRAVE_SOIL.get().asItem());
 				tabData.accept(SupernaturalItems.GOTHIC_TEMPLATE.get());
 				tabData.accept(SupernaturalItems.NECRO_TEMPLATE.get());
-				tabData.accept(SupernaturalItems.ANIMAL_BLOOD.get());
-				tabData.accept(SupernaturalItems.VILLAGER_BLOOD.get());
-				tabData.accept(SupernaturalItems.PLAYER_BLOOD.get());
 				tabData.accept(SupernaturalItems.ECTOPLASM.get());
 				tabData.accept(SupernaturalItems.VAMPIRE_DUST.get());
 				tabData.accept(SupernaturalItems.ANGEL_STATUE.get());
 				tabData.accept(SupernaturalBlocks.RITUAL_ALTAR.get().asItem());
 				tabData.accept(SupernaturalItems.SOULGEM.get());
+				tabData.accept(SupernaturalItems.PLAYER_BLOOD.get());
 				tabData.accept(SupernaturalItems.VAMPIRISM_CONTRACT.get());
 				tabData.accept(SupernaturalItems.VEXATION_CONTRACT.get());
 				tabData.accept(SupernaturalItems.PUMPKIN_CONTRACT.get());

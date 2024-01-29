@@ -55,8 +55,7 @@ public class ContractItem extends Item {
 		ItemStack stack = player.getItemInHand(hand);
 		if (SupernaturalManager.getUUID(stack) == null) {
 			if (SupernaturalManager.getUUID(player.getOffhandItem()) != null) {
-				Player blood = world.getPlayerByUUID(SupernaturalManager.getUUID(player.getOffhandItem()));
-				SupernaturalManager.setUUID(stack, blood);
+				SupernaturalManager.setUUID(stack, world.getPlayerByUUID(SupernaturalManager.getUUID(player.getOffhandItem())));
 				player.playSound(SoundEvents.INK_SAC_USE);
 				return InteractionResultHolder.consume(stack);
 			} else if (!SupernaturalManager.isVampire(player)) {

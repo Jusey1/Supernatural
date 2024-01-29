@@ -33,8 +33,7 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.core.BlockPos;
-
-import javax.annotation.Nullable;
+import javax.annotation.Nullable;
 import java.util.Map;
 
 public class RitualBlock extends BaseEntityBlock {
@@ -58,27 +57,29 @@ public class RitualBlock extends BaseEntityBlock {
 				return InteractionResult.SUCCESS;
 			} else if (!target.isEmpty()) {
 				if (world instanceof ServerLevel lvl) {
-					if (stack.is(SupernaturalItems.SOULGEM.get()) && target.getItem(0).isEnchantable() && (player.experienceLevel >= 30 || player.isCreative())) {
-						int i = SupernaturalManager.getSoulLevel(SupernaturalManager.getSoulgem(stack));
-						target.setItem(0, EnchantmentHelper.enchantItem(lvl.getRandom(), target.getItem(0), (i * SupernaturalConfig.SOULPOWER.get()), true));
-						if (SupernaturalManager.isVampire(player)) {
-							int e = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.FIRE_ASPECT, target.getItem(0));
-							if (e > 0) {
-								Map<Enchantment, Integer> enchs = EnchantmentHelper.getEnchantments(target.getItem(0));
-								enchs.put(SupernaturalEnchantments.LEECHING.get(), e);
-								enchs.remove(Enchantments.FIRE_ASPECT);
-								EnchantmentHelper.setEnchantments(enchs, target.getItem(0));
+					if (stack.is(SupernaturalItems.SOULGEM.get())) {
+						if (target.getItem(0).isEnchantable() && (player.experienceLevel >= 30 || player.isCreative())) {
+							int i = SupernaturalManager.getSoulLevel(SupernaturalManager.getSoulgem(stack));
+							target.setItem(0, EnchantmentHelper.enchantItem(lvl.getRandom(), target.getItem(0), (i * SupernaturalConfig.SOULPOWER.get()), true));
+							if (SupernaturalManager.isVampire(player)) {
+								int e = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.FIRE_ASPECT, target.getItem(0));
+								if (e > 0) {
+									Map<Enchantment, Integer> enchs = EnchantmentHelper.getEnchantments(target.getItem(0));
+									enchs.put(SupernaturalEnchantments.LEECHING.get(), e);
+									enchs.remove(Enchantments.FIRE_ASPECT);
+									EnchantmentHelper.setEnchantments(enchs, target.getItem(0));
+								}
 							}
-						}
-						lvl.playSound(null, pos, SoundEvents.ENCHANTMENT_TABLE_USE, SoundSource.BLOCKS, 1.0F, (float) (0.8F + (Math.random() * 0.2)));
-						if (!player.isCreative()) {
-							player.giveExperienceLevels(-i);
-							stack.shrink(1);
+							lvl.playSound(null, pos, SoundEvents.ENCHANTMENT_TABLE_USE, SoundSource.BLOCKS, 1.0F, (float) (0.8F + (Math.random() * 0.2)));
+							if (!player.isCreative()) {
+								player.giveExperienceLevels(-i);
+								stack.shrink(1);
+							}
+						} else if (SupernaturalManager.isVampire(player)) {
+							Rituals.doRitual(target.getItem(0), stack, lvl, player, pos);
 						}
 					} else if (stack.getItem() instanceof ContractItem item && SupernaturalManager.getUUID(stack) != null && target.getItem(0).is(item.getRitualItem())) {
 						Contracts.doContract(item.getContractType(), stack, lvl, lvl.getPlayerByUUID(SupernaturalManager.getUUID(stack)), player, pos);
-					} else if (SupernaturalManager.isVampire(player)) {
-						Rituals.doRitual(stack, lvl, player, pos);
 					} else {
 						target.dropItem(0);
 					}

@@ -1,7 +1,6 @@
 package net.salju.supernatural.events;
 
 import net.salju.supernatural.network.UsedContract;
-import net.salju.supernatural.item.DrinkableBloodItem;
 import net.salju.supernatural.init.SupernaturalTags;
 import net.salju.supernatural.init.SupernaturalMobs;
 import net.salju.supernatural.init.SupernaturalItems;
@@ -68,7 +67,7 @@ public class SupernaturalEvents {
 			if (player.level() instanceof ServerLevel lvl) {
 				if (SupernaturalManager.isVampire(player)) {
 					SupernaturalManager.addVampireEffects(player);
-					if ((player.getHealth() < player.getMaxHealth() && player.getFoodData().getFoodLevel() >= 16) || player.isSprinting()) {
+					if ((player.isHurt() && player.getFoodData().getFoodLevel() >= 16) || player.isSprinting()) {
 						player.getFoodData().setSaturation(1);
 					} else {
 						player.getFoodData().setSaturation(0);
@@ -177,7 +176,7 @@ public class SupernaturalEvents {
 				} else if (SupernaturalManager.isWerewolf(player)) {
 					SupernaturalManager.setWerewolf(player, false);
 				}
-			} else if (SupernaturalManager.isVampire(player) && !(stack.getItem() instanceof DrinkableBloodItem)) {
+			} else if (SupernaturalManager.isVampire(player)) {
 				player.getFoodData().setFoodLevel(player.getFoodData().getFoodLevel() - (stack.getFoodProperties(player).getNutrition() * 2));
 			} else if (SupernaturalManager.isWerewolf(player) && stack.getFoodProperties(player).isMeat()) {
 				player.setHealth(player.getHealth() + (stack.getFoodProperties(player).getNutrition() / 2.0F));
@@ -222,8 +221,10 @@ public class SupernaturalEvents {
 			}
 			if (event.getSource().getDirectEntity() != null && event.getSource().getDirectEntity() instanceof LivingEntity source) {
 				ItemStack weapon = source.getMainHandItem();
-				if (SupernaturalManager.isVampire(target) && weapon.getItem() == Items.WOODEN_SWORD) {
-					if (target.getHealth() <= (target.getMaxHealth() * SupernaturalConfig.WOOD.get())) {
+				if (SupernaturalManager.isVampire(target)) {
+					int i = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.SMITE, weapon);
+					event.setAmount(event.getAmount() + ((float) i * 2.5F));
+					if (weapon.getItem() == Items.WOODEN_SWORD && target.getHealth() <= (target.getMaxHealth() * SupernaturalConfig.WOOD.get())) {
 						event.setAmount(Float.MAX_VALUE);
 						if (target.level() instanceof ServerLevel lvl) {
 							EntityType.BAT.spawn(lvl, target.blockPosition(), MobSpawnType.MOB_SUMMONED);
