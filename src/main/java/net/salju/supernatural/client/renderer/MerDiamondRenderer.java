@@ -10,8 +10,7 @@ import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.MultiBufferSource;
-
-import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.PoseStack;
 
 public class MerDiamondRenderer extends MobRenderer<MerD, MerModel<MerD>> {
 	public MerDiamondRenderer(EntityRendererProvider.Context context) {
@@ -20,14 +19,14 @@ public class MerDiamondRenderer extends MobRenderer<MerD, MerModel<MerD>> {
 		this.addLayer(new EyesLayer<MerD, MerModel<MerD>>(this) {
 			@Override
 			public RenderType renderType() {
-				return RenderType.eyes(new ResourceLocation("supernatural:textures/entities/merfolk_diamond_glow.png"));
+				return RenderType.eyes(new ResourceLocation("supernatural:textures/entity/merfolk_diamond_glow.png"));
 			}
 		});
 	}
 
 	@Override
 	public ResourceLocation getTextureLocation(MerD mer) {
-		return new ResourceLocation("supernatural:textures/entities/merfolk_diamond.png");
+		return new ResourceLocation("supernatural:textures/entity/merfolk_diamond.png");
 	}
 
 	@Override

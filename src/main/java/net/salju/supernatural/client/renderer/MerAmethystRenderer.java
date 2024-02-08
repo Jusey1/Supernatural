@@ -10,8 +10,7 @@ import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.MultiBufferSource;
-
-import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.PoseStack;
 
 public class MerAmethystRenderer extends MobRenderer<MerA, MerModel<MerA>> {
 	public MerAmethystRenderer(EntityRendererProvider.Context context) {
@@ -20,14 +19,14 @@ public class MerAmethystRenderer extends MobRenderer<MerA, MerModel<MerA>> {
 		this.addLayer(new EyesLayer<MerA, MerModel<MerA>>(this) {
 			@Override
 			public RenderType renderType() {
-				return RenderType.eyes(new ResourceLocation("supernatural:textures/entities/merfolk_amethyst_glow.png"));
+				return RenderType.eyes(new ResourceLocation("supernatural:textures/entity/merfolk_amethyst_glow.png"));
 			}
 		});
 	}
 
 	@Override
 	public ResourceLocation getTextureLocation(MerA mer) {
-		return new ResourceLocation("supernatural:textures/entities/merfolk_amethyst.png");
+		return new ResourceLocation("supernatural:textures/entity/merfolk_amethyst.png");
 	}
 
 	@Override

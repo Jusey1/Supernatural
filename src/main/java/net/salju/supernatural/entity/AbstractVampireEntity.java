@@ -8,7 +8,6 @@ import net.salju.supernatural.entity.ai.SupernaturalBloodSpellGoal;
 
 import net.minecraft.world.level.Level;
 import net.minecraft.world.entity.raid.Raider;
-import net.minecraft.world.entity.raid.Raid;
 import net.minecraft.world.entity.monster.SpellcasterIllager;
 import net.minecraft.world.entity.monster.AbstractIllager;
 import net.minecraft.world.entity.ai.util.GoalUtils;
@@ -120,8 +119,9 @@ public class AbstractVampireEntity extends SpellcasterIllager {
 		return false;
 	}
 
-	public void applyRaidBuffs(int imp, boolean boop) {
-		Raid raid = this.getCurrentRaid();
+	@Override
+	public void applyRaidBuffs(int i, boolean check) {
+		//
 	}
 
 	@Override

@@ -1,8 +1,7 @@
 package net.salju.supernatural.entity.ai;
 
 import net.salju.supernatural.entity.AbstractVampireEntity;
-
-import net.minecraft.world.entity.monster.SpellcasterIllager;
+import net.minecraft.world.entity.monster.SpellcasterIllager;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.LivingEntity;

@@ -2,7 +2,8 @@
 
 import net.salju.supernatural.init.SupernaturalConfig;
 import net.salju.supernatural.events.SupernaturalManager;
-import net.minecraft.world.level.Level;
+
+import net.minecraft.world.level.Level;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Item;
@@ -36,17 +37,21 @@ public class ContractItem extends Item {
 		list.add(Component.translatable(this.name).withStyle(ChatFormatting.DARK_PURPLE));
 		if (Screen.hasShiftDown()) {
 			list.add(Component.empty());
-			if (SupernaturalConfig.CONTRACT.get()) {
-				list.add(Component.translatable((this.name + ".desc")).withStyle(ChatFormatting.GRAY));
-			} else {
-				list.add(Component.translatable(this.item.getDescriptionId(stack)).withStyle(ChatFormatting.GRAY));
-				if (this.requiresSacrifice()) {
-					list.add(Component.translatable("item.supernatural.contract.sacrifice").withStyle(ChatFormatting.GRAY));
-				}
+			list.add(Component.translatable(this.item.getDescriptionId(stack)).withStyle(ChatFormatting.GRAY));
+			if (this.requiresSacrifice()) {
+				list.add(Component.translatable("item.supernatural.contract.sacrifice").withStyle(ChatFormatting.GRAY));
 			}
+			if (this.requiresBlood()) {
+				list.add(Component.translatable("item.supernatural.contract.blood").withStyle(ChatFormatting.GRAY));
+			}
+			if (this.requiresFullmoon()) {
+				list.add(Component.translatable("item.supernatural.contract.werewolf").withStyle(ChatFormatting.GRAY));
+			}
+		} else {
+			list.add(Component.translatable("item.supernatural.contract.desc").withStyle(ChatFormatting.GOLD));
 		}
-		if (target != null) {
-			list.add(Component.literal(world.getPlayerByUUID(target).getName().getString()).withStyle(ChatFormatting.GOLD));
+		if (target != null && world != null) {
+			list.add(Component.literal(world.getPlayerByUUID(target).getName().getString()).withStyle(ChatFormatting.DARK_RED));
 		}
 	}
 
@@ -74,21 +79,30 @@ public class ContractItem extends Item {
 	}
 
 	public boolean requiresSacrifice() {
-		return (this.getContractType() == Types.REANIMATE && SupernaturalConfig.REANIMATE.get());
+		return (this.is(Types.REANIMATE) && SupernaturalConfig.REANIMATE.get() && SupernaturalConfig.SACRIFICE.get());
+	}
+
+	public boolean requiresBlood() {
+		return (this.is(Types.VAMPIRISM) && SupernaturalConfig.VAMPIRISM.get());
+	}
+
+	public boolean requiresFullmoon() {
+		return (this.is(Types.WEREWOLFISM) && SupernaturalConfig.WEREWOLFISM.get());
+	}
+
+	public boolean is(ContractItem.Type type) {
+		return this.contract == type;
 	}
 
 	public Item getRitualItem() {
 		return this.item;
 	}
 
-	public ContractItem.Type getContractType() {
-		return this.contract;
-	}
-
 	public interface Type {
+		//
 	}
 
 	public static enum Types implements ContractItem.Type {
-		VAMPIRISM, REANIMATE, VEXATION, PUMPKIN, KNOWLEDGE, FORTUNE;
+		VAMPIRISM, WEREWOLFISM, REANIMATE, VEXATION, PUMPKIN, KNOWLEDGE, FORTUNE;
 	}
 }

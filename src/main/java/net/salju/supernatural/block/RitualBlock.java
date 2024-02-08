@@ -79,7 +79,7 @@ public class RitualBlock extends BaseEntityBlock {
 							Rituals.doRitual(target.getItem(0), stack, lvl, player, pos);
 						}
 					} else if (stack.getItem() instanceof ContractItem item && SupernaturalManager.getUUID(stack) != null && target.getItem(0).is(item.getRitualItem())) {
-						Contracts.doContract(item.getContractType(), stack, lvl, lvl.getPlayerByUUID(SupernaturalManager.getUUID(stack)), player, pos);
+						Contracts.doContract(item, stack, lvl, lvl.getPlayerByUUID(SupernaturalManager.getUUID(stack)), player, pos);
 					} else {
 						target.dropItem(0);
 					}

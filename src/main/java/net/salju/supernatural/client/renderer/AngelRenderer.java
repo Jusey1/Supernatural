@@ -14,7 +14,7 @@ public class AngelRenderer extends LivingEntityRenderer<Angel, AngelModel<Angel>
 
 	@Override
 	public ResourceLocation getTextureLocation(Angel target) {
-		return new ResourceLocation("supernatural:textures/entities/angel.png");
+		return new ResourceLocation("supernatural:textures/entity/angel.png");
 	}
 
 	@Override

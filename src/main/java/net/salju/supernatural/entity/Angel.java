@@ -36,7 +36,8 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.particles.BlockParticleOption;
 import net.minecraft.core.BlockPos;
-import java.util.List;
+
+import java.util.List;
 
 public class Angel extends Mob {
 	public static final EntityDataAccessor<Integer> POSE = SynchedEntityData.defineId(Angel.class, EntityDataSerializers.INT);
@@ -140,6 +141,8 @@ public class Angel extends Mob {
 							}
 						}
 					}
+				} else {
+					this.getEntityData().set(POSE, 3);
 				}
 			} else if (SupernaturalConfig.FURIA.get()) {
 				for (Mob target : this.level().getEntitiesOfClass(Mob.class, this.getBoundingBox().inflate(12.0))) {
@@ -247,4 +250,4 @@ public class Angel extends Mob {
 					(double) (this.getBbWidth() / 4.0F), 0.05D);
 		}
 	}
-}
+}

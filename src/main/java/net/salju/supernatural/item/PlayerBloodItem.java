@@ -20,7 +20,7 @@ public class PlayerBloodItem extends Item {
 	public void appendHoverText(ItemStack stack, Level world, List<Component> list, TooltipFlag flag) {
 		super.appendHoverText(stack, world, list, flag);
 		UUID target = SupernaturalManager.getUUID(stack);
-		if (target != null) {
+		if (target != null && world != null) {
 			list.add(Component.literal(world.getPlayerByUUID(target).getName().getString()).withStyle(ChatFormatting.DARK_RED));
 		}
 	}

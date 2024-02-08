@@ -50,10 +50,10 @@ public class SupernaturalNecroSpellGoal extends AbstractSupernaturalSpellGoal {
 						if (Math.random() <= 0.99) {
 							if (Math.random() <= 0.5) {
 								Skeleton skele = EntityType.SKELETON.spawn(lvl, pos, MobSpawnType.MOB_SUMMONED);
-								((PathfinderMob) skele).targetSelector.addGoal(1, new MinionTargetGoal((PathfinderMob) skele));
+								skele.targetSelector.addGoal(1, new MinionTargetGoal(skele, this.user));
 							} else {
 								Zombie billy = EntityType.ZOMBIE.spawn(lvl, pos, MobSpawnType.MOB_SUMMONED);
-								((PathfinderMob) billy).targetSelector.addGoal(1, new MinionTargetGoal((PathfinderMob) billy));
+								billy.targetSelector.addGoal(1, new MinionTargetGoal(billy, this.user));
 							}
 						} else {
 							Vampire vampire = SupernaturalMobs.VAMPIRE.get().spawn(lvl, pos, MobSpawnType.MOB_SUMMONED);

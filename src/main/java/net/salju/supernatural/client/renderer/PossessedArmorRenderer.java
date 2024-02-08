@@ -17,6 +17,6 @@ public class PossessedArmorRenderer extends HumanoidMobRenderer<PossessedArmor, 
 
 	@Override
 	public ResourceLocation getTextureLocation(PossessedArmor armor) {
-		return new ResourceLocation("supernatural:textures/entities/empty_texture.png");
+		return new ResourceLocation("supernatural:textures/entity/empty_texture.png");
 	}
 }

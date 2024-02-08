@@ -5,7 +5,6 @@ import net.salju.supernatural.init.SupernaturalBlocks;
 import net.salju.supernatural.events.SupernaturalManager;
 import net.salju.supernatural.entity.Angel;
 
-import net.minecraft.world.phys.AABB;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.CandleBlock;
 import net.minecraft.world.level.block.Blocks;
@@ -14,9 +13,6 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.npc.Villager;
-import net.minecraft.world.entity.animal.Animal;
-import net.minecraft.world.entity.Mob;
 import net.minecraft.util.Mth;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.sounds.SoundEvents;
@@ -77,18 +73,9 @@ public class Rituals {
 		for (Angel statue : lvl.getEntitiesOfClass(Angel.class, target.getRenderBoundingBox().inflate(64.85D))) {
 			if (Mth.nextInt(lvl.getRandom(), 0, 25) >= 24 && !statue.isCursed()) {
 				statue.getEntityData().set(Angel.CURSED, true);
+				lvl.sendParticles(ParticleTypes.SOUL, (statue.getX() + 0.5), (statue.getY() + 0.5), (statue.getZ() + 0.5), 8, 0.25, 0.35, 0.25, 0);
 			}
 		}
-	}
-
-	private static List<Mob> getSacrifice(ServerLevel lvl, AABB box) {
-		List<Mob> list = Lists.newArrayList();
-		for (Mob sacrifice : lvl.getEntitiesOfClass(Mob.class, box)) {
-			if ((sacrifice.getMaxHealth() <= 10 && sacrifice instanceof Animal) || sacrifice instanceof Villager) {
-				list.add(sacrifice);
-			}
-		}
-		return list;
 	}
 
 	private static int getPower(ServerLevel lvl, BlockPos pos) {
@@ -106,7 +93,6 @@ public class Rituals {
 
 	private static List<Item> getContracts() {
 		List<Item> list = Lists.newArrayList();
-		list.add(SupernaturalItems.VAMPIRISM_CONTRACT.get());
 		list.add(SupernaturalItems.VEXATION_CONTRACT.get());
 		list.add(SupernaturalItems.PUMPKIN_CONTRACT.get());
 		list.add(SupernaturalItems.REANIMATE_CONTRACT.get());

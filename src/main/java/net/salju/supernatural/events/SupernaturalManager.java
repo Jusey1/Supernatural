@@ -16,7 +16,6 @@ import net.minecraft.world.entity.decoration.ArmorStand;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attribute;
-import net.minecraft.world.entity.TamableAnimal;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -84,14 +83,23 @@ public class SupernaturalManager {
 		player.getAttributes().addTransientAttributeModifiers(createSupernatural());
 	}
 
-	public static boolean getPack(Player player, int e) {
-		int i = 0;
-		for (TamableAnimal animal : player.level().getEntitiesOfClass(TamableAnimal.class, player.getBoundingBox().inflate(24.85D))) {
-			if (animal.isOwnedBy(player)) {
-				i++;
-			}
+	public static boolean isArtificer(LivingEntity target) {
+		return (target.getPersistentData().getBoolean("isArtificer"));
+	}
+
+	public static void setArtificer(Player player, boolean check) {
+		if (!check) {
+			player.getPersistentData().remove("isArtificer");
+			player.removeEffect(SupernaturalEffects.SUPERNATURAL.get());
+			player.getAttributes().removeAttributeModifiers(createSupernatural());
+		} else {
+			player.getPersistentData().putBoolean("isArtificer", true);
 		}
-		return (i >= e);
+	}
+
+	public static void addArtificerEffects(Player player) {
+		player.addEffect(new MobEffectInstance(SupernaturalEffects.SUPERNATURAL.get(), 10, 2, false, false));
+		player.getAttributes().addTransientAttributeModifiers(createSupernatural());
 	}
 
 	private static Multimap<Attribute, AttributeModifier> createSupernatural() {

@@ -15,7 +15,7 @@ public class SpookyRenderer extends MobRenderer<Spooky, SpiritModel<Spooky>> {
 
 	@Override
 	public ResourceLocation getTextureLocation(Spooky ghost) {
-		return new ResourceLocation("supernatural:textures/entities/spook.png");
+		return new ResourceLocation("supernatural:textures/entity/spook.png");
 	}
 
 	protected int getBlockLightLevel(Spooky ghost, BlockPos pos) {

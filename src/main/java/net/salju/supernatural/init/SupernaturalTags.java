@@ -1,6 +1,8 @@
 package net.salju.supernatural.init;
 
+import net.minecraft.world.item.Item;
 import net.minecraft.tags.TagKey;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.core.registries.Registries;
 
@@ -12,4 +14,5 @@ public class SupernaturalTags {
 	public static final TagKey WEREWOLF = TagKey.create(Registries.ENTITY_TYPE, new ResourceLocation("supernatural:is_werewolf"));
 	public static final TagKey GRAND = TagKey.create(Registries.ENTITY_TYPE, new ResourceLocation("supernatural:grand_soul"));
 	public static final TagKey IMMUNITY = TagKey.create(Registries.ENTITY_TYPE, new ResourceLocation("supernatural:immunity"));
+	public static final TagKey<Item> ARTIFICER = ItemTags.create(new ResourceLocation("supernatural:artificer_unbreakable"));
 }

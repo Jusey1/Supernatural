@@ -57,7 +57,7 @@ public class SupernaturalClientHUD {
 					}
 				}
 				RenderSystem.disableBlend();
-			} else if (SupernaturalManager.getSupernatural(mc.player, 2)) {
+			} else if (SupernaturalManager.getSupernatural(mc.player, 3)) {
 				event.setCanceled(true);
 			}
 		}

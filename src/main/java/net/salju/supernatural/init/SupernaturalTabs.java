@@ -1,19 +1,23 @@
 package net.salju.supernatural.init;
 
+import net.salju.supernatural.events.SupernaturalManager;
 import net.salju.supernatural.SupernaturalMod;
-import net.minecraftforge.registries.RegistryObject;
+
+import net.minecraftforge.registries.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 
-import net.minecraft.world.item.Items;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.entity.npc.Villager;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.network.chat.Component;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.client.Minecraft;
 
 public class SupernaturalTabs {
 	public static final DeferredRegister<CreativeModeTab> REGISTRY = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, SupernaturalMod.MODID);
 	public static final RegistryObject<CreativeModeTab> SUPERNATURAL = REGISTRY.register("supernatural",
-			() -> CreativeModeTab.builder().title(Component.translatable("itemGroup.supernatural")).icon(() -> new ItemStack(Items.ENDER_EYE)).displayItems((parameters, tabData) -> {
+			() -> CreativeModeTab.builder().title(Component.translatable("itemGroup.supernatural")).icon(() -> new ItemStack(SupernaturalItems.SOULGEM.get())).displayItems((parameters, tabData) -> {
 				tabData.accept(SupernaturalItems.VAMPIRE_SPAWN_EGG.get());
 				tabData.accept(SupernaturalItems.NECROMANCER_SPAWN_EGG.get());
 				tabData.accept(SupernaturalItems.POSSESSED_ARMOR_SPAWN_EGG.get());
@@ -30,9 +34,10 @@ public class SupernaturalTabs {
 				tabData.accept(SupernaturalItems.VAMPIRE_DUST.get());
 				tabData.accept(SupernaturalItems.ANGEL_STATUE.get());
 				tabData.accept(SupernaturalBlocks.RITUAL_ALTAR.get().asItem());
-				tabData.accept(SupernaturalItems.SOULGEM.get());
-				tabData.accept(SupernaturalItems.PLAYER_BLOOD.get());
+				tabData.accept(SupernaturalManager.setSoul(new ItemStack(SupernaturalItems.SOULGEM.get()), new Villager(EntityType.VILLAGER, Minecraft.getInstance().level)));
+				tabData.accept(SupernaturalManager.setUUID(new ItemStack(SupernaturalItems.PLAYER_BLOOD.get()), Minecraft.getInstance().player));
 				tabData.accept(SupernaturalItems.VAMPIRISM_CONTRACT.get());
+				tabData.accept(SupernaturalItems.WEREWOLFISM_CONTRACT.get());
 				tabData.accept(SupernaturalItems.VEXATION_CONTRACT.get());
 				tabData.accept(SupernaturalItems.PUMPKIN_CONTRACT.get());
 				tabData.accept(SupernaturalItems.REANIMATE_CONTRACT.get());

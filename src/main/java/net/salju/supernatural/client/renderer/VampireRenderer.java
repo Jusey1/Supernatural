@@ -20,7 +20,7 @@ public class VampireRenderer extends IllagerRenderer<Vampire> {
 		this.addLayer(new EyesLayer<Vampire, IllagerModel<Vampire>>(this) {
 			@Override
 			public RenderType renderType() {
-				return RenderType.eyes(new ResourceLocation("supernatural:textures/entities/vampire_eyes.png"));
+				return RenderType.eyes(new ResourceLocation("supernatural:textures/entity/vampire_eyes.png"));
 			}
 		});
 		this.addLayer(new ItemInHandLayer<Vampire, IllagerModel<Vampire>>(this, context.getItemInHandRenderer()) {
@@ -35,9 +35,9 @@ public class VampireRenderer extends IllagerRenderer<Vampire> {
 	@Override
 	public ResourceLocation getTextureLocation(Vampire vampy) {
 		if (SupernaturalConfig.ORIGINAL.get()) {
-			return new ResourceLocation("supernatural:textures/entities/vampire_original.png");
+			return new ResourceLocation("supernatural:textures/entity/vampire_original.png");
 		} else {
-			return new ResourceLocation("supernatural:textures/entities/vampire_normal.png");
+			return new ResourceLocation("supernatural:textures/entity/vampire_normal.png");
 		}
 	}
 }

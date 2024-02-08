@@ -16,8 +16,8 @@ public class SupernaturalConfig {
 	public static final ForgeConfigSpec.BooleanValue ORIGINAL;
 
 	public static final ForgeConfigSpec.IntValue SOULPOWER;
-	public static final ForgeConfigSpec.BooleanValue CONTRACT;
 	public static final ForgeConfigSpec.BooleanValue VAMPIRISM;
+	public static final ForgeConfigSpec.BooleanValue WEREWOLFISM;
 	public static final ForgeConfigSpec.BooleanValue VEXATION;
 	public static final ForgeConfigSpec.BooleanValue PUMPKIN;
 	public static final ForgeConfigSpec.BooleanValue REANIMATE;
@@ -42,10 +42,10 @@ public class SupernaturalConfig {
 		BUILDER.pop();
 		BUILDER.push("Ritual Altar");
 		SOULPOWER = BUILDER.comment("What should be the base power for soul enchanting?").defineInRange("Soulpower", 7, 0, Integer.MAX_VALUE);
-		CONTRACT = BUILDER.comment("Should contracts have a full description instead of a short & simple one?").define("Contracts", true);
 		VAMPIRISM = BUILDER.comment("Should the Vampirism Contract be Enabled? Note: This doesn't remove the item.").define("Vampirism", true);
+		WEREWOLFISM = BUILDER.comment("Should the Lycanthropy Contract be Enabled? Note: This doesn't remove the item.").define("Werewolfism", true);
 		VEXATION = BUILDER.comment("Should the Vexation Contract be Enabled? Note: This doesn't remove the item.").define("Vexation", true);
-		PUMPKIN = BUILDER.comment("Should the Pumpkin Head Contract be Enabled? Note: This doesn't remove the item.").define("Pumpkin", true);
+		PUMPKIN = BUILDER.comment("Should the Pumpkin Thief Contract be Enabled? Note: This doesn't remove the item.").define("Pumpkin", true);
 		REANIMATE = BUILDER.comment("Should the Reanimation Contract be Enabled? Note: This doesn't remove the item.").define("Reanimation", true);
 		KNOWLEDGE = BUILDER.comment("Should the Knowledge Contract be Enabled? Note: This doesn't remove the item.").define("Knowledge", true);
 		FORTUNE = BUILDER.comment("Should the Fortune Contract be Enabled? Note: This doesn't remove the item.").define("Fortune", true);

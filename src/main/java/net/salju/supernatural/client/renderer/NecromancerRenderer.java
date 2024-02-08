@@ -20,7 +20,7 @@ public class NecromancerRenderer extends IllagerRenderer<Necromancer> {
 		this.addLayer(new EyesLayer<Necromancer, IllagerModel<Necromancer>>(this) {
 			@Override
 			public RenderType renderType() {
-				return RenderType.eyes(new ResourceLocation("supernatural:textures/entities/vampire_eyes.png"));
+				return RenderType.eyes(new ResourceLocation("supernatural:textures/entity/vampire_eyes.png"));
 			}
 		});
 		this.addLayer(new ItemInHandLayer<Necromancer, IllagerModel<Necromancer>>(this, context.getItemInHandRenderer()) {
@@ -36,9 +36,9 @@ public class NecromancerRenderer extends IllagerRenderer<Necromancer> {
 	@Override
 	public ResourceLocation getTextureLocation(Necromancer vampy) {
 		if (SupernaturalConfig.ORIGINAL.get()) {
-			return new ResourceLocation("supernatural:textures/entities/vampire_necromancer_original.png");
+			return new ResourceLocation("supernatural:textures/entity/vampire_necromancer_original.png");
 		} else {
-			return new ResourceLocation("supernatural:textures/entities/vampire_necromancer.png");
+			return new ResourceLocation("supernatural:textures/entity/vampire_necromancer.png");
 		}
 	}
 }
