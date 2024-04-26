@@ -223,5 +223,23 @@
         "stream": false
       }
     ]
+  },
+  "cannon_spin": {
+    "subtitle": "subtitles.cannon_spin",
+    "sounds": [
+      {
+        "name": "supernatural:cannon_spin",
+        "stream": false
+      }
+    ]
+  },
+  "cannon_shoot": {
+    "subtitle": "subtitles.cannon_shoot",
+    "sounds": [
+      {
+        "name": "supernatural:cannon_shoot",
+        "stream": false
+      }
+    ]
   }
 }

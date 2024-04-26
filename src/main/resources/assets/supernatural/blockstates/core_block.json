@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "powered=false": {
+      "model": "supernatural:block/core_block_off"
+    },
+    "powered=true": {
+      "model": "supernatural:block/core_block_on"
+    }
+  }
+}
