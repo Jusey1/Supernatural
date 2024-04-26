@@ -1,6 +1,7 @@
 package net.salju.supernatural.block;
 
 import net.salju.supernatural.init.SupernaturalItems;
+import net.salju.supernatural.init.SupernaturalEffects;
 import net.salju.supernatural.init.SupernaturalBlocks;
 import net.salju.supernatural.events.SupernaturalManager;
 import net.salju.supernatural.entity.Angel;
@@ -13,9 +14,11 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.util.Mth;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.BlockPos;
@@ -28,19 +31,17 @@ public class Rituals {
 			BlockPos top = BlockPos.containing((pos.getX() + 3), (pos.getY() - 1), (pos.getZ() + 3));
 			BlockPos bot = BlockPos.containing((pos.getX() - 3), (pos.getY() - 1), (pos.getZ() - 3));
 			if (lvl.getBrightness(LightLayer.BLOCK, pos) < 6 && (lvl.getBrightness(LightLayer.SKY, pos) < 6 || !lvl.isDay())) {
-				int i = getPower(lvl, pos);
+				int i = SupernaturalManager.getPower(lvl, pos);
 				int e = SupernaturalManager.getSoulLevel(SupernaturalManager.getSoulgem(offer));
-				if (i == 28 && e >= 5 && stack.is(Items.TOTEM_OF_UNDYING)) {
+				if (i == 28 && e >= 5 && stack.is(Items.TOTEM_OF_UNDYING) && SupernaturalManager.isVampire(player)) {
 					defaultResult(target, offer, lvl, player, pos);
 					List<Item> list = getContracts();
 					int r = Mth.nextInt(lvl.random, 0, (list.size() - 1));
 					target.setItem(0, new ItemStack(list.get(r)));
-				} else if (i == 20 && e >= 4 && stack.is(Items.GLASS_BOTTLE)) {
+				} else if (i == 20 && e >= 4 && stack.is(Items.GLASS_BOTTLE) && SupernaturalManager.isVampire(player)) {
 					defaultResult(target, offer, lvl, player, pos);
-					Player randy = lvl.getRandomPlayer();
-					if (randy != null) {
-						target.setItem(0, SupernaturalManager.setUUID(new ItemStack(SupernaturalItems.PLAYER_BLOOD.get()), randy));
-					}
+					Player randy = getRandomPlayer(lvl, (ServerPlayer) player);
+					target.setItem(0, SupernaturalManager.setUUID(new ItemStack(SupernaturalItems.PLAYER_BLOOD.get()), randy));
 				} else if (i == 12 && e >= 3 && stack.is(Items.IRON_INGOT)) {
 					defaultResult(target, offer, lvl, player, pos);
 					target.setItem(0, new ItemStack(Items.GOLD_INGOT));
@@ -78,43 +79,25 @@ public class Rituals {
 		}
 	}
 
-	private static int getPower(ServerLevel lvl, BlockPos pos) {
-		int i = 0;
-		List<BlockPos> list = getCircle(pos);
-		for (BlockPos poz : list) {
-			BlockState state = lvl.getBlockState(poz);
-			if (state.getBlock() instanceof CandleBlock && state.getValue(CandleBlock.LIT)) {
-				i = (i + state.getValue(CandleBlock.CANDLES));
-				lvl.setBlock(poz, state.getBlock().defaultBlockState().setValue(CandleBlock.LIT, false).setValue(CandleBlock.CANDLES, state.getValue(CandleBlock.CANDLES)), 3);
+	private static ServerPlayer getRandomPlayer(ServerLevel lvl, ServerPlayer ply) {
+		List<ServerPlayer> list = lvl.getPlayers(LivingEntity::isAlive);
+		List<ServerPlayer> hit = Lists.newArrayList();
+		for (int i = 0; i < list.size(); i++) {
+			if (!list.get(i).hasEffect(SupernaturalEffects.SUPERNATURAL.get())) {
+				hit.add(list.get(i));
 			}
 		}
-		return i;
+		return hit.isEmpty() ? ply : hit.get(lvl.random.nextInt(hit.size()));
 	}
 
 	private static List<Item> getContracts() {
 		List<Item> list = Lists.newArrayList();
 		list.add(SupernaturalItems.VEXATION_CONTRACT.get());
+		list.add(SupernaturalItems.MISFORTUNE_CONTRACT.get());
 		list.add(SupernaturalItems.PUMPKIN_CONTRACT.get());
 		list.add(SupernaturalItems.REANIMATE_CONTRACT.get());
 		list.add(SupernaturalItems.KNOWLEDGE_CONTRACT.get());
 		list.add(SupernaturalItems.FORTUNE_CONTRACT.get());
-		return list;
-	}
-
-	private static List<BlockPos> getCircle(BlockPos pos) {
-		List<BlockPos> list = Lists.newArrayList();
-		list.add(pos.north(4));
-		list.add(pos.west(4));
-		list.add(pos.south(4));
-		list.add(pos.east(4));
-		list.add(BlockPos.containing((pos.getX() + 3), pos.getY(), (pos.getZ() + 2)));
-		list.add(BlockPos.containing((pos.getX() + 3), pos.getY(), (pos.getZ() - 2)));
-		list.add(BlockPos.containing((pos.getX() - 3), pos.getY(), (pos.getZ() + 2)));
-		list.add(BlockPos.containing((pos.getX() - 3), pos.getY(), (pos.getZ() - 2)));
-		list.add(BlockPos.containing((pos.getX() + 2), pos.getY(), (pos.getZ() + 3)));
-		list.add(BlockPos.containing((pos.getX() + 2), pos.getY(), (pos.getZ() - 3)));
-		list.add(BlockPos.containing((pos.getX() - 2), pos.getY(), (pos.getZ() + 3)));
-		list.add(BlockPos.containing((pos.getX() - 2), pos.getY(), (pos.getZ() - 3)));
 		return list;
 	}
 }

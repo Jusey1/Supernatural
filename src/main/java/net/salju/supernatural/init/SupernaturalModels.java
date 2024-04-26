@@ -15,6 +15,7 @@ public class SupernaturalModels {
 		event.registerLayerDefinition(PossessedModel.POSSESSED_MODEL, PossessedModel::createBodyLayer);
 		event.registerLayerDefinition(MerModel.MER_MODEL, MerModel::createBodyLayer);
 		event.registerLayerDefinition(AngelModel.ANGEL_MODEL, AngelModel::createBodyLayer);
+		event.registerLayerDefinition(ArtCanModel.CANNON_MODEL, ArtCanModel::createBodyLayer);
 		event.registerLayerDefinition(GothicArmorModel.GOTHIC_ARMOR, GothicArmorModel::createBodyLayer);
 		event.registerLayerDefinition(GothicKoboldArmorModel.KOBOLD_GOTHIC_ARMOR, GothicKoboldArmorModel::createBodyLayer);
 	}

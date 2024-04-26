@@ -1,11 +1,11 @@
 package net.salju.supernatural.init;
 
 import net.salju.supernatural.client.renderer.*;
-
-import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraft.client.renderer.entity.ThrownItemRenderer;
 
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public class SupernaturalRenderers {
@@ -19,6 +19,8 @@ public class SupernaturalRenderers {
 		event.registerEntityRenderer(SupernaturalMobs.MER_EMERALD.get(), MerEmeraldRenderer::new);
 		event.registerEntityRenderer(SupernaturalMobs.MER_DIAMOND.get(), MerDiamondRenderer::new);
 		event.registerEntityRenderer(SupernaturalMobs.ANGEL.get(), AngelRenderer::new);
+		event.registerEntityRenderer(SupernaturalMobs.CANNON.get(), ArtCanRenderer::new);
+		event.registerEntityRenderer(SupernaturalMobs.CANNONBALL.get(), ThrownItemRenderer::new);
 		event.registerBlockEntityRenderer(SupernaturalBlockEntities.RITUAL.get(), RitualBlockRenderer::new);
 	}
 }

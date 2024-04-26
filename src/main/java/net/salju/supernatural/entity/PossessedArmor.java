@@ -4,8 +4,7 @@ import net.salju.supernatural.init.SupernaturalModSounds;
 import net.salju.supernatural.init.SupernaturalItems;
 import net.salju.supernatural.init.SupernaturalEffects;
 import net.salju.supernatural.events.SupernaturalManager;
-
-import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
@@ -40,8 +39,7 @@ import net.minecraft.world.DifficultyInstance;
 import net.minecraft.util.RandomSource;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.nbt.CompoundTag;
-
-import javax.annotation.Nullable;
+import javax.annotation.Nullable;
 import java.util.function.Predicate;
 import java.util.UUID;
 import java.util.Map;

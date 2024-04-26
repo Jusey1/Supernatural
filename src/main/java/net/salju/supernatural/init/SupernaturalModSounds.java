@@ -28,4 +28,6 @@ public class SupernaturalModSounds {
 	public static final RegistryObject<SoundEvent> MERWATER_HURT = REGISTRY.register("merwater_hurt", () -> SoundEvent.createVariableRangeEvent(new ResourceLocation("supernatural", "merwater_hurt")));
 	public static final RegistryObject<SoundEvent> MERWATER_IDLE = REGISTRY.register("merwater_idle", () -> SoundEvent.createVariableRangeEvent(new ResourceLocation("supernatural", "merwater_idle")));
 	public static final RegistryObject<SoundEvent> SPOOK_POOF = REGISTRY.register("spook_poof", () -> SoundEvent.createVariableRangeEvent(new ResourceLocation("supernatural", "spook_poof")));
+	public static final RegistryObject<SoundEvent> CANNON_SPIN = REGISTRY.register("cannon_spin", () -> SoundEvent.createVariableRangeEvent(new ResourceLocation("supernatural", "cannon_spin")));
+	public static final RegistryObject<SoundEvent> CANNON_SHOOT = REGISTRY.register("cannon_shoot", () -> SoundEvent.createVariableRangeEvent(new ResourceLocation("supernatural", "cannon_shoot")));
 }

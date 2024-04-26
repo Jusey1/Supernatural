@@ -4,8 +4,9 @@ import net.salju.supernatural.init.SupernaturalTags;
 import net.salju.supernatural.init.SupernaturalEffects;
 import net.salju.supernatural.init.SupernaturalConfig;
 import net.salju.supernatural.block.RitualBlockEntity;
-
-import net.minecraft.world.level.chunk.LevelChunk;
+import net.minecraft.world.level.chunk.LevelChunk;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.CandleBlock;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.ItemStack;
@@ -22,28 +23,30 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.core.SectionPos;
 import net.minecraft.core.BlockPos;
-
-import javax.annotation.Nullable;
+import javax.annotation.Nullable;
 import java.util.UUID;
 import java.util.Map;
+import java.util.List;
 import java.util.HashMap;
 import com.google.common.collect.Multimap;
+import com.google.common.collect.Lists;
 import com.google.common.collect.HashMultimap;
 
 public class SupernaturalManager {
-	public static boolean getSupernatural(Player player, int i) {
+	private static boolean getSupernatural(LivingEntity target, int i) {
 		int e = 0;
-		if (player.hasEffect(SupernaturalEffects.SUPERNATURAL.get())) {
-			e = (player.getEffect(SupernaturalEffects.SUPERNATURAL.get()).getAmplifier() + 1);
+		if (target.hasEffect(SupernaturalEffects.SUPERNATURAL.get())) {
+			e = (target.getEffect(SupernaturalEffects.SUPERNATURAL.get()).getAmplifier() + 1);
 		}
 		return (i == e);
 	}
 
 	public static boolean isVampire(LivingEntity target) {
-		return (target.getPersistentData().getBoolean("isVampire") || target.getType().is(SupernaturalTags.VAMPIRE));
+		return (target.getPersistentData().getBoolean("isVampire") || getSupernatural(target, 1) || target.getType().is(SupernaturalTags.VAMPIRE));
 	}
 
 	public static void setVampire(Player player, boolean check) {
@@ -65,7 +68,7 @@ public class SupernaturalManager {
 	}
 
 	public static boolean isWerewolf(LivingEntity target) {
-		return (target.getPersistentData().getBoolean("isWerewolf") || target.getType().is(SupernaturalTags.WEREWOLF));
+		return (target.getPersistentData().getBoolean("isWerewolf") || getSupernatural(target, 2) || target.getType().is(SupernaturalTags.WEREWOLF));
 	}
 
 	public static void setWerewolf(Player player, boolean check) {
@@ -84,7 +87,7 @@ public class SupernaturalManager {
 	}
 
 	public static boolean isArtificer(LivingEntity target) {
-		return (target.getPersistentData().getBoolean("isArtificer"));
+		return (target.getPersistentData().getBoolean("isArtificer") || getSupernatural(target, 3));
 	}
 
 	public static void setArtificer(Player player, boolean check) {
@@ -213,6 +216,36 @@ public class SupernaturalManager {
 			}
 		}
 		return null;
+	}
+
+	public static int getPower(ServerLevel lvl, BlockPos pos) {
+		int i = 0;
+		List<BlockPos> list = getCircle(pos);
+		for (BlockPos poz : list) {
+			BlockState state = lvl.getBlockState(poz);
+			if (state.getBlock() instanceof CandleBlock && state.getValue(CandleBlock.LIT)) {
+				i = (i + state.getValue(CandleBlock.CANDLES));
+				lvl.setBlock(poz, state.getBlock().defaultBlockState().setValue(CandleBlock.LIT, false).setValue(CandleBlock.CANDLES, state.getValue(CandleBlock.CANDLES)), 3);
+			}
+		}
+		return i;
+	}
+
+	public static List<BlockPos> getCircle(BlockPos pos) {
+		List<BlockPos> list = Lists.newArrayList();
+		list.add(pos.north(4));
+		list.add(pos.west(4));
+		list.add(pos.south(4));
+		list.add(pos.east(4));
+		list.add(BlockPos.containing((pos.getX() + 3), pos.getY(), (pos.getZ() + 2)));
+		list.add(BlockPos.containing((pos.getX() + 3), pos.getY(), (pos.getZ() - 2)));
+		list.add(BlockPos.containing((pos.getX() - 3), pos.getY(), (pos.getZ() + 2)));
+		list.add(BlockPos.containing((pos.getX() - 3), pos.getY(), (pos.getZ() - 2)));
+		list.add(BlockPos.containing((pos.getX() + 2), pos.getY(), (pos.getZ() + 3)));
+		list.add(BlockPos.containing((pos.getX() + 2), pos.getY(), (pos.getZ() - 3)));
+		list.add(BlockPos.containing((pos.getX() - 2), pos.getY(), (pos.getZ() + 3)));
+		list.add(BlockPos.containing((pos.getX() - 2), pos.getY(), (pos.getZ() - 3)));
+		return list;
 	}
 
 	public static boolean hasArmor(LivingEntity target) {

@@ -2,8 +2,7 @@ package net.salju.supernatural.entity;
 
 import net.salju.supernatural.init.SupernaturalTags;
 import net.salju.supernatural.init.SupernaturalModSounds;
-
-import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.level.pathfinder.Path;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.level.block.state.BlockState;
@@ -45,8 +44,7 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.core.BlockPos;
-
-import javax.annotation.Nullable;
+import javax.annotation.Nullable;
 import java.util.function.Predicate;
 import java.util.UUID;
 

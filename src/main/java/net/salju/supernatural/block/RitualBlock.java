@@ -7,8 +7,7 @@ import net.salju.supernatural.init.SupernaturalEnchantments;
 import net.salju.supernatural.init.SupernaturalConfig;
 import net.salju.supernatural.init.SupernaturalBlockEntities;
 import net.salju.supernatural.events.SupernaturalManager;
-
-import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.BlockHitResult;
@@ -25,16 +24,20 @@ import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionHand;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.core.BlockPos;
 import javax.annotation.Nullable;
 import java.util.Map;
+import java.util.List;
+import net.minecraft.world.item.context.BlockPlaceContext;
 
 public class RitualBlock extends BaseEntityBlock {
 	public RitualBlock(BlockBehaviour.Properties props) {
@@ -46,6 +49,14 @@ public class RitualBlock extends BaseEntityBlock {
 		BlockEntity entity = world.getBlockEntity(pos);
 		ItemStack stack = player.getItemInHand(hand);
 		if (entity instanceof RitualBlockEntity target) {
+			if (stack.is(ItemTags.CANDLES) && stack.getItem() instanceof BlockItem blok) {
+				List<BlockPos> list = SupernaturalManager.getCircle(pos);
+				for (BlockPos poz : list) {
+					if (world.isEmptyBlock(poz)) {
+						return blok.place(new BlockPlaceContext(world, player, hand, stack, rez.withPosition(poz)));
+					}
+				}
+			}
 			if (target.isEmpty() && !stack.isEmpty()) {
 				if (world instanceof ServerLevel lvl) {
 					target.setItem(0, stack);
@@ -75,7 +86,7 @@ public class RitualBlock extends BaseEntityBlock {
 								player.giveExperienceLevels(-i);
 								stack.shrink(1);
 							}
-						} else if (SupernaturalManager.isVampire(player)) {
+						} else {
 							Rituals.doRitual(target.getItem(0), stack, lvl, player, pos);
 						}
 					} else if (stack.getItem() instanceof ContractItem item && SupernaturalManager.getUUID(stack) != null && target.getItem(0).is(item.getRitualItem())) {

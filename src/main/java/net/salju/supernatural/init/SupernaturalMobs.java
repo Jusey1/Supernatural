@@ -2,16 +2,14 @@ package net.salju.supernatural.init;
 
 import net.salju.supernatural.entity.*;
 import net.salju.supernatural.SupernaturalMod;
-
-import net.minecraftforge.registries.RegistryObject;
+import net.minecraftforge.registries.RegistryObject;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
-
-import net.minecraft.world.entity.MobCategory;
+import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Entity;
 
@@ -26,6 +24,8 @@ public class SupernaturalMobs {
 	public static final RegistryObject<EntityType<MerE>> MER_EMERALD = register("mer_emerald", EntityType.Builder.<MerE>of(MerE::new, MobCategory.MONSTER).sized(0.6f, 1.95f));
 	public static final RegistryObject<EntityType<MerD>> MER_DIAMOND = register("mer_diamond", EntityType.Builder.<MerD>of(MerD::new, MobCategory.MONSTER).sized(0.6f, 1.95f));
 	public static final RegistryObject<EntityType<Angel>> ANGEL = register("angel", EntityType.Builder.<Angel>of(Angel::new, MobCategory.MISC).sized(0.6f, 1.95f));
+	public static final RegistryObject<EntityType<Cannon>> CANNON = register("artificer_cannon", EntityType.Builder.<Cannon>of(Cannon::new, MobCategory.MISC).sized(1.25f, 2.2f));
+	public static final RegistryObject<EntityType<Cannonball>> CANNONBALL = register("cannonball", EntityType.Builder.<Cannonball>of(Cannonball::new, MobCategory.MISC).sized(0.5F, 0.5F).clientTrackingRange(4).updateInterval(10));
 
 	private static <T extends Entity> RegistryObject<EntityType<T>> register(String registryname, EntityType.Builder<T> entityTypeBuilder) {
 		return REGISTRY.register(registryname, () -> (EntityType<T>) entityTypeBuilder.build(registryname));
@@ -48,5 +48,6 @@ public class SupernaturalMobs {
 		event.put(MER_EMERALD.get(), MerE.createAttributes().build());
 		event.put(MER_DIAMOND.get(), MerD.createAttributes().build());
 		event.put(ANGEL.get(), Angel.createAttributes().build());
+		event.put(CANNON.get(), Cannon.createAttributes().build());
 	}
 }

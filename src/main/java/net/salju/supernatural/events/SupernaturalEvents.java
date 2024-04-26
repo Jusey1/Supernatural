@@ -8,8 +8,7 @@ import net.salju.supernatural.init.SupernaturalEffects;
 import net.salju.supernatural.init.SupernaturalConfig;
 import net.salju.supernatural.entity.MerA;
 import net.salju.supernatural.block.RitualBlockEntity;
-
-import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.Event.Result;
@@ -22,10 +21,7 @@ import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.event.TickEvent;
-
-import net.minecraft.world.phys.Vec3;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.item.enchantment.Enchantments;
+import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.ItemStack;
@@ -37,13 +33,11 @@ import net.minecraft.world.entity.monster.Vex;
 import net.minecraft.world.entity.monster.SpellcasterIllager;
 import net.minecraft.world.entity.monster.Slime;
 import net.minecraft.world.entity.monster.Evoker;
-import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.TamableAnimal;
 import net.minecraft.world.entity.MobType;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.LightningBolt;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Entity;
@@ -52,7 +46,6 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.damagesource.CombatRules;
 import net.minecraft.util.Mth;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.network.chat.Component;
 import net.minecraft.core.particles.ParticleTypes;
@@ -131,29 +124,6 @@ public class SupernaturalEvents {
 	public static void onRightClickBlock(PlayerInteractEvent.RightClickBlock event) {
 		if (event.getEntity().hasEffect(SupernaturalEffects.POSSESSION.get())) {
 			event.setCanceled(true);
-		} else if (event.getEntity() instanceof ServerPlayer ply && ply.level() instanceof ServerLevel lvl) {
-			ItemStack stack = event.getItemStack();
-			BlockPos pos = event.getPos();
-			if (lvl.getBlockState(pos).getBlock() == Blocks.CARVED_PUMPKIN && lvl.getBlockState(pos.above()).getBlock() == Blocks.LIGHTNING_ROD && lvl.getBlockState(pos.below()).getBlock() == Blocks.REDSTONE_BLOCK) {
-				if (!ply.hasEffect(SupernaturalEffects.SUPERNATURAL.get()) && stack.is(Items.TOTEM_OF_UNDYING) && lvl.canSeeSky(pos.above()) && lvl.getLevelData().isThundering()) {
-					lvl.broadcastEntityEvent(ply, (byte) 35);
-					if (!ply.isCreative()) {
-						stack.shrink(1);
-					}
-					ply.hurt(ply.damageSources().magic(), 0.25F);
-					ply.setHealth(1.0F);
-					ply.getInventory().dropAll();
-					SupernaturalManager.setArtificer(ply, true);
-					lvl.destroyBlock(pos, false);
-					lvl.destroyBlock(pos.above(), false);
-					lvl.destroyBlock(pos.below(), false);
-					ply.teleportTo(pos.below().getX(), pos.below().getY(), pos.below().getZ());
-					LightningBolt bolt = EntityType.LIGHTNING_BOLT.create(lvl);
-					bolt.moveTo(Vec3.atBottomCenterOf(pos.below()));
-					bolt.setVisualOnly(true);
-					lvl.addFreshEntity(bolt);
-				}
-			}
 		}
 	}
 
@@ -181,18 +151,7 @@ public class SupernaturalEvents {
 			} else if (SupernaturalManager.isVampire(player) || (SupernaturalManager.isWerewolf(player) && !stack.getFoodProperties(player).isMeat())) {
 				player.getFoodData().setFoodLevel(player.getFoodData().getFoodLevel() - (stack.getFoodProperties(player).getNutrition() * 2));
 			} else if (SupernaturalManager.isArtificer(player)) {
-				player.setHealth(player.getHealth() + (stack.getFoodProperties(player).getNutrition() / 2.0F));
-			}
-		}
-	}
-
-	@SubscribeEvent
-	public static void onItemCrafted(PlayerEvent.ItemCraftedEvent event) {
-		ItemStack stack = event.getCrafting();
-		if (SupernaturalManager.isArtificer(event.getEntity())) {
-			if (stack.is(SupernaturalTags.ARTIFICER)) {
-				stack.getOrCreateTag().putBoolean("Unbreakable", true);
-				stack.getOrCreateTag().putInt("HideFlags", 4);
+				player.setHealth(player.getHealth() + (stack.getFoodProperties(player).getNutrition() / 1.5F));
 			}
 		}
 	}
@@ -221,18 +180,17 @@ public class SupernaturalEvents {
 					if (bobs.getOwner() == target) {
 						bobs.hurt(event.getSource(), event.getAmount() * 0.45F);
 						event.setAmount(event.getAmount() * 0.3F);
+						break;
 					}
 				}
 			} else if (target instanceof TamableAnimal animal && animal.getOwner() != null && SupernaturalManager.isWerewolf(animal.getOwner())) {
 				if (target.blockPosition().closerThan(animal.getOwner().blockPosition(), 28)) {
-					float d = CombatRules.getDamageAfterAbsorb(event.getAmount(), animal.getOwner().getArmorValue(), (float) animal.getOwner().getAttributeValue(Attributes.ARMOR_TOUGHNESS));
-					int k = EnchantmentHelper.getDamageProtection(animal.getOwner().getArmorSlots(), event.getSource());
-					if (k > 0) {
-						d = CombatRules.getDamageAfterMagicAbsorb(d, (float) k);
-					}
-					event.setAmount(d);
-					if (target.level() instanceof ServerLevel lvl) {
-						lvl.sendParticles(ParticleTypes.ENCHANTED_HIT, target.getX(), (target.getY() + 0.5), target.getZ(), 8, 2, 1, 2, 0);
+					int dr = EnchantmentHelper.getDamageProtection(animal.getOwner().getArmorSlots(), event.getSource());
+					if (dr > 0) {
+						event.setAmount(CombatRules.getDamageAfterMagicAbsorb(event.getAmount(), (float) dr));
+						if (target.level() instanceof ServerLevel lvl) {
+							lvl.sendParticles(ParticleTypes.ENCHANTED_HIT, target.getX(), (target.getY() + 0.5), target.getZ(), 8, 2, 1, 2, 0);
+						}
 					}
 				}
 			}
@@ -240,18 +198,29 @@ public class SupernaturalEvents {
 				ItemStack weapon = source.getMainHandItem();
 				if (SupernaturalManager.isVampire(target)) {
 					int i = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.SMITE, weapon);
-					event.setAmount(event.getAmount() + ((float) i * 2.5F));
 					if (weapon.getItem() == Items.WOODEN_SWORD && target.getHealth() <= (target.getMaxHealth() * SupernaturalConfig.WOOD.get())) {
 						event.setAmount(Float.MAX_VALUE);
 						if (target.level() instanceof ServerLevel lvl) {
 							EntityType.BAT.spawn(lvl, target.blockPosition(), MobSpawnType.MOB_SUMMONED);
 						}
+					} else if (i > 0) {
+						event.setAmount(event.getAmount() + ((float) i * 2.5F));
+					} else {
+						event.setAmount(event.getAmount() * 0.85F);
 					}
-				} else if (SupernaturalManager.isWerewolf(target) && weapon.getDescriptionId().contains("iron")) {
-					target.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 120, 0));
-					event.setAmount(event.getAmount() * (1.0F + ((float) SupernaturalConfig.IRON.get() / 100)));
+				} else if (SupernaturalManager.isWerewolf(target)) {
+					if (weapon.getDescriptionId().contains("iron")) {
+						target.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 120, 0));
+						event.setAmount(event.getAmount() * (1.0F + ((float) SupernaturalConfig.IRON.get() / 100)));
+					} else {
+						event.setAmount(event.getAmount() * 0.85F);
+					}
+				} else if (SupernaturalManager.isArtificer(target)) {
+					if (SupernaturalManager.isVampire(source) || SupernaturalManager.isWerewolf(source)) {
+						event.setAmount(event.getAmount() * 0.55F);
+					}
 				}
-				if (!(target.getMobType() == MobType.UNDEAD) && !SupernaturalManager.isVampire(target) && !target.getType().is(SupernaturalTags.IMMUNITY)) {
+				if (!(target.getMobType() == MobType.UNDEAD || SupernaturalManager.isVampire(target) || target.getType().is(SupernaturalTags.IMMUNITY))) {
 					int i = EnchantmentHelper.getItemEnchantmentLevel(SupernaturalEnchantments.LEECHING.get(), weapon);
 					source.setHealth(source.getHealth() + ((float) i * SupernaturalConfig.LEECH.get()));
 					if (source instanceof Player vampyre && SupernaturalManager.isVampire(vampyre)) {
@@ -292,8 +261,8 @@ public class SupernaturalEvents {
 	public static void onEntitySpawned(EntityJoinLevelEvent event) {
 		Entity target = event.getEntity();
 		BlockPos pos = target.blockPosition();
-		if (event.getLevel() instanceof ServerLevel lvl) {
-			if (target instanceof Raider raidyr && !(lvl.isDay()) && !(raidyr.isPassenger()) && !(raidyr.isPatrolLeader())) {
+		if (event.getLevel() instanceof ServerLevel lvl && !event.loadedFromDisk()) {
+			if (target instanceof Raider raidyr && !(lvl.isDay() || raidyr.isPassenger() || raidyr.isPatrolLeader())) {
 				if (SupernaturalConfig.RAIDERS.get()) {
 					Raid raid = raidyr.getCurrentRaid();
 					if (raid != null) {
@@ -312,8 +281,8 @@ public class SupernaturalEvents {
 				if (ghost.getOwner() == null) {
 					ghost.setBoundOrigin(pos);
 				}
-				ghost.setLimitedLife(2000);
-			} else if (target instanceof MerA && !event.loadedFromDisk()) {
+				ghost.setLimitedLife(Mth.nextInt(ghost.getRandom(), 1200, 2400));
+			} else if (target instanceof MerA) {
 				if (Math.random() >= 0.85) {
 					SupernaturalMobs.MER_DIAMOND.get().spawn(lvl, pos, MobSpawnType.NATURAL);
 					event.setCanceled(true);
@@ -324,4 +293,4 @@ public class SupernaturalEvents {
 			}
 		}
 	}
-}
+}

@@ -8,8 +8,7 @@ import net.minecraftforge.client.gui.overlay.ForgeGui;
 import net.minecraftforge.client.event.RenderGuiOverlayEvent;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.api.distmarker.Dist;
-
-import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.Minecraft;
@@ -30,7 +29,7 @@ public class SupernaturalClientHUD {
 			if (mc.player.isCreative() || mc.player.isSpectator() || mc.player.isPassenger()) {
 				return;
 			}
-			if (SupernaturalManager.getSupernatural(mc.player, 1)) {
+			if (SupernaturalManager.isVampire(mc.player)) {
 				event.setCanceled(true);
 				RenderSystem.setShaderTexture(0, texture);
 				RenderSystem.enableBlend();
@@ -57,7 +56,7 @@ public class SupernaturalClientHUD {
 					}
 				}
 				RenderSystem.disableBlend();
-			} else if (SupernaturalManager.getSupernatural(mc.player, 3)) {
+			} else if (SupernaturalManager.isArtificer(mc.player)) {
 				event.setCanceled(true);
 			}
 		}

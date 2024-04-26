@@ -2,8 +2,7 @@ package net.salju.supernatural.entity.ai;
 
 import net.salju.supernatural.init.SupernaturalTags;
 import net.salju.supernatural.events.SupernaturalManager;
-
-import net.minecraft.world.entity.monster.Monster;
+import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.MobType;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -23,7 +22,7 @@ public class SupernaturalBloodSpellGoal extends AbstractSupernaturalSpellGoal {
 		if (this.user.getTarget() != null && !(this.user.getTarget().getMobType() == MobType.UNDEAD) && !SupernaturalManager.isVampire(this.user.getTarget()) && !this.user.getTarget().getType().is(SupernaturalTags.IMMUNITY)) {
 			if (this.user.getHealth() > (this.user.getMaxHealth() * 0.45)) {
 				return false;
-			} else {
+			} else if (super.canUse()) {
 				this.user.getTarget().addEffect(new MobEffectInstance(MobEffects.LEVITATION, 30, 0, false, false));
 				return true;
 			}
