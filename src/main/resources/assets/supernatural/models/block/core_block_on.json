@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_column",
+  "textures": {
+    "end": "supernatural:block/core_top_on",
+    "side": "supernatural:block/core_side_on"
+  }
+}
