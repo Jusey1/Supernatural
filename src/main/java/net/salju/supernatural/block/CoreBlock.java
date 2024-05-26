@@ -42,7 +42,7 @@ public class CoreBlock extends Block {
 	public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult rez) {
 		ItemStack stack = player.getItemInHand(hand);
 		Inventory invy = player.getInventory();
-		if (stack.is(Items.TOTEM_OF_UNDYING) && !state.getValue(POWERED)) {
+		if (stack.is(SupernaturalTags.TOTEMS) && !state.getValue(POWERED)) {
 			world.setBlock(pos, state.setValue(POWERED, Boolean.valueOf(true)), 3);
 			if (!player.isCreative()) {
 				stack.shrink(1);

@@ -8,7 +8,8 @@ import net.minecraftforge.client.gui.overlay.ForgeGui;
 import net.minecraftforge.client.event.RenderGuiOverlayEvent;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.animal.Animal;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.Minecraft;
@@ -26,7 +27,7 @@ public class SupernaturalClientHUD {
 		Minecraft mc = Minecraft.getInstance();
 		GuiGraphics gui = event.getGuiGraphics();
 		if (event.getOverlay().equals(VanillaGuiOverlay.FOOD_LEVEL.type())) {
-			if (mc.player.isCreative() || mc.player.isSpectator() || mc.player.isPassenger()) {
+			if (mc.player.isCreative() || mc.player.isSpectator() || (mc.player.isPassenger() && mc.player.getVehicle() instanceof Animal)) {
 				return;
 			}
 			if (SupernaturalManager.isVampire(mc.player)) {

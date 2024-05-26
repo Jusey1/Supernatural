@@ -16,4 +16,5 @@ public class SupernaturalTags {
 	public static final TagKey IMMUNITY = TagKey.create(Registries.ENTITY_TYPE, new ResourceLocation("supernatural:immunity"));
 	public static final TagKey<Item> ARTIFICER = ItemTags.create(new ResourceLocation("supernatural:unbreakable"));
 	public static final TagKey<Item> CANNON = ItemTags.create(new ResourceLocation("supernatural:cannon_recolor"));
+	public static final TagKey<Item> TOTEMS = ItemTags.create(new ResourceLocation("supernatural:totems"));
 }

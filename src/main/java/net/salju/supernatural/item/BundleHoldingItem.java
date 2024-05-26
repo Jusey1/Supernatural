@@ -34,11 +34,15 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.BlockPos;
 import net.minecraft.ChatFormatting;
+import javax.annotation.Nullable;
 import java.util.stream.Stream;
 import java.util.Optional;
 import java.util.List;
 
 public class BundleHoldingItem extends Item implements Vanishable {
+	@Nullable
+	private String bundleType;
+
 	public BundleHoldingItem(Item.Properties props) {
 		super(props);
 	}
@@ -46,19 +50,36 @@ public class BundleHoldingItem extends Item implements Vanishable {
 	@Override
 	public void appendHoverText(ItemStack stack, Level world, List<Component> list, TooltipFlag flag) {
 		super.appendHoverText(stack, world, list, flag);
-		list.add(Component.translatable("item.minecraft.bundle.fullness", getContentWeight(stack), 256).withStyle(ChatFormatting.GRAY));
+		if (!EnchantmentHelper.hasVanishingCurse(stack)) {
+			list.add(Component.translatable("item.minecraft.bundle.fullness", getContentWeight(stack), 256).withStyle(ChatFormatting.GRAY));
+		}
 	}
 
 	@Override
 	public Optional<TooltipComponent> getTooltipImage(ItemStack stack) {
 		NonNullList<ItemStack> list = NonNullList.create();
 		getContents(stack).forEach(list::add);
-		return Optional.of(new BundleTooltip(list, getContentWeight(stack)));
+		return (EnchantmentHelper.hasVanishingCurse(stack) ? super.getTooltipImage(stack) : Optional.of(new BundleTooltip(list, getContentWeight(stack))));
+	}
+
+	@Override
+	public String getDescriptionId(ItemStack stack) {
+		if (EnchantmentHelper.hasVanishingCurse(stack)) {
+			this.bundleType = "item.supernatural.bundle_of_vanishing";
+		} else {
+			this.bundleType = "item.supernatural.bundle_of_holding";
+		}
+		return this.bundleType;
 	}
 
 	@Override
 	public boolean isBarVisible(ItemStack stack) {
 		return getContentWeight(stack) > 0;
+	}
+
+	@Override
+	public boolean canFitInsideContainerItems() {
+		return (this.bundleType != "item.supernatural.bundle_of_holding" ? true : false);
 	}
 
 	@Override
@@ -78,15 +99,9 @@ public class BundleHoldingItem extends Item implements Vanishable {
 
 	@Override
 	public boolean onEntityItemUpdate(ItemStack stack, ItemEntity target) {
-		CompoundTag tag = stack.getOrCreateTag();
-		if (tag.contains("Items")) {
-			ListTag list = tag.getList("Items", 10);
-			for (int i = 0; i < list.size(); ++i) {
-				if (ItemStack.of(list.getCompound(i)).getItem() instanceof BundleHoldingItem) {
-					if (target.level() instanceof ServerLevel lvl) {
-						lvl.sendParticles(ParticleTypes.PORTAL, target.getX(), target.getY(), target.getZ(), 2, 0.5, 0.5, 0.5, 0.65);
-					}
-				}
+		if (isBomb(stack)) {
+			if (target.level() instanceof ServerLevel lvl) {
+				lvl.sendParticles(ParticleTypes.PORTAL, target.getX(), target.getY(), target.getZ(), 2, 0.5, 0.5, 0.5, 0.65);
 			}
 		}
 		return super.onEntityItemUpdate(stack, target);
@@ -96,34 +111,23 @@ public class BundleHoldingItem extends Item implements Vanishable {
 	public void inventoryTick(ItemStack stack, Level world, Entity target, int e, boolean check) {
 		super.inventoryTick(stack, world, target, e, check);
 		CompoundTag tag = stack.getOrCreateTag();
-		if (tag.contains("Items")) {
-			ListTag list = tag.getList("Items", 10);
-			for (int i = 0; i < list.size(); ++i) {
-				if (ItemStack.of(list.getCompound(i)).getItem() instanceof BundleHoldingItem) {
-					dropContents(ItemStack.of(list.getCompound(i)), target);
-					list.remove(i);
-					if (list.isEmpty()) {
-						stack.removeTagKey("Items");
-					}
-					dropContents(stack, target);
-					stack.shrink(1);
-					if (world instanceof ServerLevel lvl) {
-						ServerLevel loc = lvl.getServer().getLevel(Level.END);
-						lvl.playSound(null, target.blockPosition(), SoundEvents.ENDERMAN_TELEPORT, SoundSource.AMBIENT, 1.0F, (float) (0.8F + (Math.random() * 0.2)));
-						lvl.sendParticles(ParticleTypes.PORTAL, target.getX(), target.getY(), target.getZ(), 12, 0.5, 0.5, 0.5, 0.65);
-						if (target instanceof ServerPlayer ply) {
-							ply.teleportTo(loc, ply.getX(), 0, ply.getZ(), ply.getYRot(), ply.getXRot());
-						} else {
-							target.teleportTo(loc, target.getX(), 0, target.getZ(), RelativeMovement.ALL, target.getYRot(), target.getXRot());
-						}
-						loc.playSound(null, BlockPos.containing(target.getX(), 0, target.getZ()), SoundEvents.ENDERMAN_TELEPORT, SoundSource.AMBIENT, 1.0F, (float) (0.8F + (Math.random() * 0.2)));
-						loc.sendParticles(ParticleTypes.PORTAL, target.getX(), 0, target.getZ(), 12, 0.5, 0.5, 0.5, 0.65);
-					}
+		if (isBomb(stack)) {
+			stack.shrink(1);
+			if (world instanceof ServerLevel lvl) {
+				ServerLevel loc = lvl.getServer().getLevel(Level.END);
+				lvl.playSound(null, target.blockPosition(), SoundEvents.ENDERMAN_TELEPORT, SoundSource.AMBIENT, 1.0F, (float) (0.8F + (Math.random() * 0.2)));
+				lvl.sendParticles(ParticleTypes.PORTAL, target.getX(), target.getY(), target.getZ(), 12, 0.5, 0.5, 0.5, 0.65);
+				if (target instanceof ServerPlayer ply) {
+					ply.teleportTo(loc, ply.getX(), 0, ply.getZ(), ply.getYRot(), ply.getXRot());
+				} else {
+					target.teleportTo(loc, target.getX(), 0, target.getZ(), RelativeMovement.ALL, target.getYRot(), target.getXRot());
 				}
+				loc.playSound(null, BlockPos.containing(target.getX(), 0, target.getZ()), SoundEvents.ENDERMAN_TELEPORT, SoundSource.AMBIENT, 1.0F, (float) (0.8F + (Math.random() * 0.2)));
+				loc.sendParticles(ParticleTypes.PORTAL, target.getX(), 0, target.getZ(), 12, 0.5, 0.5, 0.5, 0.65);
 			}
-			if (EnchantmentHelper.hasVanishingCurse(stack)) {
-				stack.removeTagKey("Items");
-			}
+		}
+		if (tag.contains("Items") && EnchantmentHelper.hasVanishingCurse(stack)) {
+			stack.removeTagKey("Items");
 		}
 	}
 
@@ -133,11 +137,20 @@ public class BundleHoldingItem extends Item implements Vanishable {
 			return false;
 		} else {
 			ItemStack target = slot.getItem();
-			if (target.isEmpty() && (getContentWeight(stack) > 0)) {
+			if (target.isEmpty() && getContentWeight(stack) > 0) {
 				this.playRemoveOneSound(player);
 				removeOne(stack).ifPresent((item) -> {
 					add(stack, slot.safeInsert(item));
 				});
+			} else if (target.getItem() instanceof BundleHoldingItem) {
+				if (getContentWeight(stack) <= 0 && getContentWeight(target) <= 0) {
+					this.setBomb(stack);
+					this.playInsertSound(player);
+					target.shrink(target.getCount());
+				}
+			} else if (EnchantmentHelper.hasVanishingCurse(stack) && !target.isEmpty()) {
+				this.playInsertSound(player);
+				target.shrink(target.getCount());
 			} else if (target.getItem().canFitInsideContainerItems()) {
 				int i = (256 - getContentWeight(stack));
 				if (add(stack, slot.safeTake(target.getCount(), i, player))) {
@@ -150,13 +163,24 @@ public class BundleHoldingItem extends Item implements Vanishable {
 
 	@Override
 	public boolean overrideOtherStackedOnMe(ItemStack stack, ItemStack target, Slot slot, ClickAction action, Player player, SlotAccess acc) {
-		if (action == ClickAction.SECONDARY && slot.allowModification(player)) {
+		if (action != ClickAction.SECONDARY) {
+			return false;
+		} else if (slot.allowModification(player)) {
 			if (target.isEmpty()) {
 				removeOne(stack).ifPresent((i) -> {
 					this.playRemoveOneSound(player);
 					acc.set(i);
 				});
-			} else {
+			} else if (target.getItem() instanceof BundleHoldingItem) {
+				if (getContentWeight(stack) <= 0 && getContentWeight(target) <= 0) {
+					this.setBomb(stack);
+					this.playInsertSound(player);
+					target.shrink(target.getCount());
+				}
+			} else if (EnchantmentHelper.hasVanishingCurse(stack)) {
+				this.playInsertSound(player);
+				target.shrink(target.getCount());
+			} else if (target.getItem().canFitInsideContainerItems()) {
 				int i = (256 - getContentWeight(stack));
 				if (add(stack, target)) {
 					this.playInsertSound(player);
@@ -179,6 +203,17 @@ public class BundleHoldingItem extends Item implements Vanishable {
 		} else {
 			return InteractionResultHolder.fail(stack);
 		}
+	}
+
+	private ItemStack setBomb(ItemStack stack) {
+		CompoundTag tag = stack.getOrCreateTag();
+		tag.putBoolean("BundleBomb", true);
+		return stack;
+	}
+
+	private boolean isBomb(ItemStack stack) {
+		CompoundTag tag = stack.getOrCreateTag();
+		return tag.getBoolean("BundleBomb");
 	}
 
 	private Optional<CompoundTag> getMatchingItem(ItemStack stack, ListTag list) {
