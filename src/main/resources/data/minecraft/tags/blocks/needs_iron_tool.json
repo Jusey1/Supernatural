@@ -2,6 +2,8 @@
   "replace": false,
   "values": [
     "supernatural:grave_soil",
-    "supernatural:ritual_altar"
+    "supernatural:ritual_altar",
+    "supernatural:power_block",
+    "supernatural:core_block"
   ]
 }
