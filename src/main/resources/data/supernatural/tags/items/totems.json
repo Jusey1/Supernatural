@@ -1,0 +1,14 @@
+{
+  "replace": false,
+  "values": [
+    "minecraft:totem_of_undying",
+    {
+      "id": "alexscaves:totem_of_possession",
+      "required": false
+    },
+    {
+      "id": "#friendsandfoes:totems",
+      "required": false
+    }
+  ]
+}
