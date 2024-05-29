@@ -58,17 +58,7 @@ public class CoreBlock extends Block {
 				}
 				return InteractionResult.SUCCESS;
 			} else if (SupernaturalManager.isArtificer(player)) {
-				if (isUnbreakable(stack) && invy.contains(new ItemStack(Items.IRON_INGOT)) && invy.getItem(invy.findSlotMatchingItem(new ItemStack(Items.IRON_INGOT))).getCount() >= 12) {
-					int i = Mth.nextInt(player.getRandom(), 8, 12);
-					invy.getItem(invy.findSlotMatchingItem(new ItemStack(Items.IRON_INGOT))).shrink(i);
-					stack.getOrCreateTag().putBoolean("Unbreakable", true);
-					stack.getOrCreateTag().putInt("HideFlags", 4);
-					stack.setDamageValue(0);
-					if (world instanceof ServerLevel lvl) {
-						lvl.playSound(null, pos, SoundEvents.ANVIL_USE, SoundSource.BLOCKS, 0.85F, (float) (0.8F + (Math.random() * 0.2)));
-					}
-					return InteractionResult.SUCCESS;
-				} else if (stack.is(Items.IRON_INGOT) && stack.getCount() >= 12) {
+				if (stack.is(Items.IRON_INGOT) && stack.getCount() >= 12) {
 					if (world instanceof ServerLevel lvl) {
 						int i = Mth.nextInt(player.getRandom(), 6, 12);
 						return createItem(lvl, pos, stack, new ItemStack(SupernaturalItems.CANNONBALL.get()), i, Mth.nextInt(player.getRandom(), 4, i));

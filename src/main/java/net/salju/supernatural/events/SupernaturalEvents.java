@@ -137,7 +137,7 @@ public class SupernaturalEvents {
 	@SubscribeEvent
 	public static void onUseItemFinish(LivingEntityUseItemEvent.Finish event) {
 		ItemStack stack = event.getItem();
-		if (event.getEntity() instanceof Player player && stack.isEdible() && player.level() instanceof ServerLevel lvl) {
+		if (event.getEntity() instanceof Player player && stack.isEdible()) {
 			if (stack.is(Items.ENCHANTED_GOLDEN_APPLE) && player.getOffhandItem().is(Items.TOTEM_OF_UNDYING) && (SupernaturalManager.isVampire(player) || SupernaturalManager.isWerewolf(player))) {
 				player.level().broadcastEntityEvent(player, (byte) 35);
 				if (SupernaturalManager.isVampire(player)) {
@@ -149,9 +149,9 @@ public class SupernaturalEvents {
 					player.getOffhandItem().shrink(1);
 				}
 			} else if (SupernaturalManager.isVampire(player) || (SupernaturalManager.isWerewolf(player) && !stack.getFoodProperties(player).isMeat())) {
-				player.getFoodData().setFoodLevel(player.getFoodData().getFoodLevel() - (stack.getFoodProperties(player).getNutrition() * 2));
+				player.getFoodData().setFoodLevel(player.getFoodData().getFoodLevel() - stack.getFoodProperties(player).getNutrition());
 			} else if (SupernaturalManager.isArtificer(player)) {
-				player.setHealth(player.getHealth() + (stack.getFoodProperties(player).getNutrition() / 1.5F));
+				player.heal(stack.getFoodProperties(player).getNutrition() / 1.5F);
 			}
 		}
 	}
@@ -222,7 +222,7 @@ public class SupernaturalEvents {
 				}
 				if (!(target.getMobType() == MobType.UNDEAD || SupernaturalManager.isVampire(target) || target.getType().is(SupernaturalTags.IMMUNITY))) {
 					int i = EnchantmentHelper.getItemEnchantmentLevel(SupernaturalEnchantments.LEECHING.get(), weapon);
-					source.setHealth(source.getHealth() + ((float) i * SupernaturalConfig.LEECH.get()));
+					source.heal((float) i * SupernaturalConfig.LEECH.get());
 					if (source instanceof Player vampyre && SupernaturalManager.isVampire(vampyre)) {
 						if (vampyre.getFoodData().getFoodLevel() < 20) {
 							vampyre.getFoodData().setFoodLevel(vampyre.getFoodData().getFoodLevel() + 1 + (i * 1));

@@ -1,5 +1,6 @@
 package net.salju.supernatural.item;
 
+import net.salju.supernatural.init.SupernaturalItems;
 import net.salju.supernatural.events.SupernaturalManager;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
@@ -24,6 +25,7 @@ import net.minecraft.util.Mth;
 import net.minecraft.stats.Stats;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.network.chat.Component;
@@ -34,15 +36,11 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.BlockPos;
 import net.minecraft.ChatFormatting;
-import javax.annotation.Nullable;
 import java.util.stream.Stream;
 import java.util.Optional;
 import java.util.List;
 
 public class BundleHoldingItem extends Item implements Vanishable {
-	@Nullable
-	private String bundleType;
-
 	public BundleHoldingItem(Item.Properties props) {
 		super(props);
 	}
@@ -63,23 +61,13 @@ public class BundleHoldingItem extends Item implements Vanishable {
 	}
 
 	@Override
-	public String getDescriptionId(ItemStack stack) {
-		if (EnchantmentHelper.hasVanishingCurse(stack)) {
-			this.bundleType = "item.supernatural.bundle_of_vanishing";
-		} else {
-			this.bundleType = "item.supernatural.bundle_of_holding";
-		}
-		return this.bundleType;
-	}
-
-	@Override
 	public boolean isBarVisible(ItemStack stack) {
 		return getContentWeight(stack) > 0;
 	}
 
 	@Override
 	public boolean canFitInsideContainerItems() {
-		return (this.bundleType != "item.supernatural.bundle_of_holding" ? true : false);
+		return false;
 	}
 
 	@Override
@@ -126,8 +114,14 @@ public class BundleHoldingItem extends Item implements Vanishable {
 				loc.sendParticles(ParticleTypes.PORTAL, target.getX(), 0, target.getZ(), 12, 0.5, 0.5, 0.5, 0.65);
 			}
 		}
-		if (tag.contains("Items") && EnchantmentHelper.hasVanishingCurse(stack)) {
-			stack.removeTagKey("Items");
+		if (EnchantmentHelper.hasVanishingCurse(stack)) {
+			if (tag.contains("Items")) {
+				dropContents(stack, target);
+			}
+			stack.shrink(stack.getCount());
+			if (target instanceof Player player) {
+				player.getInventory().add(e, new ItemStack(SupernaturalItems.BUNDLE_VANISHING.get()));
+			}
 		}
 	}
 
@@ -138,23 +132,20 @@ public class BundleHoldingItem extends Item implements Vanishable {
 		} else {
 			ItemStack target = slot.getItem();
 			if (target.isEmpty() && getContentWeight(stack) > 0) {
-				this.playRemoveOneSound(player);
+				this.playSound(player, SoundEvents.BUNDLE_REMOVE_ONE);
 				removeOne(stack).ifPresent((item) -> {
 					add(stack, slot.safeInsert(item));
 				});
-			} else if (target.getItem() instanceof BundleHoldingItem) {
+			} else if (target.getItem() instanceof BundleHoldingItem || target.getItem() instanceof BundleVanishingItem) {
 				if (getContentWeight(stack) <= 0 && getContentWeight(target) <= 0) {
 					this.setBomb(stack);
-					this.playInsertSound(player);
+					this.playSound(player, SoundEvents.BUNDLE_INSERT);
 					target.shrink(target.getCount());
 				}
-			} else if (EnchantmentHelper.hasVanishingCurse(stack) && !target.isEmpty()) {
-				this.playInsertSound(player);
-				target.shrink(target.getCount());
 			} else if (target.getItem().canFitInsideContainerItems()) {
 				int i = (256 - getContentWeight(stack));
 				if (add(stack, slot.safeTake(target.getCount(), i, player))) {
-					this.playInsertSound(player);
+					this.playSound(player, SoundEvents.BUNDLE_INSERT);
 				}
 			}
 			return true;
@@ -168,22 +159,19 @@ public class BundleHoldingItem extends Item implements Vanishable {
 		} else if (slot.allowModification(player)) {
 			if (target.isEmpty()) {
 				removeOne(stack).ifPresent((i) -> {
-					this.playRemoveOneSound(player);
+					this.playSound(player, SoundEvents.BUNDLE_REMOVE_ONE);
 					acc.set(i);
 				});
-			} else if (target.getItem() instanceof BundleHoldingItem) {
+			} else if (target.getItem() instanceof BundleHoldingItem || target.getItem() instanceof BundleVanishingItem) {
 				if (getContentWeight(stack) <= 0 && getContentWeight(target) <= 0) {
 					this.setBomb(stack);
-					this.playInsertSound(player);
+					this.playSound(player, SoundEvents.BUNDLE_INSERT);
 					target.shrink(target.getCount());
 				}
-			} else if (EnchantmentHelper.hasVanishingCurse(stack)) {
-				this.playInsertSound(player);
-				target.shrink(target.getCount());
 			} else if (target.getItem().canFitInsideContainerItems()) {
 				int i = (256 - getContentWeight(stack));
 				if (add(stack, target)) {
-					this.playInsertSound(player);
+					this.playSound(player, SoundEvents.BUNDLE_INSERT);
 					target.shrink(i);
 				}
 			}
@@ -197,7 +185,7 @@ public class BundleHoldingItem extends Item implements Vanishable {
 	public InteractionResultHolder<ItemStack> use(Level world, Player player, InteractionHand hand) {
 		ItemStack stack = player.getItemInHand(hand);
 		if (dropContents(stack, player)) {
-			this.playDropContentsSound(player);
+			this.playSound(player, SoundEvents.BUNDLE_DROP_CONTENTS);
 			player.awardStat(Stats.ITEM_USED.get(this));
 			return InteractionResultHolder.sidedSuccess(stack, world.isClientSide());
 		} else {
@@ -331,15 +319,11 @@ public class BundleHoldingItem extends Item implements Vanishable {
 		}
 	}
 
-	private void playRemoveOneSound(Entity target) {
-		target.playSound(SoundEvents.BUNDLE_REMOVE_ONE, 0.8F, 0.8F + target.level().getRandom().nextFloat() * 0.4F);
-	}
-
-	private void playInsertSound(Entity target) {
-		target.playSound(SoundEvents.BUNDLE_INSERT, 0.8F, 0.8F + target.level().getRandom().nextFloat() * 0.4F);
-	}
-
-	private void playDropContentsSound(Entity target) {
-		target.playSound(SoundEvents.BUNDLE_DROP_CONTENTS, 0.8F, 0.8F + target.level().getRandom().nextFloat() * 0.4F);
+	private void playSound(Entity target, SoundEvent sound) {
+		if (target.level() instanceof ServerLevel lvl) {
+			lvl.playSound(null, target.blockPosition(), sound, SoundSource.AMBIENT, 1.0F, 0.8F + lvl.getRandom().nextFloat() * 0.4F);
+		} else {
+			target.playSound(sound, 0.8F, 0.8F + target.level().getRandom().nextFloat() * 0.4F);
+		}
 	}
 }
