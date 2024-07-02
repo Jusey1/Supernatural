@@ -4,7 +4,8 @@ import net.salju.supernatural.init.SupernaturalTags;
 import net.salju.supernatural.init.SupernaturalItems;
 import net.salju.supernatural.init.SupernaturalEffects;
 import net.salju.supernatural.events.SupernaturalManager;
-import net.minecraft.world.phys.Vec3;
+
+import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -14,6 +15,9 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.item.enchantment.Enchantments;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.entity.player.Player;
@@ -29,6 +33,8 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.core.BlockPos;
+
+import java.util.Map;
 
 public class CoreBlock extends Block {
 	public static final BooleanProperty POWERED = BlockStateProperties.POWERED;
@@ -58,7 +64,28 @@ public class CoreBlock extends Block {
 				}
 				return InteractionResult.SUCCESS;
 			} else if (SupernaturalManager.isArtificer(player)) {
-				if (stack.is(Items.IRON_INGOT) && stack.getCount() >= 12) {
+				if (stack.is(SupernaturalTags.ARTIFICER) && stack.isDamageableItem()) {
+					if (invy.contains(new ItemStack(Items.IRON_INGOT)) && invy.getItem(invy.findSlotMatchingItem(new ItemStack(Items.IRON_INGOT))).getCount() >= 6) {
+						if (world instanceof ServerLevel lvl) {
+							int i = Mth.nextInt(player.getRandom(), 2, 6);
+							invy.getItem(invy.findSlotMatchingItem(new ItemStack(Items.IRON_INGOT))).shrink(i);
+							stack.hideTooltipPart(ItemStack.TooltipPart.UNBREAKABLE);
+							stack.getOrCreateTag().putBoolean("Unbreakable", true);
+							lvl.playSound(null, pos, SoundEvents.ANVIL_USE, SoundSource.BLOCKS, 0.85F, (float) (0.8F + (Math.random() * 0.2)));
+							if (stack.isEnchanted()) {
+								Map<Enchantment, Integer> enchs = EnchantmentHelper.getEnchantments(stack);
+								if (enchs.containsKey(Enchantments.UNBREAKING)) {
+									enchs.remove(Enchantments.UNBREAKING);
+								}
+								if (enchs.containsKey(Enchantments.MENDING)) {
+									enchs.remove(Enchantments.MENDING);
+								}
+								EnchantmentHelper.setEnchantments(enchs, stack);
+							}
+						}
+						return InteractionResult.SUCCESS;
+					}
+				} else if (stack.is(Items.IRON_INGOT) && stack.getCount() >= 12) {
 					if (world instanceof ServerLevel lvl) {
 						int i = Mth.nextInt(player.getRandom(), 6, 12);
 						return createItem(lvl, pos, stack, new ItemStack(SupernaturalItems.CANNONBALL.get()), i, Mth.nextInt(player.getRandom(), 4, i));
@@ -161,4 +188,4 @@ public class CoreBlock extends Block {
 			}
 		}
 	}
-}
+}

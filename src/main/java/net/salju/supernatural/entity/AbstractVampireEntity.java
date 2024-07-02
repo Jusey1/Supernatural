@@ -5,8 +5,7 @@ import net.salju.supernatural.init.SupernaturalConfig;
 import net.salju.supernatural.entity.ai.VampireAttackSelector;
 import net.salju.supernatural.entity.ai.SupernaturalSpellcasterGoal;
 import net.salju.supernatural.entity.ai.SupernaturalBloodSpellGoal;
-
-import net.minecraft.world.level.Level;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.entity.raid.Raider;
 import net.minecraft.world.entity.monster.SpellcasterIllager;
 import net.minecraft.world.entity.monster.AbstractIllager;
@@ -148,4 +147,4 @@ public class AbstractVampireEntity extends SpellcasterIllager {
 	public SoundEvent getCastingSoundEvent() {
 		return SoundEvents.EVOKER_CAST_SPELL;
 	}
-}
+}

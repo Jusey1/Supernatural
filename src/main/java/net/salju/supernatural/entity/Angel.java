@@ -46,6 +46,7 @@ public class Angel extends Mob {
 	public Angel(EntityType<Angel> type, Level world) {
 		super(type, world);
 		this.setMaxUpStep(1.0F);
+		this.setPersistenceRequired();
 	}
 
 	@Override
@@ -250,4 +251,4 @@ public class Angel extends Mob {
 					(double) (this.getBbWidth() / 4.0F), 0.05D);
 		}
 	}
-}
+}
