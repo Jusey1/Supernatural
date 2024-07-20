@@ -46,13 +46,11 @@ public class ContractItem extends Item {
 			if (this.requiresBlood()) {
 				list.add(Component.translatable("item.supernatural.contract.blood").withStyle(ChatFormatting.GRAY));
 			}
-			if (this.requiresFullmoon()) {
-				list.add(Component.translatable("item.supernatural.contract.werewolf").withStyle(ChatFormatting.GRAY));
-			}
 			if (this.requiresGoatSacrifice()) {
 				list.add(Component.translatable("item.supernatural.contract.sacrifice.goat").withStyle(ChatFormatting.GRAY));
 			}
 		} else {
+			list.add(Component.translatable("item.supernatural.contract.instructo").withStyle(ChatFormatting.GRAY));
 			list.add(Component.translatable("item.supernatural.contract.desc").withStyle(ChatFormatting.GOLD));
 		}
 		if (target != null && world != null) {
@@ -88,15 +86,11 @@ public class ContractItem extends Item {
 	}
 
 	public boolean requiresGoatSacrifice() {
-		return ((this.requiresBlood() || this.requiresFullmoon()) && SupernaturalConfig.SACRIFICE.get());
+		return (this.requiresBlood() && SupernaturalConfig.SACRIFICE.get());
 	}
 
 	public boolean requiresBlood() {
 		return (this.is(Types.VAMPIRISM) && SupernaturalConfig.VAMPIRISM.get());
-	}
-
-	public boolean requiresFullmoon() {
-		return (this.is(Types.WEREWOLFISM) && SupernaturalConfig.WEREWOLFISM.get());
 	}
 
 	public boolean is(ContractItem.Type type) {
@@ -112,6 +106,6 @@ public class ContractItem extends Item {
 	}
 
 	public static enum Types implements ContractItem.Type {
-		VAMPIRISM, WEREWOLFISM, REANIMATE, VEXATION, MISFORTUNE, PUMPKIN, KNOWLEDGE, FORTUNE, DEVIL;
+		VAMPIRISM, REANIMATE, VEXATION, MISFORTUNE, PUMPKIN, KNOWLEDGE, FORTUNE;
 	}
 }

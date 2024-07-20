@@ -115,7 +115,7 @@ public class Angel extends Mob {
 		if (this.level() instanceof ServerLevel lvl && this.isAlive() && this.isEffectiveAi()) {
 			if (this.isCursed()) {
 				Player player = lvl.getNearestPlayer(this, 32);
-				if (player != null && !player.isCreative() && !player.isSpectator() && !SupernaturalManager.isVampire(player) && !SupernaturalManager.isWerewolf(player)) {
+				if (player != null && !player.isCreative() && !player.isSpectator() && !SupernaturalManager.isVampire(player)) {
 					if (player.isCloseEnough(this, 1)) {
 						if (player.isAlive()) {
 							this.getEntityData().set(POSE, 0);
@@ -128,7 +128,7 @@ public class Angel extends Mob {
 						int i = 0;
 						List<ServerPlayer> list = lvl.getPlayers(LivingEntity::isAlive);
 						for (ServerPlayer ply : list) {
-							if (!SupernaturalManager.isVampire(ply) && !SupernaturalManager.isWerewolf(ply)) {
+							if (!SupernaturalManager.isVampire(ply)) {
 								if (this.isLookingAtMe(ply)) {
 									++i;
 								} else {

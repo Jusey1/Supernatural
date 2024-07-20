@@ -4,8 +4,7 @@ import net.salju.supernatural.init.SupernaturalTags;
 import net.salju.supernatural.init.SupernaturalItems;
 import net.salju.supernatural.init.SupernaturalEffects;
 import net.salju.supernatural.events.SupernaturalManager;
-
-import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -33,8 +32,7 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.core.BlockPos;
-
-import java.util.Map;
+import java.util.Map;
 
 public class CoreBlock extends Block {
 	public static final BooleanProperty POWERED = BlockStateProperties.POWERED;

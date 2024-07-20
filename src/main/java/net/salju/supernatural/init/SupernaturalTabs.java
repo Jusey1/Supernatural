@@ -31,16 +31,14 @@ public class SupernaturalTabs {
 				tabData.accept(SupernaturalItems.SOULGEM.get());
 				tabData.accept(SupernaturalItems.PLAYER_BLOOD.get());
 				tabData.accept(SupernaturalItems.VAMPIRISM_CONTRACT.get());
-				tabData.accept(SupernaturalItems.WEREWOLFISM_CONTRACT.get());
 				tabData.accept(SupernaturalItems.VEXATION_CONTRACT.get());
 				tabData.accept(SupernaturalItems.MISFORTUNE_CONTRACT.get());
 				tabData.accept(SupernaturalItems.PUMPKIN_CONTRACT.get());
 				tabData.accept(SupernaturalItems.REANIMATE_CONTRACT.get());
 				tabData.accept(SupernaturalItems.KNOWLEDGE_CONTRACT.get());
 				tabData.accept(SupernaturalItems.FORTUNE_CONTRACT.get());
-				tabData.accept(SupernaturalItems.DEVIL_CONTRACT.get());
-				tabData.accept(SupernaturalBlocks.POWER_BLOCK.get().asItem());
 				tabData.accept(SupernaturalBlocks.CORE_BLOCK.get().asItem());
+				tabData.accept(SupernaturalBlocks.POWER_BLOCK.get().asItem());
 				tabData.accept(SupernaturalItems.CANNON.get());
 				tabData.accept(SupernaturalItems.CANNONBALL.get());
 				tabData.accept(SupernaturalItems.COPPER_CANNONBALL.get());

@@ -33,7 +33,6 @@ import net.minecraft.world.entity.monster.Vex;
 import net.minecraft.world.entity.monster.SpellcasterIllager;
 import net.minecraft.world.entity.monster.Slime;
 import net.minecraft.world.entity.monster.Evoker;
-import net.minecraft.world.entity.TamableAnimal;
 import net.minecraft.world.entity.MobType;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.Mob;
@@ -42,12 +41,8 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.effect.MobEffects;
-import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.effect.MobEffectCategory;
-import net.minecraft.world.damagesource.CombatRules;
 import net.minecraft.util.Mth;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.network.chat.Component;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.BlockPos;
 
@@ -79,16 +74,17 @@ public class SupernaturalEvents {
 							}
 						}
 					}
-				} else if (SupernaturalManager.isWerewolf(player)) {
-					SupernaturalManager.addWerewolfEffects(player);
-					if (lvl.getMoonPhase() == 0 && !lvl.isDay()) {
-						if (player.isSleeping() && player.getSleepTimer() >= 85) {
-							player.stopSleeping();
-							player.displayClientMessage(Component.translatable("gui.supernatural.werewolf_sleep"), true);
-						}
-					}
 				} else if (SupernaturalManager.isArtificer(player)) {
 					SupernaturalManager.addArtificerEffects(player);
+					player.getFoodData().setSaturation(1);
+					if (player.hasEffect(MobEffects.HUNGER)) {
+						player.getFoodData().setFoodLevel(1);
+					} else {
+						player.getFoodData().setFoodLevel(18);
+					}
+				}
+			} else {
+				if (SupernaturalManager.isArtificer(player)) {
 					player.getFoodData().setSaturation(1);
 					if (player.hasEffect(MobEffects.HUNGER)) {
 						player.getFoodData().setFoodLevel(1);
@@ -104,8 +100,6 @@ public class SupernaturalEvents {
 	public static void onPlayerClone(PlayerEvent.Clone event) {
 		if (SupernaturalManager.isVampire(event.getOriginal())) {
 			SupernaturalManager.setVampire(event.getEntity(), true);
-		} else if (SupernaturalManager.isWerewolf(event.getOriginal())) {
-			SupernaturalManager.setWerewolf(event.getEntity(), true);
 		} else if (SupernaturalManager.isArtificer(event.getOriginal())) {
 			SupernaturalManager.setArtificer(event.getEntity(), true);
 		}
@@ -138,17 +132,13 @@ public class SupernaturalEvents {
 	public static void onUseItemFinish(LivingEntityUseItemEvent.Finish event) {
 		ItemStack stack = event.getItem();
 		if (event.getEntity() instanceof Player player && stack.isEdible()) {
-			if (stack.is(Items.ENCHANTED_GOLDEN_APPLE) && player.getOffhandItem().is(Items.TOTEM_OF_UNDYING) && (SupernaturalManager.isVampire(player) || SupernaturalManager.isWerewolf(player))) {
+			if (stack.is(Items.ENCHANTED_GOLDEN_APPLE) && player.getOffhandItem().is(Items.TOTEM_OF_UNDYING) && SupernaturalManager.isVampire(player)) {
 				player.level().broadcastEntityEvent(player, (byte) 35);
-				if (SupernaturalManager.isVampire(player)) {
-					SupernaturalManager.setVampire(player, false);
-				} else {
-					SupernaturalManager.setWerewolf(player, false);
-				}
+				SupernaturalManager.setVampire(player, false);
 				if (!player.isCreative()) {
 					player.getOffhandItem().shrink(1);
 				}
-			} else if (SupernaturalManager.isVampire(player) || (SupernaturalManager.isWerewolf(player) && !stack.getFoodProperties(player).isMeat())) {
+			} else if (SupernaturalManager.isVampire(player)) {
 				player.getFoodData().setFoodLevel(player.getFoodData().getFoodLevel() - stack.getFoodProperties(player).getNutrition());
 			} else if (SupernaturalManager.isArtificer(player)) {
 				player.heal(stack.getFoodProperties(player).getNutrition() / 1.5F);
@@ -158,13 +148,7 @@ public class SupernaturalEvents {
 
 	@SubscribeEvent
 	public static void onEffect(MobEffectEvent.Applicable event) {
-		if (SupernaturalManager.isWerewolf(event.getEntity()) && event.getEffectInstance().getEffect().getCategory() == MobEffectCategory.BENEFICIAL) {
-			for (TamableAnimal animal : event.getEntity().level().getEntitiesOfClass(TamableAnimal.class, event.getEntity().getBoundingBox().inflate(24.85D))) {
-				if (animal.isOwnedBy(event.getEntity())) {
-					animal.addEffect(event.getEffectInstance());
-				}
-			}
-		} else if (SupernaturalManager.isArtificer(event.getEntity())) {
+		if (SupernaturalManager.isArtificer(event.getEntity())) {
 			if (event.getEffectInstance().getEffect() == MobEffects.POISON) {
 				event.setResult(Result.DENY);
 			}
@@ -183,16 +167,6 @@ public class SupernaturalEvents {
 						break;
 					}
 				}
-			} else if (target instanceof TamableAnimal animal && animal.getOwner() != null && SupernaturalManager.isWerewolf(animal.getOwner())) {
-				if (target.blockPosition().closerThan(animal.getOwner().blockPosition(), 28)) {
-					int dr = EnchantmentHelper.getDamageProtection(animal.getOwner().getArmorSlots(), event.getSource());
-					if (dr > 0) {
-						event.setAmount(CombatRules.getDamageAfterMagicAbsorb(event.getAmount(), (float) dr));
-						if (target.level() instanceof ServerLevel lvl) {
-							lvl.sendParticles(ParticleTypes.ENCHANTED_HIT, target.getX(), (target.getY() + 0.5), target.getZ(), 8, 2, 1, 2, 0);
-						}
-					}
-				}
 			}
 			if (event.getSource().getDirectEntity() != null && event.getSource().getDirectEntity() instanceof LivingEntity source) {
 				ItemStack weapon = source.getMainHandItem();
@@ -208,15 +182,8 @@ public class SupernaturalEvents {
 					} else {
 						event.setAmount(event.getAmount() * 0.85F);
 					}
-				} else if (SupernaturalManager.isWerewolf(target)) {
-					if (weapon.getDescriptionId().contains("iron")) {
-						target.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 120, 0));
-						event.setAmount(event.getAmount() * (1.0F + ((float) SupernaturalConfig.IRON.get() / 100)));
-					} else {
-						event.setAmount(event.getAmount() * 0.85F);
-					}
 				} else if (SupernaturalManager.isArtificer(target)) {
-					if (SupernaturalManager.isVampire(source) || SupernaturalManager.isWerewolf(source)) {
+					if (SupernaturalManager.isVampire(source)) {
 						event.setAmount(event.getAmount() * 0.55F);
 					}
 				}

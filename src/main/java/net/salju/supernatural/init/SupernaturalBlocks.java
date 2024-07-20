@@ -12,7 +12,7 @@ import net.minecraft.world.level.block.Block;
 
 public class SupernaturalBlocks {
 	public static final DeferredRegister<Block> REGISTRY = DeferredRegister.create(ForgeRegistries.BLOCKS, SupernaturalMod.MODID);
-	public static final RegistryObject<Block> GRAVE_SOIL = REGISTRY.register("grave_soil", () -> new GraveSoilBlock(BlockBehaviour.Properties.of().mapColor(MapColor.PODZOL).sound(SoundType.SOUL_SOIL).strength(1.2f, 8f).requiresCorrectToolForDrops().randomTicks()));
+	public static final RegistryObject<Block> GRAVE_SOIL = REGISTRY.register("grave_soil", () -> new GraveSoilBlock(BlockBehaviour.Properties.of().mapColor(MapColor.PODZOL).sound(SoundType.SOUL_SOIL).strength(0.5f, 2f).randomTicks()));
 	public static final RegistryObject<Block> RITUAL_ALTAR = REGISTRY.register("ritual_altar", () -> new RitualBlock(BlockBehaviour.Properties.of().mapColor(MapColor.DEEPSLATE).sound(SoundType.DEEPSLATE_BRICKS).strength(1.2f, 8f).requiresCorrectToolForDrops()));
 	public static final RegistryObject<Block> CORE_BLOCK = REGISTRY.register("core_block", () -> new CoreBlock(BlockBehaviour.Properties.of().mapColor(MapColor.METAL).sound(SoundType.COPPER).strength(1.2f, 8f).requiresCorrectToolForDrops()));
 	public static final RegistryObject<Block> POWER_BLOCK = REGISTRY.register("power_block", () -> new PowerBlock(BlockBehaviour.Properties.of().mapColor(MapColor.METAL).sound(SoundType.COPPER).strength(1.2f, 8f).requiresCorrectToolForDrops()));

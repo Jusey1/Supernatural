@@ -53,13 +53,6 @@ public class Contracts {
 				if (SupernaturalConfig.SACRIFICE.get()) {
 					goat.hurt(goat.damageSources().magic(), Float.MAX_VALUE);
 				}
-			} else if (type.is(ContractItem.Types.WEREWOLFISM) && SupernaturalConfig.WEREWOLFISM.get() && p == 20 && !player.hasEffect(SupernaturalEffects.SUPERNATURAL.get()) && lvl.getMoonPhase() == 0 && !lvl.isDay()
-					&& (goat != null || !SupernaturalConfig.SACRIFICE.get())) {
-				defaultResult(target, stack, lvl, player, user, pos);
-				SupernaturalManager.setWerewolf(player, true);
-				if (SupernaturalConfig.SACRIFICE.get()) {
-					goat.hurt(goat.damageSources().magic(), Float.MAX_VALUE);
-				}
 			} else if (type.is(ContractItem.Types.REANIMATE) && SupernaturalConfig.REANIMATE.get() && p == 28) {
 				defaultResult(target, stack, lvl, player, user, pos);
 				Mob sacrifice = getSacrifice(lvl, offer, target.getRenderBoundingBox().inflate(12.85D));
@@ -180,4 +173,4 @@ public class Contracts {
 		}
 		return null;
 	}
-}
+}

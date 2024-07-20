@@ -5,8 +5,7 @@ import net.salju.supernatural.init.SupernaturalEffects;
 import net.salju.supernatural.init.SupernaturalBlocks;
 import net.salju.supernatural.events.SupernaturalManager;
 import net.salju.supernatural.entity.Angel;
-
-import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.CandleBlock;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.LightLayer;

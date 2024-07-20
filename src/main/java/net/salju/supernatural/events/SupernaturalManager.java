@@ -38,11 +38,10 @@ import com.google.common.collect.HashMultimap;
 
 public class SupernaturalManager {
 	private static boolean getSupernatural(LivingEntity target, int i) {
-		int e = 0;
 		if (target.hasEffect(SupernaturalEffects.SUPERNATURAL.get())) {
-			e = (target.getEffect(SupernaturalEffects.SUPERNATURAL.get()).getAmplifier() + 1);
+			return (target.getEffect(SupernaturalEffects.SUPERNATURAL.get()).getAmplifier() + 1) == i;
 		}
-		return (i == e);
+		return false;
 	}
 
 	public static boolean isVampire(LivingEntity target) {
@@ -67,27 +66,8 @@ public class SupernaturalManager {
 		}
 	}
 
-	public static boolean isWerewolf(LivingEntity target) {
-		return (target.getPersistentData().getBoolean("isWerewolf") || getSupernatural(target, 2) || target.getType().is(SupernaturalTags.WEREWOLF));
-	}
-
-	public static void setWerewolf(Player player, boolean check) {
-		if (!check) {
-			player.getPersistentData().remove("isWerewolf");
-			player.removeEffect(SupernaturalEffects.SUPERNATURAL.get());
-			player.getAttributes().removeAttributeModifiers(createSupernatural());
-		} else {
-			player.getPersistentData().putBoolean("isWerewolf", true);
-		}
-	}
-
-	public static void addWerewolfEffects(Player player) {
-		player.addEffect(new MobEffectInstance(SupernaturalEffects.SUPERNATURAL.get(), 10, 1, false, false));
-		player.getAttributes().addTransientAttributeModifiers(createSupernatural());
-	}
-
 	public static boolean isArtificer(LivingEntity target) {
-		return (target.getPersistentData().getBoolean("isArtificer") || getSupernatural(target, 3));
+		return (target.getPersistentData().getBoolean("isArtificer") || getSupernatural(target, 2));
 	}
 
 	public static void setArtificer(Player player, boolean check) {
@@ -101,7 +81,7 @@ public class SupernaturalManager {
 	}
 
 	public static void addArtificerEffects(Player player) {
-		player.addEffect(new MobEffectInstance(SupernaturalEffects.SUPERNATURAL.get(), 10, 2, false, false));
+		player.addEffect(new MobEffectInstance(SupernaturalEffects.SUPERNATURAL.get(), 10, 1, false, false));
 		player.getAttributes().addTransientAttributeModifiers(createSupernatural());
 	}
 
