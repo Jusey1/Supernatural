@@ -17,11 +17,11 @@
         {
           "type": "minecraft:item",
           "name": "supernatural:contract_vampirism",
-          "weight": 8
+          "weight": 4
         },
         {
           "type": "minecraft:item",
-          "name": "supernatural:contract_vexation",
+          "name": "minecraft:air",
           "weight": 2
         }
       ]
@@ -32,17 +32,12 @@
         {
           "type": "minecraft:item",
           "name": "minecraft:air",
-          "weight": 8
+          "weight": 6
         },
         {
           "type": "minecraft:item",
           "name": "supernatural:angel_statue",
-          "weight": 6
-        },
-        {
-          "type": "minecraft:item",
-          "name": "supernatural:villager_blood",
-          "weight": 6
+          "weight": 2
         }
       ]
     },
@@ -93,6 +88,11 @@
               }
             }
           ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:candle",
+          "weight": 2
         },
         {
           "type": "minecraft:item",
