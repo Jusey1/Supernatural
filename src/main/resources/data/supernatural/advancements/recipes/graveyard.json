@@ -1,0 +1,37 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_soil": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "supernatural:grave_soil"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "supernatural:ritual_altar"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_soil",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "supernatural:ritual_altar",
+      "supernatural:necro_trim_template",
+      "supernatural:gothic_upgrade_template"
+    ]
+  },
+  "sends_telemetry_event": false
+}

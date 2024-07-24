@@ -1,0 +1,19 @@
+{
+  "replace": false,
+  "values": [
+    "minecraft:cow",
+    "minecraft:pig",
+    "minecraft:chicken",
+    "minecraft:iron_golem",
+    "minecraft:zombie",
+    "minecraft:skeleton",
+    "minecraft:spider",
+    "minecraft:cave_spider",
+    "minecraft:husk",
+    "minecraft:stray",
+    "minecraft:zombie_villager",
+    "minecraft:zombified_piglin",
+    "minecraft:hoglin",
+    "minecraft:piglin"
+  ]
+}

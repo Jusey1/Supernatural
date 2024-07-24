@@ -1,0 +1,114 @@
+{
+  "replace": false,
+  "values": [
+    "supernatural:necromancer",
+    "supernatural:vampire",
+    "supernatural:possessed_armor",
+    "supernatural:spooky",
+    "supernatural:angel",
+    "minecraft:snow_golem",
+    "minecraft:iron_golem",
+    "minecraft:ender_dragon",
+    "minecraft:wither",
+    "minecraft:allay",
+    "minecraft:ghast",
+    "minecraft:elder_guardian",
+    "minecraft:guardian",
+    "minecraft:magma_cube",
+    "minecraft:slime",
+    "minecraft:vex",
+    "minecraft:warden",
+    {
+      "id": "alexscaves:forsaken",
+      "required": false
+    },
+    {
+      "id": "alexscaves:atlatitan",
+      "required": false
+    },
+    {
+      "id": "alexscaves:luxtructosaurus",
+      "required": false
+    },
+    {
+      "id": "alexscaves:tremorzilla",
+      "required": false
+    },
+    {
+      "id": "alexscaves:mine_guardian",
+      "required": false
+    },
+    {
+      "id": "alexscaves:ferrouslime",
+      "required": false
+    },
+    {
+      "id": "alexscaves:boundroid",
+      "required": false
+    },
+    {
+      "id": "alexscaves:magnetron",
+      "required": false
+    },
+    {
+      "id": "alexscaves:teletor",
+      "required": false
+    },
+    {
+      "id": "alexscaves:notor",
+      "required": false
+    },
+    {
+      "id": "alexsmobs:spectre",
+      "required": false
+    },
+    {
+      "id": "alexsmobs:underminer",
+      "required": false
+    },
+    {
+      "id": "alexsmobs:enderiophage",
+      "required": false
+    },
+    {
+      "id": "alexsmobs:mimicube",
+      "required": false
+    },
+    {
+      "id": "alexsmobs:warped_mosco",
+      "required": false
+    },
+    {
+      "id": "alexsmobs:bone_serpent",
+      "required": false
+    },
+    {
+      "id": "alexsmobs:farseer",
+      "required": false
+    },
+    {
+      "id": "alexsmobs:void_worm",
+      "required": false
+    },
+    {
+      "id": "dungeonnowloading:chaos_spawner",
+      "required": false
+    },
+    {
+      "id": "dungeonnowloading:hollow",
+      "required": false
+    },
+    {
+      "id": "dungeonnowloading:sealed_chaos",
+      "required": false
+    },
+    {
+      "id": "dungeonnowloading:spawner_carrier",
+      "required": false
+    },
+    {
+      "id": "dungeonnowloading:whimper",
+      "required": false
+    }
+  ]
+}

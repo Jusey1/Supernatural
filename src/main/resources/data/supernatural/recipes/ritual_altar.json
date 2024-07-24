@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "C": {
+      "item": "minecraft:chain"
+    },
+    "G": {
+      "item": "supernatural:grave_soil"
+    },
+    "#": {
+      "item": "minecraft:deepslate_bricks"
+    }
+  },
+  "pattern": [
+    "CGC",
+    "###"
+  ],
+  "result": {
+    "count": 1,
+    "item": "supernatural:ritual_altar"
+  }
+}

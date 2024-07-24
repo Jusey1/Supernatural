@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:smithing_transform",
+  "addition": {
+    "item": "minecraft:feather"
+  },
+  "base": {
+    "item": "minecraft:iron_helmet"
+  },
+  "result": {
+    "item": "supernatural:gothic_iron_helmet"
+  },
+  "template": {
+    "item": "supernatural:gothic_template"
+  }
+}
