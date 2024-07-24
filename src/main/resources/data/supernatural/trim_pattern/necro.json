@@ -1,7 +1,0 @@
-{
-  "asset_id": "supernatural:necro",
-  "description": {
-    "translate": "trim_pattern.minecraft.necro"
-  },
-  "template_item": "supernatural:necro_template"
-}
