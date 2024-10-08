@@ -9,7 +9,6 @@ import net.minecraftforge.common.ForgeSpawnEggItem;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.item.SmithingTemplateItem;
 import net.minecraft.world.item.Rarity;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ArmorMaterials;
@@ -38,15 +37,9 @@ public class SupernaturalItems {
 	public static final RegistryObject<Item> ECTOPLASM = REGISTRY.register("ectoplasm", () -> new Item(new Item.Properties()));
 	public static final RegistryObject<Item> VAMPIRE_DUST = REGISTRY.register("vampire_dust", () -> new Item(new Item.Properties()));
 	public static final RegistryObject<Item> ANGEL_STATUE = REGISTRY.register("angel_statue", () -> new AngelItem(new Item.Properties()));
-	public static final RegistryObject<Item> SOULGEM = REGISTRY.register("soulgem", () -> new SoulgemItem(new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON)));
-	public static final RegistryObject<Item> PLAYER_BLOOD = REGISTRY.register("player_blood", () -> new PlayerBloodItem(new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON)));
-	public static final RegistryObject<Item> VAMPIRISM_CONTRACT = REGISTRY.register("contract_vampirism", () -> new ContractItem(ContractItem.Types.VAMPIRISM, Items.GLASS_BOTTLE, "contract.supernatural.vampirism", "XX", new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON)));
-	public static final RegistryObject<Item> REANIMATE_CONTRACT = REGISTRY.register("contract_reanimate", () -> new ContractItem(ContractItem.Types.REANIMATE, SupernaturalItems.SOULGEM.get(), "contract.supernatural.reanimate", "XXVIII", new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON)));
-	public static final RegistryObject<Item> VEXATION_CONTRACT = REGISTRY.register("contract_vexation", () -> new ContractItem(ContractItem.Types.VEXATION, Items.CAKE, "contract.supernatural.vexation", "XII", new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON)));
-	public static final RegistryObject<Item> MISFORTUNE_CONTRACT = REGISTRY.register("contract_misfortune", () -> new ContractItem(ContractItem.Types.MISFORTUNE, Items.RABBIT_FOOT, "contract.supernatural.misfortune", "XVI", new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON)));
-	public static final RegistryObject<Item> PUMPKIN_CONTRACT = REGISTRY.register("contract_pumpkin", () -> new ContractItem(ContractItem.Types.PUMPKIN, Items.CARVED_PUMPKIN, "contract.supernatural.pumpkin", "XII", new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON)));
-	public static final RegistryObject<Item> KNOWLEDGE_CONTRACT = REGISTRY.register("contract_knowledge", () -> new ContractItem(ContractItem.Types.KNOWLEDGE, Items.ENCHANTED_BOOK, "contract.supernatural.knowledge", "XVIII", new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON)));
-	public static final RegistryObject<Item> FORTUNE_CONTRACT = REGISTRY.register("contract_fortune", () -> new ContractItem(ContractItem.Types.FORTUNE, Items.ENCHANTED_GOLDEN_APPLE, "contract.supernatural.fortune", "XXIV", new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON)));
+	public static final RegistryObject<Item> SOULGEM = REGISTRY.register("soulgem", () -> new SoulgemItem(new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON).fireResistant()));
+	public static final RegistryObject<Item> TAGLOCK = REGISTRY.register("taglock", () -> new TaglockItem(new Item.Properties().stacksTo(1)));
+	public static final RegistryObject<Item> BLOOD = REGISTRY.register("blood_bottle", () -> new BloodItem(new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON)));
 
 	private static RegistryObject<Item> block(RegistryObject<Block> block) {
 		return REGISTRY.register(block.getId().getPath(), () -> new BlockItem(block.get(), new Item.Properties()));

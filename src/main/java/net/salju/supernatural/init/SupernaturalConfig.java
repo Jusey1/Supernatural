@@ -15,13 +15,6 @@ public class SupernaturalConfig {
 	public static final ForgeConfigSpec.BooleanValue ORIGINAL;
 
 	public static final ForgeConfigSpec.IntValue SOULPOWER;
-	public static final ForgeConfigSpec.BooleanValue VAMPIRISM;
-	public static final ForgeConfigSpec.BooleanValue VEXATION;
-	public static final ForgeConfigSpec.BooleanValue MISFORTUNE;
-	public static final ForgeConfigSpec.BooleanValue PUMPKIN;
-	public static final ForgeConfigSpec.BooleanValue REANIMATE;
-	public static final ForgeConfigSpec.BooleanValue KNOWLEDGE;
-	public static final ForgeConfigSpec.BooleanValue FORTUNE;
 	public static final ForgeConfigSpec.BooleanValue SACRIFICE;
 
 	public static final ForgeConfigSpec.BooleanValue VEX;
@@ -40,14 +33,7 @@ public class SupernaturalConfig {
 		BUILDER.pop();
 		BUILDER.push("Ritual Altar");
 		SOULPOWER = BUILDER.comment("What should be the base power for soul enchanting?").defineInRange("Soulpower", 7, 0, Integer.MAX_VALUE);
-		VAMPIRISM = BUILDER.comment("Should the Vampirism Contract be Enabled? Note: This doesn't remove the item.").define("Vampirism", true);
-		VEXATION = BUILDER.comment("Should the Vexation Contract be Enabled? Note: This doesn't remove the item.").define("Vexation", true);
-		MISFORTUNE = BUILDER.comment("Should the Misfortune Contract be Enabled? Note: This doesn't remove the item.").define("Misfortune", true);
-		PUMPKIN = BUILDER.comment("Should the Pumpkin Thief Contract be Enabled? Note: This doesn't remove the item.").define("Pumpkin", true);
-		REANIMATE = BUILDER.comment("Should the Reanimation Contract be Enabled? Note: This doesn't remove the item.").define("Reanimation", true);
-		KNOWLEDGE = BUILDER.comment("Should the Knowledge Contract be Enabled? Note: This doesn't remove the item.").define("Knowledge", true);
-		FORTUNE = BUILDER.comment("Should the Fortune Contract be Enabled? Note: This doesn't remove the item.").define("Fortune", true);
-		SACRIFICE = BUILDER.comment("Should Contracts require sacrifices?").define("Ritual Sacrifice", true);
+		SACRIFICE = BUILDER.comment("Should Rituals require sacrifices?").define("Ritual Sacrifice", true);
 		BUILDER.pop();
 		BUILDER.push("Misc");
 		VEX = BUILDER.comment("Should Vexes spawn from Grave Soil?").define("Gravy Vexes", true);

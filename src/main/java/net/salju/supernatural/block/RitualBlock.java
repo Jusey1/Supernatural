@@ -1,7 +1,5 @@
 package net.salju.supernatural.block;
 
-import net.salju.supernatural.item.Contracts;
-import net.salju.supernatural.item.ContractItem;
 import net.salju.supernatural.init.SupernaturalItems;
 import net.salju.supernatural.init.SupernaturalEnchantments;
 import net.salju.supernatural.init.SupernaturalConfig;
@@ -89,8 +87,6 @@ public class RitualBlock extends BaseEntityBlock {
 						} else {
 							Rituals.doRitual(target.getItem(0), stack, lvl, player, pos);
 						}
-					} else if (stack.getItem() instanceof ContractItem item && SupernaturalManager.getUUID(stack) != null && target.getItem(0).is(item.getRitualItem())) {
-						Contracts.doContract(item, stack, lvl, lvl.getPlayerByUUID(SupernaturalManager.getUUID(stack)), player, pos);
 					} else {
 						target.dropItem(0);
 					}

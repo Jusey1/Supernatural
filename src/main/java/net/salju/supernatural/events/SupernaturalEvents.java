@@ -5,6 +5,7 @@ import net.salju.supernatural.init.SupernaturalMobs;
 import net.salju.supernatural.init.SupernaturalItems;
 import net.salju.supernatural.init.SupernaturalEnchantments;
 import net.salju.supernatural.init.SupernaturalEffects;
+import net.salju.supernatural.init.SupernaturalDamageTypes;
 import net.salju.supernatural.init.SupernaturalConfig;
 import net.salju.supernatural.entity.MerA;
 import net.salju.supernatural.block.RitualBlockEntity;
@@ -15,10 +16,10 @@ import net.minecraftforge.eventbus.api.Event.Result;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.living.MobEffectEvent;
-import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.living.LivingHealEvent;
+import net.minecraftforge.event.entity.living.LivingExperienceDropEvent;
 import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
-import net.minecraftforge.event.entity.living.LivingDropsEvent;
+import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraft.world.item.enchantment.Enchantments;
@@ -31,7 +32,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.monster.Vindicator;
 import net.minecraft.world.entity.monster.Vex;
 import net.minecraft.world.entity.monster.SpellcasterIllager;
-import net.minecraft.world.entity.monster.Slime;
 import net.minecraft.world.entity.MobType;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.Mob;
@@ -53,22 +53,20 @@ public class SupernaturalEvents {
 			Player player = event.player;
 			if (SupernaturalManager.isVampire(player)) {
 				player.getFoodData().setSaturation(1);
-				if (player.hasEffect(MobEffects.HUNGER)) {
-					player.getFoodData().setFoodLevel(1);
-				} else {
-					player.getFoodData().setFoodLevel(18);
-				}
+				player.getFoodData().setFoodLevel(18);
 				if (player.level() instanceof ServerLevel lvl) {
 					SupernaturalManager.addVampireEffects(player);
 					boolean check = (player.isInWaterRainOrBubble() || player.isInPowderSnow || player.wasInPowderSnow || player.isCreative());
 					if (lvl.isDay() && lvl.canSeeSky(BlockPos.containing(player.getX(), player.getEyeY(), player.getZ())) && !check && !SupernaturalConfig.SUN.get()) {
 						ItemStack helmet = player.getItemBySlot(EquipmentSlot.HEAD);
 						if (helmet.isEmpty()) {
-							if (player.getRemainingFireTicks() <= 10) {
-								player.setSecondsOnFire(3);
-								player.hurt(player.damageSources().inFire(), 4);
+							if (player.getRemainingFireTicks() <= 20) {
+								player.setSecondsOnFire(4);
+								if (!player.hasEffect(MobEffects.FIRE_RESISTANCE)) {
+									player.hurt(SupernaturalDamageTypes.causeSunDamage(player.level().registryAccess()), 3);
+								}
 							}
-						} else if (Mth.nextInt(player.getRandom(), 0, 10 * EnchantmentHelper.getItemEnchantmentLevel(Enchantments.UNBREAKING, helmet) + 20) <= 2) {
+						} else if (Mth.nextInt(player.getRandom(), 0, 10 * EnchantmentHelper.getItemEnchantmentLevel(Enchantments.UNBREAKING, helmet) + 20) <= 2 && !player.hasEffect(MobEffects.FIRE_RESISTANCE)) {
 							if (helmet.hurt(1, player.getRandom(), null)) {
 								helmet.shrink(1);
 							}
@@ -88,10 +86,8 @@ public class SupernaturalEvents {
 
 	@SubscribeEvent
 	public static void onHeal(LivingHealEvent event) {
-		if (event.getAmount() <= 1.0F) {
-			if (event.getEntity().hasEffect(SupernaturalEffects.SUPERNATURAL.get())) {
-				event.setAmount(event.getAmount() * (event.getEntity().hasEffect(MobEffects.REGENERATION) ? 0.5F : 0.1F));
-			}
+		if (event.getAmount() <= 1.0F && SupernaturalManager.isVampire(event.getEntity())) {
+			event.setAmount(event.getAmount() * (event.getEntity().hasEffect(MobEffects.REGENERATION) ? 0.5F : 0.1F));
 		}
 	}
 
@@ -119,8 +115,6 @@ public class SupernaturalEvents {
 				if (!player.isCreative()) {
 					player.getOffhandItem().shrink(1);
 				}
-			} else {
-				player.getFoodData().setFoodLevel(Math.max(player.getFoodData().getFoodLevel() - stack.getFoodProperties(player).getNutrition(), 0));
 			}
 		}
 	}
@@ -128,14 +122,14 @@ public class SupernaturalEvents {
 	@SubscribeEvent
 	public static void onEffect(MobEffectEvent.Applicable event) {
 		if (SupernaturalManager.isVampire(event.getEntity())) {
-			if (event.getEffectInstance().getEffect() == MobEffects.POISON) {
+			if (event.getEffectInstance().getEffect() == MobEffects.POISON || event.getEffectInstance().getEffect() == MobEffects.HUNGER) {
 				event.setResult(Result.DENY);
 			}
 		}
 	}
 
 	@SubscribeEvent
-	public static void onEntityAttacked(LivingHurtEvent event) {
+	public static void onAttacked(LivingDamageEvent event) {
 		if (event != null && event.getEntity() != null) {
 			LivingEntity target = event.getEntity();
 			if (target instanceof SpellcasterIllager) {
@@ -147,7 +141,7 @@ public class SupernaturalEvents {
 					}
 				}
 			}
-			if (event.getSource().getDirectEntity() != null && event.getSource().getDirectEntity() instanceof LivingEntity source) {
+			if (event.getSource().getDirectEntity() instanceof LivingEntity source) {
 				ItemStack weapon = source.getMainHandItem();
 				if (SupernaturalManager.isVampire(target)) {
 					int i = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.SMITE, weapon);
@@ -173,17 +167,11 @@ public class SupernaturalEvents {
 	}
 
 	@SubscribeEvent
-	public static void onEntityDrops(LivingDropsEvent event) {
+	public static void onXpDrops(LivingExperienceDropEvent event) {
 		LivingEntity target = event.getEntity();
 		if (target.level() instanceof ServerLevel lvl) {
 			if (target.hasEffect(SupernaturalEffects.POSSESSION.get())) {
 				SupernaturalMobs.SPOOKY.get().spawn(lvl, target.blockPosition(), MobSpawnType.MOB_SUMMONED);
-				if (target instanceof Slime slm && slm.isTiny() && Math.random() <= 0.35) {
-					event.setCanceled(true);
-					for (int i = 0; i < Mth.nextInt(target.getRandom(), 1, (1 + event.getLootingLevel())); i++) {
-						target.spawnAtLocation(new ItemStack(SupernaturalItems.ECTOPLASM.get()));
-					}
-				}
 			} else {
 				RitualBlockEntity block = SupernaturalManager.getAltar(target.blockPosition(), lvl, 12, Items.AMETHYST_SHARD);
 				if (block != null && target instanceof Mob && !target.getType().is(SupernaturalTags.IMMUNITY)) {
@@ -228,4 +216,4 @@ public class SupernaturalEvents {
 			}
 		}
 	}
-}
+}

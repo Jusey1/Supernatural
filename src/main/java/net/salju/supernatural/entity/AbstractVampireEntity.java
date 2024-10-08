@@ -1,6 +1,7 @@
 package net.salju.supernatural.entity;
 
 import net.salju.supernatural.init.SupernaturalModSounds;
+import net.salju.supernatural.init.SupernaturalDamageTypes;
 import net.salju.supernatural.init.SupernaturalConfig;
 import net.salju.supernatural.entity.ai.VampireAttackSelector;
 import net.salju.supernatural.entity.ai.SupernaturalSpellcasterGoal;
@@ -52,8 +53,7 @@ public class AbstractVampireEntity extends SpellcasterIllager {
 
 	protected void customServerAiStep() {
 		if (!this.isNoAi() && GoalUtils.hasGroundPathNavigation(this)) {
-			boolean flag = ((ServerLevel) this.level()).isRaided(this.blockPosition());
-			((GroundPathNavigation) this.getNavigation()).setCanOpenDoors(flag);
+			((GroundPathNavigation) this.getNavigation()).setCanOpenDoors(((ServerLevel) this.level()).isRaided(this.blockPosition()));
 		}
 		if (this.isCastingSpell()) {
 			this.navigation.stop();
@@ -62,11 +62,12 @@ public class AbstractVampireEntity extends SpellcasterIllager {
 	}
 
 	public void aiStep() {
-		if (!SupernaturalConfig.SUN.get()) {
-			boolean flag = this.isSunBurnTick();
-			if (flag) {
-				this.setSecondsOnFire(8);
-				this.hurt(this.damageSources().inFire(), 4);
+		if (this.isAlive()) {
+			if (!SupernaturalConfig.SUN.get() && this.isSunBurnTick()) {
+				if (this.getRemainingFireTicks() <= 20) {
+					this.setSecondsOnFire(4);
+					this.hurt(SupernaturalDamageTypes.causeSunDamage(this.level().registryAccess()), 3);
+				}
 			}
 		}
 		super.aiStep();

@@ -70,6 +70,25 @@ public class SupernaturalManager {
 		return stats;
 	}
 
+	public static ItemStack setBlood(ItemStack stack, LivingEntity target) {
+		CompoundTag tag = stack.getOrCreateTag();
+		if (target instanceof Player || target.getType().is(SupernaturalTags.GRAND)) {
+			tag.putInt("SupernaturalBlood", 8);
+			return SupernaturalManager.setUUID(stack, target);
+		} else {
+			tag.putInt("SupernaturalBlood", 4);
+		}
+		return stack;
+	}
+
+	public static int getBlood(ItemStack stack) {
+		CompoundTag tag = stack.getOrCreateTag();
+		if (tag.getInt("SupernaturalBlood") >= 6) {
+			return tag.getInt("SupernaturalBlood");
+		}
+		return 4;
+	}
+
 	public static ItemStack setUUID(ItemStack stack, LivingEntity target) {
 		CompoundTag tag = stack.getOrCreateTag();
 		tag.putUUID("SupernaturalUUID", target.getUUID());
@@ -96,18 +115,9 @@ public class SupernaturalManager {
 		mobster.remove("Leash");
 		mobster.remove("Fire");
 		mobster.remove("UUID");
-		tag.putString("Soul", target.getType().toString());
 		tag.put("SoulTag", mobster);
 		tag.putString("Soulgem", getSoulLevel(target));
 		return stack;
-	}
-
-	public static String getSoul(ItemStack stack) {
-		CompoundTag tag = stack.getOrCreateTag();
-		if (tag.getString("Soul") != null) {
-			return tag.getString("Soul");
-		}
-		return "";
 	}
 
 	public static CompoundTag getSoulTag(ItemStack stack) {
@@ -179,7 +189,7 @@ public class SupernaturalManager {
 			BlockState state = lvl.getBlockState(poz);
 			if (state.getBlock() instanceof CandleBlock && state.getValue(CandleBlock.LIT)) {
 				i = (i + state.getValue(CandleBlock.CANDLES));
-				lvl.setBlock(poz, state.getBlock().defaultBlockState().setValue(CandleBlock.LIT, false).setValue(CandleBlock.CANDLES, state.getValue(CandleBlock.CANDLES)), 3);
+				lvl.setBlock(poz, state.setValue(CandleBlock.LIT, false), 3);
 			}
 		}
 		return i;
