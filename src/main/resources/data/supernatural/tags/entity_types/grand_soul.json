@@ -7,7 +7,15 @@
     "minecraft:piglin",
     "minecraft:piglin_brute",
     {
-      "id": "#forge:kobolds",
+      "id": "iwannaskate:wandering_skater",
+      "required": false
+    },
+    {
+      "id": "#kobolds:kobolds",
+      "required": false
+    },
+    {
+      "id": "supplementaries:red_merchant",
       "required": false
     }
   ]
