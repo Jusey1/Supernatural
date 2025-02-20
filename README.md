@@ -1,2 +1,2 @@
-# Supernatural
-Minecraft Java Edition Supernatural Mod
+# Salju's Mod
+Minecraft Java Edition Mod
