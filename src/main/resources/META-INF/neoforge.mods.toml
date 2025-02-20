@@ -1,0 +1,21 @@
+modLoader="javafml"
+loaderVersion="[4,)"
+license="MIT License"
+
+[[mods]]
+modId="supernatural"
+version="3.1.0"
+displayName="Supernatural"
+displayURL="https://discord.gg/s7QaYGUzZU"
+logoFile="logo.png"
+credits="Jusey1, Burack, Aura, Myahster"
+authors="Jusey1"
+description="Adds supernatural entities, blocks, & items."
+
+
+[[dependencies.supernatural]]
+    modId="minecraft"
+    type="required"
+    versionRange="[1.21.2,)"
+    ordering="NONE"
+    side="BOTH"
