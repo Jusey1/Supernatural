@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "#minecraft:undead",
+    "minecraft:creeper",
+    "minecraft:hoglin",
+    "minecraft:ravager",
+    "minecraft:cave_spider",
+    "minecraft:spider"
+  ]
+}

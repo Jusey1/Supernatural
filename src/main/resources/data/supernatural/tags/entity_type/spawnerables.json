@@ -1,0 +1,16 @@
+{
+  "replace": false,
+  "values": [
+    "#minecraft:undead",
+    "minecraft:blaze",
+    "minecraft:breeze",
+    "minecraft:cave_spider",
+    "minecraft:chicken",
+    "minecraft:cow",
+    "minecraft:creeper",
+    "minecraft:goat",
+    "minecraft:pig",
+    "minecraft:silverfish",
+    "minecraft:spider"
+  ]
+}

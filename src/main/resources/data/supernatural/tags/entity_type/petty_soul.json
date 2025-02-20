@@ -1,0 +1,8 @@
+{
+  "replace": false,
+  "values": [
+    "#minecraft:aquatic",
+    "minecraft:bat",
+    "minecraft:bee"
+  ]
+}

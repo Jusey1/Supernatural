@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    "#minecraft:illager",
+    "minecraft:blaze",
+    "minecraft:breeze",
+    "minecraft:enderman",
+    "minecraft:witch"
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "#": "minecraft:smooth_stone",
+    "H": "minecraft:chiseled_stone_bricks",
+    "T": "minecraft:totem_of_undying",
+    "S": "minecraft:smooth_stone_slab"
+  },
+  "pattern": [
+    "#H#",
+    "#T#",
+    " S "
+  ],
+  "result": {
+    "id": "supernatural:angel_statue",
+    "count": 1
+  }
+}
