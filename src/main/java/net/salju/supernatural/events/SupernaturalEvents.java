@@ -118,7 +118,9 @@ public class SupernaturalEvents {
 						EntityType.BAT.spawn(lvl, target.blockPosition(), EntitySpawnReason.MOB_SUMMONED);
 					}
 				} else if (i > 0) {
-					event.setAmount(event.getAmount() + ((float) i * 2.5F));
+					if (target instanceof Player) {
+						event.setAmount(event.getAmount() + ((float) i * 2.5F));
+					}
 				} else if (SupernaturalConfig.DR.get() < 1.0) {
 					event.setAmount(event.getAmount() * SupernaturalConfig.DR.get().floatValue());
 				}
