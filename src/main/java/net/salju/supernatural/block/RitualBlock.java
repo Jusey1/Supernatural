@@ -1,7 +1,7 @@
 package net.salju.supernatural.block;
 
 import net.salju.supernatural.init.SupernaturalItems;
-import net.salju.supernatural.init.SupernaturalBlockEntities;
+import net.salju.supernatural.init.SupernaturalBlocks;
 import net.salju.supernatural.events.SupernaturalManager;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
@@ -117,7 +117,7 @@ public class RitualBlock extends BaseEntityBlock {
 
 	@Override
 	public @Nullable <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level world, BlockState state, BlockEntityType<T> type) {
-		return createTickerHelper(type, SupernaturalBlockEntities.RITUAL.get(), RitualBlockEntity::tick);
+		return createTickerHelper(type, SupernaturalBlocks.RITUAL.get(), RitualBlockEntity::tick);
 	}
 
 	@Override

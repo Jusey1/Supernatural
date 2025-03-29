@@ -1,21 +1,16 @@
 package net.salju.supernatural.events;
 
 import net.salju.supernatural.Supernatural;
-import net.salju.supernatural.init.SupernaturalData;
-import net.salju.supernatural.init.SupernaturalTags;
-import net.salju.supernatural.init.SupernaturalEffects;
-import net.salju.supernatural.init.SupernaturalConfig;
+import net.salju.supernatural.init.*;
 import net.salju.supernatural.block.RitualBlockEntity;
 import net.salju.supernatural.item.component.SoulgemData;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
-import net.minecraft.core.SectionPos;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.world.level.chunk.LevelChunk;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.CandleBlock;
 import net.minecraft.world.level.LightLayer;
@@ -31,12 +26,15 @@ import net.minecraft.world.entity.decoration.ArmorStand;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attribute;
+import net.minecraft.world.entity.ai.village.poi.PoiManager;
+import net.minecraft.world.entity.ai.village.poi.PoiRecord;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.effect.MobEffectInstance;
 import javax.annotation.Nullable;
 import java.util.Map;
 import java.util.List;
 import java.util.HashMap;
+import java.util.stream.Stream;
 import com.google.common.collect.Multimap;
 import com.google.common.collect.Lists;
 import com.google.common.collect.HashMultimap;
@@ -138,22 +136,12 @@ public class SupernaturalManager {
 	}
 
 	@Nullable
-	public static RitualBlockEntity getAltar(BlockPos pos, ServerLevel lvl, int radius, Item item) {
-		int minX = SectionPos.blockToSectionCoord(pos.getX() - radius);
-		int minZ = SectionPos.blockToSectionCoord(pos.getZ() - radius);
-		int maxX = SectionPos.blockToSectionCoord(pos.getX() + radius);
-		int maxZ = SectionPos.blockToSectionCoord(pos.getZ() + radius);
-		for (int chunkX = minX; chunkX <= maxX; chunkX++) {
-			for (int chunkZ = minZ; chunkZ <= maxZ; chunkZ++) {
-				LevelChunk chunk = lvl.getChunkSource().getChunk(chunkX, chunkZ, false);
-				if (chunk != null) {
-					for (BlockPos poz : chunk.getBlockEntitiesPos()) {
-						if (lvl.getBlockEntity(poz) instanceof RitualBlockEntity target) {
-							if (target.getItem(0).is(item) && pos.closerThan(poz, radius) && canRitualsWork(lvl, poz, target)) {
-								return target;
-							}
-						}
-					}
+	public static RitualBlockEntity getAltar(BlockPos pos, ServerLevel lvl, int r, Item i) {
+		Stream<PoiRecord> stream = lvl.getPoiManager().getInRange(type -> type.is(SupernaturalBlocks.RITUAL_POI.getKey()), pos, r, PoiManager.Occupancy.ANY);
+		for (PoiRecord record : stream.toList()) {
+			if (lvl.getBlockEntity(record.getPos()) instanceof RitualBlockEntity target) {
+				if (target.getItem(0).is(i) && pos.closerThan(record.getPos(), r) && canRitualsWork(lvl, record.getPos(), target)) {
+					return target;
 				}
 			}
 		}

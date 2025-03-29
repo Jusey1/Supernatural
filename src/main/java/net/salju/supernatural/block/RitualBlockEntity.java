@@ -1,6 +1,6 @@
 package net.salju.supernatural.block;
 
-import net.salju.supernatural.init.SupernaturalBlockEntities;
+import net.salju.supernatural.init.SupernaturalBlocks;
 import net.salju.supernatural.init.SupernaturalTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
@@ -28,7 +28,7 @@ public class RitualBlockEntity extends BaseContainerBlockEntity {
 	private int timer = 0;
 
 	public RitualBlockEntity(BlockPos pos, BlockState state) {
-		super(SupernaturalBlockEntities.RITUAL.get(), pos, state);
+		super(SupernaturalBlocks.RITUAL.get(), pos, state);
 	}
 
 	@Override

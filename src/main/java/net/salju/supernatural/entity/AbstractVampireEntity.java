@@ -10,6 +10,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.raid.Raider;
 import net.minecraft.world.entity.monster.SpellcasterIllager;
@@ -73,7 +74,7 @@ public class AbstractVampireEntity extends SpellcasterIllager {
 
 	public void aiStep() {
 		if (this.isAlive()) {
-			if (!SupernaturalConfig.SUN.get() && this.isSunBurnTick()) {
+			if (!SupernaturalConfig.SUN.get() && this.isSunBurnTick() && !this.hasEffect(MobEffects.FIRE_RESISTANCE)) {
 				if (this.getRemainingFireTicks() <= 20) {
 					this.setRemainingFireTicks(120);
 					this.hurt(SupernaturalDamageTypes.causeSunDamage(this.level().registryAccess()), 3);

@@ -1,7 +1,7 @@
 package net.salju.supernatural.client.renderer;
 
 import net.salju.supernatural.Supernatural;
-import net.salju.supernatural.init.SupernaturalModels;
+import net.salju.supernatural.init.SupernaturalClient;
 import net.salju.supernatural.entity.Spooky;
 import net.salju.supernatural.client.model.SpiritModel;
 import net.minecraft.resources.ResourceLocation;
@@ -11,7 +11,7 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider;
 
 public class SpookyRenderer extends MobRenderer<Spooky, SpookyState, SpiritModel<SpookyState>> {
 	public SpookyRenderer(EntityRendererProvider.Context context) {
-		super(context, new SpiritModel(context.bakeLayer(SupernaturalModels.SPIRIT)), 0.3F);
+		super(context, new SpiritModel(context.bakeLayer(SupernaturalClient.SPIRIT)), 0.3F);
 	}
 
 	@Override

@@ -23,8 +23,9 @@ public class Supernatural {
 		NeoForge.EVENT_BUS.register(this);
 		SupernaturalData.REGISTRY.register(bus);
 		SupernaturalSounds.REGISTRY.register(bus);
-		SupernaturalBlockEntities.REGISTRY.register(bus);
+		SupernaturalBlocks.BE.register(bus);
 		SupernaturalBlocks.REGISTRY.register(bus);
+		SupernaturalBlocks.POI.register(bus);
 		SupernaturalItems.REGISTRY.register(bus);
 		SupernaturalTabs.REGISTRY.register(bus);
 		SupernaturalMobs.REGISTRY.register(bus);

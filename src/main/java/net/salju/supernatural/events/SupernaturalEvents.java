@@ -43,17 +43,15 @@ public class SupernaturalEvents {
 			player.getFoodData().setFoodLevel(20);
 			if (player.level() instanceof ServerLevel lvl) {
 				SupernaturalManager.addVampireEffects(player);
-				boolean check = (player.isInWaterRainOrBubble() || player.isInPowderSnow || player.wasInPowderSnow || player.isCreative() || SupernaturalConfig.SUN.get());
+				boolean check = (player.isInWaterRainOrBubble() || player.isInPowderSnow || player.wasInPowderSnow || player.isCreative() || SupernaturalConfig.SUN.get() || player.hasEffect(MobEffects.FIRE_RESISTANCE));
 				if (lvl.isDay() && lvl.canSeeSky(BlockPos.containing(player.getX(), player.getEyeY(), player.getZ())) && !check) {
 					ItemStack helmet = player.getItemBySlot(EquipmentSlot.HEAD);
 					if (helmet.isEmpty()) {
 						if (player.getRemainingFireTicks() <= 20) {
 							player.setRemainingFireTicks(120);
-							if (!player.hasEffect(MobEffects.FIRE_RESISTANCE)) {
 								player.hurt(SupernaturalDamageTypes.causeSunDamage(player.level().registryAccess()), 3);
-							}
 						}
-					} else if (Mth.nextInt(player.getRandom(), 0, 25) <= 2 && !player.hasEffect(MobEffects.FIRE_RESISTANCE)) {
+					} else if (Mth.nextInt(player.getRandom(), 0, 25) <= 2) {
 						helmet.hurtAndBreak(1, player, EquipmentSlot.HEAD);
 					}
 				}

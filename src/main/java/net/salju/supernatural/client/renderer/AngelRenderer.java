@@ -1,7 +1,7 @@
 package net.salju.supernatural.client.renderer;
 
 import net.salju.supernatural.Supernatural;
-import net.salju.supernatural.init.SupernaturalModels;
+import net.salju.supernatural.init.SupernaturalClient;
 import net.salju.supernatural.entity.Angel;
 import net.salju.supernatural.client.model.AngelModel;
 import net.minecraft.resources.ResourceLocation;
@@ -10,7 +10,7 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider;
 
 public class AngelRenderer extends LivingEntityRenderer<Angel, AngelState, AngelModel<AngelState>> {
 	public AngelRenderer(EntityRendererProvider.Context context) {
-		super(context, new AngelModel(context.bakeLayer(SupernaturalModels.ANGEL)), 0.5f);
+		super(context, new AngelModel(context.bakeLayer(SupernaturalClient.ANGEL)), 0.5f);
 	}
 
 	@Override
