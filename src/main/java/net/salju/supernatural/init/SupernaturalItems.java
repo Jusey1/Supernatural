@@ -29,6 +29,7 @@ public class SupernaturalItems {
 	public static final DeferredHolder<Item, Item> ANGEL_STATUE = REGISTRY.register("angel_statue", () -> new AngelItem(createBaseProps("angel_statue").stacksTo(1).rarity(Rarity.UNCOMMON)));
 	public static final DeferredHolder<Item, Item> SOULGEM = REGISTRY.register("soulgem", () -> new SoulgemItem(createBaseProps("soulgem").stacksTo(1).rarity(Rarity.UNCOMMON).fireResistant()));
 	public static final DeferredHolder<Item, Item> COMPASS = REGISTRY.register("ritual_compass", () -> new RitualCompassItem(createBaseProps("ritual_compass").stacksTo(1).rarity(Rarity.UNCOMMON).fireResistant()));
+	public static final DeferredHolder<Item, Item> ANCHORBALL = REGISTRY.register("anchorball", () -> new AnchorballItem(new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON).fireResistant()));
 
 	private static DeferredHolder<Item, Item> block(DeferredHolder<Block, Block> block, String name) {
 		return REGISTRY.register(block.getId().getPath(), () -> new BlockItem(block.get(), createBaseProps(name)));

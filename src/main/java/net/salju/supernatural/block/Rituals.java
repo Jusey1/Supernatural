@@ -4,11 +4,14 @@ import net.salju.supernatural.Supernatural;
 import net.salju.supernatural.init.*;
 import net.salju.supernatural.entity.Angel;
 import net.salju.supernatural.events.SupernaturalManager;
+import net.salju.supernatural.item.component.AnchorballData;
 import net.salju.supernatural.item.RitualCompassItem;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.GlobalPos;
 import net.minecraft.nbt.NbtOps;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
@@ -21,6 +24,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.gameevent.GameEvent;
+import net.minecraft.world.level.portal.TeleportTransition;
 import net.minecraft.world.level.Spawner;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
@@ -108,6 +112,26 @@ public class Rituals {
 							}
 						});
 					}
+				} else if (stack.is(SupernaturalItems.ANCHORBALL.get()) && i == 12 && e >= 3) {
+					ItemStack copy = stack.copy();
+					AnchorballData data = copy.get(SupernaturalData.ANCHOR.get());
+					defaultResult(target, offer, lvl, player, pos);
+					if (data != null) {
+						if (lvl.isInWorldBounds(data.getPos()) && lvl.getPoiManager().existsAtPosition(SupernaturalBlocks.RITUAL_POI.getKey(), data.getPos())) {
+							target.setItem(0, copy);
+							ServerLevel loc = lvl.getServer().getLevel(data.target().dimension());
+							double x = data.getPos().getX() + 0.5;
+							double y = data.getPos().getY() + 0.7;
+							double z = data.getPos().getZ() + 0.5;
+							if (loc != null && player instanceof ServerPlayer ply) {
+								lvl.playSound(null, pos, SoundEvents.ENDERMAN_TELEPORT, SoundSource.BLOCKS, 1.0F, (float) (0.8F + (Math.random() * 0.2)));
+								lvl.sendParticles(ParticleTypes.PORTAL, pos.getX(), pos.getY() + 0.75, pos.getZ(), 12, 0.5, 0.5, 0.5, 0.65);
+								ply.teleport(new TeleportTransition(loc, new Vec3(x, y, z), ply.getDeltaMovement(), ply.getYRot(), ply.getXRot(), TeleportTransition.DO_NOTHING));
+								loc.playSound(null, data.getPos(), SoundEvents.ENDERMAN_TELEPORT, SoundSource.BLOCKS, 1.0F, (float) (0.8F + (Math.random() * 0.2)));
+								loc.sendParticles(ParticleTypes.PORTAL, x, y, z, 12, 0.5, 0.5, 0.5, 0.65);
+							}
+						}
+					}
 				} else if (stack.is(Items.WRITABLE_BOOK) && i == 12 && e >= 3) {
 					defaultResult(target, offer, lvl, player, pos);
 					target.setItem(0, new ItemStack(SupernaturalItems.RITUAL_BOOK.get()));
@@ -130,6 +154,11 @@ public class Rituals {
 						defaultResult(target, offer, lvl, player, pos);
 						target.setItem(0, RitualCompassItem.getRitualCompass(pos, lvl, 2));
 					}
+				} else if (stack.is(Items.ENDER_PEARL) && i == 16 && e >= 4) {
+					ItemStack copy = new ItemStack(SupernaturalItems.ANCHORBALL.get());
+					defaultResult(target, offer, lvl, player, pos);
+					copy.set(SupernaturalData.ANCHOR, new AnchorballData(GlobalPos.of(lvl.dimension(), pos)));
+					target.setItem(0, copy);
 				} else if (stack.isEnchantable() && (player.experienceLevel >= 30 || player.isCreative())) {
 					ItemStack copy = stack.copy();
 					defaultResult(target, offer, lvl, player, pos);

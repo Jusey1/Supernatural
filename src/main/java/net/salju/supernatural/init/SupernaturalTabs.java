@@ -28,5 +28,6 @@ public class SupernaturalTabs {
 				tabData.accept(SupernaturalItems.CONTRACT.get());
 				tabData.accept(SupernaturalItems.COMPASS.get());
 				tabData.accept(SupernaturalItems.SOULGEM.get());
+				tabData.accept(SupernaturalItems.ANCHORBALL.get());
 			}).build());
 }
