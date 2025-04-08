@@ -79,7 +79,9 @@ public class Spooky extends PathfinderMob {
 	@Override
 	public void addAdditionalSaveData(CompoundTag tag) {
 		super.addAdditionalSaveData(tag);
-		tag.putUUID("Player", this.friend);
+		if (this.friend != null) {
+			tag.putUUID("Player", this.friend);
+		}
 	}
 
 	@Override
