@@ -1,8 +1,10 @@
 package net.salju.supernatural.init;
 
+import net.neoforged.fml.ModList;
 import net.salju.supernatural.Supernatural;
 import net.salju.supernatural.client.model.*;
 import net.salju.supernatural.client.renderer.*;
+import net.salju.supernatural.compat.Kobolds;
 import net.salju.supernatural.item.component.RitualCompassData;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -46,6 +48,9 @@ public class SupernaturalClient {
 		event.registerLayerDefinition(POSSESSED, PossessedModel::createBodyLayer);
 		event.registerLayerDefinition(ANGEL, AngelModel::createBodyLayer);
 		event.registerLayerDefinition(GOTHIC, GothicArmorModel::createBodyLayer);
+		if (ModList.get().isLoaded("kobolds")) {
+			Kobolds.registerKoboldArmor(event);
+		}
 	}
 
 	@SubscribeEvent
@@ -64,6 +69,9 @@ public class SupernaturalClient {
 			@Override
 			public Model getHumanoidArmorModel(ItemStack stack, EquipmentModel.LayerType type, Model basic) {
 				HumanoidModel<?> gothic = new GothicArmorModel(GothicArmorModel.createBodyLayer().bakeRoot());
+				if (ModList.get().isLoaded("kobolds")) {
+					gothic = Kobolds.getKoboldModel(basic, gothic);
+				}
 				if (basic instanceof HumanoidModel<?> target) {
 					ClientHooks.copyModelProperties(target, gothic);
 				}
