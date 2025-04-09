@@ -63,7 +63,7 @@ public class SupernaturalClient {
 		IClientItemExtensions armor = new IClientItemExtensions() {
 			@Override
 			public Model getHumanoidArmorModel(ItemStack stack, EquipmentModel.LayerType type, Model basic) {
-				GothicArmorModel<?> gothic = new GothicArmorModel<>(GothicArmorModel.createBodyLayer().bakeRoot());
+				HumanoidModel<?> gothic = new GothicArmorModel(GothicArmorModel.createBodyLayer().bakeRoot());
 				if (basic instanceof HumanoidModel<?> target) {
 					ClientHooks.copyModelProperties(target, gothic);
 				}
