@@ -96,7 +96,7 @@ public class SupernaturalEvents {
 
 	@SubscribeEvent
 	public static void onEffectAdded(MobEffectEvent.Applicable event) {
-		if (SupernaturalManager.isVampire(event.getEntity())) {
+		if (SupernaturalManager.isVampire(event.getEntity()) && event.getEffectInstance() != null) {
 			if (event.getEffectInstance().is(MobEffects.POISON) || event.getEffectInstance().is(MobEffects.HUNGER)) {
 				event.setResult(MobEffectEvent.Applicable.Result.DO_NOT_APPLY);
 			}
@@ -105,8 +105,10 @@ public class SupernaturalEvents {
 
 	@SubscribeEvent
 	public static void onEffectRemoval(MobEffectEvent.Remove event) {
-		if (event.getEffectInstance().is(SupernaturalEffects.POSSESSION) && event.getEntity().level() instanceof ServerLevel lvl) {
-			SupernaturalMobs.SPOOKY.get().spawn(lvl, event.getEntity().blockPosition(), EntitySpawnReason.MOB_SUMMONED);
+		if (event.getEffectInstance() != null) {
+			if (event.getEffectInstance().is(SupernaturalEffects.POSSESSION) && event.getEntity().level() instanceof ServerLevel lvl) {
+				SupernaturalMobs.SPOOKY.get().spawn(lvl, event.getEntity().blockPosition(), EntitySpawnReason.MOB_SUMMONED);
+			}
 		}
 	}
 
