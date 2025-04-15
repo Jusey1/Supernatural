@@ -2,13 +2,8 @@
   "type": "minecraft:chest",
   "pools": [
     {
-      "rolls": 3,
+      "rolls": 1,
       "entries": [
-        {
-          "type": "minecraft:item",
-          "name": "minecraft:air",
-          "weight": 7
-        },
         {
           "type": "minecraft:item",
           "name": "supernatural:angel_statue",
