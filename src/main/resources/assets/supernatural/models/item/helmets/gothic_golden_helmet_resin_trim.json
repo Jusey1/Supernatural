@@ -2,6 +2,7 @@
   "parent": "minecraft:item/generated",
   "textures": {
     "layer0": "supernatural:item/gothic_feather",
-    "layer1": "supernatural:item/gothic_diamond_helmet"
+    "layer1": "supernatural:item/gothic_golden_helmet",
+    "layer2": "supernatural:item/gothic_trim_resin"
   }
 }
