@@ -1,5 +1,6 @@
 package net.salju.supernatural.entity;
 
+import net.minecraft.tags.ItemTags;
 import net.salju.supernatural.init.SupernaturalItems;
 import net.salju.supernatural.init.SupernaturalConfig;
 import net.salju.supernatural.events.SupernaturalManager;
@@ -19,7 +20,6 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.item.PickaxeItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.monster.Vex;
@@ -56,8 +56,12 @@ public class Angel extends Mob {
 	@Override
 	public void readAdditionalSaveData(CompoundTag tag) {
 		super.readAdditionalSaveData(tag);
-		this.getEntityData().set(POSE, tag.getInt("Angel"));
-		this.getEntityData().set(CURSED, tag.getBoolean("Cursed"));
+		if (tag.getInt("Angel").isPresent()) {
+			this.getEntityData().set(POSE, tag.getInt("Angel").get());
+		}
+		if (tag.getBoolean("Cursed").isPresent()) {
+			this.getEntityData().set(CURSED, tag.getBoolean("Cursed").get());
+		}
 	}
 
 	@Override
@@ -69,7 +73,7 @@ public class Angel extends Mob {
 
 	@Override
 	public InteractionResult interactAt(Player player, Vec3 vec, InteractionHand hand) {
-		if (player.getItemInHand(hand).getItem() instanceof PickaxeItem && !this.isCursed()) {
+		if (player.getItemInHand(hand).is(ItemTags.PICKAXES) && !this.isCursed()) {
 			if (player.isCrouching()) {
 				if (this.getAngelPose() >= 7) {
 					this.getEntityData().set(POSE, 1);
@@ -92,7 +96,7 @@ public class Angel extends Mob {
 
 	@Override
 	public boolean hurtServer(ServerLevel lvl, DamageSource source, float amount) {
-		if ((source.getEntity() instanceof LivingEntity target && target.getMainHandItem().getItem() instanceof PickaxeItem && !this.isCursed()) || source.is(DamageTypes.FELL_OUT_OF_WORLD) || source.is(DamageTypes.EXPLOSION) || source.isCreativePlayer() || source.getEntity() instanceof Creeper) {
+		if ((source.getEntity() instanceof LivingEntity target && target.getMainHandItem().is(ItemTags.PICKAXES) && !this.isCursed()) || source.is(DamageTypes.FELL_OUT_OF_WORLD) || source.is(DamageTypes.EXPLOSION) || source.isCreativePlayer() || source.getEntity() instanceof Creeper) {
 			return super.hurtServer(lvl, source, amount);
 		}
 		return false;

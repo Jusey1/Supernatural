@@ -33,7 +33,7 @@ public class Possession extends MobEffect {
 		if (dur <= 1) {
 			Spooky ghost = SupernaturalMobs.SPOOKY.get().spawn(lvl, target.blockPosition(), EntitySpawnReason.MOB_SUMMONED);
 			if (target instanceof Player player && ghost != null) {
-				ghost.setOwner(player.getUUID());
+				ghost.setOwner(player);
 			}
 		}
 		if (target instanceof Animal) {
@@ -42,7 +42,7 @@ public class Possession extends MobEffect {
 			}
 			target.addEffect(new MobEffectInstance(MobEffects.LEVITATION, dur, str));
 		} else if (target instanceof PossessedArmor armor) {
-			target.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, dur, str));
+			target.addEffect(new MobEffectInstance(MobEffects.STRENGTH, dur, str));
 			if (armor.isTamed()) {
 				target.addEffect(new MobEffectInstance(MobEffects.REGENERATION, dur, str));
 			}

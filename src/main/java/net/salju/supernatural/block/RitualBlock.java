@@ -19,6 +19,7 @@ import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.BaseEntityBlock;
+import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.item.ItemStack;
@@ -81,14 +82,12 @@ public class RitualBlock extends BaseEntityBlock {
 	}
 
 	@Override
-	public void onRemove(BlockState state, Level world, BlockPos pos, BlockState newState, boolean bool) {
-		if (!state.is(newState.getBlock())) {
-			BlockEntity entity = world.getBlockEntity(pos);
-			if (entity instanceof RitualBlockEntity target && !target.isEmpty()) {
-				target.dropItem(0);
-			}
-			super.onRemove(state, world, pos, newState, bool);
+	public boolean onDestroyedByPlayer(BlockState state, Level world, BlockPos pos, Player player, boolean check, FluidState fluid) {
+		BlockEntity entity = world.getBlockEntity(pos);
+		if (entity instanceof RitualBlockEntity target && !target.isEmpty()) {
+			target.dropItem(0);
 		}
+		return super.onDestroyedByPlayer(state, world, pos, player, check, fluid);
 	}
 
 	@Override

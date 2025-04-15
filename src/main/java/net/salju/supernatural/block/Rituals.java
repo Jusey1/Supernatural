@@ -189,18 +189,18 @@ public class Rituals {
 	private static void summonMob(ServerLevel lvl, BlockPos pos, ItemStack stack) {
 		Entity entity = EntityType.loadEntityRecursive(SupernaturalManager.getSoulTag(stack), lvl, EntitySpawnReason.MOB_SUMMONED, o -> o);
 		if (entity != null) {
-			entity.moveTo(Vec3.atBottomCenterOf(pos));
+			entity.move(MoverType.SELF, Vec3.atBottomCenterOf(pos));
 			if (entity instanceof Villager bob) {
 				bob.convertTo(EntityType.ZOMBIE_VILLAGER, ConversionParams.single(bob, true, true), newbie -> {
 					newbie.setVillagerData(bob.getVillagerData());
-					newbie.setGossips(bob.getGossips().store(NbtOps.INSTANCE));
+					newbie.setGossips(bob.getGossips());
 					newbie.setTradeOffers(bob.getOffers());
 					newbie.setVillagerXp(bob.getVillagerXp()); });
 			}
 			if (lvl.canSeeSky(pos)) {
 				LightningBolt bolt = EntityType.LIGHTNING_BOLT.create(lvl, EntitySpawnReason.EVENT);
 				if (bolt != null) {
-					bolt.moveTo(Vec3.atBottomCenterOf(pos));
+					bolt.move(MoverType.SELF, Vec3.atBottomCenterOf(pos));
 					bolt.setVisualOnly(true);
 					lvl.addFreshEntity(bolt);
 				}

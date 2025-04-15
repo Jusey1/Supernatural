@@ -13,14 +13,14 @@ import net.minecraft.world.item.*;
 
 public class SupernaturalItems {
 	public static final DeferredRegister<Item> REGISTRY = DeferredRegister.createItems(Supernatural.MODID);
-	public static final DeferredHolder<Item, Item> VAMPIRE_SPAWN_EGG = REGISTRY.register("vampire_spawn_egg", () -> new SpawnEggItem(SupernaturalMobs.VAMPIRE.get(), -6710887, -3407872, createBaseProps("vampire_spawn_egg")));
-	public static final DeferredHolder<Item, Item> NECROMANCER_SPAWN_EGG = REGISTRY.register("necromancer_spawn_egg", () -> new SpawnEggItem(SupernaturalMobs.NECROMANCER.get(), -6710887, -13382401, createBaseProps("necromancer_spawn_egg")));
-	public static final DeferredHolder<Item, Item> ARMOR_SPAWN_EGG = REGISTRY.register("armor_spawn_egg", () -> new SpawnEggItem(SupernaturalMobs.POSSESSED_ARMOR.get(), -10066330, -3355444, createBaseProps("armor_spawn_egg")));
-	public static final DeferredHolder<Item, Item> SPOOKY_SPAWN_EGG = REGISTRY.register("spooky_spawn_egg", () -> new SpawnEggItem(SupernaturalMobs.SPOOKY.get(), -6697729, -3342337, createBaseProps("spooky_spawn_egg")));
-	public static final DeferredHolder<Item, Item> GOTHIC_IRON_HELMET = REGISTRY.register("gothic_iron_helmet", () -> new GothicHelmetItem(SupernaturalArmors.IRON, createBaseProps("gothic_iron_helmet").durability(ArmorType.HELMET.getDurability(15))));
-	public static final DeferredHolder<Item, Item> GOTHIC_DIAMOND_HELMET = REGISTRY.register("gothic_diamond_helmet", () -> new GothicHelmetItem(SupernaturalArmors.DIAMOND, createBaseProps("gothic_diamond_helmet").durability(ArmorType.HELMET.getDurability(33))));
-	public static final DeferredHolder<Item, Item> GOTHIC_GOLDEN_HELMET = REGISTRY.register("gothic_golden_helmet", () -> new GothicHelmetItem(SupernaturalArmors.GOLDEN, createBaseProps("gothic_golden_helmet").durability(ArmorType.HELMET.getDurability(7))));
-	public static final DeferredHolder<Item, Item> GOTHIC_NETHERITE_HELMET = REGISTRY.register("gothic_netherite_helmet", () -> new GothicHelmetItem(SupernaturalArmors.NETHERITE, createBaseProps("gothic_netherite_helmet").fireResistant().durability(ArmorType.HELMET.getDurability(37))));
+	public static final DeferredHolder<Item, Item> VAMPIRE_SPAWN_EGG = REGISTRY.register("vampire_spawn_egg", () -> new SpawnEggItem(SupernaturalMobs.VAMPIRE.get(), createBaseProps("vampire_spawn_egg")));
+	public static final DeferredHolder<Item, Item> NECROMANCER_SPAWN_EGG = REGISTRY.register("necromancer_spawn_egg", () -> new SpawnEggItem(SupernaturalMobs.NECROMANCER.get(), createBaseProps("necromancer_spawn_egg")));
+	public static final DeferredHolder<Item, Item> ARMOR_SPAWN_EGG = REGISTRY.register("armor_spawn_egg", () -> new SpawnEggItem(SupernaturalMobs.POSSESSED_ARMOR.get(), createBaseProps("armor_spawn_egg")));
+	public static final DeferredHolder<Item, Item> SPOOKY_SPAWN_EGG = REGISTRY.register("spooky_spawn_egg", () -> new SpawnEggItem(SupernaturalMobs.SPOOKY.get(), createBaseProps("spooky_spawn_egg")));
+	public static final DeferredHolder<Item, Item> GOTHIC_IRON_HELMET = REGISTRY.register("gothic_iron_helmet", () -> new Item(createBaseProps("gothic_iron_helmet").durability(ArmorType.HELMET.getDurability(15)).humanoidArmor(SupernaturalArmors.IRON, ArmorType.HELMET)));
+	public static final DeferredHolder<Item, Item> GOTHIC_DIAMOND_HELMET = REGISTRY.register("gothic_diamond_helmet", () -> new Item(createBaseProps("gothic_diamond_helmet").durability(ArmorType.HELMET.getDurability(33)).humanoidArmor(SupernaturalArmors.DIAMOND, ArmorType.HELMET)));
+	public static final DeferredHolder<Item, Item> GOTHIC_GOLDEN_HELMET = REGISTRY.register("gothic_golden_helmet", () -> new Item(createBaseProps("gothic_golden_helmet").durability(ArmorType.HELMET.getDurability(7)).humanoidArmor(SupernaturalArmors.GOLDEN, ArmorType.HELMET)));
+	public static final DeferredHolder<Item, Item> GOTHIC_NETHERITE_HELMET = REGISTRY.register("gothic_netherite_helmet", () -> new Item(createBaseProps("gothic_netherite_helmet").fireResistant().durability(ArmorType.HELMET.getDurability(37)).humanoidArmor(SupernaturalArmors.NETHERITE, ArmorType.HELMET)));
 	public static final DeferredHolder<Item, Item> GRAVE_SOIL = block(SupernaturalBlocks.GRAVE_SOIL, "grave_soil");
 	public static final DeferredHolder<Item, Item> RITUAL_ALTAR = block(SupernaturalBlocks.RITUAL_ALTAR, "ritual_altar");
 	public static final DeferredHolder<Item, Item> CONTRACT = REGISTRY.register("contract", () -> new ContractItem(createBaseProps("contract").stacksTo(1).rarity(Rarity.UNCOMMON).fireResistant()));

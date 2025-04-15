@@ -28,7 +28,7 @@ public class PossessedArmorRenderer extends HumanoidMobRenderer<PossessedArmor, 
 	@Override
 	public void extractRenderState(PossessedArmor target, PossessedArmorState state, float f1) {
 		super.extractRenderState(target, state, f1);
-		HumanoidMobRenderer.extractHumanoidRenderState(target, state, f1);
+		HumanoidMobRenderer.extractHumanoidRenderState(target, state, f1, this.itemModelResolver);
 		state.isAggressive = target.isAggressive();
 		state.isLeftHanded = target.isLeftHanded();
 	}

@@ -43,7 +43,9 @@ public class RitualBlockEntity extends BaseContainerBlockEntity {
 		super.loadAdditional(tag, regs);
 		this.stacks = NonNullList.withSize(this.getContainerSize(), ItemStack.EMPTY);
 		ContainerHelper.loadAllItems(tag, this.stacks, regs);
-		this.greedy = tag.getBoolean("Greedy");
+		if (tag.getBoolean("Greedy").isPresent()) {
+			this.greedy = tag.getBoolean("Greedy").get();
+		}
 	}
 
 	@Override
@@ -55,7 +57,9 @@ public class RitualBlockEntity extends BaseContainerBlockEntity {
 	public void onDataPacket(Connection queen, ClientboundBlockEntityDataPacket packet, HolderLookup.Provider regs) {
 		this.stacks = NonNullList.withSize(this.getContainerSize(), ItemStack.EMPTY);
 		ContainerHelper.loadAllItems(packet.getTag(), this.stacks, regs);
-		this.greedy = packet.getTag().getBoolean("Greedy");
+		if (packet.getTag().getBoolean("Greedy").isPresent()) {
+			this.greedy = packet.getTag().getBoolean("Greedy").get();
+		}
 	}
 
 	@Override

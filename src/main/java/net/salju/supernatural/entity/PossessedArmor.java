@@ -1,5 +1,9 @@
 package net.salju.supernatural.entity;
 
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.world.entity.*;
 import net.salju.supernatural.init.SupernaturalEffects;
 import net.salju.supernatural.init.SupernaturalItems;
 import net.salju.supernatural.init.SupernaturalSounds;
@@ -20,12 +24,6 @@ import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
 import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
-import net.minecraft.world.entity.SpawnGroupData;
-import net.minecraft.world.entity.EntitySpawnReason;
-import net.minecraft.world.entity.Mob;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.damagesource.DamageSource;
@@ -36,10 +34,11 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.nbt.CompoundTag;
 import javax.annotation.Nullable;
+import java.util.Optional;
 import java.util.UUID;
 
 public class PossessedArmor extends AbstractGolem {
-	private UUID friend;
+	private static final EntityDataAccessor<Optional<EntityReference<LivingEntity>>> OWNER = SynchedEntityData.defineId(PossessedArmor.class, EntityDataSerializers.OPTIONAL_LIVING_ENTITY_REFERENCE);
 
 	public PossessedArmor(EntityType<PossessedArmor> type, Level world) {
 		super(type, world);
@@ -60,17 +59,30 @@ public class PossessedArmor extends AbstractGolem {
 	@Override
 	public void addAdditionalSaveData(CompoundTag tag) {
 		super.addAdditionalSaveData(tag);
-		if (this.friend != null) {
-			tag.putUUID("Player", this.friend);
+		if (this.getOwner() != null) {
+			this.getOwner().store(tag, "Player");
 		}
 	}
 
 	@Override
 	public void readAdditionalSaveData(CompoundTag tag) {
 		super.readAdditionalSaveData(tag);
-		if (tag.contains("Player")) {
-			this.friend = tag.getUUID("Player");
+		EntityReference<LivingEntity> target = EntityReference.readWithOldOwnerConversion(tag, "Player", this.level());
+		if (target != null) {
+			try {
+				this.entityData.set(OWNER, Optional.of(target));
+			} catch (Throwable throwable) {
+				//
+			}
+		} else {
+			this.entityData.set(OWNER, Optional.empty());
 		}
+	}
+
+	@Override
+	protected void defineSynchedData(SynchedEntityData.Builder builder) {
+		super.defineSynchedData(builder);
+		builder.define(OWNER, Optional.empty());
 	}
 
 	@Override
@@ -95,12 +107,14 @@ public class PossessedArmor extends AbstractGolem {
 	protected void dropCustomDeathLoot(ServerLevel lvl, DamageSource src, boolean check) {
 		this.setItemInHand(InteractionHand.MAIN_HAND, ItemStack.EMPTY);
 		this.setItemInHand(InteractionHand.OFF_HAND, ItemStack.EMPTY);
-		Iterable<ItemStack> armor = this.getArmorSlots();
-		for (ItemStack stack : armor) {
-			EquipmentSlot slot = this.getEquipmentSlotForItem(stack);
-			this.spawnAtLocation(lvl, stack);
-			this.setItemSlot(slot, ItemStack.EMPTY);
-		}
+		this.spawnAtLocation(lvl, this.getItemBySlot(EquipmentSlot.HEAD));
+		this.setItemSlot(EquipmentSlot.HEAD, ItemStack.EMPTY);
+		this.spawnAtLocation(lvl, this.getItemBySlot(EquipmentSlot.BODY));
+		this.setItemSlot(EquipmentSlot.BODY, ItemStack.EMPTY);
+		this.spawnAtLocation(lvl, this.getItemBySlot(EquipmentSlot.LEGS));
+		this.setItemSlot(EquipmentSlot.LEGS, ItemStack.EMPTY);
+		this.spawnAtLocation(lvl, this.getItemBySlot(EquipmentSlot.FEET));
+		this.setItemSlot(EquipmentSlot.FEET, ItemStack.EMPTY);
 	}
 
 	@Override
@@ -137,16 +151,21 @@ public class PossessedArmor extends AbstractGolem {
 		super.aiStep();
 	}
 
-	public void setOwner(UUID player) {
-		this.friend = player;
+	public void setOwner(@Nullable LivingEntity target) {
+		this.entityData.set(OWNER, Optional.ofNullable(target).map(EntityReference::new));
 	}
 
-	public UUID getOwner() {
-		return this.friend;
+	public void setOwnerDirectly(@Nullable EntityReference<LivingEntity> target) {
+		this.entityData.set(OWNER, Optional.ofNullable(target));
+	}
+
+	@Nullable
+	public EntityReference<LivingEntity> getOwner() {
+		return this.entityData.get(OWNER).orElse(null);
 	}
 
 	public boolean isTamed() {
-		return (this.friend != null);
+		return this.getOwner() != null;
 	}
 
 	public static AttributeSupplier.Builder createAttributes() {
@@ -161,8 +180,8 @@ public class PossessedArmor extends AbstractGolem {
 		}
 
 		public boolean test(@Nullable LivingEntity target, ServerLevel lvl) {
-			if (armor.isTamed()) {
-				Player player = armor.level().getPlayerByUUID(armor.getOwner());
+			if (armor.isTamed() && armor.getOwner() != null) {
+				Player player = armor.level().getPlayerByUUID(armor.getOwner().getUUID());
 				if (player != null && player.getLastHurtByMob() != null && player.getLastHurtByMob().isAlive()) {
 					return (target == player.getLastHurtByMob());
 				}

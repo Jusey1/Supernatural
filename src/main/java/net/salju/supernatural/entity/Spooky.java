@@ -1,5 +1,9 @@
 package net.salju.supernatural.entity;
 
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.world.entity.*;
 import net.salju.supernatural.init.SupernaturalTags;
 import net.salju.supernatural.init.SupernaturalSounds;
 import net.salju.supernatural.init.SupernaturalMobs;
@@ -25,14 +29,6 @@ import net.minecraft.world.entity.ai.goal.FloatGoal;
 import net.minecraft.world.entity.ai.control.FlyingMoveControl;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
-import net.minecraft.world.entity.SpawnGroupData;
-import net.minecraft.world.entity.PathfinderMob;
-import net.minecraft.world.entity.EntitySpawnReason;
-import net.minecraft.world.entity.Mob;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.damagesource.DamageSource;
@@ -45,10 +41,9 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.BlockPos;
 import javax.annotation.Nullable;
 import java.util.Optional;
-import java.util.UUID;
 
 public class Spooky extends PathfinderMob {
-	private UUID friend;
+	private static final EntityDataAccessor<Optional<EntityReference<LivingEntity>>> OWNER = SynchedEntityData.defineId(Spooky.class, EntityDataSerializers.OPTIONAL_LIVING_ENTITY_REFERENCE);
 
 	public Spooky(EntityType<Spooky> type, Level world) {
 		super(type, world);
@@ -57,11 +52,7 @@ public class Spooky extends PathfinderMob {
 
 	@Override
 	protected PathNavigation createNavigation(Level lvl) {
-		FlyingPathNavigation scary = new FlyingPathNavigation(this, lvl);
-		scary.setCanOpenDoors(false);
-		scary.setCanFloat(true);
-		scary.setCanPassDoors(true);
-		return scary;
+		return new FlyingPathNavigation(this, lvl);
 	}
 
 	@Override
@@ -79,17 +70,30 @@ public class Spooky extends PathfinderMob {
 	@Override
 	public void addAdditionalSaveData(CompoundTag tag) {
 		super.addAdditionalSaveData(tag);
-		if (this.friend != null) {
-			tag.putUUID("Player", this.friend);
+		if (this.getOwner() != null) {
+			this.getOwner().store(tag, "Player");
 		}
 	}
 
 	@Override
 	public void readAdditionalSaveData(CompoundTag tag) {
 		super.readAdditionalSaveData(tag);
-		if (tag.contains("Player")) {
-			this.friend = tag.getUUID("Player");
+		EntityReference<LivingEntity> target = EntityReference.readWithOldOwnerConversion(tag, "Player", this.level());
+		if (target != null) {
+			try {
+				this.entityData.set(OWNER, Optional.of(target));
+			} catch (Throwable throwable) {
+				//
+			}
+		} else {
+			this.entityData.set(OWNER, Optional.empty());
 		}
+	}
+
+	@Override
+	protected void defineSynchedData(SynchedEntityData.Builder builder) {
+		super.defineSynchedData(builder);
+		builder.define(OWNER, Optional.empty());
 	}
 
 	@Override
@@ -142,7 +146,7 @@ public class Spooky extends PathfinderMob {
 					if (this.getOwner() != null) {
 						ItemStack sword = new ItemStack(Items.IRON_SWORD);
 						EnchantmentHelper.enchantItem(this.getRandom(), sword, 32, lvl.registryAccess(), Optional.empty());
-						armor.setOwner(this.getOwner());
+						armor.setOwnerDirectly(this.getOwner());
 						armor.setItemSlot(EquipmentSlot.MAINHAND, sword);
 					}
 					double r = this.random.nextGaussian() * 0.02D;
@@ -155,7 +159,7 @@ public class Spooky extends PathfinderMob {
 			double x = this.getX();
 			double y = this.getY();
 			double z = this.getZ();
-			if (this.level() instanceof ServerLevel lvl && this.level().isDay() && this.level().canSeeSkyFromBelowWater(BlockPos.containing(x, y, z))) {
+			if (this.level() instanceof ServerLevel lvl && !this.level().isMoonVisible() && this.level().canSeeSkyFromBelowWater(BlockPos.containing(x, y, z))) {
 				this.playSound(SupernaturalSounds.SPOOK_POOF.get(), 1.0F, 1.0F);
 				this.discard();
 				double r = this.random.nextGaussian() * 0.02D;
@@ -181,7 +185,7 @@ public class Spooky extends PathfinderMob {
 	}
 
 	@Override
-	public boolean causeFallDamage(float l, float d, DamageSource source) {
+	public boolean causeFallDamage(double d, float f, DamageSource source) {
 		return false;
 	}
 
@@ -190,12 +194,17 @@ public class Spooky extends PathfinderMob {
 		super.setNoGravity(true);
 	}
 
-	public void setOwner(UUID player) {
-		this.friend = player;
+	public void setOwner(@Nullable LivingEntity target) {
+		this.entityData.set(OWNER, Optional.ofNullable(target).map(EntityReference::new));
 	}
 
-	public UUID getOwner() {
-		return this.friend;
+	public void setOwnerDirectly(@Nullable EntityReference<LivingEntity> target) {
+		this.entityData.set(OWNER, Optional.ofNullable(target));
+	}
+
+	@Nullable
+	public EntityReference<LivingEntity> getOwner() {
+		return this.entityData.get(OWNER).orElse(null);
 	}
 
 	public static AttributeSupplier.Builder createAttributes() {

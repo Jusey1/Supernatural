@@ -9,6 +9,7 @@ import net.minecraft.core.GlobalPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.component.TooltipDisplay;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Item;
@@ -17,8 +18,8 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.util.Mth;
 import net.minecraft.ChatFormatting;
-import java.util.List;
 import java.util.Optional;
+import java.util.function.Consumer;
 
 public class RitualCompassItem extends Item {
 	public RitualCompassItem(Item.Properties props) {
@@ -26,23 +27,18 @@ public class RitualCompassItem extends Item {
 	}
 
 	@Override
-	public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> list, TooltipFlag flag) {
-		super.appendHoverText(stack, context, list, flag);
+	public void appendHoverText(ItemStack stack, Item.TooltipContext context, TooltipDisplay display, Consumer<Component> list, TooltipFlag flag) {
+		super.appendHoverText(stack, context, display, list, flag);
 		RitualCompassData data = stack.get(SupernaturalData.COMPASS);
 		if (data != null) {
 			if (context.level().dimensionType().natural()) {
-				list.add(Component.translatable(data.getPower()).withStyle(ChatFormatting.DARK_PURPLE));
+				list.accept(Component.translatable(data.getPower()).withStyle(ChatFormatting.DARK_PURPLE));
 			} else {
-				list.add(Component.translatable("desc.compass.broken").withStyle(ChatFormatting.DARK_PURPLE));
+				list.accept(Component.translatable("desc.compass.broken").withStyle(ChatFormatting.DARK_PURPLE));
 			}
 		} else {
-			list.add(Component.translatable("desc.compass.creative").withStyle(ChatFormatting.DARK_PURPLE));
+			list.accept(Component.translatable("desc.compass.creative").withStyle(ChatFormatting.DARK_PURPLE));
 		}
-	}
-
-	@Override
-	public boolean isFoil(ItemStack stack) {
-		return true;
 	}
 
 	@Override

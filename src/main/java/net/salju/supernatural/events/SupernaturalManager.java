@@ -45,17 +45,25 @@ public class SupernaturalManager {
 	}
 
 	public static boolean isVampire(LivingEntity target) {
-		return (target.getPersistentData().getCompound(Player.PERSISTED_NBT_TAG).getBoolean("isVampire") || target.getType().is(SupernaturalTags.VAMPIRE));
+		if (target instanceof Player player) {
+			if (player.getPersistentData().getCompound(Player.PERSISTED_NBT_TAG).isPresent()) {
+				return player.getPersistentData().getCompound(Player.PERSISTED_NBT_TAG).get().getBooleanOr("isVampire", false);
+			}
+			return false;
+		}
+		return target.getType().is(SupernaturalTags.VAMPIRE);
 	}
 
 	public static void setVampire(Player player, boolean check) {
+		if (player.getPersistentData().getCompound(Player.PERSISTED_NBT_TAG).isEmpty()) {
+			player.getPersistentData().put(Player.PERSISTED_NBT_TAG, new CompoundTag());
+		}
+		CompoundTag data = player.getPersistentData().getCompound(Player.PERSISTED_NBT_TAG).get();
 		if (!check) {
-			CompoundTag data = player.getPersistentData().getCompound(Player.PERSISTED_NBT_TAG);
 			data.remove("isVampire");
 			player.getPersistentData().put(Player.PERSISTED_NBT_TAG, data);
 			player.getAttributes().removeAttributeModifiers(createSupernatural());
 		} else {
-			CompoundTag data = player.getPersistentData().getCompound(Player.PERSISTED_NBT_TAG);
 			data.putBoolean("isVampire", true);
 			player.getPersistentData().put(Player.PERSISTED_NBT_TAG, data);
 		}
@@ -149,7 +157,7 @@ public class SupernaturalManager {
 	}
 
 	public static boolean canRitualsWork(ServerLevel lvl, BlockPos pos, RitualBlockEntity target) {
-		return (lvl.dimensionType().natural() && !target.getGreedy() && lvl.getBrightness(LightLayer.BLOCK, pos) < 6 && (lvl.getBrightness(LightLayer.SKY, pos) < 6 || lvl.isNight()));
+		return (lvl.dimensionType().natural() && !target.getGreedy() && lvl.getBrightness(LightLayer.BLOCK, pos) < 6 && (lvl.getBrightness(LightLayer.SKY, pos) < 6 || lvl.isMoonVisible()));
 	}
 
 	public static int getPower(ServerLevel lvl, BlockPos pos) {
@@ -183,12 +191,18 @@ public class SupernaturalManager {
 	}
 
 	public static boolean hasArmor(LivingEntity target) {
-		Iterable<ItemStack> armor = target.getArmorSlots();
 		int i = 0;
-		for (ItemStack stack : armor) {
-			if (!stack.isEmpty()) {
-				i++;
-			}
+		if (!target.getItemBySlot(EquipmentSlot.HEAD).isEmpty()) {
+			i++;
+		}
+		if (!target.getItemBySlot(EquipmentSlot.BODY).isEmpty()) {
+			i++;
+		}
+		if (!target.getItemBySlot(EquipmentSlot.LEGS).isEmpty()) {
+			i++;
+		}
+		if (!target.getItemBySlot(EquipmentSlot.FEET).isEmpty()) {
+			i++;
 		}
 		return (i >= 4);
 	}

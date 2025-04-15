@@ -43,8 +43,8 @@ public class SupernaturalEvents {
 			player.getFoodData().setFoodLevel(20);
 			if (player.level() instanceof ServerLevel lvl) {
 				SupernaturalManager.addVampireEffects(player);
-				boolean check = (player.isInWaterRainOrBubble() || player.isInPowderSnow || player.wasInPowderSnow || player.isCreative() || SupernaturalConfig.SUN.get() || player.hasEffect(MobEffects.FIRE_RESISTANCE));
-				if (lvl.isDay() && lvl.canSeeSky(BlockPos.containing(player.getX(), player.getEyeY(), player.getZ())) && !check) {
+				boolean check = (player.isInWaterOrRain() || player.isInPowderSnow || player.wasInPowderSnow || player.isCreative() || SupernaturalConfig.SUN.get() || player.hasEffect(MobEffects.FIRE_RESISTANCE));
+				if (!lvl.isMoonVisible() && lvl.canSeeSky(BlockPos.containing(player.getX(), player.getEyeY(), player.getZ())) && !check) {
 					ItemStack helmet = player.getItemBySlot(EquipmentSlot.HEAD);
 					if (helmet.isEmpty()) {
 						if (player.getRemainingFireTicks() <= 20) {
@@ -163,8 +163,8 @@ public class SupernaturalEvents {
 	public static void onDrops(LivingDropsEvent event) {
 		LivingEntity target = event.getEntity();
 		if (target.level() instanceof ServerLevel) {
-			if (target.getPersistentData().getBoolean("SoulTrapped")) {
-				event.setCanceled(true);
+			if (target.getPersistentData().getBoolean("SoulTrapped").isPresent()) {
+				event.setCanceled(target.getPersistentData().getBoolean("SoulTrapped").get());
 			}
 		}
 	}
@@ -173,8 +173,8 @@ public class SupernaturalEvents {
 	public static void onXpDrops(LivingExperienceDropEvent event) {
 		LivingEntity target = event.getEntity();
 		if (target.level() instanceof ServerLevel) {
-			if (target.getPersistentData().getBoolean("SoulTrapped")) {
-				event.setCanceled(true);
+			if (target.getPersistentData().getBoolean("SoulTrapped").isPresent()) {
+				event.setCanceled(target.getPersistentData().getBoolean("SoulTrapped").get());
 			}
 		}
 	}
@@ -185,10 +185,10 @@ public class SupernaturalEvents {
 			Entity target = event.getEntity();
 			BlockPos pos = target.blockPosition();
 			if (event.getLevel() instanceof ServerLevel lvl && target instanceof Raider raidyr) {
-				if (SupernaturalConfig.RAIDERS.get() && lvl.isNight() && raidyr.getCurrentRaid() != null && !(raidyr.isPassenger() || raidyr.isPatrolLeader())) {
+				if (SupernaturalConfig.RAIDERS.get() && lvl.isMoonVisible() && raidyr.getCurrentRaid() != null && !(raidyr.isPassenger() || raidyr.isPatrolLeader())) {
 					if (raidyr instanceof Vindicator && Math.random() <= 0.25) {
 						SupernaturalMobs.VAMPIRE.get().spawn(lvl, pos, EntitySpawnReason.EVENT);
-						raidyr.getCurrentRaid().removeFromRaid(raidyr, true);
+						raidyr.getCurrentRaid().removeFromRaid(lvl, raidyr, true);
 						event.setCanceled(true);
 					}
 				}

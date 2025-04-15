@@ -5,6 +5,7 @@ import net.salju.supernatural.init.SupernaturalItems;
 import net.salju.supernatural.init.SupernaturalTags;
 import net.salju.supernatural.item.component.SoulgemData;
 import net.salju.supernatural.events.SupernaturalManager;
+import net.minecraft.world.item.component.TooltipDisplay;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Item;
@@ -14,7 +15,7 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.network.chat.Component;
 import net.minecraft.ChatFormatting;
-import java.util.List;
+import java.util.function.Consumer;
 
 public class SoulgemItem extends Item {
 	public SoulgemItem(Item.Properties props) {
@@ -22,18 +23,18 @@ public class SoulgemItem extends Item {
 	}
 
 	@Override
-	public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> list, TooltipFlag flag) {
-		super.appendHoverText(stack, context, list, flag);
+	public void appendHoverText(ItemStack stack, Item.TooltipContext context, TooltipDisplay display, Consumer<Component> list, TooltipFlag flag) {
+		super.appendHoverText(stack, context, display, list, flag);
 		if (context.level() != null) {
 			Entity entity = EntityType.loadEntityRecursive(SupernaturalManager.getSoulTag(stack), context.level(), EntitySpawnReason.LOAD, o -> o);
 			if (entity != null) {
 				if (entity.hasCustomName()) {
-					list.add(Component.literal(entity.getName().getString()).withStyle(ChatFormatting.GOLD));
+					list.accept(Component.literal(entity.getName().getString()).withStyle(ChatFormatting.GOLD));
 				} else {
-					list.add(Component.translatable(entity.getType().toString()).withStyle(ChatFormatting.GOLD));
+					list.accept(Component.translatable(entity.getType().toString()).withStyle(ChatFormatting.GOLD));
 				}
 			}
-			list.add(Component.translatable(SupernaturalManager.getSoulgem(stack)).withStyle(ChatFormatting.DARK_PURPLE));
+			list.accept(Component.translatable(SupernaturalManager.getSoulgem(stack)).withStyle(ChatFormatting.DARK_PURPLE));
 		}
 	}
 

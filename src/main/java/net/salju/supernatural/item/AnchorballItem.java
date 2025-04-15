@@ -6,13 +6,14 @@ import net.salju.supernatural.init.SupernaturalItems;
 import net.salju.supernatural.item.component.AnchorballData;
 import net.minecraft.core.GlobalPos;
 import net.minecraft.network.chat.Component;
+import net.minecraft.world.item.component.TooltipDisplay;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.ChatFormatting;
-import java.util.List;
+import java.util.function.Consumer;
 
 public class AnchorballItem extends Item {
 	public AnchorballItem(Item.Properties props) {
@@ -20,11 +21,11 @@ public class AnchorballItem extends Item {
 	}
 
 	@Override
-	public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> list, TooltipFlag flag) {
-		super.appendHoverText(stack, context, list, flag);
+	public void appendHoverText(ItemStack stack, Item.TooltipContext context, TooltipDisplay display, Consumer<Component> list, TooltipFlag flag) {
+		super.appendHoverText(stack, context, display, list, flag);
 		AnchorballData data = stack.get(SupernaturalData.ANCHOR);
 		if (data != null) {
-			list.add(Component.literal(data.getPos().getX() + ", " + data.getPos().getY() + ", " + data.getPos().getZ()).withStyle(ChatFormatting.DARK_PURPLE));
+			list.accept(Component.literal(data.getPos().getX() + ", " + data.getPos().getY() + ", " + data.getPos().getZ()).withStyle(ChatFormatting.DARK_PURPLE));
 		}
 	}
 

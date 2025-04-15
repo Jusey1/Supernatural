@@ -1,5 +1,6 @@
 package net.salju.supernatural.item;
 
+import net.minecraft.world.entity.MoverType;
 import net.salju.supernatural.init.SupernaturalMobs;
 import net.salju.supernatural.entity.Angel;
 import net.minecraft.world.phys.Vec3;
@@ -35,14 +36,8 @@ public class AngelItem extends Item {
 				Consumer<Angel> consumer = EntityType.createDefaultStackConfig(lvl, context.getItemInHand(), context.getPlayer());
 				Angel target = SupernaturalMobs.ANGEL.get().create(lvl, consumer, pos, EntitySpawnReason.SPAWN_ITEM_USE, true, true);
 				if (target != null && lvl.noCollision(target, nums) && lvl.getEntities(target, nums).isEmpty()) {
-					target.moveTo(target.getX(), target.getY(), target.getZ());
 					float rot = (float) Mth.floor((Mth.wrapDegrees(context.getRotation() - 180.0F) + 22.5F) / 45.0F) * 45.0F;
-					target.setYRot(rot);
-					target.setYBodyRot(rot);
-					target.setYHeadRot(rot);
-					target.yRotO = rot;
-					target.yBodyRotO = rot;
-					target.yHeadRotO = rot;
+					target.snapTo(target.getX(), target.getY(), target.getZ(), rot, 0.0F);
 					lvl.addFreshEntityWithPassengers(target);
 					lvl.playSound(null, target.getX(), target.getY(), target.getZ(), SoundEvents.ARMOR_STAND_PLACE, SoundSource.BLOCKS, 0.75F, 0.8F);
 					target.gameEvent(GameEvent.ENTITY_PLACE, context.getPlayer());

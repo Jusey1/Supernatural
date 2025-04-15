@@ -23,7 +23,7 @@ public class NecromancerRenderer extends IllagerRenderer<Necromancer, IllagerRen
 				return RenderType.eyes(ResourceLocation.fromNamespaceAndPath(Supernatural.MODID, "textures/entity/vampires/vampire_eyes.png"));
 			}
 		});
-		this.addLayer(new ItemInHandLayer<>(this, context.getItemRenderer()) {
+		this.addLayer(new ItemInHandLayer<>(this) {
 			public void render(PoseStack pose, MultiBufferSource buffer, int i, IllagerRenderState target, float f1, float f2) {
 				if (target.isAggressive) {
 					super.render(pose, buffer, i, target, f1, f2);

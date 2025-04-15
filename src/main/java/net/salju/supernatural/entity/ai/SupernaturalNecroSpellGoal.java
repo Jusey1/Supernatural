@@ -13,10 +13,7 @@ import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.entity.monster.Zombie;
 import net.minecraft.world.entity.monster.Skeleton;
 import net.minecraft.world.entity.monster.Monster;
-import net.minecraft.world.entity.EntitySpawnReason;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.LightningBolt;
-import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.*;
 
 public class SupernaturalNecroSpellGoal extends AbstractSupernaturalSpellGoal {
 	private final Monster user;
@@ -37,7 +34,7 @@ public class SupernaturalNecroSpellGoal extends AbstractSupernaturalSpellGoal {
 		if (world instanceof ServerLevel lvl) {
 			Supernatural.queueServerWork(26, () -> {
 				LightningBolt bolt = EntityType.LIGHTNING_BOLT.create(lvl, EntitySpawnReason.EVENT);
-				bolt.moveTo(Vec3.atBottomCenterOf(pos));
+				bolt.move(MoverType.SELF, Vec3.atBottomCenterOf(pos));
 				bolt.setVisualOnly(true);
 				lvl.addFreshEntity(bolt);
 				if ((Math.floor(target.getX()) == x) && (Math.floor(target.getY()) == y) && (Math.floor(target.getZ()) == z)) {
