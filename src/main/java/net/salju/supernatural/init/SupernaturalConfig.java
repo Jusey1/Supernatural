@@ -14,6 +14,7 @@ public class SupernaturalConfig {
 	public static final ModConfigSpec.BooleanValue SUN;
 	public static final ModConfigSpec.DoubleValue WOOD;
 	public static final ModConfigSpec.DoubleValue DR;
+	public static final ModConfigSpec.BooleanValue BLOOD;
 
 	public static final ModConfigSpec.IntValue SOULPOWER;
 	public static final ModConfigSpec.BooleanValue SACRIFICE;
@@ -32,6 +33,7 @@ public class SupernaturalConfig {
 		SUN = BUILDER.comment("Should vampires be immune to sun damage?").define("Vampiric Sunlight", false);
 		WOOD = BUILDER.comment("How much health does a Vampire needs to be at in percentage to die instantly to a Wooden Sword?").defineInRange("Vampiric Weakness", 0.6, 0.0, 1.0);
 		DR = BUILDER.comment("How much damage does a Vampire takes from all sources?").defineInRange("Vampiric Damage Reduction", 0.85, 0.0, 1.0);
+		BLOOD = BUILDER.comment("Should blood bottles be obtainable by attacking Tagged Mobs & Players?").define("Blood Bottles", false);
 		BUILDER.pop();
 		BUILDER.push("Ritual Altar");
 		SOULPOWER = BUILDER.comment("What should be the base power for soul enchanting?").defineInRange("Ritual Soulpower", 3, 0, Integer.MAX_VALUE);

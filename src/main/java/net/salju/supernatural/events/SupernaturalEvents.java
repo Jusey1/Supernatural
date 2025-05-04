@@ -135,6 +135,18 @@ public class SupernaturalEvents {
 			}
 			if (SupernaturalManager.isVampire(source)&& !SupernaturalManager.isVampire(target) && !target.getType().is(EntityTypeTags.UNDEAD) && !target.getType().is(SupernaturalTags.IMMUNITY)) {
 				source.heal(SupernaturalConfig.LEECH.get().floatValue() + 1.25F);
+				if (source instanceof Player player && SupernaturalConfig.BLOOD.get() && (target instanceof Player || target.getType().is(SupernaturalTags.BLOODY))) {
+					ItemStack stack = player.getOffhandItem();
+					if (stack.is(Items.GLASS_BOTTLE)) {
+						if (!player.isCreative()) {
+							stack.shrink(1);
+						}
+						ItemStack blood = new ItemStack(SupernaturalItems.BLOOD.get());
+						if (!player.getInventory().add(blood)) {
+							player.drop(blood, false);
+						}
+					}
+				}
 				if (target instanceof Player && !target.hasEffect(SupernaturalEffects.VAMPIRISM)) {
 					target.addEffect(new MobEffectInstance(SupernaturalEffects.VAMPIRISM, 24000, 0));
 				}
