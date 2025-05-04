@@ -1,21 +1,14 @@
 package net.salju.supernatural.entity;
 
-import net.minecraft.network.syncher.EntityDataAccessor;
-import net.minecraft.network.syncher.EntityDataSerializers;
-import net.minecraft.network.syncher.SynchedEntityData;
-import net.minecraft.world.entity.*;
 import net.salju.supernatural.init.SupernaturalEffects;
 import net.salju.supernatural.init.SupernaturalItems;
 import net.salju.supernatural.init.SupernaturalSounds;
-import net.salju.supernatural.init.SupernaturalTags;
 import net.salju.supernatural.events.SupernaturalManager;
+import net.salju.supernatural.entity.ai.targets.MinionAttackSelector;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.animal.AbstractGolem;
-import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.ai.goal.RandomStrollGoal;
@@ -24,6 +17,7 @@ import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
 import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.damagesource.DamageSource;
@@ -32,14 +26,9 @@ import net.minecraft.world.DifficultyInstance;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.sounds.SoundEvent;
-import net.minecraft.nbt.CompoundTag;
 import javax.annotation.Nullable;
-import java.util.Optional;
-import java.util.UUID;
 
-public class PossessedArmor extends AbstractGolem {
-	private static final EntityDataAccessor<Optional<EntityReference<LivingEntity>>> OWNER = SynchedEntityData.defineId(PossessedArmor.class, EntityDataSerializers.OPTIONAL_LIVING_ENTITY_REFERENCE);
-
+public class PossessedArmor extends AbstractMinionEntity {
 	public PossessedArmor(EntityType<PossessedArmor> type, Level world) {
 		super(type, world);
 		this.setPersistenceRequired();
@@ -53,36 +42,7 @@ public class PossessedArmor extends AbstractGolem {
 		this.goalSelector.addGoal(3, new LookAtPlayerGoal(this, LivingEntity.class, (float) 6));
 		this.goalSelector.addGoal(4, new RandomLookAroundGoal(this));
 		this.targetSelector.addGoal(0, new HurtByTargetGoal(this));
-		this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, LivingEntity.class, 12, true, true, new PossessedArmor.PossessedAttackSelector(this)));
-	}
-
-	@Override
-	public void addAdditionalSaveData(CompoundTag tag) {
-		super.addAdditionalSaveData(tag);
-		if (this.getOwner() != null) {
-			this.getOwner().store(tag, "Player");
-		}
-	}
-
-	@Override
-	public void readAdditionalSaveData(CompoundTag tag) {
-		super.readAdditionalSaveData(tag);
-		EntityReference<LivingEntity> target = EntityReference.readWithOldOwnerConversion(tag, "Player", this.level());
-		if (target != null) {
-			try {
-				this.entityData.set(OWNER, Optional.of(target));
-			} catch (Throwable throwable) {
-				//
-			}
-		} else {
-			this.entityData.set(OWNER, Optional.empty());
-		}
-	}
-
-	@Override
-	protected void defineSynchedData(SynchedEntityData.Builder builder) {
-		super.defineSynchedData(builder);
-		builder.define(OWNER, Optional.empty());
+		this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, LivingEntity.class, 12, true, true, new MinionAttackSelector(this)));
 	}
 
 	@Override
@@ -107,14 +67,10 @@ public class PossessedArmor extends AbstractGolem {
 	protected void dropCustomDeathLoot(ServerLevel lvl, DamageSource src, boolean check) {
 		this.setItemInHand(InteractionHand.MAIN_HAND, ItemStack.EMPTY);
 		this.setItemInHand(InteractionHand.OFF_HAND, ItemStack.EMPTY);
-		this.spawnAtLocation(lvl, this.getItemBySlot(EquipmentSlot.HEAD));
-		this.setItemSlot(EquipmentSlot.HEAD, ItemStack.EMPTY);
-		this.spawnAtLocation(lvl, this.getItemBySlot(EquipmentSlot.BODY));
-		this.setItemSlot(EquipmentSlot.BODY, ItemStack.EMPTY);
-		this.spawnAtLocation(lvl, this.getItemBySlot(EquipmentSlot.LEGS));
-		this.setItemSlot(EquipmentSlot.LEGS, ItemStack.EMPTY);
-		this.spawnAtLocation(lvl, this.getItemBySlot(EquipmentSlot.FEET));
-		this.setItemSlot(EquipmentSlot.FEET, ItemStack.EMPTY);
+		for (EquipmentSlot slot : EquipmentSlot.values()) {
+			this.spawnAtLocation(lvl, this.getItemBySlot(slot));
+			this.setItemSlot(slot, ItemStack.EMPTY);
+		}
 	}
 
 	@Override
@@ -146,48 +102,7 @@ public class PossessedArmor extends AbstractGolem {
 		}
 	}
 
-	public void aiStep() {
-		this.updateSwingTime();
-		super.aiStep();
-	}
-
-	public void setOwner(@Nullable LivingEntity target) {
-		this.entityData.set(OWNER, Optional.ofNullable(target).map(EntityReference::new));
-	}
-
-	public void setOwnerDirectly(@Nullable EntityReference<LivingEntity> target) {
-		this.entityData.set(OWNER, Optional.ofNullable(target));
-	}
-
-	@Nullable
-	public EntityReference<LivingEntity> getOwner() {
-		return this.entityData.get(OWNER).orElse(null);
-	}
-
-	public boolean isTamed() {
-		return this.getOwner() != null;
-	}
-
 	public static AttributeSupplier.Builder createAttributes() {
 		return Mob.createMobAttributes().add(Attributes.MAX_HEALTH, 20).add(Attributes.ATTACK_DAMAGE, 1).add(Attributes.KNOCKBACK_RESISTANCE, 0.5).add(Attributes.MOVEMENT_SPEED, 0.25);
-	}
-
-	static class PossessedAttackSelector implements TargetingConditions.Selector {
-		private final PossessedArmor armor;
-
-		public PossessedAttackSelector(PossessedArmor source) {
-			this.armor = source;
-		}
-
-		public boolean test(@Nullable LivingEntity target, ServerLevel lvl) {
-			if (armor.isTamed() && armor.getOwner() != null) {
-				Player player = armor.level().getPlayerByUUID(armor.getOwner().getUUID());
-				if (player != null && player.getLastHurtByMob() != null && player.getLastHurtByMob().isAlive()) {
-					return (target == player.getLastHurtByMob());
-				}
-				return (target.getType().is(SupernaturalTags.ARMOR));
-			}
-			return (target instanceof Player);
-		}
 	}
 }

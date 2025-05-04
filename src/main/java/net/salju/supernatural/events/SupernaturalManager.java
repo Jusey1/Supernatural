@@ -71,8 +71,9 @@ public class SupernaturalManager {
 
 	public static void addVampireEffects(Player player) {
 		player.getAttributes().addTransientAttributeModifiers(createSupernatural());
+		player.addEffect(new MobEffectInstance(SupernaturalEffects.VAMPIRISM, 5, 4, false, false, false));
 		if (player.isCrouching()) {
-			player.addEffect(new MobEffectInstance(MobEffects.INVISIBILITY, 10, 0, false, false));
+			player.addEffect(new MobEffectInstance(MobEffects.INVISIBILITY, 10, 0, false, false, false));
 		}
 	}
 
@@ -157,7 +158,7 @@ public class SupernaturalManager {
 	}
 
 	public static boolean canRitualsWork(ServerLevel lvl, BlockPos pos, RitualBlockEntity target) {
-		return (lvl.dimensionType().natural() && !target.getGreedy() && lvl.getBrightness(LightLayer.BLOCK, pos) < 6 && (lvl.getBrightness(LightLayer.SKY, pos) < 6 || lvl.isMoonVisible()));
+		return (lvl.dimensionType().natural() && !target.getGreedy() && lvl.getBrightness(LightLayer.BLOCK, pos) < 6 && (lvl.getBrightness(LightLayer.SKY, pos) < 6 || lvl.isDarkOutside()));
 	}
 
 	public static int getPower(ServerLevel lvl, BlockPos pos) {
@@ -192,17 +193,10 @@ public class SupernaturalManager {
 
 	public static boolean hasArmor(LivingEntity target) {
 		int i = 0;
-		if (!target.getItemBySlot(EquipmentSlot.HEAD).isEmpty()) {
-			i++;
-		}
-		if (!target.getItemBySlot(EquipmentSlot.BODY).isEmpty()) {
-			i++;
-		}
-		if (!target.getItemBySlot(EquipmentSlot.LEGS).isEmpty()) {
-			i++;
-		}
-		if (!target.getItemBySlot(EquipmentSlot.FEET).isEmpty()) {
-			i++;
+		for (EquipmentSlot slot : EquipmentSlot.values()) {
+			if (!target.getItemBySlot(slot).isEmpty()) {
+				i++;
+			}
 		}
 		return (i >= 4);
 	}

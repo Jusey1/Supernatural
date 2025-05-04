@@ -33,6 +33,7 @@ public class Possession extends MobEffect {
 		if (dur <= 1) {
 			Spooky ghost = SupernaturalMobs.SPOOKY.get().spawn(lvl, target.blockPosition(), EntitySpawnReason.MOB_SUMMONED);
 			if (target instanceof Player player && ghost != null) {
+				ghost.setPersistenceRequired();
 				ghost.setOwner(player);
 			}
 		}

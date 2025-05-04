@@ -1,7 +1,6 @@
 package net.salju.supernatural.entity;
 
-import net.salju.supernatural.entity.ai.SupernaturalSummonVexSpellGoal;
-import net.salju.supernatural.entity.ai.SupernaturalNecroSpellGoal;
+import net.salju.supernatural.entity.ai.spells.*;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
@@ -11,7 +10,7 @@ import net.minecraft.world.entity.EntityType;
 public class Necromancer extends AbstractVampireEntity {
 	public Necromancer(EntityType<Necromancer> type, Level world) {
 		super(type, world);
-		this.xpReward = 50;
+		this.xpReward = 25;
 	}
 
 	@Override

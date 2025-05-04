@@ -1,17 +1,22 @@
 package net.salju.supernatural.init;
 
+import net.minecraft.sounds.SoundEvents;
 import net.salju.supernatural.Supernatural;
 import net.salju.supernatural.item.*;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.item.component.*;
 import net.minecraft.world.item.equipment.*;
 import net.minecraft.world.item.*;
 
 public class SupernaturalItems {
+	public static final Consumable BLOODY = Consumables.defaultDrink().consumeSeconds(2.0F).sound(SoundEvents.HONEY_DRINK).build();
+
 	public static final DeferredRegister<Item> REGISTRY = DeferredRegister.createItems(Supernatural.MODID);
 	public static final DeferredHolder<Item, Item> VAMPIRE_SPAWN_EGG = REGISTRY.register("vampire_spawn_egg", () -> new SpawnEggItem(SupernaturalMobs.VAMPIRE.get(), createBaseProps("vampire_spawn_egg")));
 	public static final DeferredHolder<Item, Item> NECROMANCER_SPAWN_EGG = REGISTRY.register("necromancer_spawn_egg", () -> new SpawnEggItem(SupernaturalMobs.NECROMANCER.get(), createBaseProps("necromancer_spawn_egg")));
@@ -30,6 +35,7 @@ public class SupernaturalItems {
 	public static final DeferredHolder<Item, Item> SOULGEM = REGISTRY.register("soulgem", () -> new SoulgemItem(createBaseProps("soulgem").stacksTo(1).rarity(Rarity.UNCOMMON).fireResistant()));
 	public static final DeferredHolder<Item, Item> COMPASS = REGISTRY.register("ritual_compass", () -> new RitualCompassItem(createBaseProps("ritual_compass").stacksTo(1).rarity(Rarity.UNCOMMON).fireResistant()));
 	public static final DeferredHolder<Item, Item> ANCHORBALL = REGISTRY.register("anchorball", () -> new AnchorballItem(createBaseProps("anchorball").stacksTo(1).rarity(Rarity.UNCOMMON).fireResistant()));
+	public static final DeferredHolder<Item, Item> BLOOD = REGISTRY.register("blood_bottle", () -> new BloodItem(createBaseProps("blood_bottle").stacksTo(16).component(DataComponents.CONSUMABLE, BLOODY).craftRemainder(Items.GLASS_BOTTLE).usingConvertsTo(Items.GLASS_BOTTLE)));
 
 	private static DeferredHolder<Item, Item> block(DeferredHolder<Block, Block> block, String name) {
 		return REGISTRY.register(block.getId().getPath(), () -> new BlockItem(block.get(), createBaseProps(name)));

@@ -1,5 +1,6 @@
 package net.salju.supernatural.events;
 
+import net.salju.supernatural.entity.Spooky;
 import net.salju.supernatural.init.SupernaturalTags;
 import net.salju.supernatural.init.SupernaturalMobs;
 import net.salju.supernatural.init.SupernaturalItems;
@@ -44,7 +45,7 @@ public class SupernaturalEvents {
 			if (player.level() instanceof ServerLevel lvl) {
 				SupernaturalManager.addVampireEffects(player);
 				boolean check = (player.isInWaterOrRain() || player.isInPowderSnow || player.wasInPowderSnow || player.isCreative() || SupernaturalConfig.SUN.get() || player.hasEffect(MobEffects.FIRE_RESISTANCE));
-				if (!lvl.isMoonVisible() && lvl.canSeeSky(BlockPos.containing(player.getX(), player.getEyeY(), player.getZ())) && !check) {
+				if (lvl.isBrightOutside() && lvl.canSeeSky(BlockPos.containing(player.getX(), player.getEyeY(), player.getZ())) && !check) {
 					ItemStack helmet = player.getItemBySlot(EquipmentSlot.HEAD);
 					if (helmet.isEmpty()) {
 						if (player.getRemainingFireTicks() <= 20) {
@@ -146,7 +147,10 @@ public class SupernaturalEvents {
 		LivingEntity target = event.getEntity();
 		if (target.level() instanceof ServerLevel lvl) {
 			if (target.hasEffect(SupernaturalEffects.POSSESSION)) {
-				SupernaturalMobs.SPOOKY.get().spawn(lvl, target.blockPosition(), EntitySpawnReason.MOB_SUMMONED);
+				Spooky ghost = SupernaturalMobs.SPOOKY.get().spawn(lvl, target.blockPosition(), EntitySpawnReason.MOB_SUMMONED);
+				if (ghost != null) {
+					ghost.setPersistenceRequired();
+				}
 			} else if (lvl.dimensionType().natural() && target instanceof Mob && !target.getType().is(SupernaturalTags.IMMUNITY)) {
 				RitualBlockEntity block = SupernaturalManager.getAltar(target.blockPosition(), lvl, 12, Items.AMETHYST_SHARD);
 				if (block != null) {
