@@ -28,6 +28,7 @@ public class SupernaturalTags {
 	public static final TagKey<Item> HELMS = ItemTags.create(ResourceLocation.fromNamespaceAndPath(Supernatural.MODID, "transmutable_helmets"));
 	public static final TagKey<Item> KEPT = ItemTags.create(ResourceLocation.fromNamespaceAndPath(Supernatural.MODID, "altar_kept_items"));
 	public static final TagKey<Item> MONEY = ItemTags.create(ResourceLocation.fromNamespaceAndPath(Supernatural.MODID, "valuable_items"));
+	public static final TagKey<Item> BLOOD = ItemTags.create(ResourceLocation.fromNamespaceAndPath(Supernatural.MODID, "blood"));
 	public static final TagKey<Structure> RUINS = TagKey.create(Registries.STRUCTURE, ResourceLocation.fromNamespaceAndPath(Supernatural.MODID, "ritual_compass_01"));
 	public static final TagKey<Structure> LIFE = TagKey.create(Registries.STRUCTURE, ResourceLocation.fromNamespaceAndPath(Supernatural.MODID, "ritual_compass_02"));
 	public static final TagKey<Structure> ANCIENT = TagKey.create(Registries.STRUCTURE, ResourceLocation.fromNamespaceAndPath(Supernatural.MODID, "ritual_compass_03"));

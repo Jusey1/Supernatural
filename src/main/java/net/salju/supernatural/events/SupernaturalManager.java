@@ -54,6 +54,10 @@ public class SupernaturalManager {
 		return target.getType().is(SupernaturalTags.VAMPIRE);
 	}
 
+	public static boolean hasVampirism(LivingEntity target) {
+		return target.hasEffect(SupernaturalEffects.VAMPIRISM) && target.getEffect(SupernaturalEffects.VAMPIRISM).getAmplifier() >= 1;
+	}
+
 	public static void setVampire(Player player, boolean check) {
 		if (player.getPersistentData().getCompound(Player.PERSISTED_NBT_TAG).isEmpty()) {
 			player.getPersistentData().put(Player.PERSISTED_NBT_TAG, new CompoundTag());
