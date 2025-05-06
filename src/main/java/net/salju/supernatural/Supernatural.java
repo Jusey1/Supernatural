@@ -1,5 +1,6 @@
 package net.salju.supernatural;
 
+import net.salju.supernatural.compat.*;
 import net.salju.supernatural.init.*;
 import net.neoforged.fml.config.ModConfig;
 import net.neoforged.fml.common.Mod;
@@ -8,6 +9,8 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.event.tick.ServerTickEvent;
 import net.neoforged.neoforge.common.NeoForge;
+import net.neoforged.fml.ModList;
+import net.neoforged.fml.loading.FMLEnvironment;
 import net.neoforged.fml.util.thread.SidedThreadGroups;
 import net.minecraft.util.Tuple;
 import java.util.concurrent.ConcurrentLinkedQueue;
@@ -31,6 +34,11 @@ public class Supernatural {
 		SupernaturalMobs.REGISTRY.register(bus);
 		SupernaturalEffects.REGISTRY.register(bus);
 		mod.registerConfig(ModConfig.Type.COMMON, SupernaturalConfig.CONFIG, "supernatural-common.toml");
+		if (FMLEnvironment.dist.isClient()) {
+			if (ModList.get().isLoaded("appleskin")) {
+				NeoForge.EVENT_BUS.register(new Appleskin());
+			}
+		}
 	}
 
 	private static final Collection<Tuple<Runnable, Integer>> workQueue = new ConcurrentLinkedQueue<>();
