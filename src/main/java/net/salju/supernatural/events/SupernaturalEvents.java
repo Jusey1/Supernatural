@@ -1,6 +1,5 @@
 package net.salju.supernatural.events;
 
-import net.salju.supernatural.entity.Spooky;
 import net.salju.supernatural.init.SupernaturalTags;
 import net.salju.supernatural.init.SupernaturalMobs;
 import net.salju.supernatural.init.SupernaturalItems;
@@ -8,7 +7,10 @@ import net.salju.supernatural.init.SupernaturalEffects;
 import net.salju.supernatural.init.SupernaturalDamageTypes;
 import net.salju.supernatural.init.SupernaturalConfig;
 import net.salju.supernatural.block.RitualBlockEntity;
+import net.salju.supernatural.compat.Thirst;
+import net.salju.supernatural.entity.Spooky;
 import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.fml.ModList;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.bus.api.EventPriority;
 import net.neoforged.neoforge.event.entity.living.*;
@@ -21,6 +23,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.EntityTypeTags;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.entity.monster.Vindicator;
 import net.minecraft.world.entity.raid.Raider;
 import net.minecraft.world.entity.player.Player;
@@ -64,6 +67,25 @@ public class SupernaturalEvents {
 	public static void onHeal(LivingHealEvent event) {
 		if (event.getAmount() <= 1.0F && SupernaturalManager.isVampire(event.getEntity())) {
 			event.setAmount(event.getAmount() * (event.getEntity().hasEffect(MobEffects.REGENERATION) ? 0.45F : 0.15F));
+		}
+	}
+
+	@SubscribeEvent
+	public static void onRightClickEntity(PlayerInteractEvent.EntityInteract event) {
+		if (SupernaturalManager.isVampire(event.getEntity()) && event.getTarget() instanceof LivingEntity target && event.getEntity().isCrouching()) {
+			if (!SupernaturalManager.isVampire(target) && target.isSleeping() && (target instanceof Player || target.getType().is(SupernaturalTags.BLOODY))) {
+				event.getEntity().heal(6.0F);
+				if (ModList.get().isLoaded("thirst")) {
+					Thirst.vampireBite(event.getEntity());
+				}
+				if (Math.random() <= SupernaturalConfig.BITE.get()) {
+					target.hurt(target.damageSources().source(DamageTypes.PLAYER_ATTACK, event.getEntity()), 3.0F);
+					if (target instanceof Player) {
+						target.addEffect(new MobEffectInstance(SupernaturalEffects.VAMPIRISM, 24000, 0));
+					}
+				}
+				event.setCanceled(true);
+			}
 		}
 	}
 
@@ -147,9 +169,6 @@ public class SupernaturalEvents {
 						}
 					}
 				}
-				if (target instanceof Player && !target.hasEffect(SupernaturalEffects.VAMPIRISM)) {
-					target.addEffect(new MobEffectInstance(SupernaturalEffects.VAMPIRISM, 24000, 0));
-				}
 			}
 		}
 	}
@@ -202,7 +221,7 @@ public class SupernaturalEvents {
 			BlockPos pos = target.blockPosition();
 			if (event.getLevel() instanceof ServerLevel lvl && target instanceof Raider raidyr) {
 				if (SupernaturalConfig.RAIDERS.get() && lvl.isMoonVisible() && raidyr.getCurrentRaid() != null && !(raidyr.isPassenger() || raidyr.isPatrolLeader())) {
-					if (raidyr instanceof Vindicator && Math.random() <= 0.25) {
+					if (raidyr instanceof Vindicator && Math.random() <= SupernaturalConfig.VAMPIRER.get()) {
 						SupernaturalMobs.VAMPIRE.get().spawn(lvl, pos, EntitySpawnReason.EVENT);
 						raidyr.getCurrentRaid().removeFromRaid(lvl, raidyr, true);
 						event.setCanceled(true);
