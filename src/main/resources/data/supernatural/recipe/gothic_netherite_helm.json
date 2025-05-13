@@ -3,7 +3,6 @@
   "addition": "minecraft:netherite_ingot",
   "base": "supernatural:gothic_diamond_helmet",
   "result": {
-    "count": 1,
     "id": "supernatural:gothic_netherite_helmet"
   },
   "template": "minecraft:netherite_upgrade_smithing_template"
