@@ -39,7 +39,7 @@ public class AbstractVampireEntity extends SpellcasterIllager {
 	public AbstractVampireEntity(EntityType<? extends AbstractVampireEntity> type, Level world) {
 		super(type, world);
 		this.setPersistenceRequired();
-		((GroundPathNavigation) this.getNavigation()).setCanOpenDoors(true);
+		this.getNavigation().setCanOpenDoors(true);
 	}
 
 	@Override

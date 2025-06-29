@@ -11,13 +11,17 @@ import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.Connection;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.entity.BaseContainerBlockEntity;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.util.ProblemReporter;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.entity.BaseContainerBlockEntity;
+import net.minecraft.world.level.storage.TagValueOutput;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.Containers;
 import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.Container;
@@ -32,20 +36,18 @@ public class RitualBlockEntity extends BaseContainerBlockEntity {
 	}
 
 	@Override
-	public void saveAdditional(CompoundTag tag, HolderLookup.Provider regs) {
-		super.saveAdditional(tag, regs);
-		ContainerHelper.saveAllItems(tag, this.stacks, regs);
+	public void saveAdditional(ValueOutput tag) {
+		super.saveAdditional(tag);
+		ContainerHelper.saveAllItems(tag, this.stacks, true);
 		tag.putBoolean("Greedy", this.greedy);
 	}
 
 	@Override
-	public void loadAdditional(CompoundTag tag, HolderLookup.Provider regs) {
-		super.loadAdditional(tag, regs);
+	public void loadAdditional(ValueInput tag) {
+		super.loadAdditional(tag);
 		this.stacks = NonNullList.withSize(this.getContainerSize(), ItemStack.EMPTY);
-		ContainerHelper.loadAllItems(tag, this.stacks, regs);
-		if (tag.getBoolean("Greedy").isPresent()) {
-			this.greedy = tag.getBoolean("Greedy").get();
-		}
+		ContainerHelper.loadAllItems(tag, this.stacks);
+		this.greedy = tag.getBooleanOr("Greedy", false);
 	}
 
 	@Override
@@ -54,18 +56,17 @@ public class RitualBlockEntity extends BaseContainerBlockEntity {
 	}
 
 	@Override
-	public void onDataPacket(Connection queen, ClientboundBlockEntityDataPacket packet, HolderLookup.Provider regs) {
+	public void onDataPacket(Connection queen, ValueInput tag) {
 		this.stacks = NonNullList.withSize(this.getContainerSize(), ItemStack.EMPTY);
-		ContainerHelper.loadAllItems(packet.getTag(), this.stacks, regs);
-		if (packet.getTag().getBoolean("Greedy").isPresent()) {
-			this.greedy = packet.getTag().getBoolean("Greedy").get();
-		}
+		ContainerHelper.loadAllItems(tag, this.stacks);
+		this.greedy = tag.getBooleanOr("Greedy", false);
 	}
 
 	@Override
 	public CompoundTag getUpdateTag(HolderLookup.Provider regs) {
-		CompoundTag tag = new CompoundTag();
-		ContainerHelper.saveAllItems(tag, this.stacks, regs);
+		TagValueOutput value = TagValueOutput.createWithContext(ProblemReporter.DISCARDING, regs);
+		ContainerHelper.saveAllItems(value, this.stacks, true);
+		CompoundTag tag = value.buildResult();
 		tag.putBoolean("Greedy", this.greedy);
 		return tag;
 	}

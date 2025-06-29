@@ -11,8 +11,11 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.ProblemReporter;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.CandleBlock;
+import net.minecraft.world.level.storage.TagValueOutput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.level.LightLayer;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.item.Items;
@@ -93,16 +96,9 @@ public class SupernaturalManager {
 	}
 
 	public static ItemStack setSoul(ItemStack stack, LivingEntity target) {
-		CompoundTag mobster = new CompoundTag();
-		target.save(mobster);
-		mobster.remove("ActiveEffects");
-		mobster.remove("Passengers");
-		mobster.remove("DeathTime");
-		mobster.remove("Health");
-		mobster.remove("Leash");
-		mobster.remove("Fire");
-		mobster.remove("UUID");
-		stack.set(SupernaturalData.SOULGEM, new SoulgemData(mobster, getSoulLevel(target)));
+		TagValueOutput value = TagValueOutput.createWithoutContext(ProblemReporter.DISCARDING);
+		target.save(value);
+		stack.set(SupernaturalData.SOULGEM, new SoulgemData(value.buildResult(), getSoulLevel(target)));
 		return stack;
 	}
 

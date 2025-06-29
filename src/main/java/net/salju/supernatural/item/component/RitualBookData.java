@@ -29,10 +29,11 @@ public record RitualBookData(int page) {
 		map.put(4, "item.minecraft.compass");
 		map.put(5, "item.minecraft.compass");
 		map.put(6, "item.minecraft.compass");
-		map.put(7, "block.supernatural.grave_soil");
-		map.put(8, "item.minecraft.totem_of_undying");
-		map.put(9, "item.supernatural.vampire_dust");
-		map.put(10, "desc.book.money");
+		map.put(7, "item.minecraft.totem_of_undying");
+		map.put(8, "item.supernatural.vampire_dust");
+		map.put(9, "desc.book.money");
+		map.put(10, "item.minecraft.ender_pearl");
+		map.put(11, "item.supernatural.anchorball");
 		return map.getOrDefault(this.page, "item.minecraft.writable_book");
 	}
 
@@ -45,9 +46,10 @@ public record RitualBookData(int page) {
 		map.put(5, "soulgem.supernatural.greater");
 		map.put(6, "soulgem.supernatural.grand");
 		map.put(7, "item.supernatural.soulgem");
-		map.put(8, "item.supernatural.soulgem");
-		map.put(9, "soulgem.supernatural.greater");
-		map.put(10, "soulgem.supernatural.lesser");
+		map.put(8, "soulgem.supernatural.greater");
+		map.put(9, "soulgem.supernatural.lesser");
+		map.put(10, "soulgem.supernatural.greater");
+		map.put(11, "soulgem.supernatural.common");
 		return map.getOrDefault(this.page, "soulgem.supernatural.common");
 	}
 
@@ -60,19 +62,14 @@ public record RitualBookData(int page) {
 		map.put(5, "XX");
 		map.put(6, "XXVIII");
 		map.put(7, "XXVIII");
-		map.put(8, "XXVIII");
+		map.put(8, "XVI");
 		map.put(9, "XVI");
 		map.put(10, "XVI");
+		map.put(11, "XII");
 		return map.getOrDefault(this.page, "XII");
 	}
 
-	public boolean requiresSacrifice() {
-		Map<Integer, Boolean> map = new HashMap<>();
-		map.put(7, true);
-		return map.getOrDefault(this.page, false);
-	}
-
 	public int getMaxRituals() {
-		return 11;
+		return 12;
 	}
 }

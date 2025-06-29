@@ -1,6 +1,8 @@
 package net.salju.supernatural.entity;
 
 import net.minecraft.tags.ItemTags;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.salju.supernatural.init.SupernaturalItems;
 import net.salju.supernatural.init.SupernaturalConfig;
 import net.salju.supernatural.events.SupernaturalManager;
@@ -47,21 +49,19 @@ public class Angel extends Mob {
 	}
 
 	@Override
-	public void addAdditionalSaveData(CompoundTag tag) {
+	public void addAdditionalSaveData(ValueOutput tag) {
 		super.addAdditionalSaveData(tag);
 		tag.putInt("Angel", this.getAngelPose());
 		tag.putBoolean("Cursed", this.isCursed());
 	}
 
 	@Override
-	public void readAdditionalSaveData(CompoundTag tag) {
+	public void readAdditionalSaveData(ValueInput tag) {
 		super.readAdditionalSaveData(tag);
 		if (tag.getInt("Angel").isPresent()) {
 			this.getEntityData().set(POSE, tag.getInt("Angel").get());
 		}
-		if (tag.getBoolean("Cursed").isPresent()) {
-			this.getEntityData().set(CURSED, tag.getBoolean("Cursed").get());
-		}
+		this.getEntityData().set(CURSED, tag.getBooleanOr("Cursed", false));
 	}
 
 	@Override
@@ -208,7 +208,7 @@ public class Angel extends Mob {
 	}
 
 	@Override
-	public boolean canBeCollidedWith() {
+	public boolean canBeCollidedWith(Entity target) {
 		return true;
 	}
 

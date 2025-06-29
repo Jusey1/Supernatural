@@ -1,6 +1,5 @@
 package net.salju.supernatural.item;
 
-import net.salju.supernatural.init.SupernaturalConfig;
 import net.salju.supernatural.init.SupernaturalData;
 import net.salju.supernatural.item.component.RitualBookData;
 import net.minecraft.network.chat.Component;
@@ -25,9 +24,6 @@ public class RitualBookItem extends Item {
 				list.accept(Component.translatable("desc.book.page_" + data.getPage()).withStyle(ChatFormatting.BLUE));
 				list.accept(Component.translatable("desc.book.desc_" + data.getPage()).withStyle(ChatFormatting.GRAY));
 				list.accept(Component.empty());
-				if (SupernaturalConfig.SACRIFICE.get() && data.requiresSacrifice()) {
-					list.accept(Component.translatable("desc.book.sacrifice").withStyle(ChatFormatting.DARK_RED));
-				}
 				list.accept(Component.translatable(data.getRequiredItem()).withStyle(ChatFormatting.GRAY));
 				list.accept(Component.translatable(data.getSoulPower()).withStyle(ChatFormatting.DARK_PURPLE));
 				list.accept(Component.literal(data.getCandles()).withStyle(ChatFormatting.GOLD));

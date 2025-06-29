@@ -21,7 +21,7 @@ import net.minecraft.client.resources.model.EquipmentClientInfo;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 
-@EventBusSubscriber(bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
+@EventBusSubscriber(value = Dist.CLIENT)
 public class SupernaturalClient {
 	public static final ModelLayerLocation ANGEL = new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(Supernatural.MODID, "angel"), "main");
 	public static final ModelLayerLocation SPIRIT = new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(Supernatural.MODID, "spirit"), "main");
