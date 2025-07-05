@@ -20,7 +20,6 @@
     "minecraft:vex",
     "minecraft:warden",
     "minecraft:creaking",
-    "minecraft:creaking_transient",
     "minecraft:zombie_villager",
     {
       "id": "alexscaves:forsaken",
