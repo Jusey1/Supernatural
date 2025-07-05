@@ -19,7 +19,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.monster.SpellcasterIllager;
 import net.minecraft.world.entity.monster.AbstractIllager;
 import net.minecraft.world.entity.ai.util.GoalUtils;
-import net.minecraft.world.entity.ai.navigation.GroundPathNavigation;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.ai.goal.RestrictSunGoal;
@@ -77,7 +76,7 @@ public class AbstractVampireEntity extends SpellcasterIllager {
 
 	protected void customServerAiStep(ServerLevel lvl) {
 		if (!this.isNoAi() && GoalUtils.hasGroundPathNavigation(this)) {
-			((GroundPathNavigation) this.getNavigation()).setCanOpenDoors(lvl.isRaided(this.blockPosition()));
+			this.getNavigation().setCanOpenDoors(lvl.isRaided(this.blockPosition()));
 		}
 		if (this.isCastingSpell()) {
 			this.navigation.stop();

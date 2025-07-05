@@ -9,7 +9,6 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.entity.decoration.ArmorStand;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.LivingEntity;
 import javax.annotation.Nullable;
 
@@ -24,10 +23,8 @@ public class SpookyAttackSelector implements TargetingConditions.Selector {
 		if (!target.hasEffect(SupernaturalEffects.POSSESSION) && !target.hasEffect(MobEffects.GLOWING)) {
 			if (SupernaturalConfig.ARMOR.get() && target instanceof ArmorStand) {
 				return SupernaturalManager.hasArmor(target);
-			} else if (target instanceof Player) {
-				return !this.ghost.isTamed();
 			}
-			return target.getType().is(SupernaturalTags.SPOOKY);
+			return target.getType().is(SupernaturalTags.SPOOKY) && !this.ghost.isTamed();
 		}
 		return false;
 	}

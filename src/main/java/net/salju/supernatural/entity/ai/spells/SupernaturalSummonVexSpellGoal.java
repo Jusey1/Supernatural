@@ -57,7 +57,7 @@ public class SupernaturalSummonVexSpellGoal extends AbstractSupernaturalSpellGoa
 
 	@Override
 	protected int getCastingInterval() {
-		return 360;
+		return 460;
 	}
 
 	@Override

@@ -119,7 +119,7 @@ public class Spooky extends AbstractMinionEntity {
 					this.setTarget(null);
 				}
 			}
-			if (this.level() instanceof ServerLevel lvl && this.level().isBrightOutside() && this.level().canSeeSkyFromBelowWater(BlockPos.containing(this.getX(), this.getY(), this.getZ()))) {
+			if (this.level() instanceof ServerLevel lvl && !this.isTamed() && this.level().isBrightOutside() && this.level().canSeeSkyFromBelowWater(BlockPos.containing(this.getX(), this.getY(), this.getZ()))) {
 				this.playSound(SupernaturalSounds.SPOOK_POOF.get(), 1.0F, 1.0F);
 				this.discard();
 				double r = this.random.nextGaussian() * 0.02D;

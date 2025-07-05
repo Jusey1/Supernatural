@@ -26,17 +26,17 @@ public class SupernaturalNecroSpellGoal extends AbstractSupernaturalSpellGoal {
 	@Override
 	protected void performSpellCasting() {
 		LivingEntity target = this.user.getTarget();
-		double x = Math.floor(target.getX());
-		double y = Math.floor(target.getY());
-		double z = Math.floor(target.getZ());
+		double x = target.getX();
+		double y = target.getY();
+		double z = target.getZ();
 		BlockPos pos = BlockPos.containing((x + 0.5), y, (z + 0.5));
 		if (target.level() instanceof ServerLevel lvl) {
-			Supernatural.queueServerWork(26, () -> {
+			Supernatural.queueServerWork(25, () -> {
 				LightningBolt bolt = EntityType.LIGHTNING_BOLT.create(lvl, EntitySpawnReason.EVENT);
 				bolt.move(MoverType.SELF, Vec3.atBottomCenterOf(pos));
 				bolt.setVisualOnly(true);
 				lvl.addFreshEntity(bolt);
-				if ((Math.floor(target.getX()) == x) && (Math.floor(target.getY()) == y) && (Math.floor(target.getZ()) == z)) {
+				if (target.getX() == x && target.getY() == y && target.getZ() == z) {
 					target.hurt(target.damageSources().magic(), 12);
 				} else {
 					for (int bob = 0; bob < (int) (2); bob++) {
@@ -65,7 +65,7 @@ public class SupernaturalNecroSpellGoal extends AbstractSupernaturalSpellGoal {
 
 	@Override
 	protected int getCastingInterval() {
-		return 210;
+		return 420;
 	}
 
 	@Override

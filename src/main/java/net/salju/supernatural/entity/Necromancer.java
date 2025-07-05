@@ -10,7 +10,7 @@ import net.minecraft.world.entity.EntityType;
 public class Necromancer extends AbstractVampireEntity {
 	public Necromancer(EntityType<Necromancer> type, Level world) {
 		super(type, world);
-		this.xpReward = 25;
+		this.xpReward = 15;
 	}
 
 	@Override
@@ -21,6 +21,6 @@ public class Necromancer extends AbstractVampireEntity {
 	}
 
 	public static AttributeSupplier.Builder createAttributes() {
-		return Monster.createMonsterAttributes().add(Attributes.MAX_HEALTH, 100.0).add(Attributes.ATTACK_DAMAGE, 3.0).add(Attributes.ARMOR, 2.0).add(Attributes.MOVEMENT_SPEED, 0.3);
+		return Monster.createMonsterAttributes().add(Attributes.MAX_HEALTH, 50.0).add(Attributes.ATTACK_DAMAGE, 3.0).add(Attributes.ARMOR, 2.0).add(Attributes.MOVEMENT_SPEED, 0.3);
 	}
 }
