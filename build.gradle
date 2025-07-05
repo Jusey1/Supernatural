@@ -71,7 +71,7 @@ sourceSets.main.resources { srcDir 'src/generated/resources' }
 
 dependencies {
     implementation "curse.maven:appleskin-248787:6680857"
-    implementation "curse.maven:kobolds-484967:6734770"
+    implementation "curse.maven:kobolds-484967:6734900"
 }
 
 var generateModMetadata = tasks.register("generateModMetadata", ProcessResources) {
