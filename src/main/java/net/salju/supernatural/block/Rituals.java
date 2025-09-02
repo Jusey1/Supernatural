@@ -6,6 +6,7 @@ import net.salju.supernatural.entity.Angel;
 import net.salju.supernatural.events.SupernaturalManager;
 import net.salju.supernatural.item.component.AnchorballData;
 import net.salju.supernatural.item.RitualCompassItem;
+import net.neoforged.neoforge.event.EventHooks;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.GlobalPos;
@@ -15,6 +16,8 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.animal.goat.Goat;
+import net.minecraft.world.entity.monster.ZombieVillager;
+import net.minecraft.world.entity.npc.Villager;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
@@ -50,6 +53,14 @@ public class Rituals {
 							goat.hurt(SupernaturalDamageTypes.causeRitualDamage(goat.level().registryAccess(), player), Float.MAX_VALUE);
 						}
 					}
+				} else if (stack.is(SupernaturalItems.GRAVE_SOIL.get()) && i == 28 && e >= 0) {
+					defaultResult(target, offer, lvl, player, pos);
+					if (SupernaturalConfig.SACRIFICE.get()) {
+						Mob sacrifice = getSacrifice(lvl, offer, new AABB(pos).inflate(SupernaturalConfig.ALTARRANGE.get()));
+						(sacrifice != null ? sacrifice : player).hurt(SupernaturalDamageTypes.causeRitualDamage(player.level().registryAccess(), player), Float.MAX_VALUE);
+					}
+					summonMob(lvl, pos.above(), offer);
+					lvl.playSound(null, pos, SoundEvents.SOUL_ESCAPE.value(), SoundSource.BLOCKS, 1.0F, (float) (0.8F + (Math.random() * 0.2)));
 				} else if (stack.is(SupernaturalItems.VAMPIRE_DUST.get())) {
 					if (i == 8 && e >= 1) {
 						defaultResult(target, offer, lvl, player, pos);
@@ -176,6 +187,31 @@ public class Rituals {
 		}
 	}
 
+	private static void summonMob(ServerLevel lvl, BlockPos pos, ItemStack stack) {
+		Entity entity = EntityType.loadEntityRecursive(SupernaturalManager.getSoulTag(stack), lvl, EntitySpawnReason.MOB_SUMMONED, o -> o);
+		if (entity != null) {
+			entity.teleportTo(Vec3.atBottomCenterOf(pos).x, Vec3.atBottomCenterOf(pos).y, Vec3.atBottomCenterOf(pos).z);
+			if (entity instanceof Villager bob) {
+				ZombieVillager zomby = bob.convertTo(EntityType.ZOMBIE_VILLAGER, ConversionParams.single(bob, true, true), newbie -> { EventHooks.onLivingConvert(bob, newbie); });
+				if (zomby != null) {
+					zomby.setVillagerData(bob.getVillagerData());
+					zomby.setGossips(bob.getGossips());
+					zomby.setTradeOffers(bob.getOffers());
+					zomby.setVillagerXp(bob.getVillagerXp());
+				}
+			}
+			if (lvl.canSeeSky(pos)) {
+				LightningBolt bolt = EntityType.LIGHTNING_BOLT.create(lvl, EntitySpawnReason.MOB_SUMMONED);
+				if (bolt != null) {
+					bolt.move(MoverType.SELF, Vec3.atBottomCenterOf(pos));
+					bolt.setVisualOnly(true);
+					lvl.addFreshEntity(bolt);
+				}
+			}
+			lvl.addFreshEntity(entity);
+		}
+	}
+
 	private static Item getHelmet(Item target) {
 		Map<Item, Item> map = new HashMap<>();
 		map.put(Items.IRON_HELMET, SupernaturalItems.GOTHIC_IRON_HELMET.get());
@@ -207,6 +243,16 @@ public class Rituals {
 	private static Goat getGoat(ServerLevel lvl, AABB box) {
 		for (Goat target : lvl.getEntitiesOfClass(Goat.class, box)) {
 			return target;
+		}
+		return null;
+	}
+
+	@Nullable
+	private static Mob getSacrifice(ServerLevel lvl, ItemStack stack, AABB box) {
+		for (Mob target : lvl.getEntitiesOfClass(Mob.class, box)) {
+			if (SupernaturalManager.getSoulLevel(SupernaturalManager.getSoulLevel(target)) >= SupernaturalManager.getSoulLevel(SupernaturalManager.getSoulgem(stack)) && !target.getType().is(SupernaturalTags.IMMUNITY)) {
+				return target;
+			}
 		}
 		return null;
 	}

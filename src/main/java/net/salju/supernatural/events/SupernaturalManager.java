@@ -98,7 +98,15 @@ public class SupernaturalManager {
 	public static ItemStack setSoul(ItemStack stack, LivingEntity target) {
 		TagValueOutput value = TagValueOutput.createWithoutContext(ProblemReporter.DISCARDING);
 		target.save(value);
-		stack.set(SupernaturalData.SOULGEM, new SoulgemData(value.buildResult(), getSoulLevel(target)));
+		CompoundTag mobster = value.buildResult();
+		mobster.remove("ActiveEffects");
+		mobster.remove("Passengers");
+		mobster.remove("DeathTime");
+		mobster.remove("Health");
+		mobster.remove("Leash");
+		mobster.remove("Fire");
+		mobster.remove("UUID");
+		stack.set(SupernaturalData.SOULGEM, new SoulgemData(mobster, getSoulLevel(target)));
 		return stack;
 	}
 
