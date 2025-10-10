@@ -2,6 +2,7 @@ package net.salju.supernatural.init;
 
 import net.salju.supernatural.Supernatural;
 import net.salju.supernatural.entity.*;
+import net.salju.supernatural.events.SupernaturalManager;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.event.entity.EntityAttributeCreationEvent;
@@ -10,6 +11,7 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Entity;
@@ -27,12 +29,12 @@ public class SupernaturalMobs {
 		return REGISTRY.register(name, () -> builder.build(ResourceKey.create(Registries.ENTITY_TYPE, ResourceLocation.fromNamespaceAndPath(Supernatural.MODID, name))));
 	}
 
-	@SubscribeEvent
-	public static void registerAttributes(EntityAttributeCreationEvent event) {
-		event.put(VAMPIRE.get(), Vampire.createAttributes().build());
-		event.put(NECROMANCER.get(), Necromancer.createAttributes().build());
-		event.put(POSSESSED_ARMOR.get(), PossessedArmor.createAttributes().build());
-		event.put(SPOOKY.get(), Spooky.createAttributes().build());
-		event.put(ANGEL.get(), Angel.createAttributes().build());
-	}
+    @SubscribeEvent
+    public static void registerAttributes(EntityAttributeCreationEvent event) {
+        event.put(VAMPIRE.get(), SupernaturalManager.createAttributes(24, 3, 2, 0.3).build());
+        event.put(NECROMANCER.get(), SupernaturalManager.createAttributes(52, 3, 2, 0.3).build());
+        event.put(POSSESSED_ARMOR.get(), SupernaturalManager.createAttributes(20, 1, 0, 0.25).add(Attributes.KNOCKBACK_RESISTANCE, 0.5).build());
+        event.put(SPOOKY.get(), SupernaturalManager.createAttributes(12, 0.15, 0, 0.2).add(Attributes.FLYING_SPEED, 0.35).build());
+        event.put(ANGEL.get(), SupernaturalManager.createAttributes(24, 7, 0, 0.25).add(Attributes.KNOCKBACK_RESISTANCE, 1).add(Attributes.FOLLOW_RANGE, 32).add(Attributes.STEP_HEIGHT, 1.25).build());
+    }
 }
