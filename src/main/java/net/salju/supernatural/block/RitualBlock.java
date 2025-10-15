@@ -1,5 +1,6 @@
 package net.salju.supernatural.block;
 
+import net.minecraft.core.Direction;
 import net.salju.supernatural.init.SupernaturalItems;
 import net.salju.supernatural.init.SupernaturalBlocks;
 import net.salju.supernatural.events.SupernaturalManager;
@@ -82,12 +83,12 @@ public class RitualBlock extends BaseEntityBlock {
 	}
 
 	@Override
-	public boolean onDestroyedByPlayer(BlockState state, Level world, BlockPos pos, Player player, boolean check, FluidState fluid) {
+	public boolean onDestroyedByPlayer(BlockState state, Level world, BlockPos pos, Player player, ItemStack stack, boolean check, FluidState fluid) {
 		BlockEntity entity = world.getBlockEntity(pos);
 		if (entity instanceof RitualBlockEntity target && !target.isEmpty()) {
 			target.dropItem(0);
 		}
-		return super.onDestroyedByPlayer(state, world, pos, player, check, fluid);
+		return super.onDestroyedByPlayer(state, world, pos, player, stack, check, fluid);
 	}
 
 	@Override
@@ -101,7 +102,7 @@ public class RitualBlock extends BaseEntityBlock {
 	}
 
 	@Override
-	public int getAnalogOutputSignal(BlockState state, Level world, BlockPos pos) {
+	public int getAnalogOutputSignal(BlockState state, Level world, BlockPos pos, Direction dir) {
 		BlockEntity entity = world.getBlockEntity(pos);
 		if (entity instanceof RitualBlockEntity target && !target.isEmpty()) {
 			return AbstractContainerMenu.getRedstoneSignalFromContainer(target);

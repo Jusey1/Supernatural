@@ -81,7 +81,7 @@ public class PossessedArmor extends AbstractMinionEntity {
 	@Override
 	protected void populateDefaultEquipmentSlots(RandomSource randy, DifficultyInstance souls) {
 		this.setItemSlot(EquipmentSlot.MAINHAND, new ItemStack(Items.IRON_SWORD));
-		this.setItemSlot(EquipmentSlot.HEAD, new ItemStack(SupernaturalItems.GOTHIC_IRON_HELMET.get()));
+		this.setItemSlot(EquipmentSlot.HEAD, SupernaturalManager.dyeHelmet(SupernaturalItems.GOTHIC_IRON_HELMET.get()));
 		this.setItemSlot(EquipmentSlot.CHEST, new ItemStack(Items.IRON_CHESTPLATE));
 		this.setItemSlot(EquipmentSlot.LEGS, new ItemStack(Items.IRON_LEGGINGS));
 		this.setItemSlot(EquipmentSlot.FEET, new ItemStack(Items.IRON_BOOTS));

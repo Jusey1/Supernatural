@@ -10,7 +10,7 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider;
 
 public class AngelRenderer extends LivingEntityRenderer<Angel, AngelState, AngelModel<AngelState>> {
 	public AngelRenderer(EntityRendererProvider.Context context) {
-		super(context, new AngelModel(context.bakeLayer(SupernaturalClient.ANGEL)), 0.5f);
+		super(context, new AngelModel(context.bakeLayer(SupernaturalClient.ANGEL)), 0.5F);
 	}
 
 	@Override

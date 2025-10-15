@@ -1,6 +1,7 @@
 package net.salju.supernatural.init;
 
 import net.salju.supernatural.Supernatural;
+import net.salju.supernatural.events.SupernaturalManager;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import net.minecraft.core.registries.Registries;
@@ -17,10 +18,10 @@ public class SupernaturalTabs {
 				tabData.accept(SupernaturalItems.ARMOR_SPAWN_EGG.get());
 				tabData.accept(SupernaturalItems.SPOOKY_SPAWN_EGG.get());
 				tabData.accept(SupernaturalItems.ANGEL_STATUE.get());
-				tabData.accept(SupernaturalItems.GOTHIC_IRON_HELMET.get());
-				tabData.accept(SupernaturalItems.GOTHIC_GOLDEN_HELMET.get());
-				tabData.accept(SupernaturalItems.GOTHIC_DIAMOND_HELMET.get());
-				tabData.accept(SupernaturalItems.GOTHIC_NETHERITE_HELMET.get());
+				tabData.accept(SupernaturalManager.dyeHelmet(SupernaturalItems.GOTHIC_IRON_HELMET.get()));
+				tabData.accept(SupernaturalManager.dyeHelmet(SupernaturalItems.GOTHIC_GOLDEN_HELMET.get()));
+				tabData.accept(SupernaturalManager.dyeHelmet(SupernaturalItems.GOTHIC_DIAMOND_HELMET.get()));
+				tabData.accept(SupernaturalManager.dyeHelmet(SupernaturalItems.GOTHIC_NETHERITE_HELMET.get()));
 				tabData.accept(SupernaturalItems.GRAVE_SOIL.get());
 				tabData.accept(SupernaturalItems.RITUAL_ALTAR.get());
 				tabData.accept(SupernaturalItems.VAMPIRE_DUST.get());

@@ -53,7 +53,7 @@ public class AbstractMinionEntity extends PathfinderMob {
 	}
 
 	public void setOwner(@Nullable LivingEntity target) {
-		this.entityData.set(OWNER, Optional.ofNullable(target).map(EntityReference::new));
+		this.entityData.set(OWNER, Optional.ofNullable(target).map(EntityReference::of));
 	}
 
 	public void setOwnerDirectly(@Nullable EntityReference<LivingEntity> target) {

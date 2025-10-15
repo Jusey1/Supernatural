@@ -4,6 +4,7 @@ import net.salju.supernatural.Supernatural;
 import net.salju.supernatural.init.*;
 import net.salju.supernatural.block.RitualBlockEntity;
 import net.salju.supernatural.item.component.SoulgemData;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
@@ -12,14 +13,6 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.ProblemReporter;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.CandleBlock;
-import net.minecraft.world.level.storage.TagValueOutput;
-import net.minecraft.world.level.LightLayer;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.item.Items;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.monster.Monster;
@@ -33,6 +26,16 @@ import net.minecraft.world.entity.ai.village.poi.PoiManager;
 import net.minecraft.world.entity.ai.village.poi.PoiRecord;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.item.component.DyedItemColor;
+import net.minecraft.world.item.DyeColor;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.CandleBlock;
+import net.minecraft.world.level.storage.TagValueOutput;
+import net.minecraft.world.level.LightLayer;
+import net.minecraft.world.level.Level;
 import javax.annotation.Nullable;
 import java.util.Map;
 import java.util.List;
@@ -98,6 +101,12 @@ public class SupernaturalManager {
 		}
 		return stats;
 	}
+
+    public static ItemStack dyeHelmet(Item item) {
+        ItemStack stack = new ItemStack(item);
+        stack.set(DataComponents.DYED_COLOR, new DyedItemColor(DyeColor.RED.getTextureDiffuseColor()));
+        return stack;
+    }
 
 	public static ItemStack setSoul(ItemStack stack, LivingEntity target) {
 		TagValueOutput value = TagValueOutput.createWithoutContext(ProblemReporter.DISCARDING);

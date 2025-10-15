@@ -9,7 +9,7 @@ import net.minecraft.client.renderer.entity.layers.EyesLayer;
 import net.minecraft.client.renderer.entity.IllagerRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.model.IllagerModel;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -24,9 +24,9 @@ public class VampireRenderer extends IllagerRenderer<Vampire, IllagerRenderState
 			}
 		});
 		this.addLayer(new ItemInHandLayer<>(this) {
-			public void render(PoseStack pose, MultiBufferSource buffer, int i, IllagerRenderState target, float f1, float f2) {
+			public void submit(PoseStack pose, SubmitNodeCollector buffer, int i, IllagerRenderState target, float f1, float f2) {
 				if (target.isAggressive) {
-					super.render(pose, buffer, i, target, f1, f2);
+					super.submit(pose, buffer, i, target, f1, f2);
 				}
 			}
 		});

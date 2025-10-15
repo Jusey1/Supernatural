@@ -1,6 +1,5 @@
 package net.salju.supernatural.item;
 
-import net.minecraft.world.entity.MoverType;
 import net.salju.supernatural.init.SupernaturalMobs;
 import net.salju.supernatural.entity.Angel;
 import net.minecraft.world.phys.Vec3;

@@ -185,11 +185,6 @@ public class Angel extends Mob {
 	}
 
 	@Override
-	protected boolean shouldDespawnInPeaceful() {
-		return this.isCursed();
-	}
-
-	@Override
 	public boolean isAffectedByPotions() {
 		return false;
 	}
