@@ -4,11 +4,11 @@ license="MIT License"
 
 [[mods]]
 modId="supernatural"
-version="3.2.4"
+version="3.2.6"
 displayName="Supernatural"
 displayURL="https://discord.gg/s7QaYGUzZU"
 logoFile="logo.png"
-credits="Jusey1, Burack, Aura, Myahster"
+credits="Jusey1, Burack, Aura, Myahster, Void"
 authors="Jusey1"
 description="Adds supernatural entities, blocks, & items."
 
@@ -16,6 +16,6 @@ description="Adds supernatural entities, blocks, & items."
 [[dependencies.supernatural]]
     modId="minecraft"
     type="required"
-    versionRange="[1.21.8]"
+    versionRange="[1.21.10]"
     ordering="NONE"
     side="BOTH"
