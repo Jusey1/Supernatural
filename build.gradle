@@ -2,7 +2,7 @@ plugins {
     id 'java-library'
     id 'maven-publish'
     id 'idea'
-    id 'net.neoforged.moddev' version '2.0.99'
+    id 'net.neoforged.moddev' version '2.0.115'
 }
 
 version = mod_version
@@ -43,6 +43,7 @@ neoForge {
             programArgument '--nogui'
             systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id
         }
+
         gameTestServer {
             type = "gameTestServer"
             systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id
@@ -70,8 +71,8 @@ sourceSets.main.resources { srcDir 'src/generated/resources' }
 
 
 dependencies {
-    implementation "curse.maven:appleskin-248787:6680857"
-    implementation "curse.maven:kobolds-484967:6734900"
+    implementation "curse.maven:appleskin-248787:7075798"
+    implementation "curse.maven:kobolds-484967:7110955"
 }
 
 var generateModMetadata = tasks.register("generateModMetadata", ProcessResources) {
