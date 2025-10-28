@@ -1,7 +1,7 @@
 package net.salju.supernatural.entity.ai.spells;
 
+import net.salju.supernatural.entity.AbstractSpellcasterEntity;
 import net.salju.supernatural.entity.AbstractVampireEntity;
-import net.salju.supernatural.entity.Spellcaster;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.Mob;
 import java.util.EnumSet;
@@ -18,7 +18,7 @@ public class AbstractSpellcasterGoal extends Goal {
 	public boolean canUse() {
 		if (this.user instanceof AbstractVampireEntity target) {
 			return target.isCastingSpell();
-		} else if (this.user instanceof Spellcaster target) {
+		} else if (this.user instanceof AbstractSpellcasterEntity target) {
             return target.isCastingSpell();
         }
 		return false;
@@ -29,7 +29,7 @@ public class AbstractSpellcasterGoal extends Goal {
 		super.stop();
 		if (this.user instanceof AbstractVampireEntity target) {
 			target.setIsCastingSpell(0);
-		} else if (this.user instanceof Spellcaster target) {
+		} else if (this.user instanceof AbstractSpellcasterEntity target) {
             target.setSpellTick(0);
         }
 	}

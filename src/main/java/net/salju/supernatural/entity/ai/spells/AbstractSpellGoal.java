@@ -1,7 +1,7 @@
 package net.salju.supernatural.entity.ai.spells;
 
+import net.salju.supernatural.entity.AbstractSpellcasterEntity;
 import net.salju.supernatural.entity.AbstractVampireEntity;
-import net.salju.supernatural.entity.Spellcaster;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
@@ -26,7 +26,7 @@ public abstract class AbstractSpellGoal extends Goal {
 				} else {
 					return this.user.tickCount >= this.nextAttackTickCount;
 				}
-			} else if (this.user instanceof Spellcaster target) {
+			} else if (this.user instanceof AbstractSpellcasterEntity target) {
                 if (target.isCastingSpell()) {
                     return false;
                 } else {
@@ -50,7 +50,7 @@ public abstract class AbstractSpellGoal extends Goal {
 		if (this.user instanceof AbstractVampireEntity target) {
 			target.setSpellCastingTime(this.getCastingTime());
 			target.setIsCastingSpell(this.getSpell());
-		} else if (this.user instanceof Spellcaster target) {
+		} else if (this.user instanceof AbstractSpellcasterEntity target) {
             target.setSpellTick(this.getCastingTime());
         }
 		if (this.getSpellPrepareSound() != null) {
@@ -65,7 +65,7 @@ public abstract class AbstractSpellGoal extends Goal {
 			this.performSpellCasting();
 			if (this.user instanceof AbstractVampireEntity target) {
 				this.user.playSound(target.getCastingSoundEvent(), 1.0F, 1.0F);
-			} else if (this.user instanceof Spellcaster target) {
+			} else if (this.user instanceof AbstractSpellcasterEntity target) {
                 this.user.playSound(target.getCastingSoundEvent(), 1.0F, 1.0F);
             }
 		}

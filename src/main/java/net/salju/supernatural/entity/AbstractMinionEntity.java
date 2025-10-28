@@ -6,14 +6,13 @@ import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.world.entity.EntityReference;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.level.Level;
 import javax.annotation.Nullable;
 import java.util.Optional;
 
-public abstract class AbstractMinionEntity extends PathfinderMob {
+public abstract class AbstractMinionEntity extends AbstractSpellcasterEntity {
 	private static final EntityDataAccessor<Optional<EntityReference<LivingEntity>>> OWNER = SynchedEntityData.defineId(AbstractMinionEntity.class, EntityDataSerializers.OPTIONAL_LIVING_ENTITY_REFERENCE);
 
 	public AbstractMinionEntity(EntityType<? extends AbstractMinionEntity> type, Level world) {
@@ -23,6 +22,7 @@ public abstract class AbstractMinionEntity extends PathfinderMob {
 	@Override
 	public void addAdditionalSaveData(ValueOutput tag) {
 		super.addAdditionalSaveData(tag);
+        this.checkDespawn();
 		if (this.getOwner() != null) {
 			this.getOwner().store(tag, "Player");
 		}
@@ -49,11 +49,12 @@ public abstract class AbstractMinionEntity extends PathfinderMob {
 		builder.define(OWNER, Optional.empty());
 	}
 
-	@Override
-	public void aiStep() {
-		this.updateSwingTime();
-		super.aiStep();
-	}
+    @Override
+    public void checkDespawn() {
+        if (!this.isTamed()) {
+            super.checkDespawn();
+        }
+    }
 
     @Nullable
     public EntityReference<LivingEntity> getOwner() {

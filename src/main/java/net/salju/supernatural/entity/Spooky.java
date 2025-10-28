@@ -6,12 +6,8 @@ import net.salju.supernatural.init.SupernaturalEffects;
 import net.salju.supernatural.entity.ai.spells.AbstractSpellcasterGoal;
 import net.salju.supernatural.entity.ai.spells.spooky.*;
 import net.salju.supernatural.entity.ai.targets.SpookyAttackSelector;
-import net.minecraft.core.particles.ColorParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.BlockPos;
-import net.minecraft.network.syncher.EntityDataAccessor;
-import net.minecraft.network.syncher.EntityDataSerializers;
-import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundEvent;
@@ -29,37 +25,13 @@ import net.minecraft.world.entity.decoration.ArmorStand;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.effect.MobEffects;
-import net.minecraft.world.level.storage.ValueInput;
-import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.level.Level;
 
-public class Spooky extends AbstractMinionEntity implements Spellcaster {
-    public static final EntityDataAccessor<Integer> SPELL_TICK = SynchedEntityData.defineId(Spooky.class, EntityDataSerializers.INT);
-
+public class Spooky extends AbstractMinionEntity {
 	public Spooky(EntityType<Spooky> type, Level world) {
 		super(type, world);
 		this.moveControl = new FlyingMoveControl(this, 20, true);
 	}
-
-    @Override
-    public void addAdditionalSaveData(ValueOutput tag) {
-        super.addAdditionalSaveData(tag);
-        tag.putInt("SpellTick", this.getSpellTick());
-    }
-
-    @Override
-    public void readAdditionalSaveData(ValueInput tag) {
-        super.readAdditionalSaveData(tag);
-        if (tag.getInt("SpellTick").isPresent()) {
-            this.setSpellTick(tag.getInt("SpellTick").get());
-        }
-    }
-
-    @Override
-    protected void defineSynchedData(SynchedEntityData.Builder builder) {
-        super.defineSynchedData(builder);
-        builder.define(SPELL_TICK, 0);
-    }
 
 	@Override
 	protected PathNavigation createNavigation(Level lvl) {
@@ -116,9 +88,6 @@ public class Spooky extends AbstractMinionEntity implements Spellcaster {
                     this.setTarget(null);
                 }
 			}
-            if (this.getSpellTick() > 0) {
-                this.setSpellTick(this.getSpellTick() - 1);
-            }
             if (this.isCastingSpell()) {
                 this.applySpellEffects(this.getX(), this.getY() + 0.35, this.getZ());
             }
@@ -137,30 +106,8 @@ public class Spooky extends AbstractMinionEntity implements Spellcaster {
     }
 
     @Override
-    public void applySpellEffects(double x, double y, double z) {
-        if (this.level().isClientSide()) {
-            this.level().addParticle(ColorParticleOption.create(ParticleTypes.ENTITY_EFFECT, this.getSpellColor()), x, y, z, 0.0, 0.0, 0.0);
-        }
-    }
-
-    @Override
-    public void setSpellTick(int i) {
-        this.getEntityData().set(SPELL_TICK, i);
-    }
-
-    @Override
     public boolean causeFallDamage(double d, float f, DamageSource source) {
         return false;
-    }
-
-    @Override
-    public boolean isCastingSpell() {
-        return this.getSpellTick() > 0;
-    }
-
-    @Override
-    public int getSpellTick() {
-        return this.getEntityData().get(SPELL_TICK);
     }
 
     @Override
