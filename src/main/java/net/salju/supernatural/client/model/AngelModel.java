@@ -1,6 +1,6 @@
 package net.salju.supernatural.client.model;
 
-import net.salju.supernatural.client.renderer.AngelState;
+import net.salju.supernatural.client.renderer.SupernaturalRenderState;
 import net.minecraft.client.model.geom.builders.PartDefinition;
 import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
@@ -10,7 +10,7 @@ import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.EntityModel;
 
-public class AngelModel<T extends AngelState> extends EntityModel<T> {
+public class AngelModel<T extends SupernaturalRenderState> extends EntityModel<T> {
 	private final ModelPart body = root.getChild("body");
 	private final ModelPart head = this.body.getChild("head");
 	private final ModelPart hat = this.head.getChild("hat");
@@ -59,36 +59,36 @@ public class AngelModel<T extends AngelState> extends EntityModel<T> {
 		this.left_arm.xRot = 0.0F;
 		this.left_arm.yRot = 0.0F;
 		this.left_arm.zRot = 0.0F;
-		if (angel.angelPose == 0) {
+		if (angel.pose == 0) {
 			this.right_arm.xRot = -1.5708F;
 			this.left_arm.xRot = -1.5708F;
-		} else if (angel.angelPose == 2) {
+		} else if (angel.pose == 2) {
 			this.right_arm.xRot = -0.7854F;
 			this.right_arm.yRot = -0.5236F;
 			this.left_arm.xRot = -0.7854F;
 			this.left_arm.yRot = 0.5236F;
-		} else if (angel.angelPose == 3) {
+		} else if (angel.pose == 3) {
 			this.head.xRot = 0.2618F;
 			this.hat.xRot = 0.2618F;
 			this.right_arm.xRot = -1.9199F;
 			this.right_arm.yRot = -0.4363F;
 			this.left_arm.xRot = -1.9199F;
 			this.left_arm.yRot = 0.4363F;
-		} else if (angel.angelPose == 4) {
+		} else if (angel.pose == 4) {
 			this.right_arm.xRot = -1.5708F;
-		} else if (angel.angelPose == 5) {
+		} else if (angel.pose == 5) {
 			this.head.xRot = -0.2618F;
 			this.hat.xRot = -0.2618F;
 			this.right_arm.xRot = -3.0543F;
 			this.right_arm.zRot = -0.0873F;
 			this.left_arm.xRot = -3.0543F;
 			this.left_arm.zRot = 0.0873F;
-		} else if (angel.angelPose == 6) {
+		} else if (angel.pose == 6) {
 			this.right_arm.xRot = -0.0436F;
 			this.right_arm.zRot = 1.5708F;
 			this.left_arm.xRot = -0.0436F;
 			this.left_arm.zRot = -1.5708F;
-		} else if (angel.angelPose == 7) {
+		} else if (angel.pose == 7) {
 			this.head.xRot = 0.2618F;
 			this.head.yRot = 0.7854F;
 			this.hat.xRot = 0.2618F;

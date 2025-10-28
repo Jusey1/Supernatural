@@ -9,13 +9,13 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 
-public class SpookyRenderer extends MobRenderer<Spooky, SpookyState, SpiritModel<SpookyState>> {
+public class SpookyRenderer extends MobRenderer<Spooky, SupernaturalRenderState, SpiritModel<SupernaturalRenderState>> {
 	public SpookyRenderer(EntityRendererProvider.Context context) {
 		super(context, new SpiritModel(context.bakeLayer(SupernaturalClient.SPIRIT)), 0.3F);
 	}
 
 	@Override
-	public ResourceLocation getTextureLocation(SpookyState target) {
+	public ResourceLocation getTextureLocation(SupernaturalRenderState target) {
 		return ResourceLocation.fromNamespaceAndPath(Supernatural.MODID, "textures/entity/spook.png");
 	}
 
@@ -25,12 +25,12 @@ public class SpookyRenderer extends MobRenderer<Spooky, SpookyState, SpiritModel
 	}
 
 	@Override
-	public SpookyState createRenderState() {
-		return new SpookyState();
+	public SupernaturalRenderState createRenderState() {
+		return new SupernaturalRenderState();
 	}
 
 	@Override
-	public void extractRenderState(Spooky target, SpookyState state, float f1) {
+	public void extractRenderState(Spooky target, SupernaturalRenderState state, float f1) {
 		super.extractRenderState(target, state, f1);
 		state.isCastingSpell = target.isCastingSpell();
 	}

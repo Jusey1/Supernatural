@@ -1,6 +1,6 @@
 package net.salju.supernatural.client.model;
 
-import net.salju.supernatural.client.renderer.SpookyState;
+import net.salju.supernatural.client.renderer.SupernaturalRenderState;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.model.geom.builders.PartDefinition;
 import net.minecraft.client.model.geom.builders.MeshDefinition;
@@ -12,7 +12,7 @@ import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.util.Mth;
 
-public class SpiritModel<T extends SpookyState> extends EntityModel<T> {
+public class SpiritModel<T extends SupernaturalRenderState> extends EntityModel<T> {
 	private final ModelPart body = this.root.getChild("body");
 	private final ModelPart rightArm = this.body.getChild("right_arm");
 	private final ModelPart leftArm = this.body.getChild("left_arm");

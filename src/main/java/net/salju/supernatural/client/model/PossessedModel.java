@@ -1,6 +1,6 @@
 package net.salju.supernatural.client.model;
 
-import net.salju.supernatural.client.renderer.PossessedArmorState;
+import net.salju.supernatural.client.renderer.SupernaturalRenderState;
 import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.model.geom.builders.CubeDeformation;
@@ -8,7 +8,7 @@ import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.util.Mth;
 
-public class PossessedModel<T extends PossessedArmorState> extends HumanoidModel<T> {
+public class PossessedModel<T extends SupernaturalRenderState> extends HumanoidModel<T> {
 	public PossessedModel(ModelPart root) {
 		super(root);
 	}
