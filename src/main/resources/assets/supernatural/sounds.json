@@ -3,15 +3,15 @@
     "subtitle": "subtitles.armor_death",
     "sounds": [
       {
-        "name": "supernatural:armor_death_1",
+        "name": "supernatural:armor/armor_death_1",
         "stream": false
       },
       {
-        "name": "supernatural:armor_death_2",
+        "name": "supernatural:armor/armor_death_2",
         "stream": false
       },
       {
-        "name": "supernatural:armor_death_3",
+        "name": "supernatural:armor/armor_death_3",
         "stream": false
       }
     ]
@@ -20,62 +20,62 @@
     "subtitle": "subtitles.armor_hurt",
     "sounds": [
       {
-        "name": "supernatural:armor_hurt_1",
+        "name": "supernatural:armor/armor_hurt_1",
         "stream": false
       },
       {
-        "name": "supernatural:armor_hurt_2",
+        "name": "supernatural:armor/armor_hurt_2",
         "stream": false
       },
       {
-        "name": "supernatural:armor_hurt_3",
+        "name": "supernatural:armor/armor_hurt_3",
         "stream": false
       }
     ]
   },
-  "merfolk_water_death": {
-    "subtitle": "subtitles.merfolk_water_death",
+  "merfolk_death": {
+    "subtitle": "subtitles.merfolk_death",
     "sounds": [
       {
-        "name": "supernatural:merfolk_water_death_1",
+        "name": "supernatural:merfolk/merfolk_death_1",
         "stream": false
       },
       {
-        "name": "supernatural:merfolk_water_death_2",
+        "name": "supernatural:merfolk/merfolk_death_2",
         "stream": false
       }
     ]
   },
-  "merfolk_water_hurt": {
-    "subtitle": "subtitles.merfolk_water_hurt",
+  "merfolk_hurt": {
+    "subtitle": "subtitles.merfolk_hurt",
     "sounds": [
       {
-        "name": "supernatural:merfolk_water_hurt_1",
+        "name": "supernatural:merfolk/merfolk_hurt_1",
         "stream": false
       },
       {
-        "name": "supernatural:merfolk_water_hurt_2",
+        "name": "supernatural:merfolk/merfolk_hurt_2",
         "stream": false
       },
       {
-        "name": "supernatural:merfolk_water_hurt_3",
+        "name": "supernatural:merfolk/merfolk_hurt_3",
         "stream": false
       }
     ]
   },
-  "merfolk_water_idle": {
-    "subtitle": "subtitles.merfolk_water_idle",
+  "merfolk_idle": {
+    "subtitle": "subtitles.merfolk_idle",
     "sounds": [
       {
-        "name": "supernatural:merfolk_water_idle_1",
+        "name": "supernatural:merfolk/merfolk_idle_1",
         "stream": false
       },
       {
-        "name": "supernatural:merfolk_water_idle_2",
+        "name": "supernatural:merfolk/merfolk_idle_2",
         "stream": false
       },
       {
-        "name": "supernatural:merfolk_water_idle_3",
+        "name": "supernatural:merfolk/merfolk_idle_3",
         "stream": false
       }
     ]
@@ -84,11 +84,11 @@
     "subtitle": "subtitles.merland_death",
     "sounds": [
       {
-        "name": "supernatural:merland_death_1",
+        "name": "supernatural:merfolk/merland_death_1",
         "stream": false
       },
       {
-        "name": "supernatural:merland_death_2",
+        "name": "supernatural:merfolk/merland_death_2",
         "stream": false
       }
     ]
@@ -97,15 +97,15 @@
     "subtitle": "subtitles.merland_hurt",
     "sounds": [
       {
-        "name": "supernatural:merland_hurt_1",
+        "name": "supernatural:merfolk/merland_hurt_1",
         "stream": false
       },
       {
-        "name": "supernatural:merland_hurt_2",
+        "name": "supernatural:merfolk/merland_hurt_2",
         "stream": false
       },
       {
-        "name": "supernatural:merland_hurt_3",
+        "name": "supernatural:merfolk/merland_hurt_3",
         "stream": false
       }
     ]
@@ -114,11 +114,11 @@
     "subtitle": "subtitles.merland_idle",
     "sounds": [
       {
-        "name": "supernatural:merland_idle_1",
+        "name": "supernatural:merfolk/merland_idle_1",
         "stream": false
       },
       {
-        "name": "supernatural:merland_idle_2",
+        "name": "supernatural:merfolk/merland_idle_2",
         "stream": false
       }
     ]
@@ -127,7 +127,7 @@
     "subtitle": "subtitles.spook_poof",
     "sounds": [
       {
-        "name": "supernatural:spook_poof",
+        "name": "supernatural:spooky/spook_poof",
         "stream": false
       }
     ]
@@ -136,19 +136,19 @@
     "subtitle": "subtitles.vampire_celebrate",
     "sounds": [
       {
-        "name": "supernatural:vampire_celebrate_1",
+        "name": "supernatural:vampire/vampire_celebrate_1",
         "stream": false
       },
       {
-        "name": "supernatural:vampire_celebrate_2",
+        "name": "supernatural:vampire/vampire_celebrate_2",
         "stream": false
       },
       {
-        "name": "supernatural:vampire_celebrate_3",
+        "name": "supernatural:vampire/vampire_celebrate_3",
         "stream": false
       },
       {
-        "name": "supernatural:vampire_celebrate_4",
+        "name": "supernatural:vampire/vampire_celebrate_4",
         "stream": false
       }
     ]
@@ -157,19 +157,19 @@
     "subtitle": "subtitles.vampire_death",
     "sounds": [
       {
-        "name": "supernatural:vampire_death_1",
+        "name": "supernatural:vampire/vampire_death_1",
         "stream": false
       },
       {
-        "name": "supernatural:vampire_death_2",
+        "name": "supernatural:vampire/vampire_death_2",
         "stream": false
       },
       {
-        "name": "supernatural:vampire_death_3",
+        "name": "supernatural:vampire/vampire_death_3",
         "stream": false
       },
       {
-        "name": "supernatural:vampire_death_4",
+        "name": "supernatural:vampire/vampire_death_4",
         "stream": false
       }
     ]
@@ -178,19 +178,19 @@
     "subtitle": "subtitles.vampire_hurt",
     "sounds": [
       {
-        "name": "supernatural:vampire_hurt_1",
+        "name": "supernatural:vampire/vampire_hurt_1",
         "stream": false
       },
       {
-        "name": "supernatural:vampire_hurt_2",
+        "name": "supernatural:vampire/vampire_hurt_2",
         "stream": false
       },
       {
-        "name": "supernatural:vampire_hurt_3",
+        "name": "supernatural:vampire/vampire_hurt_3",
         "stream": false
       },
       {
-        "name": "supernatural:vampire_hurt_4",
+        "name": "supernatural:vampire/vampire_hurt_4",
         "stream": false
       }
     ]
@@ -199,27 +199,27 @@
     "subtitle": "subtitles.vampire_idle",
     "sounds": [
       {
-        "name": "supernatural:vampire_idle_1",
+        "name": "supernatural:vampire/vampire_idle_1",
         "stream": false
       },
       {
-        "name": "supernatural:vampire_idle_2",
+        "name": "supernatural:vampire/vampire_idle_2",
         "stream": false
       },
       {
-        "name": "supernatural:vampire_idle_3",
+        "name": "supernatural:vampire/vampire_idle_3",
         "stream": false
       },
       {
-        "name": "supernatural:vampire_idle_4",
+        "name": "supernatural:vampire/vampire_idle_4",
         "stream": false
       },
       {
-        "name": "supernatural:vampire_idle_5",
+        "name": "supernatural:vampire/vampire_idle_5",
         "stream": false
       },
       {
-        "name": "supernatural:vampire_idle_6",
+        "name": "supernatural:vampire/vampire_idle_6",
         "stream": false
       }
     ]
