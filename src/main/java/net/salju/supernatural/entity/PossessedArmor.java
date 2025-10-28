@@ -5,6 +5,9 @@ import net.salju.supernatural.init.SupernaturalItems;
 import net.salju.supernatural.init.SupernaturalSounds;
 import net.salju.supernatural.events.SupernaturalManager;
 import net.salju.supernatural.entity.ai.targets.MinionAttackSelector;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.item.Items;
@@ -21,9 +24,6 @@ import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.DifficultyInstance;
-import net.minecraft.server.level.ServerLevel;
-import net.minecraft.util.RandomSource;
-import net.minecraft.sounds.SoundEvent;
 import javax.annotation.Nullable;
 
 public class PossessedArmor extends AbstractMinionEntity {

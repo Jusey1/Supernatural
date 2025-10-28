@@ -32,6 +32,6 @@ public class SpookyRenderer extends MobRenderer<Spooky, SpookyState, SpiritModel
 	@Override
 	public void extractRenderState(Spooky target, SpookyState state, float f1) {
 		super.extractRenderState(target, state, f1);
-		state.isAggressive = target.isAggressive();
+		state.isCastingSpell = target.isCastingSpell();
 	}
 }

@@ -25,11 +25,9 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.entity.monster.Vindicator;
-import net.minecraft.world.entity.raid.Raider;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.effect.MobEffects;
@@ -105,9 +103,8 @@ public class SupernaturalEvents {
 
 	@SubscribeEvent
 	public static void onUseItemFinish(LivingEntityUseItemEvent.Finish event) {
-		ItemStack stack = event.getItem();
 		if (event.getEntity() instanceof Player player && SupernaturalManager.isVampire(player)) {
-			if (stack.is(Items.ENCHANTED_GOLDEN_APPLE) && player.getOffhandItem().is(Items.TOTEM_OF_UNDYING)) {
+			if (event.getItem().is(Items.ENCHANTED_GOLDEN_APPLE) && player.getOffhandItem().is(Items.TOTEM_OF_UNDYING)) {
 				player.level().broadcastEntityEvent(player, (byte) 35);
 				SupernaturalManager.setVampire(player, false);
 				if (!player.isCreative()) {
@@ -119,7 +116,7 @@ public class SupernaturalEvents {
 
 	@SubscribeEvent
 	public static void onEffectAdded(MobEffectEvent.Applicable event) {
-		if (SupernaturalManager.isVampire(event.getEntity()) && event.getEffectInstance() != null) {
+		if (SupernaturalManager.isVampire(event.getEntity())) {
 			if (event.getEffectInstance().is(MobEffects.POISON) || event.getEffectInstance().is(MobEffects.HUNGER)) {
 				event.setResult(MobEffectEvent.Applicable.Result.DO_NOT_APPLY);
 			}
@@ -217,13 +214,11 @@ public class SupernaturalEvents {
 	@SubscribeEvent
 	public static void onEntitySpawned(EntityJoinLevelEvent event) {
 		if (!event.loadedFromDisk()) {
-			Entity target = event.getEntity();
-			BlockPos pos = target.blockPosition();
-			if (event.getLevel() instanceof ServerLevel lvl && target instanceof Raider raidyr) {
-				if (SupernaturalConfig.RAIDERS.get() && lvl.isMoonVisible() && raidyr.getCurrentRaid() != null && !(raidyr.isPassenger() || raidyr.isPatrolLeader())) {
-					if (raidyr instanceof Vindicator && Math.random() <= SupernaturalConfig.VAMPIRER.get()) {
-						SupernaturalMobs.VAMPIRE.get().spawn(lvl, pos, EntitySpawnReason.EVENT);
-						raidyr.getCurrentRaid().removeFromRaid(lvl, raidyr, true);
+			if (event.getLevel() instanceof ServerLevel lvl && event.getEntity() instanceof Vindicator target) {
+				if (SupernaturalConfig.RAIDERS.get() && lvl.isMoonVisible() && target.getCurrentRaid() != null && !(target.isPassenger() || target.isPatrolLeader())) {
+					if (Math.random() <= SupernaturalConfig.VAMPIRER.get()) {
+						SupernaturalMobs.VAMPIRE.get().spawn(lvl, target.blockPosition(), EntitySpawnReason.EVENT);
+						target.getCurrentRaid().removeFromRaid(lvl, target, true);
 						event.setCanceled(true);
 					}
 				}

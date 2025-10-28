@@ -12,7 +12,7 @@ import net.minecraft.world.item.ItemStack;
 public class SupernaturalTabs {
 	public static final DeferredRegister<CreativeModeTab> REGISTRY = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, Supernatural.MODID);
 	public static final DeferredHolder<CreativeModeTab, CreativeModeTab> SUPERNATURAL = REGISTRY.register("supernatural",
-			() -> CreativeModeTab.builder().title(Component.translatable("itemGroup.supernatural")).icon(() -> new ItemStack(SupernaturalItems.SOULGEM.get())).displayItems((parameters, tabData) -> {
+			() -> CreativeModeTab.builder().title(Component.translatable("itemGroup.supernatural")).icon(() -> new ItemStack(SupernaturalItems.RITUAL_BOOK.get())).displayItems((parameters, tabData) -> {
 				tabData.accept(SupernaturalItems.VAMPIRE_SPAWN_EGG.get());
 				tabData.accept(SupernaturalItems.NECROMANCER_SPAWN_EGG.get());
 				tabData.accept(SupernaturalItems.ARMOR_SPAWN_EGG.get());

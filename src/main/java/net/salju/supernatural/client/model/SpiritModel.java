@@ -63,9 +63,9 @@ public class SpiritModel<T extends SpookyState> extends EntityModel<T> {
 		this.rightArm.zRot = f15;
 		this.rightArm.yRot = 0.27925268F * f4;
 		this.leftArm.yRot = -0.27925268F * f4;
-		if (spirit.isAggressive) {
-			this.rightArm.xRot = ((float) Math.PI * 1.5F);
-			this.leftArm.xRot = ((float) Math.PI * 1.5F);
+		if (spirit.isCastingSpell) {
+			this.rightArm.xRot = ((float) Math.PI * 1.65F);
+			this.leftArm.xRot = ((float) Math.PI * 1.65F);
 		}
 	}
 }
