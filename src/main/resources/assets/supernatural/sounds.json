@@ -33,6 +33,96 @@
       }
     ]
   },
+  "merfolk_water_death": {
+    "subtitle": "subtitles.merfolk_water_death",
+    "sounds": [
+      {
+        "name": "supernatural:merfolk_water_death_1",
+        "stream": false
+      },
+      {
+        "name": "supernatural:merfolk_water_death_2",
+        "stream": false
+      }
+    ]
+  },
+  "merfolk_water_hurt": {
+    "subtitle": "subtitles.merfolk_water_hurt",
+    "sounds": [
+      {
+        "name": "supernatural:merfolk_water_hurt_1",
+        "stream": false
+      },
+      {
+        "name": "supernatural:merfolk_water_hurt_2",
+        "stream": false
+      },
+      {
+        "name": "supernatural:merfolk_water_hurt_3",
+        "stream": false
+      }
+    ]
+  },
+  "merfolk_water_idle": {
+    "subtitle": "subtitles.merfolk_water_idle",
+    "sounds": [
+      {
+        "name": "supernatural:merfolk_water_idle_1",
+        "stream": false
+      },
+      {
+        "name": "supernatural:merfolk_water_idle_2",
+        "stream": false
+      },
+      {
+        "name": "supernatural:merfolk_water_idle_3",
+        "stream": false
+      }
+    ]
+  },
+  "merland_death": {
+    "subtitle": "subtitles.merland_death",
+    "sounds": [
+      {
+        "name": "supernatural:merland_death_1",
+        "stream": false
+      },
+      {
+        "name": "supernatural:merland_death_2",
+        "stream": false
+      }
+    ]
+  },
+  "merland_hurt": {
+    "subtitle": "subtitles.merland_hurt",
+    "sounds": [
+      {
+        "name": "supernatural:merland_hurt_1",
+        "stream": false
+      },
+      {
+        "name": "supernatural:merland_hurt_2",
+        "stream": false
+      },
+      {
+        "name": "supernatural:merland_hurt_3",
+        "stream": false
+      }
+    ]
+  },
+  "merland_idle": {
+    "subtitle": "subtitles.merland_idle",
+    "sounds": [
+      {
+        "name": "supernatural:merland_idle_1",
+        "stream": false
+      },
+      {
+        "name": "supernatural:merland_idle_2",
+        "stream": false
+      }
+    ]
+  },
   "spook_poof": {
     "subtitle": "subtitles.spook_poof",
     "sounds": [
