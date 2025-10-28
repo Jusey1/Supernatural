@@ -1,0 +1,19 @@
+{
+  "replace": false,
+  "values": [
+    "minecraft:drowned",
+    "minecraft:glow_squid",
+    {
+      "id": "alexscaves:deep_one",
+      "required": false
+    },
+    {
+      "id": "alexscaves:deep_one_knight",
+      "required": false
+    },
+    {
+      "id": "alexscaves:deep_one_mage",
+      "required": false
+    }
+  ]
+}
