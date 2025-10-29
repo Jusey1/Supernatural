@@ -1,6 +1,6 @@
 package net.salju.supernatural.entity;
 
-import net.salju.supernatural.entity.ai.spells.*;
+import net.salju.supernatural.entity.ai.spells.vampire.*;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.entity.EntityType;
 
@@ -13,7 +13,7 @@ public class Necromancer extends AbstractVampireEntity {
 	@Override
 	protected void registerGoals() {
 		super.registerGoals();
-		this.goalSelector.addGoal(1, new SupernaturalSummonVexSpellGoal(this));
-		this.goalSelector.addGoal(2, new SupernaturalNecroSpellGoal(this));
+		this.goalSelector.addGoal(1, new NecromancerVexSpellGoal(this));
+		this.goalSelector.addGoal(2, new NecromancerBoltSpellGoal(this));
 	}
 }

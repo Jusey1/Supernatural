@@ -9,7 +9,7 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.monster.Vex;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
-import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.EntityType;
 import java.util.Random;
 
@@ -39,7 +39,7 @@ public class NecromancerVexSpellGoal extends AbstractSpellGoal {
 		if (this.user.level() instanceof ServerLevel lvl) {
 			for (int i = 0; i < 3; ++i) {
 				BlockPos pos = this.user.blockPosition().offset(-2 + this.rng.nextInt(5), 1, -2 + this.rng.nextInt(5));
-				Vex ghost = EntityType.VEX.spawn(lvl, pos, MobSpawnType.MOB_SUMMONED);
+				Vex ghost = EntityType.VEX.spawn(lvl, pos, EntitySpawnReason.MOB_SUMMONED);
 				if (ghost != null) {
 					ghost.setOwner(this.user);
 					ghost.setBoundOrigin(pos);

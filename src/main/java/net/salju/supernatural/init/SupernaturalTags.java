@@ -12,8 +12,9 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.levelgen.structure.Structure;
 
 public class SupernaturalTags {
+    public static final TagKey<EntityType<?>> ARMOR = TagKey.create(Registries.ENTITY_TYPE, ResourceLocation.fromNamespaceAndPath(Supernatural.MODID, "armor_targets"));
 	public static final TagKey<EntityType<?>> SPOOKY = TagKey.create(Registries.ENTITY_TYPE, ResourceLocation.fromNamespaceAndPath(Supernatural.MODID, "spook_targets"));
-	public static final TagKey<EntityType<?>> ARMOR = TagKey.create(Registries.ENTITY_TYPE, ResourceLocation.fromNamespaceAndPath(Supernatural.MODID, "armor_targets"));
+    public static final TagKey<EntityType<?>> MERFOLK = TagKey.create(Registries.ENTITY_TYPE, ResourceLocation.fromNamespaceAndPath(Supernatural.MODID, "merfolk_targets"));
 	public static final TagKey<EntityType<?>> SPAWNER = TagKey.create(Registries.ENTITY_TYPE, ResourceLocation.fromNamespaceAndPath(Supernatural.MODID, "spawnerables"));
 	public static final TagKey<EntityType<?>> VAMPIRE = TagKey.create(Registries.ENTITY_TYPE, ResourceLocation.fromNamespaceAndPath(Supernatural.MODID, "is_vampire"));
 	public static final TagKey<EntityType<?>> IMMUNITY = TagKey.create(Registries.ENTITY_TYPE, ResourceLocation.fromNamespaceAndPath(Supernatural.MODID, "immunity"));

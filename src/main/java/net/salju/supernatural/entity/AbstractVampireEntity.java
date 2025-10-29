@@ -6,6 +6,7 @@ import net.salju.supernatural.init.SupernaturalDamageTypes;
 import net.salju.supernatural.init.SupernaturalConfig;
 import net.salju.supernatural.events.SupernaturalManager;
 import net.salju.supernatural.entity.ai.targets.VampireAttackSelector;
+import net.salju.supernatural.entity.ai.spells.vampire.VampireBloodSpellGoal;
 import net.salju.supernatural.entity.ai.spells.*;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
@@ -46,8 +47,8 @@ public class AbstractVampireEntity extends SpellcasterIllager {
 		super.registerGoals();
 		this.goalSelector.addGoal(0, new FloatGoal(this));
 		this.goalSelector.addGoal(0, new RestrictSunGoal(this));
-		this.goalSelector.addGoal(0, new SupernaturalSpellcasterGoal(this));
-		this.goalSelector.addGoal(2, new SupernaturalBloodSpellGoal(this));
+		this.goalSelector.addGoal(0, new AbstractSpellcasterGoal(this));
+		this.goalSelector.addGoal(2, new VampireBloodSpellGoal(this));
 		this.goalSelector.addGoal(3, new AbstractIllager.RaiderOpenDoorGoal(this));
 		this.goalSelector.addGoal(3, new Raider.HoldGroundAttackGoal(this, 10.0F));
 		this.goalSelector.addGoal(4, new MeleeAttackGoal(this, 1.2, false));

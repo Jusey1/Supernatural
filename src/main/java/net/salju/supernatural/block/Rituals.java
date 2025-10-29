@@ -214,7 +214,8 @@ public class Rituals {
 
 	private static Item getHelmet(Item target) {
 		Map<Item, Item> map = new HashMap<>();
-		map.put(Items.IRON_HELMET, SupernaturalItems.GOTHIC_IRON_HELMET.get());
+        map.put(Items.COPPER_HELMET, SupernaturalItems.GOTHIC_COPPER_HELMET.get());
+        map.put(Items.IRON_HELMET, SupernaturalItems.GOTHIC_IRON_HELMET.get());
 		map.put(Items.GOLDEN_HELMET, SupernaturalItems.GOTHIC_GOLDEN_HELMET.get());
 		map.put(Items.DIAMOND_HELMET, SupernaturalItems.GOTHIC_DIAMOND_HELMET.get());
 		map.put(Items.NETHERITE_HELMET, SupernaturalItems.GOTHIC_NETHERITE_HELMET.get());

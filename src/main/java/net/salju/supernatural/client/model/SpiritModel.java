@@ -13,15 +13,21 @@ import net.minecraft.client.model.EntityModel;
 import net.minecraft.util.Mth;
 
 public class SpiritModel<T extends SupernaturalRenderState> extends EntityModel<T> {
-	private final ModelPart body = this.root.getChild("body");
-	private final ModelPart rightArm = this.body.getChild("right_arm");
-	private final ModelPart leftArm = this.body.getChild("left_arm");
-	private final ModelPart rightWing = this.body.getChild("right_wing");
-	private final ModelPart leftWing = this.body.getChild("left_wing");
-	private final ModelPart head = this.root.getChild("head");
+    private final ModelPart head;
+	private final ModelPart body;
+	private final ModelPart rightArm;
+	private final ModelPart leftArm;
+	private final ModelPart rightWing;
+	private final ModelPart leftWing;
 
-	public SpiritModel(ModelPart rwt) {
-		super(rwt.getChild("root"), RenderType::entityTranslucent);
+	public SpiritModel(ModelPart root) {
+		super(root.getChild("root"), RenderType::entityTranslucent);
+        this.head = this.root.getChild("head");
+        this.body = this.root.getChild("body");
+        this.rightArm = this.body.getChild("right_arm");
+        this.leftArm = this.body.getChild("left_arm");
+        this.rightWing = this.body.getChild("right_wing");
+        this.leftWing = this.body.getChild("left_wing");
 	}
 
 	public static LayerDefinition createBodyLayer() {

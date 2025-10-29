@@ -29,9 +29,9 @@ public class NecromancerBoltSpellGoal extends AbstractSpellGoal {
 		BlockPos pos = BlockPos.containing((x + 0.5), y, (z + 0.5));
 		if (target.level() instanceof ServerLevel lvl) {
 			Supernatural.queueServerWork(25, () -> {
-				LightningBolt bolt = EntityType.LIGHTNING_BOLT.create(lvl);
+				LightningBolt bolt = EntityType.LIGHTNING_BOLT.create(lvl, EntitySpawnReason.MOB_SUMMONED);
                 if (bolt != null) {
-                    bolt.moveTo(pos.getX(), pos.getY(), pos.getZ());
+                    bolt.snapTo(pos.getX(), pos.getY(), pos.getZ());
                     if (target.getX() == x && target.getY() == y && target.getZ() == z) {
                         bolt.setDamage(12.0F);
                         lvl.addFreshEntity(bolt);
@@ -41,18 +41,18 @@ public class NecromancerBoltSpellGoal extends AbstractSpellGoal {
                         for (int bob = 0; bob < 2; bob++) {
                             if (Math.random() <= 0.99) {
                                 if (Math.random() <= 0.5) {
-                                    Skeleton skele = EntityType.SKELETON.spawn(lvl, pos, MobSpawnType.MOB_SUMMONED);
+                                    Skeleton skele = EntityType.SKELETON.spawn(lvl, pos, EntitySpawnReason.MOB_SUMMONED);
                                     if (skele != null) {
                                         skele.targetSelector.addGoal(1, new MinionTargetGoal(skele, this.user));
                                     }
                                 } else {
-                                    Zombie billy = EntityType.ZOMBIE.spawn(lvl, pos, MobSpawnType.MOB_SUMMONED);
+                                    Zombie billy = EntityType.ZOMBIE.spawn(lvl, pos, EntitySpawnReason.MOB_SUMMONED);
                                     if (billy != null) {
                                         billy.targetSelector.addGoal(1, new MinionTargetGoal(billy, this.user));
                                     }
                                 }
                             } else {
-                                Vampire vampire = SupernaturalMobs.VAMPIRE.get().spawn(lvl, pos, MobSpawnType.MOB_SUMMONED);
+                                Vampire vampire = SupernaturalMobs.VAMPIRE.get().spawn(lvl, pos, EntitySpawnReason.MOB_SUMMONED);
                                 if (vampire != null) {
                                     vampire.setCustomName(Component.literal("Bob"));
                                 }

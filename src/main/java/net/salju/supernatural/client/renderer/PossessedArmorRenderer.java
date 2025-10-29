@@ -17,7 +17,7 @@ public class PossessedArmorRenderer extends HumanoidMobRenderer<PossessedArmor, 
 	}
 
 	@Override
-	public ResourceLocation getTextureLocation(SupernaturalRenderState target) {
+	public ResourceLocation getTextureLocation(SupernaturalRenderState state) {
 		return ResourceLocation.fromNamespaceAndPath(Supernatural.MODID, "textures/entity/empty_texture.png");
 	}
 

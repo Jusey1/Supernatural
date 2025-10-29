@@ -19,6 +19,7 @@ public class SpookyAttackSelector implements TargetingConditions.Selector {
 		this.ghost = source;
 	}
 
+    @Override
 	public boolean test(@Nullable LivingEntity target, ServerLevel lvl) {
 		if (!target.hasEffect(SupernaturalEffects.POSSESSION) && !target.hasEffect(MobEffects.GLOWING)) {
 			if (SupernaturalConfig.ARMOR.get() && target instanceof ArmorStand) {

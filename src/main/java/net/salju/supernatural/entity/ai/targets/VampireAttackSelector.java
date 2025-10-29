@@ -17,6 +17,7 @@ public class VampireAttackSelector implements TargetingConditions.Selector {
 		this.vampire = source;
 	}
 
+    @Override
 	public boolean test(@Nullable LivingEntity target, ServerLevel lvl) {
 		if (target instanceof Player) {
 			if (this.vampire.getCurrentRaid() != null) {

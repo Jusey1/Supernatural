@@ -17,6 +17,7 @@ public class MinionAttackSelector implements TargetingConditions.Selector {
 		this.armor = source;
 	}
 
+    @Override
 	public boolean test(@Nullable LivingEntity target, ServerLevel lvl) {
 		if (armor.isTamed() && armor.getOwner() != null && target != null) {
 			Entity ent = armor.level().getEntity(armor.getOwner().getUUID());
