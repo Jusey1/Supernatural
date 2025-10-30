@@ -224,6 +224,57 @@
       }
     ]
   },
+  "wight_death": {
+    "subtitle": "subtitles.wight_death",
+    "sounds": [
+      {
+        "name": "supernatural:wight/wight_death_1",
+        "stream": false
+      },
+      {
+        "name": "supernatural:wight/wight_death_2",
+        "stream": false
+      },
+      {
+        "name": "supernatural:wight/wight_death_3",
+        "stream": false
+      }
+    ]
+  },
+  "wight_hurt": {
+    "subtitle": "subtitles.wight_hurt",
+    "sounds": [
+      {
+        "name": "supernatural:wight/wight_hurt_1",
+        "stream": false
+      },
+      {
+        "name": "supernatural:wight/wight_hurt_2",
+        "stream": false
+      },
+      {
+        "name": "supernatural:wight/wight_hurt_3",
+        "stream": false
+      }
+    ]
+  },
+  "wight_idle": {
+    "subtitle": "subtitles.wight_idle",
+    "sounds": [
+      {
+        "name": "supernatural:wight/wight_idle_1",
+        "stream": false
+      },
+      {
+        "name": "supernatural:wight/wight_idle_2",
+        "stream": false
+      },
+      {
+        "name": "supernatural:wight/wight_idle_3",
+        "stream": false
+      }
+    ]
+  },
   "wraith_attack": {
     "subtitle": "subtitles.wraith_attack",
     "sounds": [
