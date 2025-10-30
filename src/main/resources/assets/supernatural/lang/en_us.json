@@ -1,6 +1,7 @@
 {
   "block.supernatural.grave_soil": "Grave Soil",
   "block.supernatural.ritual_altar": "Ritual Altar",
+  "block.supernatural.wraith_soul_fire": "Soul Fire",
   "death.attack.ritual": "%1$s was ritualistic sacrificed",
   "death.attack.ritual.entity": "%1$s was ritualistic sacrificed by %2$s",
   "death.attack.sun": "%1$s has discovered that the sun is a deadly laser",
@@ -93,6 +94,12 @@
   "subtitles.spook_poof": "Poofs",
   "subtitles.vampire_celebrate": "We did it boys",
   "subtitles.vampire_death": "Dies",
+  "subtitles.vampire_hurt": "Ow",
   "subtitles.vampire_idle": "Angry Illager Noises",
-  "subtitles.vampire_hurt": "Ow"
+  "subtitles.wraith_attack": "Shoo!",
+  "subtitles.wraith_death": "Dusts",
+  "subtitles.wraith_firespell": "Ignis!",
+  "subtitles.wraith_hurt": "Boo!",
+  "subtitles.wraith_idle": "BoOOooOOooo",
+  "subtitles.wraith_teleport": "Vanish!"
 }
