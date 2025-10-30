@@ -1,0 +1,8 @@
+{
+	"parent": "minecraft:block/template_fire_side",
+	"ambientocclusion": false,
+	"render_type": "cutout",
+	"textures": {
+		"fire": "minecraft:block/soul_fire_1"
+	}
+}
