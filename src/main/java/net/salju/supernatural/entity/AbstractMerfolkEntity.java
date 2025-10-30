@@ -1,11 +1,14 @@
 package net.salju.supernatural.entity;
 
 import net.salju.supernatural.events.SupernaturalManager;
+import net.salju.supernatural.init.SupernaturalItems;
+import net.salju.supernatural.init.SupernaturalMobs;
 import net.salju.supernatural.init.SupernaturalSounds;
 import net.salju.supernatural.entity.ai.MerfolkMoveControl;
 import net.salju.supernatural.entity.ai.MerfolkSwimGoal;
 import net.salju.supernatural.entity.ai.MerfolkTridentGoal;
 import net.salju.supernatural.entity.ai.targets.MerfolkAttackSelector;
+import net.neoforged.neoforge.event.EventHooks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
@@ -124,6 +127,7 @@ public class AbstractMerfolkEntity extends Monster implements RangedAttackMob {
     public void performRangedAttack(LivingEntity target, float f) {
         InteractionHand hand = ProjectileUtil.getWeaponHoldingHand(this, stack -> (stack instanceof TridentItem));
         if (this.getItemInHand(hand).getItem() instanceof TridentItem) {
+            this.setTrident(this.getItemInHand(hand));
             ThrownTrident proj = new ThrownTrident(this.level(), this, this.getTrident());
             double d0 = target.getX() - this.getX();
             double d1 = target.getY(0.3333333333333333D) - proj.getY();
@@ -132,7 +136,6 @@ public class AbstractMerfolkEntity extends Monster implements RangedAttackMob {
             proj.shoot(d0, d1 + d3 * (double) 0.2F, d2, 1.6F, (float) (14 - this.level().getDifficulty().getId() * 4));
             this.playSound(SoundEvents.DROWNED_SHOOT, 1.0F, 1.0F / (this.getRandom().nextFloat() * 0.4F + 0.8F));
             this.level().addFreshEntity(proj);
-            this.setTrident(this.getItemInHand(hand));
             this.setItemInHand(hand, ItemStack.EMPTY);
             this.setTridentReference(proj);
             this.setCD(1200);
@@ -142,12 +145,25 @@ public class AbstractMerfolkEntity extends Monster implements RangedAttackMob {
     @Override
     public SpawnGroupData finalizeSpawn(ServerLevelAccessor world, DifficultyInstance difficulty, EntitySpawnReason reason, @Nullable SpawnGroupData data) {
         SpawnGroupData spawn = super.finalizeSpawn(world, difficulty, reason, data);
-        if (this instanceof MerfolkDiamond) {
+        int i = Mth.nextInt(this.getRandom(), 1, 100);
+        if (this instanceof MerfolkDiamond || i <= 15) {
             this.getTrident().enchant(SupernaturalManager.getEnchantment(world.getLevel(), "minecraft", "loyalty"), 3);
         }
         this.setItemInHand(InteractionHand.MAIN_HAND, this.getTrident());
         this.setDropChance(EquipmentSlot.MAINHAND, 0.05F);
+        if (this instanceof MerfolkAmethyst) {
+            if (i >= 75) {
+                this.convertTo(SupernaturalMobs.MERFOLK_EMERALD.get(), ConversionParams.single(this, true, true), newbie -> { EventHooks.onLivingConvert(this, newbie); });
+            } else if (i <= 15) {
+                this.convertTo(SupernaturalMobs.MERFOLK_DIAMOND.get(), ConversionParams.single(this, true, true), newbie -> { EventHooks.onLivingConvert(this, newbie); });
+            }
+        }
         return spawn;
+    }
+
+    @Override
+    public ItemStack getPickResult() {
+        return new ItemStack(SupernaturalItems.MERFOLK_SPAWN_EGG.get());
     }
 
     @Override
