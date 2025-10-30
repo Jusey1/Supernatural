@@ -45,7 +45,7 @@ public class WraithSoulFireBlock extends BaseFireBlock {
     }
 
     @Override
-    protected BlockState updateShape(BlockState state, LevelReader world, ScheduledTickAccess tick, BlockPos pos, Direction dir, BlockPos nearbyPos, BlockState nearybyState, RandomSource randy) {
+    protected BlockState updateShape(BlockState state, LevelReader world, ScheduledTickAccess tick, BlockPos pos, Direction dir, BlockPos nearbyPos, BlockState nearbyState, RandomSource randy) {
         return this.canSurvive(state, world, pos) ? this.defaultBlockState() : Blocks.AIR.defaultBlockState();
     }
 

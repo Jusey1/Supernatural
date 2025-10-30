@@ -22,4 +22,10 @@ public class SupernaturalSounds {
 	public static final DeferredHolder<SoundEvent, SoundEvent> VAMPIRE_DEATH = REGISTRY.register("vampire_death", () -> SoundEvent.createVariableRangeEvent(ResourceLocation.fromNamespaceAndPath(Supernatural.MODID, "vampire_death")));
 	public static final DeferredHolder<SoundEvent, SoundEvent> VAMPIRE_HURT = REGISTRY.register("vampire_hurt", () -> SoundEvent.createVariableRangeEvent(ResourceLocation.fromNamespaceAndPath(Supernatural.MODID, "vampire_hurt")));
 	public static final DeferredHolder<SoundEvent, SoundEvent> VAMPIRE_IDLE = REGISTRY.register("vampire_idle", () -> SoundEvent.createVariableRangeEvent(ResourceLocation.fromNamespaceAndPath(Supernatural.MODID, "vampire_idle")));
+    public static final DeferredHolder<SoundEvent, SoundEvent> WRAITH_ATTACK = REGISTRY.register("wraith_attack", () -> SoundEvent.createVariableRangeEvent(ResourceLocation.fromNamespaceAndPath(Supernatural.MODID, "wraith_attack")));
+    public static final DeferredHolder<SoundEvent, SoundEvent> WRAITH_DEATH = REGISTRY.register("wraith_death", () -> SoundEvent.createVariableRangeEvent(ResourceLocation.fromNamespaceAndPath(Supernatural.MODID, "wraith_death")));
+    public static final DeferredHolder<SoundEvent, SoundEvent> WRAITH_FIRE = REGISTRY.register("wraith_firespell", () -> SoundEvent.createVariableRangeEvent(ResourceLocation.fromNamespaceAndPath(Supernatural.MODID, "wraith_firespell")));
+    public static final DeferredHolder<SoundEvent, SoundEvent> WRAITH_HURT = REGISTRY.register("wraith_hurt", () -> SoundEvent.createVariableRangeEvent(ResourceLocation.fromNamespaceAndPath(Supernatural.MODID, "wraith_hurt")));
+    public static final DeferredHolder<SoundEvent, SoundEvent> WRAITH_IDLE = REGISTRY.register("wraith_idle", () -> SoundEvent.createVariableRangeEvent(ResourceLocation.fromNamespaceAndPath(Supernatural.MODID, "wraith_idle")));
+    public static final DeferredHolder<SoundEvent, SoundEvent> WRAITH_TELEPORT = REGISTRY.register("wraith_teleport", () -> SoundEvent.createVariableRangeEvent(ResourceLocation.fromNamespaceAndPath(Supernatural.MODID, "wraith_teleport")));
 }
