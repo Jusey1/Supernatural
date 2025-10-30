@@ -1,5 +1,6 @@
 package net.salju.supernatural.entity;
 
+import net.salju.supernatural.events.SupernaturalManager;
 import net.salju.supernatural.init.SupernaturalSounds;
 import net.salju.supernatural.entity.ai.MerfolkMoveControl;
 import net.salju.supernatural.entity.ai.MerfolkSwimGoal;
@@ -141,7 +142,10 @@ public class AbstractMerfolkEntity extends Monster implements RangedAttackMob {
     @Override
     public SpawnGroupData finalizeSpawn(ServerLevelAccessor world, DifficultyInstance difficulty, EntitySpawnReason reason, @Nullable SpawnGroupData data) {
         SpawnGroupData spawn = super.finalizeSpawn(world, difficulty, reason, data);
-        this.setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(Items.TRIDENT));
+        if (this instanceof MerfolkDiamond) {
+            this.getTrident().enchant(SupernaturalManager.getEnchantment(world.getLevel(), "minecraft", "loyalty"), 3);
+        }
+        this.setItemInHand(InteractionHand.MAIN_HAND, this.getTrident());
         this.setDropChance(EquipmentSlot.MAINHAND, 0.05F);
         return spawn;
     }

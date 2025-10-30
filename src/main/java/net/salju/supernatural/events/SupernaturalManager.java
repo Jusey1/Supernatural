@@ -27,6 +27,7 @@ import net.minecraft.world.entity.ai.village.poi.PoiRecord;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.item.component.DyedItemColor;
+import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.ItemStack;
@@ -47,12 +48,16 @@ import com.google.common.collect.HashMultimap;
 
 public class SupernaturalManager {
 	public static int getEnchantmentLevel(ItemStack stack, Level world, String id, String name) {
-		return stack.getEnchantmentLevel(world.registryAccess().lookupOrThrow(Registries.ENCHANTMENT).getOrThrow(ResourceKey.create(Registries.ENCHANTMENT, ResourceLocation.fromNamespaceAndPath(id, name))));
+		return stack.getEnchantmentLevel(getEnchantment(world, id, name));
 	}
 
-    public static AttributeSupplier.Builder createAttributes(double h, double d, double a, double s) {
-        return Mob.createMobAttributes().add(Attributes.MAX_HEALTH, h).add(Attributes.ATTACK_DAMAGE, d).add(Attributes.ARMOR, a).add(Attributes.MOVEMENT_SPEED, s);
-    }
+	public static Holder<Enchantment> getEnchantment(Level world, String id, String name) {
+		return world.registryAccess().lookupOrThrow(Registries.ENCHANTMENT).getOrThrow(ResourceKey.create(Registries.ENCHANTMENT, ResourceLocation.fromNamespaceAndPath(id, name)));
+	}
+
+	public static AttributeSupplier.Builder createAttributes(double h, double d, double a, double s) {
+		return Mob.createMobAttributes().add(Attributes.MAX_HEALTH, h).add(Attributes.ATTACK_DAMAGE, d).add(Attributes.ARMOR, a).add(Attributes.MOVEMENT_SPEED, s);
+	}
 
 	public static boolean isVampire(LivingEntity target) {
 		if (target instanceof Player player) {
@@ -102,11 +107,11 @@ public class SupernaturalManager {
 		return stats;
 	}
 
-    public static ItemStack dyeHelmet(Item item) {
-        ItemStack stack = new ItemStack(item);
-        stack.set(DataComponents.DYED_COLOR, new DyedItemColor(DyeColor.RED.getTextureDiffuseColor()));
-        return stack;
-    }
+	public static ItemStack dyeHelmet(Item item) {
+		ItemStack stack = new ItemStack(item);
+		stack.set(DataComponents.DYED_COLOR, new DyedItemColor(DyeColor.RED.getTextureDiffuseColor()));
+		return stack;
+	}
 
 	public static ItemStack setSoul(ItemStack stack, LivingEntity target) {
 		TagValueOutput value = TagValueOutput.createWithoutContext(ProblemReporter.DISCARDING);

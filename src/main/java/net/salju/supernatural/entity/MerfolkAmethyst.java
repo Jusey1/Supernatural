@@ -1,5 +1,6 @@
 package net.salju.supernatural.entity;
 
+import net.salju.supernatural.events.SupernaturalManager;
 import net.salju.supernatural.init.SupernaturalMobs;
 import net.neoforged.neoforge.event.EventHooks;
 import net.minecraft.core.BlockPos;
@@ -15,6 +16,7 @@ import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.Difficulty;
+import net.minecraft.world.InteractionHand;
 import javax.annotation.Nullable;
 
 public class MerfolkAmethyst extends AbstractMerfolkEntity {
@@ -29,6 +31,8 @@ public class MerfolkAmethyst extends AbstractMerfolkEntity {
         if (i >= 75) {
             this.convertTo(SupernaturalMobs.MERFOLK_EMERALD.get(), ConversionParams.single(this, true, true), newbie -> { EventHooks.onLivingConvert(this, newbie); });
         } else if (i <= 15) {
+            this.getTrident().enchant(SupernaturalManager.getEnchantment(world.getLevel(), "minecraft", "loyalty"), 3);
+            this.setItemInHand(InteractionHand.MAIN_HAND, this.getTrident());
             this.convertTo(SupernaturalMobs.MERFOLK_DIAMOND.get(), ConversionParams.single(this, true, true), newbie -> { EventHooks.onLivingConvert(this, newbie); });
         }
         return spawn;
