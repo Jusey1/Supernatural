@@ -223,5 +223,95 @@
         "stream": false
       }
     ]
+  },
+  "wraith_attack": {
+    "subtitle": "subtitles.wraith_attack",
+    "sounds": [
+      {
+        "name": "supernatural:wraith/wraith_attack_1",
+        "stream": false
+      }
+    ]
+  },
+  "wraith_death": {
+    "subtitle": "subtitles.wraith_death",
+    "sounds": [
+      {
+        "name": "supernatural:wraith/wraith_death_1",
+        "stream": false
+      },
+      {
+        "name": "supernatural:wraith/wraith_death_2",
+        "stream": false
+      }
+    ]
+  },
+  "wraith_firespell": {
+    "subtitle": "subtitles.wraith_firespell",
+    "sounds": [
+      {
+        "name": "supernatural:wraith/wraith_firespell_1",
+        "stream": false
+      }
+    ]
+  },
+  "wraith_hurt": {
+    "subtitle": "subtitles.wraith_hurt",
+    "sounds": [
+      {
+        "name": "supernatural:wraith/wraith_hurt_1",
+        "stream": false
+      },
+      {
+        "name": "supernatural:wraith/wraith_hurt_2",
+        "stream": false
+      },
+      {
+        "name": "supernatural:wraith/wraith_hurt_3",
+        "stream": false
+      }
+    ]
+  },
+  "wraith_idle": {
+    "subtitle": "subtitles.wraith_idle",
+    "sounds": [
+      {
+        "name": "supernatural:wraith/wraith_idle_1",
+        "stream": false
+      },
+      {
+        "name": "supernatural:wraith/wraith_idle_2",
+        "stream": false
+      },
+      {
+        "name": "supernatural:wraith/wraith_idle_3",
+        "stream": false
+      },
+      {
+        "name": "supernatural:wraith/wraith_idle_4",
+        "stream": false
+      },
+      {
+        "name": "supernatural:wraith/wraith_idle_5",
+        "stream": false
+      },
+      {
+        "name": "supernatural:wraith/wraith_idle_6",
+        "stream": false
+      }
+    ]
+  },
+  "wraith_teleport": {
+    "subtitle": "subtitles.wraith_teleport",
+    "sounds": [
+      {
+        "name": "supernatural:wraith/wraith_teleport_1",
+        "stream": false
+      },
+      {
+        "name": "supernatural:wraith/wraith_teleport_2",
+        "stream": false
+      }
+    ]
   }
 }
