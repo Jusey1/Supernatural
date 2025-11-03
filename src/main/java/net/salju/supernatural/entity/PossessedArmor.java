@@ -79,10 +79,9 @@ public class PossessedArmor extends AbstractMinionEntity {
 
 	@Override
 	public SpawnGroupData finalizeSpawn(ServerLevelAccessor world, DifficultyInstance difficulty, EntitySpawnReason reason, @Nullable SpawnGroupData data) {
-        SpawnGroupData spawn = super.finalizeSpawn(world, difficulty, reason, data);
 		this.populateDefaultEquipmentSlots(world.getRandom(), difficulty);
 		this.addEffect(new MobEffectInstance(SupernaturalEffects.POSSESSION, Integer.MAX_VALUE, 0));
-		return spawn;
+        return super.finalizeSpawn(world, difficulty, reason, data);
 	}
 
 	@Override

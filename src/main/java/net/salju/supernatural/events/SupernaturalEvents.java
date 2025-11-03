@@ -21,18 +21,19 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.EntityTypeTags;
-import net.minecraft.world.item.Items;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.damagesource.DamageTypes;
+import net.minecraft.world.entity.animal.IronGolem;
 import net.minecraft.world.entity.monster.Vindicator;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.entity.EntitySpawnReason;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.util.Mth;
 
 @EventBusSubscriber
@@ -210,6 +211,15 @@ public class SupernaturalEvents {
 			}
 		}
 	}
+
+    @SubscribeEvent
+    public static void onAttackTarget(LivingChangeTargetEvent event) {
+        if (event.getEntity() instanceof IronGolem && event.getOriginalAboutToBeSetTarget() != null) {
+            if (event.getOriginalAboutToBeSetTarget().getType().is(SupernaturalTags.IGNORES)) {
+                event.setCanceled(true);
+            }
+        }
+    }
 
 	@SubscribeEvent
 	public static void onEntitySpawned(EntityJoinLevelEvent event) {

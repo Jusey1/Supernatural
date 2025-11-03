@@ -144,7 +144,6 @@ public class AbstractMerfolkEntity extends Monster implements RangedAttackMob {
 
     @Override
     public SpawnGroupData finalizeSpawn(ServerLevelAccessor world, DifficultyInstance difficulty, EntitySpawnReason reason, @Nullable SpawnGroupData data) {
-        SpawnGroupData spawn = super.finalizeSpawn(world, difficulty, reason, data);
         int i = Mth.nextInt(this.getRandom(), 1, 100);
         if (this instanceof MerfolkDiamond || i <= 15) {
             this.getTrident().enchant(SupernaturalManager.getEnchantment(world.getLevel(), "minecraft", "loyalty"), 3);
@@ -156,9 +155,11 @@ public class AbstractMerfolkEntity extends Monster implements RangedAttackMob {
                 this.convertTo(SupernaturalMobs.MERFOLK_EMERALD.get(), ConversionParams.single(this, true, true), newbie -> { EventHooks.onLivingConvert(this, newbie); });
             } else if (i <= 15) {
                 this.convertTo(SupernaturalMobs.MERFOLK_DIAMOND.get(), ConversionParams.single(this, true, true), newbie -> { EventHooks.onLivingConvert(this, newbie); });
+            } else {
+                this.setItemInHand(InteractionHand.MAIN_HAND, ItemStack.EMPTY);
             }
         }
-        return spawn;
+        return super.finalizeSpawn(world, difficulty, reason, data);
     }
 
     @Override
