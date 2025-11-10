@@ -30,8 +30,8 @@ public class RitualCompassState extends NeedleDirectionHelper {
     protected float calculate(ItemStack stack, ClientLevel lvl, int i, ItemOwner target) {
         RitualCompassData data = stack.get(SupernaturalData.COMPASS);
         GlobalPos pos = null;
-        if (data != null && data.target().isPresent()) {
-            pos = data.target().get();
+        if (data != null) {
+            pos = data.getGlobalPos();
         }
         return isValid(target, pos) ? this.getTarget(target, lvl.getGameTime(), pos.pos()) : this.getRandom(i, lvl.getGameTime());
     }

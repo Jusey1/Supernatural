@@ -30,13 +30,13 @@ public class SupernaturalItems {
 	public static final DeferredHolder<Item, Item> GOTHIC_NETHERITE_HELMET = REGISTRY.register("gothic_netherite_helmet", () -> new Item(createBaseProps("gothic_netherite_helmet").fireResistant().durability(ArmorType.HELMET.getDurability(37)).humanoidArmor(SupernaturalArmors.NETHERITE, ArmorType.HELMET)));
 	public static final DeferredHolder<Item, Item> GRAVE_SOIL = block(SupernaturalBlocks.GRAVE_SOIL, "grave_soil");
 	public static final DeferredHolder<Item, Item> RITUAL_ALTAR = block(SupernaturalBlocks.RITUAL_ALTAR, "ritual_altar");
-	public static final DeferredHolder<Item, Item> CONTRACT = REGISTRY.register("contract", () -> new ContractItem(createBaseProps("contract").stacksTo(1).rarity(Rarity.UNCOMMON).fireResistant()));
-	public static final DeferredHolder<Item, Item> RITUAL_BOOK = REGISTRY.register("ritual_book", () -> new RitualBookItem(createBaseProps("ritual_book").stacksTo(1).rarity(Rarity.UNCOMMON).fireResistant()));
+	public static final DeferredHolder<Item, Item> CONTRACT = REGISTRY.register("contract", () -> new ContractItem(createBaseProps("contract").stacksTo(1).rarity(Rarity.UNCOMMON)));
+	public static final DeferredHolder<Item, Item> RITUAL_BOOK = REGISTRY.register("ritual_book", () -> new RitualBookItem(createBaseProps("ritual_book").stacksTo(1).rarity(Rarity.UNCOMMON)));
 	public static final DeferredHolder<Item, Item> VAMPIRE_DUST = REGISTRY.register("vampire_dust", () -> new Item(createBaseProps("vampire_dust")));
 	public static final DeferredHolder<Item, Item> ANGEL_STATUE = REGISTRY.register("angel_statue", () -> new AngelItem(createBaseProps("angel_statue").stacksTo(1).rarity(Rarity.UNCOMMON)));
 	public static final DeferredHolder<Item, Item> SOULGEM = REGISTRY.register("soulgem", () -> new SoulgemItem(createBaseProps("soulgem").stacksTo(1).rarity(Rarity.UNCOMMON).fireResistant()));
 	public static final DeferredHolder<Item, Item> COMPASS = REGISTRY.register("ritual_compass", () -> new RitualCompassItem(createBaseProps("ritual_compass").stacksTo(1).rarity(Rarity.UNCOMMON).fireResistant()));
-	public static final DeferredHolder<Item, Item> ANCHORBALL = REGISTRY.register("anchorball", () -> new AnchorballItem(createBaseProps("anchorball").stacksTo(1).rarity(Rarity.UNCOMMON).fireResistant()));
+	public static final DeferredHolder<Item, Item> ANCHORBALL = REGISTRY.register("anchorball", () -> new AnchorballItem(createBaseProps("anchorball").stacksTo(1).rarity(Rarity.UNCOMMON)));
 	public static final DeferredHolder<Item, Item> BLOOD = REGISTRY.register("blood_bottle", () -> new BloodItem(createBaseProps("blood_bottle").stacksTo(16).component(DataComponents.CONSUMABLE, BLOODY).craftRemainder(Items.GLASS_BOTTLE).usingConvertsTo(Items.GLASS_BOTTLE)));
 
 	private static DeferredHolder<Item, Item> block(DeferredHolder<Block, Block> block, String name) {

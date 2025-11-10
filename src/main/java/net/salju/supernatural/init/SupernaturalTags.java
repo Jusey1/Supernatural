@@ -19,7 +19,6 @@ public class SupernaturalTags {
 	public static final TagKey<EntityType<?>> VAMPIRE = TagKey.create(Registries.ENTITY_TYPE, ResourceLocation.fromNamespaceAndPath(Supernatural.MODID, "is_vampire"));
 	public static final TagKey<EntityType<?>> IMMUNITY = TagKey.create(Registries.ENTITY_TYPE, ResourceLocation.fromNamespaceAndPath(Supernatural.MODID, "immunity"));
 	public static final TagKey<EntityType<?>> BLOODY = TagKey.create(Registries.ENTITY_TYPE, ResourceLocation.fromNamespaceAndPath(Supernatural.MODID, "can_get_blood_from"));
-    public static final TagKey<EntityType<?>> IGNORES = TagKey.create(Registries.ENTITY_TYPE, ResourceLocation.fromNamespaceAndPath(Supernatural.MODID, "iron_golem_ignores"));
 	public static final TagKey<EntityType<?>> GRAND = TagKey.create(Registries.ENTITY_TYPE, ResourceLocation.fromNamespaceAndPath(Supernatural.MODID, "grand_soul"));
 	public static final TagKey<EntityType<?>> GREATER = TagKey.create(Registries.ENTITY_TYPE, ResourceLocation.fromNamespaceAndPath(Supernatural.MODID, "greater_soul"));
 	public static final TagKey<EntityType<?>> COMMON = TagKey.create(Registries.ENTITY_TYPE, ResourceLocation.fromNamespaceAndPath(Supernatural.MODID, "common_soul"));

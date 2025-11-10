@@ -13,10 +13,6 @@ public record RitualBookData(int page) {
 	public static final Codec<RitualBookData> CODEC = RecordCodecBuilder.create(codec -> codec.group(Codec.INT.fieldOf("page").forGetter(RitualBookData::page)).apply(codec, RitualBookData::new));
 	public static final StreamCodec<ByteBuf, RitualBookData> STREAM_CODEC = StreamCodec.composite(ByteBufCodecs.INT, RitualBookData::page, RitualBookData::new);
 
-	public RitualBookData(int page) {
-		this.page = page;
-	}
-
 	public int getPage() {
 		return this.page;
 	}

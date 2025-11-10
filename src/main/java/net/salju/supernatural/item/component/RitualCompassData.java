@@ -13,11 +13,6 @@ public record RitualCompassData(Optional<GlobalPos> target, String type) {
 	public static final Codec<RitualCompassData> CODEC = RecordCodecBuilder.create(codec -> codec.group(GlobalPos.CODEC.optionalFieldOf("target").forGetter(RitualCompassData::target), Codec.STRING.fieldOf("type").forGetter(RitualCompassData::type)).apply(codec, RitualCompassData::new));
 	public static final StreamCodec<ByteBuf, RitualCompassData> STREAM_CODEC = StreamCodec.composite(GlobalPos.STREAM_CODEC.apply(ByteBufCodecs::optional), RitualCompassData::target, ByteBufCodecs.STRING_UTF8, RitualCompassData::type, RitualCompassData::new);
 
-	public RitualCompassData(Optional<GlobalPos> target, String type) {
-		this.target = target;
-		this.type = type;
-	}
-
 	@Nullable
 	public GlobalPos getGlobalPos() {
 		return this.target.orElse(null);

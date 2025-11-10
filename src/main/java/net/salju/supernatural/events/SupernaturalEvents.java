@@ -22,7 +22,6 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.EntityTypeTags;
 import net.minecraft.world.damagesource.DamageTypes;
-import net.minecraft.world.entity.animal.IronGolem;
 import net.minecraft.world.entity.monster.Vindicator;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.EntitySpawnReason;
@@ -211,15 +210,6 @@ public class SupernaturalEvents {
 			}
 		}
 	}
-
-    @SubscribeEvent
-    public static void onAttackTarget(LivingChangeTargetEvent event) {
-        if (event.getEntity() instanceof IronGolem && event.getOriginalAboutToBeSetTarget() != null) {
-            if (event.getOriginalAboutToBeSetTarget().getType().is(SupernaturalTags.IGNORES)) {
-                event.setCanceled(true);
-            }
-        }
-    }
 
 	@SubscribeEvent
 	public static void onEntitySpawned(EntityJoinLevelEvent event) {
