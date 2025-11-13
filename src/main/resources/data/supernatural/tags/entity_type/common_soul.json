@@ -1,7 +1,9 @@
 {
   "replace": false,
   "values": [
-    "#minecraft:undead",
+    "#minecraft:skeletons",
+    "#minecraft:zombies",
+    "minecraft:phantom",
     "minecraft:creeper",
     "minecraft:hoglin",
     "minecraft:ravager",
