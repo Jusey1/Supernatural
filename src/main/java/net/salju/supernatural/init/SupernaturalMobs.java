@@ -38,7 +38,7 @@ public class SupernaturalMobs {
     @SubscribeEvent
     public static void registerAttributes(EntityAttributeCreationEvent event) {
         event.put(VAMPIRE.get(), SupernaturalManager.createAttributes(24, 3, 2, 0.3).build());
-        event.put(NECROMANCER.get(), SupernaturalManager.createAttributes(52, 3, 2, 0.3).build());
+        event.put(NECROMANCER.get(), SupernaturalManager.createAttributes(96, 3, 2, 0.3).build());
         event.put(POSSESSED_ARMOR.get(), SupernaturalManager.createAttributes(20, 1, 0, 0.25).add(Attributes.KNOCKBACK_RESISTANCE, 0.5).build());
         event.put(SPOOKY.get(), SupernaturalManager.createAttributes(12, 1, 0, 0.2).add(Attributes.FLYING_SPEED, 0.35).build());
         event.put(ANGEL.get(), SupernaturalManager.createAttributes(24, 7, 0, 0.25).add(Attributes.KNOCKBACK_RESISTANCE, 1).add(Attributes.FOLLOW_RANGE, 32).add(Attributes.STEP_HEIGHT, 1.25).build());

@@ -49,7 +49,7 @@ public class SpookyPossessionSpellGoal extends AbstractSpellGoal {
                         if (ghost.getOwner() != null) {
                             ItemStack sword = new ItemStack(Items.IRON_SWORD);
                             EnchantmentHelper.enchantItem(ghost.getRandom(), sword, 32, lvl.registryAccess(), Optional.empty());
-                            armor.setOwnerDirectly(ghost.getOwner());
+                            armor.setOwner(ghost.getOwner());
                             armor.setItemSlot(EquipmentSlot.MAINHAND, sword);
                         }
                         double r = ghost.getRandom().nextGaussian() * 0.02D;

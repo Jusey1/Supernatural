@@ -25,6 +25,7 @@ import net.minecraft.world.entity.decoration.ArmorStand;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.Level;
 
 public class Spooky extends AbstractMinionEntity {
@@ -108,6 +109,11 @@ public class Spooky extends AbstractMinionEntity {
     @Override
     public boolean causeFallDamage(double d, float f, DamageSource source) {
         return false;
+    }
+
+    @Override
+    public float getWalkTargetValue(BlockPos pos, LevelReader world) {
+        return -world.getPathfindingCostFromLightLevels(pos);
     }
 
     @Override

@@ -22,11 +22,8 @@ public abstract class AbstractMinionEntity extends AbstractSpellcasterEntity {
 	@Override
 	public void addAdditionalSaveData(ValueOutput tag) {
 		super.addAdditionalSaveData(tag);
-        this.checkDespawn();
-		if (this.getOwner() != null) {
-			this.getOwner().store(tag, "Player");
-		}
-	}
+        this.entityData.get(OWNER).ifPresent(target -> target.store(tag, "Player"));
+    }
 
 	@Override
 	public void readAdditionalSaveData(ValueInput tag) {
@@ -56,17 +53,22 @@ public abstract class AbstractMinionEntity extends AbstractSpellcasterEntity {
         }
     }
 
+    @Override
+    public boolean shouldDropExperience() {
+        return !this.isTamed();
+    }
+
     @Nullable
-    public EntityReference<LivingEntity> getOwner() {
-        return this.entityData.get(OWNER).orElse(null);
+    public LivingEntity getOwner() {
+        EntityReference<LivingEntity> target = this.entityData.get(OWNER).orElse(null);
+        if (target != null) {
+            return EntityReference.get(target, this.level(), LivingEntity.class);
+        }
+        return null;
     }
 
 	public void setOwner(@Nullable LivingEntity target) {
 		this.entityData.set(OWNER, Optional.ofNullable(target).map(EntityReference::of));
-	}
-
-	public void setOwnerDirectly(@Nullable EntityReference<LivingEntity> target) {
-		this.entityData.set(OWNER, Optional.ofNullable(target));
 	}
 
 	public boolean isTamed() {

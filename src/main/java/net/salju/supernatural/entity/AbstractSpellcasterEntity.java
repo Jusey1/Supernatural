@@ -5,18 +5,21 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.monster.Monster;
+import net.minecraft.world.entity.PathfinderMob;
+import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 
-public abstract class AbstractSpellcasterEntity extends Monster {
+public abstract class AbstractSpellcasterEntity extends PathfinderMob {
     public static final EntityDataAccessor<Integer> SPELL_TICK = SynchedEntityData.defineId(AbstractSpellcasterEntity.class, EntityDataSerializers.INT);
 
 	public AbstractSpellcasterEntity(EntityType<? extends AbstractSpellcasterEntity> type, Level world) {
 		super(type, world);
+        this.xpReward = 5;
 	}
 
     @Override
@@ -40,11 +43,30 @@ public abstract class AbstractSpellcasterEntity extends Monster {
     }
 
     @Override
+    public void aiStep() {
+        this.updateSwingTime();
+        if (this.getLightLevelDependentMagicValue() > 0.5F) {
+            this.noActionTime += 2;
+        }
+        super.aiStep();
+    }
+
+    @Override
     public void baseTick() {
         super.baseTick();
         if (this.getSpellTick() > 0) {
             this.setSpellTick(this.getSpellTick() - 1);
         }
+    }
+
+    @Override
+    public boolean shouldDropExperience() {
+        return true;
+    }
+
+    @Override
+    protected boolean shouldDropLoot(ServerLevel lvl) {
+        return lvl.getGameRules().getBoolean(GameRules.RULE_DOMOBLOOT);
     }
 
     public void setSpellTick(int i) {

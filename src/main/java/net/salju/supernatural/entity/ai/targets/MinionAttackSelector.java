@@ -5,37 +5,30 @@ import net.salju.supernatural.init.SupernaturalTags;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.Mob;
 import javax.annotation.Nullable;
 
 public class MinionAttackSelector implements TargetingConditions.Selector {
-	private final AbstractMinionEntity armor;
+	private final AbstractMinionEntity summon;
 
 	public MinionAttackSelector(AbstractMinionEntity source) {
-		this.armor = source;
+		this.summon = source;
 	}
 
     @Override
 	public boolean test(@Nullable LivingEntity target, ServerLevel lvl) {
-		if (armor.isTamed() && armor.getOwner() != null && target != null) {
-			Entity ent = armor.level().getEntity(armor.getOwner().getUUID());
-			if (ent instanceof Player player) {
-				if (player.getLastHurtByMob() != null && player.getLastHurtByMob().isAlive()) {
-					return target.equals(player.getLastHurtByMob());
-				} else if (player.getLastHurtMob() != null && player.getLastHurtMob().isAlive()) {
-					return target.equals(player.getLastHurtMob());
-				}
-				return (target.getType().is(SupernaturalTags.ARMOR));
-			} else if (ent instanceof Mob bob) {
-				if (bob.getLastHurtByMob() != null && bob.getLastHurtByMob().isAlive()) {
-					return target.equals(bob.getLastHurtByMob());
-				} else if (bob.getTarget() != null && bob.getTarget().isAlive()) {
-					return target.equals(bob.getTarget());
-				}
+		if (summon.isTamed() && summon.getOwner() != null && target != null) {
+			if (summon.getOwner() instanceof LivingEntity owner) {
+                if (owner.getLastHurtByMob() != null && owner.getLastHurtByMob().isAlive()) {
+                    return target.equals(owner.getLastHurtByMob());
+                } else if (owner.getLastHurtMob() != null && owner.getLastHurtMob().isAlive()) {
+                    return target.equals(owner.getLastHurtMob());
+                }
+                if (owner instanceof Player) {
+                    return target.getType().is(SupernaturalTags.ARMOR);
+                }
 			}
 		}
-		return (target instanceof Player);
+		return target instanceof Player;
 	}
 }

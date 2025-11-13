@@ -22,6 +22,8 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.EntityTypeTags;
 import net.minecraft.world.damagesource.DamageTypes;
+import net.minecraft.world.entity.monster.SpellcasterIllager;
+import net.minecraft.world.entity.monster.Vex;
 import net.minecraft.world.entity.monster.Vindicator;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.EntitySpawnReason;
@@ -168,6 +170,15 @@ public class SupernaturalEvents {
 				}
 			}
 		}
+        if (target instanceof SpellcasterIllager && target.level() instanceof ServerLevel lvl) {
+            for (Vex ghost : target.level().getEntitiesOfClass(Vex.class, target.getBoundingBox().inflate(32.76))) {
+                if (ghost.getOwner() != null && ghost.getOwner() == target) {
+                    ghost.hurtServer(lvl, event.getSource(), event.getAmount() * 0.25F);
+                    event.setAmount(event.getAmount() * 0.75F);
+                    break;
+                }
+            }
+        }
 	}
 
 	@SubscribeEvent
