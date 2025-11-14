@@ -19,7 +19,7 @@ public class BloodSpellGoal extends AbstractSpellGoal {
 	@Override
 	public boolean canUse() {
 		if (this.getTarget() != null && !this.getTarget().getType().is(EntityTypeTags.UNDEAD) && !this.getTarget().getType().is(SupernaturalTags.IMMUNITY) && !SupernaturalManager.isVampire(this.getTarget())) {
-			if (super.canUse() && this.user.getHealth() <= this.user.getMaxHealth() * 0.45F) {
+			if (super.canUse() && this.user.getHealth() <= this.user.getMaxHealth() * 0.45F && this.user.hasLineOfSight(this.getTarget())) {
 				this.getTarget().addEffect(new MobEffectInstance(MobEffects.LEVITATION, 30, 0, false, false));
 				return true;
 			}
