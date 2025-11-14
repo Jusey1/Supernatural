@@ -6,7 +6,6 @@ import net.salju.supernatural.init.SupernaturalSounds;
 import net.salju.supernatural.events.SupernaturalManager;
 import net.salju.supernatural.entity.ai.targets.MinionAttackSelector;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.ServerLevelAccessor;
@@ -54,11 +53,6 @@ public class PossessedArmor extends AbstractMinionEntity {
 		return SupernaturalSounds.ARMOR_DEATH.get();
 	}
 
-    @Override
-    public SoundEvent getCastingSoundEvent() {
-        return SoundEvents.ILLUSIONER_CAST_SPELL;
-    }
-
 	@Override
 	public boolean hurtServer(ServerLevel lvl, DamageSource source, float amount) {
 		if (source.is(DamageTypes.FALL) || source.is(DamageTypes.CACTUS) || source.is(DamageTypes.DROWN)) {
@@ -105,9 +99,4 @@ public class PossessedArmor extends AbstractMinionEntity {
 			}
 		}
 	}
-
-    @Override
-    public int getSpellColor() {
-        return 0;
-    }
 }

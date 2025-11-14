@@ -7,6 +7,7 @@ import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.level.GameRules;
@@ -69,6 +70,10 @@ public abstract class AbstractSpellcasterEntity extends PathfinderMob {
         return lvl.getGameRules().getBoolean(GameRules.RULE_DOMOBLOOT);
     }
 
+    public SoundEvent getCastingSoundEvent() {
+        return SoundEvents.ILLUSIONER_CAST_SPELL;
+    }
+
     public void setSpellTick(int i) {
         this.getEntityData().set(SPELL_TICK, i);
     }
@@ -87,7 +92,7 @@ public abstract class AbstractSpellcasterEntity extends PathfinderMob {
         return this.getEntityData().get(SPELL_TICK);
     }
 
-    public abstract SoundEvent getCastingSoundEvent();
-
-    public abstract int getSpellColor();
+    public int getSpellColor() {
+        return -6697729;
+    }
 }

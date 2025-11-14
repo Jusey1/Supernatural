@@ -26,22 +26,10 @@ public class SpookyPossessionSpellGoal extends AbstractSpellGoal {
 		super(target);
 	}
 
-    @Override
-    public boolean canUse() {
-        if (this.user.getTarget() != null) {
-            if (super.canUse() && this.user.distanceTo(this.user.getTarget()) >= 8.2F) {
-                return true;
-            } else {
-                this.user.getNavigation().moveTo(this.user.getTarget(), 1.2);
-            }
-        }
-        return false;
-    }
-
 	@Override
 	protected void performSpellCasting() {
-        if (this.user.getTarget() != null && this.user.getTarget().isAlive() && this.user instanceof Spooky ghost) {
-            if (ghost.getTarget() instanceof ArmorStand target) {
+        if (this.getTarget() != null && this.getTarget().isAlive() && this.user instanceof Spooky ghost) {
+            if (this.getTarget() instanceof ArmorStand target) {
                 if (SupernaturalManager.hasArmor(target)) {
                     ghost.playSound(SupernaturalSounds.SPOOK_POOF.get(), 1.0F, 1.0F);
                     if (target.level() instanceof ServerLevel lvl) {
@@ -57,7 +45,7 @@ public class SpookyPossessionSpellGoal extends AbstractSpellGoal {
                         ghost.discard();
                     }
                 }
-            } else if (ghost.getTarget() instanceof LivingEntity target) {
+            } else if (this.getTarget() instanceof LivingEntity target) {
                 target.addEffect(new MobEffectInstance(SupernaturalEffects.POSSESSION, 6000, 0));
                 target.addEffect(new MobEffectInstance(MobEffects.BLINDNESS, 32, 0, false, false));
                 if (ghost.level() instanceof ServerLevel lvl) {

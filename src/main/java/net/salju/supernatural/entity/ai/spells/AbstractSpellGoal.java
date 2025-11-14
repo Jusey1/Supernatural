@@ -19,7 +19,7 @@ public abstract class AbstractSpellGoal extends Goal {
 
 	@Override
 	public boolean canUse() {
-		if (this.user.getTarget() != null && this.user.getTarget().isAlive()) {
+		if (this.getTarget() != null && this.getTarget().isAlive()) {
 			if (this.user instanceof AbstractVampireEntity target) {
 				if (target.isCastingSpell()) {
 					return false;
@@ -39,8 +39,7 @@ public abstract class AbstractSpellGoal extends Goal {
 
 	@Override
 	public boolean canContinueToUse() {
-		LivingEntity target = this.user.getTarget();
-		return target != null && target.isAlive() && this.attackWarmupDelay > 0;
+		return this.getTarget() != null && this.getTarget().isAlive() && this.attackWarmupDelay > 0;
 	}
 
 	@Override
@@ -70,6 +69,14 @@ public abstract class AbstractSpellGoal extends Goal {
             }
 		}
 	}
+
+    @Nullable
+    public LivingEntity getTarget() {
+        if (this.user.getTarget() != null) {
+            return this.user.getTarget();
+        }
+        return this.user.getLastHurtMob();
+    }
 
 	protected abstract void performSpellCasting();
 

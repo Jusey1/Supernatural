@@ -67,11 +67,6 @@ public class Spooky extends AbstractMinionEntity {
 		return SoundEvents.VEX_DEATH;
 	}
 
-    @Override
-    public SoundEvent getCastingSoundEvent() {
-        return SoundEvents.ILLUSIONER_CAST_SPELL;
-    }
-
 	@Override
 	public void aiStep() {
 		super.aiStep();
@@ -114,11 +109,6 @@ public class Spooky extends AbstractMinionEntity {
     @Override
     public float getWalkTargetValue(BlockPos pos, LevelReader world) {
         return -world.getPathfindingCostFromLightLevels(pos);
-    }
-
-    @Override
-    public int getSpellColor() {
-        return -6697729;
     }
 
     @Override
