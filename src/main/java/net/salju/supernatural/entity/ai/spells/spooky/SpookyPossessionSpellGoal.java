@@ -4,7 +4,7 @@ import net.salju.supernatural.init.SupernaturalEffects;
 import net.salju.supernatural.init.SupernaturalMobs;
 import net.salju.supernatural.init.SupernaturalSounds;
 import net.salju.supernatural.events.SupernaturalManager;
-import net.salju.supernatural.entity.ai.spells.AbstractSpellGoal;
+import net.salju.supernatural.entity.ai.spells.AbstractTargetSpellGoal;
 import net.salju.supernatural.entity.PossessedArmor;
 import net.salju.supernatural.entity.Spooky;
 import net.minecraft.core.particles.ParticleTypes;
@@ -21,14 +21,14 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import java.util.Optional;
 
-public class SpookyPossessionSpellGoal extends AbstractSpellGoal {
+public class SpookyPossessionSpellGoal extends AbstractTargetSpellGoal {
 	public SpookyPossessionSpellGoal(Spooky target) {
 		super(target);
 	}
 
 	@Override
 	protected void performSpellCasting() {
-        if (this.getTarget() != null && this.getTarget().isAlive() && this.user instanceof Spooky ghost) {
+        if (this.hasTarget() && this.user instanceof Spooky ghost) {
             if (this.getTarget() instanceof ArmorStand target) {
                 if (SupernaturalManager.hasArmor(target)) {
                     ghost.playSound(SupernaturalSounds.SPOOK_POOF.get(), 1.0F, 1.0F);

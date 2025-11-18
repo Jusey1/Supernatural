@@ -2,7 +2,7 @@ package net.salju.supernatural.entity.ai.spells.vampire;
 
 import net.salju.supernatural.Supernatural;
 import net.salju.supernatural.init.SupernaturalMobs;
-import net.salju.supernatural.entity.ai.spells.AbstractSpellGoal;
+import net.salju.supernatural.entity.ai.spells.AbstractTargetSpellGoal;
 import net.salju.supernatural.entity.ai.MinionTargetGoal;
 import net.salju.supernatural.entity.Necromancer;
 import net.salju.supernatural.entity.Vampire;
@@ -15,7 +15,7 @@ import net.minecraft.world.entity.monster.Zombie;
 import net.minecraft.world.entity.monster.Skeleton;
 import net.minecraft.world.entity.*;
 
-public class NecromancerBoltSpellGoal extends AbstractSpellGoal {
+public class NecromancerBoltSpellGoal extends AbstractTargetSpellGoal {
 	public NecromancerBoltSpellGoal(Necromancer source) {
 		super(source);
 	}

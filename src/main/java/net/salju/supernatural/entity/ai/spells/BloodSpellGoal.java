@@ -11,7 +11,7 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.Difficulty;
 
-public class BloodSpellGoal extends AbstractSpellGoal {
+public class BloodSpellGoal extends AbstractTargetSpellGoal {
 	public BloodSpellGoal(Mob target) {
 		super(target);
 	}

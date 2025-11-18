@@ -1,6 +1,6 @@
 package net.salju.supernatural.entity.ai.spells.vampire;
 
-import net.salju.supernatural.entity.ai.spells.AbstractSpellGoal;
+import net.salju.supernatural.entity.ai.spells.AbstractTargetSpellGoal;
 import net.salju.supernatural.entity.Necromancer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
@@ -13,7 +13,7 @@ import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.EntityType;
 import java.util.Random;
 
-public class NecromancerVexSpellGoal extends AbstractSpellGoal {
+public class NecromancerVexSpellGoal extends AbstractTargetSpellGoal {
 	private final TargetingConditions vex = TargetingConditions.forCombat().range(16.0D).ignoreLineOfSight().ignoreInvisibilityTesting();
 	private final Random rng = new Random();
 

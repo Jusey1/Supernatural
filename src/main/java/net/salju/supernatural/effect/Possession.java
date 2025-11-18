@@ -20,11 +20,6 @@ public class Possession extends MobEffect {
 	}
 
 	@Override
-	public String getDescriptionId() {
-		return "effect.supernatural.possession";
-	}
-
-	@Override
 	public boolean applyEffectTick(ServerLevel lvl, LivingEntity target, int str) {
 		int dur = target.getEffect(SupernaturalEffects.POSSESSION).getDuration();
 		if (target.hasEffect(MobEffects.GLOWING)) {
