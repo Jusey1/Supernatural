@@ -19,27 +19,17 @@ public abstract class AbstractSpellGoal extends Goal {
 
 	@Override
 	public boolean canUse() {
-		if (this.getTarget() != null && this.getTarget().isAlive()) {
-			if (this.user instanceof AbstractVampireEntity target) {
-				if (target.isCastingSpell()) {
-					return false;
-				} else {
-					return this.user.tickCount >= this.nextAttackTickCount;
-				}
-			} else if (this.user instanceof AbstractSpellcasterEntity target) {
-                if (target.isCastingSpell()) {
-                    return false;
-                } else {
-                    return this.user.tickCount >= this.nextAttackTickCount;
-                }
-            }
-		}
-		return false;
+		if (this.user instanceof AbstractVampireEntity target && target.isCastingSpell()) {
+			return false;
+		} else if (this.user instanceof AbstractSpellcasterEntity target && target.isCastingSpell()) {
+        	return false;
+        }
+        return this.user.tickCount >= this.nextAttackTickCount;
 	}
 
 	@Override
 	public boolean canContinueToUse() {
-		return this.getTarget() != null && this.getTarget().isAlive() && this.attackWarmupDelay > 0;
+		return this.attackWarmupDelay > 0;
 	}
 
 	@Override
