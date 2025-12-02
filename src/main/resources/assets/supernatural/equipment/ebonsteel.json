@@ -1,0 +1,14 @@
+{
+  "layers": {
+    "humanoid": [
+      {
+        "texture": "supernatural:ebonsteel"
+      }
+    ],
+    "humanoid_leggings": [
+      {
+        "texture": "supernatural:ebonsteel"
+      }
+    ]
+  }
+}

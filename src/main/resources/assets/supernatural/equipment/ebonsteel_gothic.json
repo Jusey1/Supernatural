@@ -1,0 +1,15 @@
+{
+  "layers": {
+    "humanoid": [
+      {
+        "dyeable": {
+          "color_when_undyed": 16777215
+        },
+        "texture": "supernatural:gothic_feather"
+      },
+      {
+        "texture": "supernatural:ebonsteel_gothic"
+      }
+    ]
+  }
+}
