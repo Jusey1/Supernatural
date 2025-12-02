@@ -73,7 +73,7 @@ public class SupernaturalClient {
 				return gothic;
 			}
 		};
-		event.registerItem(armor, SupernaturalItems.GOTHIC_DIAMOND_HELMET, SupernaturalItems.GOTHIC_IRON_HELMET, SupernaturalItems.GOTHIC_GOLDEN_HELMET, SupernaturalItems.GOTHIC_NETHERITE_HELMET, SupernaturalItems.GOTHIC_COPPER_HELMET);
+		event.registerItem(armor, SupernaturalItems.GOTHIC_DIAMOND_HELMET, SupernaturalItems.GOTHIC_IRON_HELMET, SupernaturalItems.GOTHIC_GOLDEN_HELMET, SupernaturalItems.GOTHIC_NETHERITE_HELMET, SupernaturalItems.GOTHIC_COPPER_HELMET, SupernaturalItems.GOTHIC_EBONSTEEL_HELMET);
 	}
 
 	@SubscribeEvent
@@ -82,7 +82,7 @@ public class SupernaturalClient {
 	}
 
     public static ArmorModelSet<ModelLayerLocation> registerArmorSet(String path) {
-        return new ArmorModelSet(registerModel(path, "helmet"), registerModel(path, "chestplate"), registerModel(path, "leggings"), registerModel(path, "boots"));
+        return new ArmorModelSet<>(registerModel(path, "helmet"), registerModel(path, "chestplate"), registerModel(path, "leggings"), registerModel(path, "boots"));
     }
 
     public static ModelLayerLocation registerModel(String path, String model) {
