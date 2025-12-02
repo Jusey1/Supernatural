@@ -1,7 +1,9 @@
 {
   "replace": false,
   "values": [
+    "supernatural:ebonsteel_helmet",
     "supernatural:gothic_copper_helmet",
+    "supernatural:gothic_ebonsteel_helmet",
     "supernatural:gothic_diamond_helmet",
     "supernatural:gothic_netherite_helmet",
     "supernatural:gothic_iron_helmet",
