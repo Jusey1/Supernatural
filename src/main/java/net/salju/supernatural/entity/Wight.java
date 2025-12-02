@@ -1,0 +1,217 @@
+package net.salju.supernatural.entity;
+
+import net.salju.supernatural.events.SupernaturalManager;
+import net.salju.supernatural.init.SupernaturalItems;
+import net.salju.supernatural.init.SupernaturalSounds;
+import net.salju.supernatural.entity.ai.spells.wight.*;
+import net.salju.supernatural.entity.ai.spells.*;
+import net.salju.supernatural.entity.ai.targets.WightAttackSelector;
+import net.salju.supernatural.entity.ai.WightCrossbowGoal;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.util.Mth;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
+import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
+import net.minecraft.world.entity.ai.goal.*;
+import net.minecraft.world.entity.monster.*;
+import net.minecraft.world.entity.*;
+import net.minecraft.world.item.CrossbowItem;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.ProjectileWeaponItem;
+import net.minecraft.world.level.pathfinder.PathType;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.DifficultyInstance;
+import javax.annotation.Nullable;
+
+public class Wight extends AbstractSpellcasterEntity implements Enemy, CrossbowAttackMob, RangedAttackMob {
+    private static final EntityDataAccessor<Boolean> DATA_CHARGING_STATE = SynchedEntityData.defineId(Wight.class, EntityDataSerializers.BOOLEAN);
+    private static final EntityDataAccessor<Boolean> CAPTAIN = SynchedEntityData.defineId(Wight.class, EntityDataSerializers.BOOLEAN);
+    private ItemStack primary = new ItemStack(Items.IRON_SWORD);
+    private ItemStack secondary = new ItemStack(Items.CROSSBOW);
+
+	public Wight(EntityType<Wight> type, Level world) {
+		super(type, world);
+		this.xpReward = 10;
+        this.setPathfindingMalus(PathType.WATER, -1.0F);
+	}
+
+    @Override
+    public void addAdditionalSaveData(CompoundTag tag) {
+        super.addAdditionalSaveData(tag);
+        tag.putBoolean("Captain", this.isCaptain());
+        if (!this.getPrimary().isEmpty()) {
+            tag.put("Primary", this.getPrimary().save(this.level().registryAccess(), new CompoundTag()));
+        }
+        if (!this.getSecondary().isEmpty()) {
+            tag.put("Secondary", this.getSecondary().save(this.level().registryAccess(), new CompoundTag()));
+        }
+    }
+
+    @Override
+    public void readAdditionalSaveData(CompoundTag tag) {
+        super.readAdditionalSaveData(tag);
+        this.getEntityData().set(CAPTAIN, tag.getBoolean("Captain"));
+        if (tag.contains("Primary")) {
+            this.setPrimary(ItemStack.parseOptional(this.level().registryAccess(), tag.getCompound("Primary")));
+        }
+        if (tag.contains("Secondary")) {
+            this.setSecondary(ItemStack.parseOptional(this.level().registryAccess(), tag.getCompound("Secondary")));
+        }
+    }
+
+    @Override
+    protected void defineSynchedData(SynchedEntityData.Builder builder) {
+        super.defineSynchedData(builder);
+        builder.define(DATA_CHARGING_STATE, false);
+        builder.define(CAPTAIN, false);
+    }
+
+    @Override
+    protected void registerGoals() {
+        super.registerGoals();
+        this.goalSelector.addGoal(0, new AbstractSpellcasterGoal(this));
+        this.goalSelector.addGoal(0, new WightTeleportSpellGoal(this));
+        this.goalSelector.addGoal(1, new BloodSpellGoal(this));
+        this.goalSelector.addGoal(2, new WightCrossbowGoal<>(this, 1.0D, 12.0F));
+        this.goalSelector.addGoal(3, new MeleeAttackGoal(this, 1.2, false));
+        this.goalSelector.addGoal(4, new RandomStrollGoal(this, 1));
+        this.goalSelector.addGoal(4, new LookAtPlayerGoal(this, LivingEntity.class, 8));
+        this.goalSelector.addGoal(4, new RandomLookAroundGoal(this));
+        this.targetSelector.addGoal(0, new HurtByTargetGoal(this, Wight.class).setAlertOthers());
+        this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, LivingEntity.class, 12, false, false, new WightAttackSelector(this)));
+    }
+
+    @Override
+    public void performRangedAttack(LivingEntity target, float f) {
+        if (this.getMainHandItem().getItem() instanceof CrossbowItem) {
+            this.performCrossbowAttack(this, 2.0F);
+        }
+    }
+
+    @Override
+    public void onCrossbowAttackPerformed() {
+        this.noActionTime = 0;
+    }
+
+    @Override
+    public void setChargingCrossbow(boolean check) {
+        this.entityData.set(DATA_CHARGING_STATE, check);
+    }
+
+    public boolean isCharging() {
+        return this.entityData.get(DATA_CHARGING_STATE);
+    }
+
+    @Override
+    public void baseTick() {
+        super.baseTick();
+        if (this.isAlive()) {
+            if (this.level().isClientSide()) {
+                if (this.isCastingSpell()) {
+                    float f = this.yBodyRot * ((float) Math.PI / 180F) + Mth.cos((float) this.tickCount * 0.6662F) * 0.25F;
+                    if (this.isLeftHanded()) {
+                        this.applySpellEffects(this.getX() - (double) Mth.cos(f) * 0.6 * (double) this.getScale(), this.getY() + 1.8 * (double) this.getScale(), this.getZ() - (double) Mth.sin(f) * 0.6 * (double) this.getScale());
+                    } else {
+                        this.applySpellEffects(this.getX() + (double) Mth.cos(f) * 0.6 * (double) this.getScale(), this.getY() + 1.8 * (double) this.getScale(), this.getZ() + (double) Mth.sin(f) * 0.6 * (double) this.getScale());
+                    }
+                }
+                this.level().addParticle(ParticleTypes.SOUL_FIRE_FLAME, this.getRandomX(0.5), this.getRandomY(), this.getRandomZ(0.5), 0.0, 0.0, 0.0);
+            }
+            if (this.getTarget() != null && this.getTarget().isAlive()) {
+                if (this.distanceTo(this.getTarget()) >= 5.76 && this.getMainHandItem() != this.getSecondary()) {
+                    this.setItemSlot(EquipmentSlot.MAINHAND, this.getSecondary());
+                } else if (this.distanceTo(this.getTarget()) <= 5.64 && this.getMainHandItem() != this.getPrimary()) {
+                    this.setItemSlot(EquipmentSlot.MAINHAND, this.getPrimary());
+                }
+            }
+        }
+    }
+
+    @Override
+    public SpawnGroupData finalizeSpawn(ServerLevelAccessor lvl, DifficultyInstance difficulty, MobSpawnType reason, @Nullable SpawnGroupData data) {
+        int i = Mth.nextInt(this.getRandom(), 1, 100);
+        if (i >= 85) {
+            this.getEntityData().set(CAPTAIN, true);
+        }
+        this.getSecondary().enchant(SupernaturalManager.getEnchantment(lvl.getLevel(), "minecraft", "quick_charge"), 2);
+        this.populateDefaultEquipmentSlots(lvl.getRandom(), difficulty);
+        return super.finalizeSpawn(lvl, difficulty, reason, data);
+    }
+
+    @Override
+    protected void populateDefaultEquipmentSlots(RandomSource randy, DifficultyInstance difficulty) {
+        this.setItemSlot(EquipmentSlot.MAINHAND, this.getPrimary());
+        if (this.isCaptain()) {
+            this.setItemSlot(EquipmentSlot.HEAD, SupernaturalManager.dyeHelmet(SupernaturalItems.GOTHIC_EBONSTEEL_HELMET.get()));
+        } else {
+            this.setItemSlot(EquipmentSlot.HEAD, new ItemStack(SupernaturalItems.EBONSTEEL_HELMET.get()));
+        }
+        this.setItemSlot(EquipmentSlot.CHEST, new ItemStack(SupernaturalItems.EBONSTEEL_CHESTPLATE.get()));
+        this.setItemSlot(EquipmentSlot.LEGS, new ItemStack(SupernaturalItems.EBONSTEEL_LEGGINGS.get()));
+        this.setItemSlot(EquipmentSlot.FEET, new ItemStack(SupernaturalItems.EBONSTEEL_BOOTS.get()));
+        this.setDropChance(EquipmentSlot.MAINHAND, 0.0F);
+        this.setDropChance(EquipmentSlot.HEAD, 0.0F);
+        this.setDropChance(EquipmentSlot.CHEST, 0.0F);
+        this.setDropChance(EquipmentSlot.LEGS, 0.0F);
+        this.setDropChance(EquipmentSlot.FEET, 0.0F);
+    }
+
+    @Override
+    public ItemStack getProjectile(ItemStack stack) {
+        if (stack.getItem() instanceof ProjectileWeaponItem weapon) {
+            ItemStack extra = ProjectileWeaponItem.getHeldProjectile(this, weapon.getSupportedHeldProjectiles(stack));
+            return extra.isEmpty() ? new ItemStack(Items.ARROW) : extra;
+        } else {
+            return super.getProjectile(stack);
+        }
+    }
+
+    @Override
+    public SoundEvent getAmbientSound() {
+        return SupernaturalSounds.WIGHT_IDLE.get();
+    }
+
+    @Override
+    public SoundEvent getHurtSound(DamageSource source) {
+        return SupernaturalSounds.WIGHT_HURT.get();
+    }
+
+    @Override
+    public SoundEvent getDeathSound() {
+        return SupernaturalSounds.WIGHT_DEATH.get();
+    }
+
+    @Override
+    public SoundEvent getCastingSoundEvent() {
+        return SoundEvents.EVOKER_CAST_SPELL;
+    }
+
+    public ItemStack getPrimary() {
+        return this.primary;
+    }
+
+    public ItemStack getSecondary() {
+        return this.secondary;
+    }
+
+    public void setPrimary(ItemStack stack) {
+        this.primary = stack;
+    }
+
+    public void setSecondary(ItemStack stack) {
+        this.secondary = stack;
+    }
+
+    public boolean isCaptain() {
+        return this.getEntityData().get(CAPTAIN);
+    }
+}

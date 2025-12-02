@@ -13,6 +13,6 @@ public class MerfolkSwimGoal extends RandomSwimmingGoal {
 
 	@Override
 	public boolean canUse() {
-		return super.canUse() && this.merfolk.isInWater() && !this.merfolk.isAggressive();
+		return super.canUse() && this.merfolk.isInWaterOrBubble() && !this.merfolk.isAggressive();
 	}
 }

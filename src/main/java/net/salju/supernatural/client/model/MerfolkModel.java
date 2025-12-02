@@ -1,17 +1,18 @@
 package net.salju.supernatural.client.model;
 
-import net.salju.supernatural.client.renderer.SupernaturalRenderState;
+import net.salju.supernatural.entity.AbstractMerfolkEntity;
 import net.minecraft.client.model.ArmedModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.client.model.EntityModel;
-import net.minecraft.client.renderer.entity.state.EntityRenderState;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.HumanoidArm;
+import net.minecraft.world.item.TridentItem;
 import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.VertexConsumer;
 
-public class MerfolkModel<T extends SupernaturalRenderState> extends EntityModel<T> implements ArmedModel {
+public class MerfolkModel<T extends AbstractMerfolkEntity> extends EntityModel<T> implements ArmedModel {
     private final ModelPart head;
     private final ModelPart body;
     private final ModelPart rightArm;
@@ -20,7 +21,6 @@ public class MerfolkModel<T extends SupernaturalRenderState> extends EntityModel
     private final ModelPart lowerTail;
 
 	public MerfolkModel(ModelPart root) {
-        super(root);
         this.head = root.getChild("head");
         this.body = root.getChild("body");
         this.rightArm = root.getChild("right_arm");
@@ -42,88 +42,98 @@ public class MerfolkModel<T extends SupernaturalRenderState> extends EntityModel
 	}
 
 	@Override
-	public void setupAnim(T merfolk) {
-        this.head.xRot = merfolk.xRot * ((float) Math.PI / 180F);
-        this.head.yRot = merfolk.yRot * ((float) Math.PI / 180F);
+	public void setupAnim(T merfolk, float limbSwing, float limbSwingAmount, float ageInTicks, float headYaw, float headPitch) {
+        this.head.yRot = headYaw * ((float) Math.PI / 180F);
+        this.head.xRot = headPitch * ((float) Math.PI / 180F);
         this.rightArm.xRot = 0.0F;
         this.leftArm.xRot = 0.0F;
         this.rightArm.yRot = 0.0F;
         this.leftArm.yRot = 0.0F;
         this.rightArm.zRot = 0.0F;
         this.leftArm.zRot = 0.0F;
-        this.rightArm.xRot += Mth.cos(merfolk.ageInTicks * 0.04F) * 0.04F + 0.04F;
-        this.leftArm.xRot -= Mth.cos(merfolk.ageInTicks * 0.04F) * 0.04F + 0.04F;
-        this.rightArm.zRot += Mth.cos(merfolk.ageInTicks * 0.04F) * 0.04F + 0.04F;
-        this.leftArm.zRot -= Mth.cos(merfolk.ageInTicks * 0.04F) * 0.04F + 0.04F;
+        this.rightArm.xRot += Mth.cos(ageInTicks * 0.04F) * 0.04F + 0.04F;
+        this.leftArm.xRot -= Mth.cos(ageInTicks * 0.04F) * 0.04F + 0.04F;
+        this.rightArm.zRot += Mth.cos(ageInTicks * 0.04F) * 0.04F + 0.04F;
+        this.leftArm.zRot -= Mth.cos(ageInTicks * 0.04F) * 0.04F + 0.04F;
         this.upperTail.xRot = 0.1491F;
         this.lowerTail.xRot = 0.1627F;
-        this.upperTail.xRot += Mth.cos(merfolk.ageInTicks * 0.2F) * 0.18F;
-        this.lowerTail.xRot += Mth.cos(merfolk.ageInTicks * 0.2F) * 0.26F;
-        if ((merfolk.onGround && !merfolk.isInWater) || merfolk.isPassenger) {
+        this.upperTail.xRot += Mth.cos(ageInTicks * 0.2F) * 0.18F;
+        this.lowerTail.xRot += Mth.cos(ageInTicks * 0.2F) * 0.26F;
+        if ((merfolk.onGround() && !merfolk.isInWaterOrBubble()) || merfolk.isPassenger()) {
             this.upperTail.xRot = -1.3963F;
             this.lowerTail.xRot = -1.4399F;
         }
-        if (!merfolk.getMainHandItem().isEmpty()) {
-            if (merfolk.isAggressive) {
-                if (merfolk.isLeftHanded) {
+        if (merfolk.getMainHandItem().getItem() instanceof TridentItem) {
+            if (merfolk.isAggressive()) {
+                if (merfolk.isLeftHanded()) {
                     this.rightArm.xRot = 0.3491F;
-                    this.rightArm.xRot += Mth.cos(merfolk.ageInTicks * 0.04F) * 0.04F + 0.04F;
+                    this.rightArm.xRot += Mth.cos(ageInTicks * 0.04F) * 0.04F + 0.04F;
                     this.leftArm.xRot = -2.7925F;
                     this.leftArm.zRot = 0.1745F;
                 } else {
                     this.leftArm.xRot = 0.3491F;
-                    this.leftArm.xRot += Mth.cos(merfolk.ageInTicks * 0.04F) * 0.04F + 0.04F;
+                    this.leftArm.xRot += Mth.cos(ageInTicks * 0.04F) * 0.04F + 0.04F;
                     this.rightArm.xRot = -2.7925F;
                     this.rightArm.zRot = -0.1745F;
                 }
             }
-        } else if (merfolk.isSwimming) {
+        } else if (merfolk.isSwimming()) {
             this.rightArm.xRot = 0.0873F;
             this.leftArm.xRot = 0.0873F;
-            this.rightArm.xRot += Mth.cos(merfolk.ageInTicks * 0.12F) * 0.08F + 0.04F;
-            this.leftArm.xRot -= Mth.cos(merfolk.ageInTicks * 0.12F) * 0.08F + 0.04F;
+            this.rightArm.xRot += Mth.cos(ageInTicks * 0.12F) * 0.08F + 0.04F;
+            this.leftArm.xRot -= Mth.cos(ageInTicks * 0.12F) * 0.08F + 0.04F;
             this.upperTail.xRot = 0.8727F;
             this.lowerTail.xRot = 0.9163F;
-            this.upperTail.xRot += Mth.cos(merfolk.ageInTicks * 0.32F) * 0.18F;
-            this.lowerTail.xRot += Mth.cos(merfolk.ageInTicks * 0.32F) * 0.26F;
+            this.upperTail.xRot += Mth.cos(ageInTicks * 0.32F) * 0.18F;
+            this.lowerTail.xRot += Mth.cos(ageInTicks * 0.32F) * 0.26F;
         }
-        if (merfolk.attackTime > 0.0F) {
-            if (merfolk.isLeftHanded) {
-                float progress = merfolk.attackTime;
+        if (this.attackTime > 0.0F) {
+            if (merfolk.isLeftHanded()) {
+                float progress = this.attackTime;
                 this.body.yRot = Mth.sin(Mth.sqrt(progress) * ((float) Math.PI * 2F)) * 0.2F;
                 this.leftArm.yRot += this.body.yRot;
                 this.rightArm.yRot += this.body.yRot;
                 this.rightArm.xRot += this.body.yRot;
-                progress = 1.0F - merfolk.attackTime;
+                progress = 1.0F - this.attackTime;
                 progress = progress * progress;
                 progress = progress * progress;
                 progress = 1.0F - progress;
                 float f2 = Mth.sin(progress * (float) Math.PI);
-                float f3 = Mth.sin(merfolk.attackTime * (float) Math.PI) * -(this.head.xRot - 0.7F) * 0.75F;
+                float f3 = Mth.sin(this.attackTime * (float) Math.PI) * -(this.head.xRot - 0.7F) * 0.75F;
                 leftArm.xRot = (float) ((double) leftArm.xRot - ((double) f2 * 1.2D + (double) f3));
                 leftArm.yRot += this.body.yRot * 2.0F;
-                leftArm.zRot -= Mth.sin(merfolk.attackTime * (float) Math.PI) * -0.4F;
+                leftArm.zRot -= Mth.sin(this.attackTime * (float) Math.PI) * -0.4F;
             } else {
-                float progress = merfolk.attackTime;
+                float progress = this.attackTime;
                 this.body.yRot = Mth.sin(Mth.sqrt(progress) * ((float) Math.PI * 2F)) * 0.2F;
                 this.rightArm.yRot += this.body.yRot;
                 this.leftArm.yRot += this.body.yRot;
                 this.leftArm.xRot += this.body.yRot;
-                progress = 1.0F - merfolk.attackTime;
+                progress = 1.0F - this.attackTime;
                 progress = progress * progress;
                 progress = progress * progress;
                 progress = 1.0F - progress;
                 float f2 = Mth.sin(progress * (float) Math.PI);
-                float f3 = Mth.sin(merfolk.attackTime * (float) Math.PI) * -(this.head.xRot - 0.7F) * 0.75F;
+                float f3 = Mth.sin(this.attackTime * (float) Math.PI) * -(this.head.xRot - 0.7F) * 0.75F;
                 rightArm.xRot = (float) ((double) rightArm.xRot - ((double) f2 * 1.2D + (double) f3));
                 rightArm.yRot += this.body.yRot * 2.0F;
-                rightArm.zRot += Mth.sin(merfolk.attackTime * (float) Math.PI) * -0.4F;
+                rightArm.zRot += Mth.sin(this.attackTime * (float) Math.PI) * -0.4F;
             }
         }
 	}
 
     @Override
-    public void translateToHand(EntityRenderState state, HumanoidArm arm, PoseStack pose) {
+    public void renderToBuffer(PoseStack pose, VertexConsumer buffer, int l, int o, int c) {
+        this.head.render(pose, buffer, l, o);
+        this.body.render(pose, buffer, l, o);
+        this.rightArm.render(pose, buffer, l, o);
+        this.leftArm.render(pose, buffer, l, o);
+        this.upperTail.render(pose, buffer, l, o);
+        this.lowerTail.render(pose, buffer, l, o);
+    }
+
+    @Override
+    public void translateToHand(HumanoidArm arm, PoseStack pose) {
         switch (arm) {
             case LEFT -> {
                 this.leftArm.translateAndRotate(pose);

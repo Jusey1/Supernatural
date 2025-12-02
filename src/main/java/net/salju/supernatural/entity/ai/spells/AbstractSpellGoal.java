@@ -22,7 +22,7 @@ public abstract class AbstractSpellGoal extends Goal {
 		if (this.user instanceof AbstractVampireEntity target && target.isCastingSpell()) {
 			return false;
 		} else if (this.user instanceof AbstractSpellcasterEntity target && target.isCastingSpell()) {
-        	return false;
+            return false;
         }
         return this.user.tickCount >= this.nextAttackTickCount;
 	}

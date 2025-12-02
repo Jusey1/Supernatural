@@ -26,7 +26,7 @@ public class SupernaturalConfig {
 	public static final ModConfigSpec.BooleanValue VEX;
 	public static final ModConfigSpec.BooleanValue ARMOR;
 	public static final ModConfigSpec.BooleanValue FURIA;
-
+	
 	static {
 		BUILDER.push("Supernatural");
 		DAMAGE = BUILDER.comment("How much extra damage does a vampire do?").defineInRange("Vampiric Damage", 3, 0, Integer.MAX_VALUE);

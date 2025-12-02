@@ -1,8 +1,9 @@
 package net.salju.supernatural.events;
 
+import net.neoforged.neoforge.common.NeoForge;
 import net.salju.supernatural.Supernatural;
 import net.salju.supernatural.init.*;
-import net.salju.supernatural.block.RitualBlockEntity;
+import net.salju.supernatural.block.entity.RitualBlockEntity;
 import net.salju.supernatural.item.component.SoulgemData;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.BlockPos;
@@ -12,31 +13,32 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.util.ProblemReporter;
-import net.minecraft.world.entity.*;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.CandleBlock;
+import net.minecraft.world.level.LightLayer;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.DyeColor;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.component.DyedItemColor;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.decoration.ArmorStand;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.village.poi.PoiManager;
 import net.minecraft.world.entity.ai.village.poi.PoiRecord;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.item.component.DyedItemColor;
-import net.minecraft.world.item.enchantment.Enchantment;
-import net.minecraft.world.item.DyeColor;
-import net.minecraft.world.item.Items;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.CandleBlock;
-import net.minecraft.world.level.storage.TagValueOutput;
-import net.minecraft.world.level.LightLayer;
-import net.minecraft.world.level.Level;
 import javax.annotation.Nullable;
 import java.util.Map;
 import java.util.List;
@@ -60,13 +62,7 @@ public class SupernaturalManager {
 	}
 
 	public static boolean isVampire(LivingEntity target) {
-		if (target instanceof Player player) {
-			if (player.getPersistentData().getCompound(Player.PERSISTED_NBT_TAG).isPresent()) {
-				return player.getPersistentData().getCompound(Player.PERSISTED_NBT_TAG).get().getBooleanOr("isVampire", false);
-			}
-			return false;
-		}
-		return target.getType().is(SupernaturalTags.VAMPIRE);
+		return (target.getPersistentData().getCompound(Player.PERSISTED_NBT_TAG).getBoolean("isVampire") || target.getType().is(SupernaturalTags.VAMPIRE));
 	}
 
 	public static boolean hasVampirism(LivingEntity target) {
@@ -74,15 +70,13 @@ public class SupernaturalManager {
 	}
 
 	public static void setVampire(Player player, boolean check) {
-		if (player.getPersistentData().getCompound(Player.PERSISTED_NBT_TAG).isEmpty()) {
-			player.getPersistentData().put(Player.PERSISTED_NBT_TAG, new CompoundTag());
-		}
-		CompoundTag data = player.getPersistentData().getCompound(Player.PERSISTED_NBT_TAG).get();
 		if (!check) {
+			CompoundTag data = player.getPersistentData().getCompound(Player.PERSISTED_NBT_TAG);
 			data.remove("isVampire");
 			player.getPersistentData().put(Player.PERSISTED_NBT_TAG, data);
 			player.getAttributes().removeAttributeModifiers(createSupernatural());
 		} else {
+			CompoundTag data = player.getPersistentData().getCompound(Player.PERSISTED_NBT_TAG);
 			data.putBoolean("isVampire", true);
 			player.getPersistentData().put(Player.PERSISTED_NBT_TAG, data);
 		}
@@ -109,14 +103,13 @@ public class SupernaturalManager {
 
 	public static ItemStack dyeHelmet(Item item) {
 		ItemStack stack = new ItemStack(item);
-		stack.set(DataComponents.DYED_COLOR, new DyedItemColor(DyeColor.RED.getTextureDiffuseColor()));
+		stack.set(DataComponents.DYED_COLOR, new DyedItemColor(DyeColor.RED.getTextureDiffuseColor(), true));
 		return stack;
 	}
 
 	public static ItemStack setSoul(ItemStack stack, LivingEntity target) {
-		TagValueOutput value = TagValueOutput.createWithoutContext(ProblemReporter.DISCARDING);
-		target.save(value);
-		CompoundTag mobster = value.buildResult();
+		CompoundTag mobster = new CompoundTag();
+		target.save(mobster);
 		mobster.remove("ActiveEffects");
 		mobster.remove("Passengers");
 		mobster.remove("DeathTime");
@@ -175,7 +168,7 @@ public class SupernaturalManager {
 		Stream<PoiRecord> stream = lvl.getPoiManager().getInRange(type -> type.is(SupernaturalBlocks.RITUAL_POI.getKey()), pos, r, PoiManager.Occupancy.ANY);
 		for (PoiRecord record : stream.toList()) {
 			if (lvl.getBlockEntity(record.getPos()) instanceof RitualBlockEntity target) {
-				if (target.getItem(0).is(i) && pos.closerThan(record.getPos(), r) && canRitualsWork(lvl, record.getPos(), target)) {
+				if (target.getItem(0).is(i) && pos.closerThan(record.getPos(), r) && canSoulMagicWork(lvl, record.getPos())) {
 					return target;
 				}
 			}
@@ -183,8 +176,8 @@ public class SupernaturalManager {
 		return null;
 	}
 
-	public static boolean canRitualsWork(ServerLevel lvl, BlockPos pos, RitualBlockEntity target) {
-		return (lvl.dimensionType().natural() && !target.getGreedy() && lvl.getBrightness(LightLayer.BLOCK, pos) < 6 && (lvl.getBrightness(LightLayer.SKY, pos) < 6 || lvl.isDarkOutside()));
+	public static boolean canSoulMagicWork(ServerLevel lvl, BlockPos pos) {
+		return (lvl.dimensionType().natural() && lvl.getBrightness(LightLayer.BLOCK, pos) < 6 && (lvl.getBrightness(LightLayer.SKY, pos) < 6 || lvl.isNight()));
 	}
 
 	public static int getPower(ServerLevel lvl, BlockPos pos) {
@@ -217,6 +210,16 @@ public class SupernaturalManager {
 		return list;
 	}
 
+	public static int getDarkArmor(LivingEntity target) {
+		int i = 0;
+		for (EquipmentSlot slot : EquipmentSlot.values()) {
+			if (!target.getItemBySlot(slot).isEmpty() && target.getItemBySlot(slot).is(SupernaturalTags.DARK_ARMOR)) {
+				i++;
+			}
+		}
+		return i;
+	}
+
 	public static boolean hasArmor(LivingEntity target) {
 		int i = 0;
 		for (EquipmentSlot slot : EquipmentSlot.values()) {
@@ -228,7 +231,7 @@ public class SupernaturalManager {
 	}
 
 	public static <T extends Mob> T convertArmor(ArmorStand target, EntityType<T> type, boolean equip) {
-		T armor = type.create(target.level(), EntitySpawnReason.CONVERSION);
+		T armor = type.create(target.level());
 		armor.copyPosition(target);
 		if (target.hasCustomName()) {
 			armor.setCustomName(target.getCustomName());
@@ -251,5 +254,17 @@ public class SupernaturalManager {
 		target.level().addFreshEntity(armor);
 		target.discard();
 		return armor;
+	}
+
+	public static RitualEvent onRitualEvent(ItemStack stack, ServerLevel lvl, Player player, BlockPos pos, RitualBlockEntity target, int i, int e) {
+		RitualEvent event = new RitualEvent(stack, lvl, player, pos, target, i, e);
+		NeoForge.EVENT_BUS.post(event);
+		return event;
+	}
+
+	public static GothicEvent onGothicEvent(Item target) {
+		GothicEvent event = new GothicEvent(target);
+		NeoForge.EVENT_BUS.post(event);
+		return event;
 	}
 }

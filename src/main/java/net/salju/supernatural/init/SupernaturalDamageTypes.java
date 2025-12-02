@@ -17,11 +17,11 @@ public class SupernaturalDamageTypes {
 	public static final ResourceKey<DamageType> RITUAL = ResourceKey.create(Registries.DAMAGE_TYPE, ResourceLocation.fromNamespaceAndPath(Supernatural.MODID, "ritual"));
 
 	public static DamageSource causeSunDamage(RegistryAccess ra) {
-		return new SupernaturalDamage(ra.lookupOrThrow(Registries.DAMAGE_TYPE).getOrThrow(SUN));
+		return new SupernaturalDamage(ra.registry(Registries.DAMAGE_TYPE).get().getHolderOrThrow(SUN));
 	}
 
 	public static DamageSource causeRitualDamage(RegistryAccess ra, LivingEntity target) {
-		return new SupernaturalDamage(ra.lookupOrThrow(Registries.DAMAGE_TYPE).getOrThrow(RITUAL), target);
+		return new SupernaturalDamage(ra.registry(Registries.DAMAGE_TYPE).get().getHolderOrThrow(RITUAL), target);
 	}
 
 	private static class SupernaturalDamage extends DamageSource {

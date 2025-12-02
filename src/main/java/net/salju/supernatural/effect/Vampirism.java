@@ -2,7 +2,6 @@ package net.salju.supernatural.effect;
 
 import net.salju.supernatural.init.SupernaturalDamageTypes;
 import net.salju.supernatural.events.SupernaturalManager;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.entity.player.Player;
@@ -14,7 +13,7 @@ public class Vampirism extends MobEffect {
 	}
 
 	@Override
-	public boolean applyEffectTick(ServerLevel lvl, LivingEntity target, int str) {
+	public boolean applyEffectTick(LivingEntity target, int str) {
 		if (target instanceof Player player && !SupernaturalManager.isVampire(player)) {
 			player.hurt(SupernaturalDamageTypes.causeRitualDamage(player.level().registryAccess(), player), 0.25F);
 			if (player.isAlive()) {
@@ -22,7 +21,7 @@ public class Vampirism extends MobEffect {
 			}
 			SupernaturalManager.setVampire(player, true);
 		}
-		return super.applyEffectTick(lvl, target, str);
+		return super.applyEffectTick(target, str);
 	}
 
 	@Override

@@ -1,16 +1,15 @@
 package net.salju.supernatural.entity.ai.targets;
 
 import net.salju.supernatural.events.SupernaturalManager;
-import net.minecraft.server.level.ServerLevel;
-import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.npc.AbstractVillager;
 import net.minecraft.world.entity.monster.AbstractIllager;
 import net.minecraft.world.entity.animal.IronGolem;
 import net.minecraft.world.entity.LivingEntity;
 import javax.annotation.Nullable;
+import java.util.function.Predicate;
 
-public class VampireAttackSelector implements TargetingConditions.Selector {
+public class VampireAttackSelector implements Predicate<LivingEntity> {
 	private final AbstractIllager vampire;
 
 	public VampireAttackSelector(AbstractIllager source) {
@@ -18,7 +17,7 @@ public class VampireAttackSelector implements TargetingConditions.Selector {
 	}
 
     @Override
-	public boolean test(@Nullable LivingEntity target, ServerLevel lvl) {
+	public boolean test(@Nullable LivingEntity target) {
 		if (target instanceof Player) {
 			if (this.vampire.getCurrentRaid() != null) {
 				return true;

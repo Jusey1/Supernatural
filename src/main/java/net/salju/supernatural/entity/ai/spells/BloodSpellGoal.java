@@ -2,7 +2,6 @@ package net.salju.supernatural.entity.ai.spells;
 
 import net.salju.supernatural.events.SupernaturalManager;
 import net.salju.supernatural.init.SupernaturalTags;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.tags.EntityTypeTags;
@@ -29,8 +28,8 @@ public class BloodSpellGoal extends AbstractTargetSpellGoal {
 
 	@Override
 	protected void performSpellCasting() {
-        if (this.getTarget() != null && this.user.level() instanceof ServerLevel lvl) {
-            this.getTarget().hurtServer(lvl, this.getTarget().damageSources().magic(), this.getDamage());
+        if (this.getTarget() != null) {
+            this.getTarget().hurt(this.getTarget().damageSources().magic(), this.getDamage());
             this.user.heal(this.getDamage() * 1.5F);
         }
 	}

@@ -54,10 +54,10 @@ public abstract class AbstractTeleportSpellGoal extends AbstractSpellGoal {
 
     private void teleport(double x, double y, double z, int i) {
         BlockPos.MutableBlockPos pos = new BlockPos.MutableBlockPos(x, y, z);
-        while(pos.getY() > this.user.level().getMinY() && this.user.level().isEmptyBlock(pos.below())) {
+        while(pos.getY() > this.user.level().getMinBuildHeight() && this.user.level().isEmptyBlock(pos.below())) {
             pos.move(Direction.DOWN);
         }
-        while(pos.getY() > this.user.level().getMinY() && this.user.level().getBlockState(pos).isSolid()) {
+        while(pos.getY() > this.user.level().getMinBuildHeight() && this.user.level().getBlockState(pos).isSolid()) {
             pos.move(Direction.UP);
         }
         if (this.canTeleport(pos)) {

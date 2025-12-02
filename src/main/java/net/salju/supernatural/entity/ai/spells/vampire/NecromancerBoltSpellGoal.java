@@ -24,16 +24,16 @@ public class NecromancerBoltSpellGoal extends AbstractTargetSpellGoal {
 	protected void performSpellCasting() {
         if (this.getTarget() != null) {
             LivingEntity target = this.getTarget();
-            double x = target.getX();
-            double y = target.getY();
-            double z = target.getZ();
-            BlockPos pos = BlockPos.containing((x + 0.5), y, (z + 0.5));
+            double x = target.blockPosition().getBottomCenter().x();
+            double y = target.blockPosition().getBottomCenter().y();
+            double z = target.blockPosition().getBottomCenter().z();
+            BlockPos pos = BlockPos.containing(x, y, z);
             if (target.level() instanceof ServerLevel lvl) {
                 Supernatural.queueServerWork(25, () -> {
-                    LightningBolt bolt = EntityType.LIGHTNING_BOLT.create(lvl, EntitySpawnReason.MOB_SUMMONED);
+                    LightningBolt bolt = EntityType.LIGHTNING_BOLT.create(lvl);
                     if (bolt != null) {
-                        bolt.snapTo(pos.getX(), pos.getY(), pos.getZ());
-                        if (target.getX() == x && target.getY() == y && target.getZ() == z) {
+                        bolt.moveTo(x, y, z);
+                        if (target.blockPosition().getBottomCenter().x() == x && target.blockPosition().getBottomCenter().y() == y && target.blockPosition().getBottomCenter().z() == z) {
                             bolt.setDamage(12.0F);
                             lvl.addFreshEntity(bolt);
                         } else {
@@ -42,18 +42,18 @@ public class NecromancerBoltSpellGoal extends AbstractTargetSpellGoal {
                             for (int bob = 0; bob < 2; bob++) {
                                 if (Math.random() <= 0.99) {
                                     if (Math.random() <= 0.5) {
-                                        Skeleton skele = EntityType.SKELETON.spawn(lvl, pos, EntitySpawnReason.MOB_SUMMONED);
+                                        Skeleton skele = EntityType.SKELETON.spawn(lvl, pos, MobSpawnType.MOB_SUMMONED);
                                         if (skele != null) {
                                             skele.targetSelector.addGoal(1, new MinionTargetGoal(skele, this.user));
                                         }
                                     } else {
-                                        Zombie billy = EntityType.ZOMBIE.spawn(lvl, pos, EntitySpawnReason.MOB_SUMMONED);
+                                        Zombie billy = EntityType.ZOMBIE.spawn(lvl, pos, MobSpawnType.MOB_SUMMONED);
                                         if (billy != null) {
                                             billy.targetSelector.addGoal(1, new MinionTargetGoal(billy, this.user));
                                         }
                                     }
                                 } else {
-                                    Vampire vampire = SupernaturalMobs.VAMPIRE.get().spawn(lvl, pos, EntitySpawnReason.MOB_SUMMONED);
+                                    Vampire vampire = SupernaturalMobs.VAMPIRE.get().spawn(lvl, pos, MobSpawnType.MOB_SUMMONED);
                                     if (vampire != null) {
                                         vampire.setCustomName(Component.literal("Bob"));
                                     }

@@ -10,15 +10,15 @@ import net.salju.supernatural.entity.ai.spells.*;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.tags.EntityTypeTags;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.raid.Raider;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.monster.SpellcasterIllager;
 import net.minecraft.world.entity.monster.AbstractIllager;
 import net.minecraft.world.entity.ai.util.GoalUtils;
+import net.minecraft.world.entity.ai.navigation.GroundPathNavigation;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.ai.goal.RestrictSunGoal;
@@ -26,6 +26,8 @@ import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
 import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
 import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
 import net.minecraft.world.entity.ai.goal.FloatGoal;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
@@ -38,7 +40,7 @@ public class AbstractVampireEntity extends SpellcasterIllager {
 	public AbstractVampireEntity(EntityType<? extends AbstractVampireEntity> type, Level world) {
 		super(type, world);
 		this.setPersistenceRequired();
-		this.getNavigation().setCanOpenDoors(true);
+		((GroundPathNavigation) this.getNavigation()).setCanOpenDoors(true);
 	}
 
 	@Override
@@ -51,39 +53,41 @@ public class AbstractVampireEntity extends SpellcasterIllager {
 		this.goalSelector.addGoal(3, new AbstractIllager.RaiderOpenDoorGoal(this));
 		this.goalSelector.addGoal(3, new Raider.HoldGroundAttackGoal(this, 10.0F));
 		this.goalSelector.addGoal(4, new MeleeAttackGoal(this, 1.2, false));
+        this.goalSelector.addGoal(6, new LookAtPlayerGoal(this, LivingEntity.class, 8));
+        this.goalSelector.addGoal(6, new RandomLookAroundGoal(this));
 		this.targetSelector.addGoal(1, new HurtByTargetGoal(this, Raider.class).setAlertOthers());
 		this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, LivingEntity.class, 12, true, false, new VampireAttackSelector(this)));
-		this.goalSelector.addGoal(6, new LookAtPlayerGoal(this, LivingEntity.class, 8));
-		this.goalSelector.addGoal(6, new RandomLookAroundGoal(this));
 	}
 
 	@Override
-	public SpawnGroupData finalizeSpawn(ServerLevelAccessor world, DifficultyInstance difficulty, EntitySpawnReason reason, @Nullable SpawnGroupData data) {
-		this.setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(Items.IRON_SWORD));
+	public SpawnGroupData finalizeSpawn(ServerLevelAccessor world, DifficultyInstance difficulty, MobSpawnType reason, @Nullable SpawnGroupData data) {
+        this.setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(Items.IRON_SWORD));
 		this.setDropChance(EquipmentSlot.MAINHAND, 0.0F);
 		return super.finalizeSpawn(world, difficulty, reason, data);
 	}
 
 	@Override
-	public boolean doHurtTarget(ServerLevel lvl, Entity entity) {
+	public boolean doHurtTarget(Entity entity) {
 		if (entity instanceof Player player && !SupernaturalManager.isVampire(player)) {
 			if (Math.random() <= SupernaturalConfig.ATTACKED.get()) {
 				player.addEffect(new MobEffectInstance(SupernaturalEffects.VAMPIRISM, 24000, 0));
 			}
 		}
-		return super.doHurtTarget(lvl, entity);
+		return super.doHurtTarget(entity);
 	}
 
-	protected void customServerAiStep(ServerLevel lvl) {
+    @Override
+	protected void customServerAiStep() {
 		if (!this.isNoAi() && GoalUtils.hasGroundPathNavigation(this)) {
-			this.getNavigation().setCanOpenDoors(lvl.isRaided(this.blockPosition()));
+			((GroundPathNavigation) this.getNavigation()).setCanOpenDoors(((ServerLevel) this.level()).isRaided(this.blockPosition()));
 		}
 		if (this.isCastingSpell()) {
 			this.navigation.stop();
 		}
-		super.customServerAiStep(lvl);
+		super.customServerAiStep();
 	}
 
+    @Override
 	public void aiStep() {
 		if (this.isAlive()) {
 			if (!SupernaturalConfig.SUN.get() && this.isSunBurnTick() && !this.hasEffect(MobEffects.FIRE_RESISTANCE)) {
@@ -119,6 +123,14 @@ public class AbstractVampireEntity extends SpellcasterIllager {
 		} else {
 			return this.isCelebrating() ? AbstractIllager.IllagerArmPose.CELEBRATING : AbstractIllager.IllagerArmPose.NEUTRAL;
 		}
+	}
+
+	@Override
+	public boolean isAlliedTo(Entity target) {
+		if (target.getType().is(EntityTypeTags.ILLAGER_FRIENDS)) {
+			return this.getTeam() == null && target.getTeam() == null;
+		}
+		return super.isAlliedTo(target);
 	}
 
 	@Override

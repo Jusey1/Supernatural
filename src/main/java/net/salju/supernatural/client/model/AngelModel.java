@@ -1,6 +1,6 @@
 package net.salju.supernatural.client.model;
 
-import net.salju.supernatural.client.renderer.SupernaturalRenderState;
+import net.salju.supernatural.entity.Angel;
 import net.minecraft.client.model.geom.builders.PartDefinition;
 import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
@@ -9,18 +9,26 @@ import net.minecraft.client.model.geom.builders.CubeDeformation;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.EntityModel;
+import com.mojang.blaze3d.vertex.VertexConsumer;
+import com.mojang.blaze3d.vertex.PoseStack;
 
-public class AngelModel<T extends SupernaturalRenderState> extends EntityModel<T> {
-	private final ModelPart body = root.getChild("body");
-	private final ModelPart head = this.body.getChild("head");
-	private final ModelPart hat = this.head.getChild("hat");
-	private final ModelPart right_arm = this.body.getChild("right_arm");
-	private final ModelPart left_arm = this.body.getChild("left_arm");
-	private final ModelPart right_wing = this.body.getChild("right_wing");
-	private final ModelPart left_wing = this.body.getChild("left_wing");
+public class AngelModel<T extends Angel> extends EntityModel<T> {
+	private final ModelPart head;
+	private final ModelPart hat;
+	private final ModelPart body;
+	private final ModelPart right_arm;
+	private final ModelPart left_arm;
+	private final ModelPart right_wing;
+	private final ModelPart left_wing;
 
 	public AngelModel(ModelPart root) {
-		super(root);
+		this.body = root.getChild("body");
+		this.head = this.body.getChild("head");
+		this.hat = this.head.getChild("hat");
+		this.right_arm = this.body.getChild("right_arm");
+		this.left_arm = this.body.getChild("left_arm");
+		this.right_wing = this.body.getChild("right_wing");
+		this.left_wing = this.body.getChild("left_wing");
 	}
 
 	public static LayerDefinition createBodyLayer() {
@@ -37,7 +45,7 @@ public class AngelModel<T extends SupernaturalRenderState> extends EntityModel<T
 	}
 
 	@Override
-	public void setupAnim(T angel) {
+	public void setupAnim(T angel, float limbSwing, float limbSwingAmount, float ageInTicks, float headYaw, float headPitch) {
 		this.head.xRot = 0.0F;
 		this.head.yRot = 0.0F;
 		this.head.zRot = 0.0F;
@@ -45,7 +53,7 @@ public class AngelModel<T extends SupernaturalRenderState> extends EntityModel<T
 		this.hat.yRot = 0.0F;
 		this.hat.zRot = 0.0F;
 		this.body.xRot = 0.0F;
-		this.body.yRot = angel.yRot * ((float) Math.PI / 180F);
+		this.body.yRot = headYaw * ((float) Math.PI / 180F);
 		this.body.zRot = 0.0F;
 		this.right_wing.xRot = 0.0F;
 		this.right_wing.yRot = 2.7053F;
@@ -59,36 +67,36 @@ public class AngelModel<T extends SupernaturalRenderState> extends EntityModel<T
 		this.left_arm.xRot = 0.0F;
 		this.left_arm.yRot = 0.0F;
 		this.left_arm.zRot = 0.0F;
-		if (angel.pose == 0) {
+		if (angel.getAngelPose() == 0) {
 			this.right_arm.xRot = -1.5708F;
 			this.left_arm.xRot = -1.5708F;
-		} else if (angel.pose == 2) {
+		} else if (angel.getAngelPose() == 2) {
 			this.right_arm.xRot = -0.7854F;
 			this.right_arm.yRot = -0.5236F;
 			this.left_arm.xRot = -0.7854F;
 			this.left_arm.yRot = 0.5236F;
-		} else if (angel.pose == 3) {
+		} else if (angel.getAngelPose() == 3) {
 			this.head.xRot = 0.2618F;
 			this.hat.xRot = 0.2618F;
 			this.right_arm.xRot = -1.9199F;
 			this.right_arm.yRot = -0.4363F;
 			this.left_arm.xRot = -1.9199F;
 			this.left_arm.yRot = 0.4363F;
-		} else if (angel.pose == 4) {
+		} else if (angel.getAngelPose() == 4) {
 			this.right_arm.xRot = -1.5708F;
-		} else if (angel.pose == 5) {
+		} else if (angel.getAngelPose() == 5) {
 			this.head.xRot = -0.2618F;
 			this.hat.xRot = -0.2618F;
 			this.right_arm.xRot = -3.0543F;
 			this.right_arm.zRot = -0.0873F;
 			this.left_arm.xRot = -3.0543F;
 			this.left_arm.zRot = 0.0873F;
-		} else if (angel.pose == 6) {
+		} else if (angel.getAngelPose() == 6) {
 			this.right_arm.xRot = -0.0436F;
 			this.right_arm.zRot = 1.5708F;
 			this.left_arm.xRot = -0.0436F;
 			this.left_arm.zRot = -1.5708F;
-		} else if (angel.pose == 7) {
+		} else if (angel.getAngelPose() == 7) {
 			this.head.xRot = 0.2618F;
 			this.head.yRot = 0.7854F;
 			this.hat.xRot = 0.2618F;
@@ -98,5 +106,10 @@ public class AngelModel<T extends SupernaturalRenderState> extends EntityModel<T
 			this.left_arm.xRot = -1.9199F;
 			this.left_arm.yRot = 0.8727F;
 		}
+	}
+
+	@Override
+	public void renderToBuffer(PoseStack pose, VertexConsumer buffer, int l, int o, int c) {
+		this.body.render(pose, buffer, l, o);
 	}
 }

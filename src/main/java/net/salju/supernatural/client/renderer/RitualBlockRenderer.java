@@ -1,55 +1,42 @@
 package net.salju.supernatural.client.renderer;
 
-import net.minecraft.client.renderer.entity.state.HoldingEntityRenderState;
-import net.salju.supernatural.block.RitualBlockEntity;
-import net.minecraft.client.renderer.texture.OverlayTexture;
-import net.minecraft.client.renderer.blockentity.state.BlockEntityRenderState;
-import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
-import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
-import net.minecraft.client.renderer.feature.ModelFeatureRenderer;
-import net.minecraft.client.renderer.item.ItemModelResolver;
-import net.minecraft.client.renderer.state.CameraRenderState;
-import net.minecraft.client.renderer.SubmitNodeCollector;
+import org.joml.Quaternionf;
+import net.salju.supernatural.block.entity.RitualBlockEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ItemDisplayContext;
-import net.minecraft.world.phys.Vec3;
+import net.minecraft.client.resources.model.BakedModel;
+import net.minecraft.client.renderer.texture.OverlayTexture;
+import net.minecraft.client.renderer.entity.ItemRenderer;
+import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
+import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
+import net.minecraft.client.renderer.MultiBufferSource;
 import com.mojang.math.Axis;
 import com.mojang.blaze3d.vertex.PoseStack;
-import org.joml.Quaternionf;
 
-public class RitualBlockRenderer implements BlockEntityRenderer<RitualBlockEntity, RitualBlockState> {
-	private final ItemModelResolver item;
+public class RitualBlockRenderer implements BlockEntityRenderer<RitualBlockEntity> {
+	private final ItemRenderer item;
 
 	public RitualBlockRenderer(BlockEntityRendererProvider.Context context) {
-		this.item = context.itemModelResolver();
+		this.item = context.getItemRenderer();
 	}
 
-    @Override
-    public RitualBlockState createRenderState() {
-        return new RitualBlockState();
-    }
-
-    @Override
-    public void extractRenderState(RitualBlockEntity target, RitualBlockState state, float f1, Vec3 v, ModelFeatureRenderer.CrumblingOverlay progress) {
-        BlockEntityRenderState.extractBase(target, state, progress);
-        state.main = f1;
-        state.item = target.getItem(0);
-        state.time = target.getLevel().getGameTime();
-        this.item.updateForTopItem(state.itemState, state.item, ItemDisplayContext.GROUND, target.getLevel(), null, 0);
-    }
-
 	@Override
-	public void submit(RitualBlockState state, PoseStack pose, SubmitNodeCollector buffer, CameraRenderState c) {
-		if (!state.item.isEmpty()) {
-			this.renderItem(state, pose, buffer);
+	public void render(RitualBlockEntity target, float main, PoseStack pose, MultiBufferSource buffer, int i, int e) {
+		ItemStack stack = target.getItem(0);
+		if (!stack.isEmpty()) {
+			this.renderItem(target, stack, main, pose, buffer, i);
 		}
 	}
 
-	protected void renderItem(RitualBlockState state, PoseStack pose, SubmitNodeCollector buffer) {
+	protected void renderItem(RitualBlockEntity target, ItemStack stack, float main, PoseStack pose, MultiBufferSource buffer, int light) {
 		pose.pushPose();
 		pose.translate(0.5, 0.75, 0.5);
-		pose.mulPose(Axis.YP.rotation((float) (((Math.floorMod(state.time, (long) ((int) (2 * 360f))) + state.main) / (float) ((int) (2 * 360f))) * Math.PI * 10)));
-        state.itemState.submit(pose, buffer, state.lightCoords, OverlayTexture.NO_OVERLAY, state.outlineColor);
+		BakedModel model = this.item.getModel(stack, null, null, light);
+		int i = (int) (2 * 360f);
+		float f1 = (Math.floorMod(target.getLevel().getGameTime(), (long) i) + main) / (float) i;
+		Quaternionf rot = Axis.YP.rotation((float) (f1 * Math.PI * 10));
+		pose.mulPose(rot);
+		this.item.render(stack, ItemDisplayContext.GROUND, false, pose, buffer, light, OverlayTexture.NO_OVERLAY, model);
 		pose.popPose();
 	}
 }

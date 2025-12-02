@@ -6,13 +6,13 @@ import net.salju.supernatural.init.SupernaturalItems;
 import net.salju.supernatural.init.SupernaturalEffects;
 import net.salju.supernatural.init.SupernaturalDamageTypes;
 import net.salju.supernatural.init.SupernaturalConfig;
-import net.salju.supernatural.block.RitualBlockEntity;
+import net.salju.supernatural.block.entity.RitualBlockEntity;
 import net.salju.supernatural.compat.Thirst;
 import net.salju.supernatural.entity.Spooky;
 import net.neoforged.fml.common.EventBusSubscriber;
-import net.neoforged.fml.ModList;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.bus.api.EventPriority;
+import net.neoforged.fml.ModList;
 import net.neoforged.neoforge.event.entity.living.*;
 import net.neoforged.neoforge.event.entity.EntityJoinLevelEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
@@ -25,14 +25,16 @@ import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.entity.monster.SpellcasterIllager;
 import net.minecraft.world.entity.monster.Vex;
 import net.minecraft.world.entity.monster.Vindicator;
+import net.minecraft.world.entity.raid.Raider;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.util.Mth;
@@ -47,13 +49,13 @@ public class SupernaturalEvents {
 			player.getFoodData().setFoodLevel(20);
 			if (player.level() instanceof ServerLevel lvl) {
 				SupernaturalManager.addVampireEffects(player);
-				boolean check = (player.isInWaterOrRain() || player.isInPowderSnow || player.wasInPowderSnow || player.isCreative() || SupernaturalConfig.SUN.get() || player.hasEffect(MobEffects.FIRE_RESISTANCE));
-				if (lvl.isBrightOutside() && lvl.canSeeSky(BlockPos.containing(player.getX(), player.getEyeY(), player.getZ())) && !check) {
+				boolean check = (player.isInWaterRainOrBubble() || player.isInPowderSnow || player.wasInPowderSnow || player.isCreative() || SupernaturalConfig.SUN.get() || player.hasEffect(MobEffects.FIRE_RESISTANCE));
+				if (lvl.isDay() && lvl.canSeeSky(BlockPos.containing(player.getX(), player.getEyeY(), player.getZ())) && !check) {
 					ItemStack helmet = player.getItemBySlot(EquipmentSlot.HEAD);
 					if (helmet.isEmpty()) {
 						if (player.getRemainingFireTicks() <= 20) {
 							player.setRemainingFireTicks(120);
-								player.hurt(SupernaturalDamageTypes.causeSunDamage(player.level().registryAccess()), 3);
+							player.hurt(SupernaturalDamageTypes.causeSunDamage(player.level().registryAccess()), 3);
 						}
 					} else if (Mth.nextInt(player.getRandom(), 0, 25) <= 2) {
 						helmet.hurtAndBreak(1, player, EquipmentSlot.HEAD);
@@ -105,8 +107,9 @@ public class SupernaturalEvents {
 
 	@SubscribeEvent
 	public static void onUseItemFinish(LivingEntityUseItemEvent.Finish event) {
+		ItemStack stack = event.getItem();
 		if (event.getEntity() instanceof Player player && SupernaturalManager.isVampire(player)) {
-			if (event.getItem().is(Items.ENCHANTED_GOLDEN_APPLE) && player.getOffhandItem().is(Items.TOTEM_OF_UNDYING)) {
+			if (stack.is(Items.ENCHANTED_GOLDEN_APPLE) && player.getOffhandItem().is(Items.TOTEM_OF_UNDYING)) {
 				player.level().broadcastEntityEvent(player, (byte) 35);
 				SupernaturalManager.setVampire(player, false);
 				if (!player.isCreative()) {
@@ -118,7 +121,7 @@ public class SupernaturalEvents {
 
 	@SubscribeEvent
 	public static void onEffectAdded(MobEffectEvent.Applicable event) {
-		if (SupernaturalManager.isVampire(event.getEntity())) {
+		if (SupernaturalManager.isVampire(event.getEntity()) && event.getEffectInstance() != null) {
 			if (event.getEffectInstance().is(MobEffects.POISON) || event.getEffectInstance().is(MobEffects.HUNGER)) {
 				event.setResult(MobEffectEvent.Applicable.Result.DO_NOT_APPLY);
 			}
@@ -129,7 +132,7 @@ public class SupernaturalEvents {
 	public static void onEffectRemoval(MobEffectEvent.Remove event) {
 		if (event.getEffectInstance() != null) {
 			if (event.getEffectInstance().is(SupernaturalEffects.POSSESSION) && event.getEntity().level() instanceof ServerLevel lvl) {
-				SupernaturalMobs.SPOOKY.get().spawn(lvl, event.getEntity().blockPosition(), EntitySpawnReason.MOB_SUMMONED);
+				SupernaturalMobs.SPOOKY.get().spawn(lvl, event.getEntity().blockPosition(), MobSpawnType.MOB_SUMMONED);
 			}
 		}
 	}
@@ -144,7 +147,7 @@ public class SupernaturalEvents {
 				if (weapon.is(Items.WOODEN_SWORD) && target.getHealth() <= target.getMaxHealth() * SupernaturalConfig.WOOD.get().floatValue()) {
 					event.setAmount(Float.MAX_VALUE);
 					if (target.level() instanceof ServerLevel lvl) {
-						EntityType.BAT.spawn(lvl, target.blockPosition(), EntitySpawnReason.MOB_SUMMONED);
+						EntityType.BAT.spawn(lvl, target.blockPosition(), MobSpawnType.MOB_SUMMONED);
 					}
 				} else if (i > 0) {
 					if (target instanceof Player) {
@@ -170,10 +173,16 @@ public class SupernaturalEvents {
 				}
 			}
 		}
-        if (target instanceof SpellcasterIllager && target.level() instanceof ServerLevel lvl) {
+        int i = SupernaturalManager.getDarkArmor(target);
+        if (i >= 1) {
+            if (event.getSource().is(SupernaturalTags.MAGIC)) {
+                event.setAmount(event.getAmount() * (1.0F - (0.1F * i)));
+            }
+        }
+        if (target instanceof SpellcasterIllager) {
             for (Vex ghost : target.level().getEntitiesOfClass(Vex.class, target.getBoundingBox().inflate(32.76))) {
                 if (ghost.getOwner() != null && ghost.getOwner() == target) {
-                    ghost.hurtServer(lvl, event.getSource(), event.getAmount() * 0.25F);
+                    ghost.hurt(event.getSource(), event.getAmount() * 0.25F);
                     event.setAmount(event.getAmount() * 0.75F);
                     break;
                 }
@@ -186,7 +195,7 @@ public class SupernaturalEvents {
 		LivingEntity target = event.getEntity();
 		if (target.level() instanceof ServerLevel lvl) {
 			if (target.hasEffect(SupernaturalEffects.POSSESSION)) {
-				Spooky ghost = SupernaturalMobs.SPOOKY.get().spawn(lvl, target.blockPosition(), EntitySpawnReason.MOB_SUMMONED);
+				Spooky ghost = SupernaturalMobs.SPOOKY.get().spawn(lvl, target.blockPosition(), MobSpawnType.MOB_SUMMONED);
 				if (ghost != null) {
 					ghost.setPersistenceRequired();
 				}
@@ -206,8 +215,8 @@ public class SupernaturalEvents {
 	public static void onDrops(LivingDropsEvent event) {
 		LivingEntity target = event.getEntity();
 		if (target.level() instanceof ServerLevel) {
-			if (target.getPersistentData().getBoolean("SoulTrapped").isPresent()) {
-				event.setCanceled(target.getPersistentData().getBoolean("SoulTrapped").get());
+			if (target.getPersistentData().getBoolean("SoulTrapped")) {
+				event.setCanceled(true);
 			}
 		}
 	}
@@ -216,8 +225,8 @@ public class SupernaturalEvents {
 	public static void onXpDrops(LivingExperienceDropEvent event) {
 		LivingEntity target = event.getEntity();
 		if (target.level() instanceof ServerLevel) {
-			if (target.getPersistentData().getBoolean("SoulTrapped").isPresent()) {
-				event.setCanceled(target.getPersistentData().getBoolean("SoulTrapped").get());
+			if (target.getPersistentData().getBoolean("SoulTrapped")) {
+				event.setCanceled(true);
 			}
 		}
 	}
@@ -225,11 +234,13 @@ public class SupernaturalEvents {
 	@SubscribeEvent
 	public static void onEntitySpawned(EntityJoinLevelEvent event) {
 		if (!event.loadedFromDisk()) {
-			if (event.getLevel() instanceof ServerLevel lvl && event.getEntity() instanceof Vindicator target) {
-				if (SupernaturalConfig.RAIDERS.get() && lvl.isMoonVisible() && target.getCurrentRaid() != null && !(target.isPassenger() || target.isPatrolLeader())) {
-					if (Math.random() <= SupernaturalConfig.VAMPIRER.get()) {
-						SupernaturalMobs.VAMPIRE.get().spawn(lvl, target.blockPosition(), EntitySpawnReason.EVENT);
-						target.getCurrentRaid().removeFromRaid(lvl, target, true);
+			Entity target = event.getEntity();
+			BlockPos pos = target.blockPosition();
+			if (event.getLevel() instanceof ServerLevel lvl && target instanceof Raider raidyr) {
+				if (SupernaturalConfig.RAIDERS.get() && lvl.isNight() && raidyr.getCurrentRaid() != null && !(raidyr.isPassenger() || raidyr.isPatrolLeader())) {
+					if (raidyr instanceof Vindicator && Math.random() <= SupernaturalConfig.VAMPIRER.get()) {
+						SupernaturalMobs.VAMPIRE.get().spawn(lvl, pos, MobSpawnType.EVENT);
+						raidyr.getCurrentRaid().removeFromRaid(raidyr, true);
 						event.setCanceled(true);
 					}
 				}

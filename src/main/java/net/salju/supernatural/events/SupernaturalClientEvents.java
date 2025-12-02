@@ -1,9 +1,11 @@
 package net.salju.supernatural.events;
 
+import net.minecraft.resources.ResourceLocation;
 import net.salju.supernatural.init.SupernaturalData;
 import net.salju.supernatural.init.SupernaturalEffects;
 import net.salju.supernatural.init.SupernaturalItems;
 import net.salju.supernatural.item.component.RitualBookData;
+import net.salju.supernatural.client.ScrollWheelHandler;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -11,7 +13,6 @@ import net.neoforged.neoforge.client.event.ScreenEvent;
 import net.neoforged.neoforge.client.event.RenderGuiLayerEvent;
 import net.neoforged.neoforge.client.gui.VanillaGuiLayers;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.ScrollWheelHandler;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;

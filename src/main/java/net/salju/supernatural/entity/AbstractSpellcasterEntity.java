@@ -2,18 +2,15 @@ package net.salju.supernatural.entity;
 
 import net.minecraft.core.particles.ColorParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.PathfinderMob;
-import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.storage.ValueInput;
-import net.minecraft.world.level.storage.ValueOutput;
 
 public abstract class AbstractSpellcasterEntity extends PathfinderMob {
     public static final EntityDataAccessor<Integer> SPELL_TICK = SynchedEntityData.defineId(AbstractSpellcasterEntity.class, EntityDataSerializers.INT);
@@ -24,17 +21,15 @@ public abstract class AbstractSpellcasterEntity extends PathfinderMob {
 	}
 
     @Override
-    public void addAdditionalSaveData(ValueOutput tag) {
+    public void addAdditionalSaveData(CompoundTag tag) {
         super.addAdditionalSaveData(tag);
         tag.putInt("SpellTick", this.getSpellTick());
     }
 
     @Override
-    public void readAdditionalSaveData(ValueInput tag) {
+    public void readAdditionalSaveData(CompoundTag tag) {
         super.readAdditionalSaveData(tag);
-        if (tag.getInt("SpellTick").isPresent()) {
-            this.setSpellTick(tag.getInt("SpellTick").get());
-        }
+        this.setSpellTick(tag.getInt("SpellTick"));
     }
 
     @Override
@@ -61,13 +56,18 @@ public abstract class AbstractSpellcasterEntity extends PathfinderMob {
     }
 
     @Override
+    public boolean shouldDespawnInPeaceful() {
+        return true;
+    }
+
+    @Override
     public boolean shouldDropExperience() {
         return true;
     }
 
     @Override
-    protected boolean shouldDropLoot(ServerLevel lvl) {
-        return lvl.getGameRules().getBoolean(GameRules.RULE_DOMOBLOOT);
+    protected boolean shouldDropLoot() {
+        return true;
     }
 
     public SoundEvent getCastingSoundEvent() {

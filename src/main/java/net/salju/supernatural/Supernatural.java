@@ -24,6 +24,7 @@ public class Supernatural {
 
 	public Supernatural(ModContainer mod, IEventBus bus) {
 		NeoForge.EVENT_BUS.register(this);
+        SupernaturalArmors.REGISTRY.register(bus);
 		SupernaturalData.REGISTRY.register(bus);
 		SupernaturalSounds.REGISTRY.register(bus);
 		SupernaturalBlocks.BE.register(bus);
@@ -34,7 +35,7 @@ public class Supernatural {
 		SupernaturalMobs.REGISTRY.register(bus);
 		SupernaturalEffects.REGISTRY.register(bus);
 		mod.registerConfig(ModConfig.Type.COMMON, SupernaturalConfig.CONFIG, "supernatural-common.toml");
-		if (FMLEnvironment.getDist().isClient()) {
+		if (FMLEnvironment.dist.isClient()) {
 			if (ModList.get().isLoaded("appleskin")) {
 				NeoForge.EVENT_BUS.register(new Appleskin());
 			}

@@ -1,14 +1,12 @@
 package net.salju.supernatural.entity;
 
-import net.minecraft.tags.ItemTags;
-import net.minecraft.world.level.storage.ValueInput;
-import net.minecraft.world.level.storage.ValueOutput;
 import net.salju.supernatural.init.SupernaturalItems;
 import net.salju.supernatural.init.SupernaturalConfig;
 import net.salju.supernatural.events.SupernaturalManager;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.particles.BlockParticleOption;
 import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -21,6 +19,7 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.item.PickaxeItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.monster.Vex;
@@ -46,19 +45,17 @@ public class Angel extends Mob {
 	}
 
 	@Override
-	public void addAdditionalSaveData(ValueOutput tag) {
+	public void addAdditionalSaveData(CompoundTag tag) {
 		super.addAdditionalSaveData(tag);
 		tag.putInt("Angel", this.getAngelPose());
 		tag.putBoolean("Cursed", this.isCursed());
 	}
 
 	@Override
-	public void readAdditionalSaveData(ValueInput tag) {
+	public void readAdditionalSaveData(CompoundTag tag) {
 		super.readAdditionalSaveData(tag);
-		if (tag.getInt("Angel").isPresent()) {
-			this.getEntityData().set(POSE, tag.getInt("Angel").get());
-		}
-		this.getEntityData().set(CURSED, tag.getBooleanOr("Cursed", false));
+		this.getEntityData().set(POSE, tag.getInt("Angel"));
+		this.getEntityData().set(CURSED, tag.getBoolean("Cursed"));
 	}
 
 	@Override
@@ -70,7 +67,7 @@ public class Angel extends Mob {
 
 	@Override
 	public InteractionResult interactAt(Player player, Vec3 vec, InteractionHand hand) {
-		if (player.getItemInHand(hand).is(ItemTags.PICKAXES) && !this.isCursed()) {
+		if (player.getItemInHand(hand).getItem() instanceof PickaxeItem && !this.isCursed()) {
 			if (player.isCrouching()) {
 				if (this.getAngelPose() >= 7) {
 					this.getEntityData().set(POSE, 1);
@@ -92,9 +89,9 @@ public class Angel extends Mob {
 	}
 
 	@Override
-	public boolean hurtServer(ServerLevel lvl, DamageSource source, float amount) {
-		if ((source.getEntity() instanceof LivingEntity target && target.getMainHandItem().is(ItemTags.PICKAXES) && !this.isCursed()) || source.is(DamageTypes.FELL_OUT_OF_WORLD) || source.is(DamageTypes.EXPLOSION) || source.isCreativePlayer() || source.getEntity() instanceof Creeper) {
-			return super.hurtServer(lvl, source, amount);
+	public boolean hurt(DamageSource source, float amount) {
+		if ((source.getEntity() instanceof LivingEntity target && target.getMainHandItem().getItem() instanceof PickaxeItem && !this.isCursed()) || source.is(DamageTypes.FELL_OUT_OF_WORLD) || source.is(DamageTypes.EXPLOSION) || source.isCreativePlayer() || source.getEntity() instanceof Creeper) {
+			return super.hurt(source, amount);
 		}
 		return false;
 	}
@@ -185,6 +182,11 @@ public class Angel extends Mob {
 	}
 
 	@Override
+	protected boolean shouldDespawnInPeaceful() {
+		return this.isCursed();
+	}
+
+	@Override
 	public boolean isAffectedByPotions() {
 		return false;
 	}
@@ -200,7 +202,7 @@ public class Angel extends Mob {
 	}
 
 	@Override
-	public boolean canBeCollidedWith(Entity target) {
+	public boolean canBeCollidedWith() {
 		return true;
 	}
 

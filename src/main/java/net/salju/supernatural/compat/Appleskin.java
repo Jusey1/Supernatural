@@ -1,8 +1,8 @@
 package net.salju.supernatural.compat;
 
 import net.salju.supernatural.events.SupernaturalManager;
-import squeek.appleskin.api.event.HUDOverlayEvent;
 import net.neoforged.bus.api.SubscribeEvent;
+import squeek.appleskin.api.event.HUDOverlayEvent;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.entity.player.Player;
 

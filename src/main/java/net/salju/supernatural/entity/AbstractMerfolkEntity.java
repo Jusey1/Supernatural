@@ -1,15 +1,15 @@
 package net.salju.supernatural.entity;
 
-import net.salju.supernatural.events.SupernaturalManager;
 import net.salju.supernatural.init.SupernaturalItems;
 import net.salju.supernatural.init.SupernaturalMobs;
 import net.salju.supernatural.init.SupernaturalSounds;
+import net.salju.supernatural.events.SupernaturalManager;
 import net.salju.supernatural.entity.ai.MerfolkMoveControl;
 import net.salju.supernatural.entity.ai.MerfolkSwimGoal;
 import net.salju.supernatural.entity.ai.MerfolkTridentGoal;
 import net.salju.supernatural.entity.ai.targets.MerfolkAttackSelector;
-import net.neoforged.neoforge.event.EventHooks;
 import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
@@ -32,20 +32,18 @@ import net.minecraft.world.entity.*;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.TridentItem;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.pathfinder.PathType;
-import net.minecraft.world.level.storage.ValueInput;
-import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.pathfinder.PathType;
 import net.minecraft.world.phys.Vec3;
 import javax.annotation.Nullable;
-import java.util.Optional;
+import java.util.UUID;
 
 public class AbstractMerfolkEntity extends Monster implements RangedAttackMob {
-    private Optional<EntityReference<Entity>> thrownTrident = Optional.empty();
     private ItemStack trident = new ItemStack(Items.TRIDENT);
+    private UUID thrownTrident;
     private int cooldown;
 
 	public AbstractMerfolkEntity(EntityType<? extends AbstractMerfolkEntity> type, Level world) {
@@ -56,32 +54,27 @@ public class AbstractMerfolkEntity extends Monster implements RangedAttackMob {
 	}
 
     @Override
-    public void addAdditionalSaveData(ValueOutput tag) {
+    public void addAdditionalSaveData(CompoundTag tag) {
         super.addAdditionalSaveData(tag);
         if (!this.getTrident().isEmpty()) {
-            tag.store("Trident", ItemStack.CODEC, this.getTrident());
+            tag.put("Trident", this.getTrident().save(this.level().registryAccess(), new CompoundTag()));
         }
         if (this.getTridentReference() != null) {
-            EntityReference.store(this.getTridentReference(), tag, "ThrownTrident");
+            tag.putUUID("ThrownTrident", this.getTridentReference());
         }
         tag.putInt("CD", this.getCD());
     }
 
     @Override
-    public void readAdditionalSaveData(ValueInput tag) {
+    public void readAdditionalSaveData(CompoundTag tag) {
         super.readAdditionalSaveData(tag);
-        if (tag.read("Trident", ItemStack.CODEC).isPresent()) {
-            this.setTrident(tag.read("Trident", ItemStack.CODEC).orElse(ItemStack.EMPTY));
+        if (tag.contains("Trident")) {
+            this.setTrident(ItemStack.parseOptional(this.level().registryAccess(), tag.getCompound("Trident")));
         }
-        EntityReference<Entity> target = EntityReference.read(tag, "ThrownTrident");
-        if (target != null) {
-            this.thrownTrident = Optional.of(target);
-        } else {
-            this.thrownTrident = Optional.empty();
+        if (tag.contains("ThrownTrident")) {
+            this.thrownTrident = tag.getUUID("ThrownTrident");
         }
-        if (tag.getInt("CD").isPresent()) {
-            this.setCD(tag.getInt("CD").get());
-        }
+        this.setCD(tag.getInt("CD"));
     }
 
     @Override
@@ -98,22 +91,22 @@ public class AbstractMerfolkEntity extends Monster implements RangedAttackMob {
 
     @Override
     public SoundEvent getAmbientSound() {
-        return this.isInWater() ? SupernaturalSounds.MERFOLK_IDLE.get() : SupernaturalSounds.MERLAND_IDLE.get();
+        return this.isInWaterOrBubble() ? SupernaturalSounds.MERFOLK_IDLE.get() : SupernaturalSounds.MERLAND_IDLE.get();
     }
 
     @Override
     public SoundEvent getHurtSound(DamageSource source) {
-        return this.isInWater() ? SupernaturalSounds.MERFOLK_HURT.get() : SupernaturalSounds.MERLAND_HURT.get();
+        return this.isInWaterOrBubble() ? SupernaturalSounds.MERFOLK_HURT.get() : SupernaturalSounds.MERLAND_HURT.get();
     }
 
     @Override
     public SoundEvent getDeathSound() {
-        return this.isInWater() ? SupernaturalSounds.MERFOLK_DEATH.get() : SupernaturalSounds.MERLAND_DEATH.get();
+        return this.isInWaterOrBubble() ? SupernaturalSounds.MERFOLK_DEATH.get() : SupernaturalSounds.MERLAND_DEATH.get();
     }
 
     @Override
     public void playStepSound(BlockPos pos, BlockState state) {
-        if (this.isInWater()) {
+        if (this.isInWaterOrBubble()) {
             this.playSound(SoundEvents.DROWNED_SWIM, 0.15F, 1);
         }
     }
@@ -143,23 +136,23 @@ public class AbstractMerfolkEntity extends Monster implements RangedAttackMob {
     }
 
     @Override
-    public SpawnGroupData finalizeSpawn(ServerLevelAccessor world, DifficultyInstance difficulty, EntitySpawnReason reason, @Nullable SpawnGroupData data) {
+    public SpawnGroupData finalizeSpawn(ServerLevelAccessor lvl, DifficultyInstance difficulty, MobSpawnType reason, @Nullable SpawnGroupData data) {
         int i = Mth.nextInt(this.getRandom(), 1, 100);
         if (this instanceof MerfolkDiamond || i <= 15) {
-            this.getTrident().enchant(SupernaturalManager.getEnchantment(world.getLevel(), "minecraft", "loyalty"), 3);
+            this.getTrident().enchant(SupernaturalManager.getEnchantment(lvl.getLevel(), "minecraft", "loyalty"), 3);
         }
         this.setItemInHand(InteractionHand.MAIN_HAND, this.getTrident());
         this.setDropChance(EquipmentSlot.MAINHAND, 0.05F);
         if (this instanceof MerfolkAmethyst) {
             if (i >= 75) {
-                this.convertTo(SupernaturalMobs.MERFOLK_EMERALD.get(), ConversionParams.single(this, true, true), newbie -> { EventHooks.onLivingConvert(this, newbie); });
+                this.convertTo(SupernaturalMobs.MERFOLK_EMERALD.get(), true);
             } else if (i <= 15) {
-                this.convertTo(SupernaturalMobs.MERFOLK_DIAMOND.get(), ConversionParams.single(this, true, true), newbie -> { EventHooks.onLivingConvert(this, newbie); });
+                this.convertTo(SupernaturalMobs.MERFOLK_DIAMOND.get(), true);
             } else {
                 this.setItemInHand(InteractionHand.MAIN_HAND, ItemStack.EMPTY);
             }
         }
-        return super.finalizeSpawn(world, difficulty, reason, data);
+        return super.finalizeSpawn(lvl, difficulty, reason, data);
     }
 
     @Override
@@ -182,7 +175,7 @@ public class AbstractMerfolkEntity extends Monster implements RangedAttackMob {
 
     @Override
     public void travel(Vec3 v) {
-        if (this.isAlive() && this.isEffectiveAi() && this.isInWater()) {
+        if (this.isAlive() && this.isEffectiveAi() && this.isInWaterOrBubble()) {
             this.moveRelative(0.01F, v);
             this.move(MoverType.SELF, this.getDeltaMovement());
             this.setDeltaMovement(this.getDeltaMovement().scale(0.9D));
@@ -197,7 +190,7 @@ public class AbstractMerfolkEntity extends Monster implements RangedAttackMob {
     @Override
     public void updateSwimming() {
         if (this.level() instanceof ServerLevel && this.isAlive() && this.isEffectiveAi()) {
-            if (this.isInWater() && this.wantsToSwim()) {
+            if (this.isInWaterOrBubble() && this.wantsToSwim()) {
                 this.setSwimming(true);
             } else {
                 this.setSwimming(false);
@@ -206,18 +199,18 @@ public class AbstractMerfolkEntity extends Monster implements RangedAttackMob {
     }
 
     @Override
-    public boolean hurtServer(ServerLevel lvl, DamageSource source, float amount) {
-        return !(source.getEntity() instanceof AbstractMerfolkEntity) && super.hurtServer(lvl, source, amount);
+    public boolean hurt(DamageSource source, float amount) {
+        return !(source.getEntity() instanceof AbstractMerfolkEntity) && super.hurt(source, amount);
     }
 
     @Override
-    public boolean doHurtTarget(ServerLevel lvl, Entity target) {
+    public boolean doHurtTarget(Entity target) {
         if (this.isLeftHanded()) {
             this.setLeftHanded(false);
         } else {
             this.setLeftHanded(true);
         }
-        return super.doHurtTarget(lvl, target);
+        return super.doHurtTarget(target);
     }
 
     @Override
@@ -231,7 +224,7 @@ public class AbstractMerfolkEntity extends Monster implements RangedAttackMob {
     }
 
     protected void handleAirSupply(int i) {
-        if (this.isAlive() && !this.isInWater()) {
+        if (this.isAlive() && !this.isInWaterOrBubble()) {
             this.setAirSupply(i - 1);
             if (this.getAirSupply() == -20) {
                 this.setAirSupply(0);
@@ -243,7 +236,7 @@ public class AbstractMerfolkEntity extends Monster implements RangedAttackMob {
     }
 
     public void checkTrident(ServerLevel lvl) {
-        if (this.getTridentReference() != null && lvl.getEntity(this.getTridentReference().getUUID()) instanceof ThrownTrident proj && proj.getOwner() != null) {
+        if (this.getTridentReference() != null && lvl.getEntity(this.getTridentReference()) instanceof ThrownTrident proj && proj.getOwner() != null) {
             if (proj.getOwner().is(this) && (this.getCD() <= 1195 || proj.isNoPhysics())) {
                 if (this.distanceTo(proj) < 2.5F || this.getCD() <= 1) {
                     this.giveTrident(proj);
@@ -270,7 +263,11 @@ public class AbstractMerfolkEntity extends Monster implements RangedAttackMob {
     }
 
     public void setTridentReference(@Nullable ThrownTrident proj) {
-        this.thrownTrident = Optional.ofNullable(proj).map(EntityReference::of);
+        if (proj != null) {
+            this.thrownTrident = proj.getUUID();
+        } else {
+            this.thrownTrident = null;
+        }
     }
 
     public void setCD(int i) {
@@ -281,9 +278,8 @@ public class AbstractMerfolkEntity extends Monster implements RangedAttackMob {
         return this.trident;
     }
 
-    @Nullable
-    public EntityReference<Entity> getTridentReference() {
-        return this.thrownTrident.orElse(null);
+    public UUID getTridentReference() {
+        return this.thrownTrident;
     }
 
     public int getCD() {
@@ -291,6 +287,6 @@ public class AbstractMerfolkEntity extends Monster implements RangedAttackMob {
     }
 
     public boolean wantsToSwim() {
-        return this.getTarget() != null && this.getTarget().isInWater();
+        return this.getTarget() != null && this.getTarget().isInWaterOrBubble();
     }
 }

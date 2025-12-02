@@ -18,7 +18,11 @@ import net.minecraft.world.entity.ai.goal.RandomStrollGoal;
 import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
 import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
 import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
-import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.SpawnGroupData;
+import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.damagesource.DamageSource;
@@ -37,7 +41,7 @@ public class PossessedArmor extends AbstractMinionEntity {
 		super.registerGoals();
 		this.goalSelector.addGoal(1, new MeleeAttackGoal(this, 1.2, false));
 		this.goalSelector.addGoal(2, new RandomStrollGoal(this, 1));
-		this.goalSelector.addGoal(3, new LookAtPlayerGoal(this, LivingEntity.class, (float) 6));
+		this.goalSelector.addGoal(3, new LookAtPlayerGoal(this, LivingEntity.class, 6.0F));
 		this.goalSelector.addGoal(4, new RandomLookAroundGoal(this));
 		this.targetSelector.addGoal(0, new HurtByTargetGoal(this));
 		this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, LivingEntity.class, 12, true, true, new MinionAttackSelector(this)));
@@ -54,11 +58,11 @@ public class PossessedArmor extends AbstractMinionEntity {
 	}
 
 	@Override
-	public boolean hurtServer(ServerLevel lvl, DamageSource source, float amount) {
+	public boolean hurt(DamageSource source, float amount) {
 		if (source.is(DamageTypes.FALL) || source.is(DamageTypes.CACTUS) || source.is(DamageTypes.DROWN)) {
 			return false;
 		}
-		return super.hurtServer(lvl, source, amount);
+		return super.hurt(source, amount);
 	}
 
 	@Override
@@ -66,20 +70,22 @@ public class PossessedArmor extends AbstractMinionEntity {
 		this.setItemInHand(InteractionHand.MAIN_HAND, ItemStack.EMPTY);
 		this.setItemInHand(InteractionHand.OFF_HAND, ItemStack.EMPTY);
 		for (EquipmentSlot slot : EquipmentSlot.values()) {
-			this.spawnAtLocation(lvl, this.getItemBySlot(slot));
-			this.setItemSlot(slot, ItemStack.EMPTY);
+			if (!this.getItemBySlot(slot).isEmpty()) {
+				this.spawnAtLocation(this.getItemBySlot(slot));
+				this.setItemSlot(slot, ItemStack.EMPTY);
+			}
 		}
 	}
 
 	@Override
-	public SpawnGroupData finalizeSpawn(ServerLevelAccessor world, DifficultyInstance difficulty, EntitySpawnReason reason, @Nullable SpawnGroupData data) {
+	public SpawnGroupData finalizeSpawn(ServerLevelAccessor world, DifficultyInstance difficulty, MobSpawnType reason, @Nullable SpawnGroupData data) {
 		this.populateDefaultEquipmentSlots(world.getRandom(), difficulty);
 		this.addEffect(new MobEffectInstance(SupernaturalEffects.POSSESSION, Integer.MAX_VALUE, 0));
         return super.finalizeSpawn(world, difficulty, reason, data);
 	}
 
 	@Override
-	protected void populateDefaultEquipmentSlots(RandomSource randy, DifficultyInstance souls) {
+	protected void populateDefaultEquipmentSlots(RandomSource randy, DifficultyInstance difficulty) {
 		this.setItemSlot(EquipmentSlot.MAINHAND, new ItemStack(Items.IRON_SWORD));
 		this.setItemSlot(EquipmentSlot.HEAD, SupernaturalManager.dyeHelmet(SupernaturalItems.GOTHIC_IRON_HELMET.get()));
 		this.setItemSlot(EquipmentSlot.CHEST, new ItemStack(Items.IRON_CHESTPLATE));
@@ -90,13 +96,11 @@ public class PossessedArmor extends AbstractMinionEntity {
 	@Override
 	public void baseTick() {
 		super.baseTick();
-		if (this.level() instanceof ServerLevel lvl) {
-			if (!this.hasEffect(SupernaturalEffects.POSSESSION) || !SupernaturalManager.hasArmor(this)) {
-				this.kill(lvl);
-			}
-			if (this.isAlive() && this.isTamed() && this.getEffect(SupernaturalEffects.POSSESSION).getDuration() <= 10) {
-				this.addEffect(new MobEffectInstance(SupernaturalEffects.POSSESSION, Integer.MAX_VALUE, 0));
-			}
+		if (!this.hasEffect(SupernaturalEffects.POSSESSION) || !SupernaturalManager.hasArmor(this)) {
+			this.kill();
+		}
+		if (this.isAlive() && this.isTamed() && this.getEffect(SupernaturalEffects.POSSESSION).getDuration() <= 10) {
+			this.addEffect(new MobEffectInstance(SupernaturalEffects.POSSESSION, Integer.MAX_VALUE, 0));
 		}
 	}
 }
