@@ -218,10 +218,20 @@ public class SupernaturalManager {
 		return list;
 	}
 
+    public static int getDarkArmor(LivingEntity target) {
+        int i = 0;
+        for (EquipmentSlot slot : EquipmentSlot.values()) {
+            if (slot.isArmor() && target.getItemBySlot(slot).is(SupernaturalTags.DARK_ARMOR)) {
+                i++;
+            }
+        }
+        return i;
+    }
+
 	public static boolean hasArmor(LivingEntity target) {
 		int i = 0;
 		for (EquipmentSlot slot : EquipmentSlot.values()) {
-			if (!target.getItemBySlot(slot).isEmpty()) {
+			if (slot.isArmor() && !target.getItemBySlot(slot).isEmpty()) {
 				i++;
 			}
 		}

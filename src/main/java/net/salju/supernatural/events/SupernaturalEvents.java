@@ -170,6 +170,12 @@ public class SupernaturalEvents {
 				}
 			}
 		}
+        int i = SupernaturalManager.getDarkArmor(target);
+        if (i >= 1) {
+            if (event.getSource().is(SupernaturalTags.MAGIC)) {
+                event.setAmount(event.getAmount() * (1.0F - (0.1F * i)));
+            }
+        }
         if (target instanceof SpellcasterIllager && target.level() instanceof ServerLevel lvl) {
             for (Vex ghost : target.level().getEntitiesOfClass(Vex.class, target.getBoundingBox().inflate(32.76))) {
                 if (ghost.getOwner() != null && ghost.getOwner() == target) {
