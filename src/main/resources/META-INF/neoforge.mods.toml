@@ -16,6 +16,6 @@ description="Adds supernatural entities, blocks, & items."
 [[dependencies.supernatural]]
     modId="minecraft"
     type="required"
-    versionRange="[1.21.10]"
+    versionRange="[1.21.11]"
     ordering="NONE"
     side="BOTH"
