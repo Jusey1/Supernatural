@@ -14,10 +14,10 @@ public class AngelModel<T extends SupernaturalRenderState> extends EntityModel<T
 	private final ModelPart body = root.getChild("body");
 	private final ModelPart head = this.body.getChild("head");
 	private final ModelPart hat = this.head.getChild("hat");
-	private final ModelPart right_arm = this.body.getChild("right_arm");
-	private final ModelPart left_arm = this.body.getChild("left_arm");
-	private final ModelPart right_wing = this.body.getChild("right_wing");
-	private final ModelPart left_wing = this.body.getChild("left_wing");
+	private final ModelPart rightArm = this.body.getChild("right_arm");
+	private final ModelPart leftArm = this.body.getChild("left_arm");
+	private final ModelPart rightWing = this.body.getChild("right_wing");
+	private final ModelPart leftWing = this.body.getChild("left_wing");
 
 	public AngelModel(ModelPart root) {
 		super(root);
@@ -37,7 +37,12 @@ public class AngelModel<T extends SupernaturalRenderState> extends EntityModel<T
 	}
 
 	@Override
-	public void setupAnim(T angel) {
+	public void setupAnim(T target) {
+		this.defaultPose(target);
+		this.poseArms(target, target.isLeftHanded ? this.leftArm : this.rightArm, target.isLeftHanded ? this.rightArm : this.leftArm);
+	}
+
+	protected void defaultPose(T target) {
 		this.head.xRot = 0.0F;
 		this.head.yRot = 0.0F;
 		this.head.zRot = 0.0F;
@@ -45,58 +50,61 @@ public class AngelModel<T extends SupernaturalRenderState> extends EntityModel<T
 		this.hat.yRot = 0.0F;
 		this.hat.zRot = 0.0F;
 		this.body.xRot = 0.0F;
-		this.body.yRot = angel.yRot * ((float) Math.PI / 180F);
+		this.body.yRot = target.yRot * ((float) Math.PI / 180F);
 		this.body.zRot = 0.0F;
-		this.right_wing.xRot = 0.0F;
-		this.right_wing.yRot = 2.7053F;
-		this.right_wing.zRot = 0.0F;
-		this.left_wing.xRot = 0.0F;
-		this.left_wing.yRot = -2.7053F;
-		this.left_wing.zRot = 0.0F;
-		this.right_arm.xRot = 0.0F;
-		this.right_arm.yRot = 0.0F;
-		this.right_arm.zRot = 0.0F;
-		this.left_arm.xRot = 0.0F;
-		this.left_arm.yRot = 0.0F;
-		this.left_arm.zRot = 0.0F;
-		if (angel.pose == 0) {
-			this.right_arm.xRot = -1.5708F;
-			this.left_arm.xRot = -1.5708F;
-		} else if (angel.pose == 2) {
-			this.right_arm.xRot = -0.7854F;
-			this.right_arm.yRot = -0.5236F;
-			this.left_arm.xRot = -0.7854F;
-			this.left_arm.yRot = 0.5236F;
-		} else if (angel.pose == 3) {
+		this.rightWing.xRot = 0.0F;
+		this.rightWing.yRot = 2.7053F;
+		this.rightWing.zRot = 0.0F;
+		this.leftWing.xRot = 0.0F;
+		this.leftWing.yRot = -2.7053F;
+		this.leftWing.zRot = 0.0F;
+		this.rightArm.xRot = 0.0F;
+		this.rightArm.yRot = 0.0F;
+		this.rightArm.zRot = 0.0F;
+		this.leftArm.xRot = 0.0F;
+		this.leftArm.yRot = 0.0F;
+		this.leftArm.zRot = 0.0F;
+	}
+
+	protected void poseArms(T target, ModelPart mainArm, ModelPart offArm) {
+		if (target.pose == 0) {
+			mainArm.xRot = -1.5708F;
+			offArm.xRot = -1.5708F;
+		} else if (target.pose == 2) {
+			mainArm.xRot = -0.7854F;
+			mainArm.yRot = target.isLeftHanded ? 0.5236F : -0.5236F;
+			offArm.xRot = -0.7854F;
+			offArm.yRot = target.isLeftHanded ? -0.5236F : 0.5236F;
+		} else if (target.pose == 3) {
 			this.head.xRot = 0.2618F;
 			this.hat.xRot = 0.2618F;
-			this.right_arm.xRot = -1.9199F;
-			this.right_arm.yRot = -0.4363F;
-			this.left_arm.xRot = -1.9199F;
-			this.left_arm.yRot = 0.4363F;
-		} else if (angel.pose == 4) {
-			this.right_arm.xRot = -1.5708F;
-		} else if (angel.pose == 5) {
+			mainArm.xRot = -1.9199F;
+			mainArm.yRot = target.isLeftHanded ? 0.4363F : -0.4363F;
+			offArm.xRot = -1.9199F;
+			offArm.yRot = target.isLeftHanded ? -0.4363F : 0.4363F;
+		} else if (target.pose == 4) {
+			mainArm.xRot = -1.5708F;
+		} else if (target.pose == 5) {
 			this.head.xRot = -0.2618F;
 			this.hat.xRot = -0.2618F;
-			this.right_arm.xRot = -3.0543F;
-			this.right_arm.zRot = -0.0873F;
-			this.left_arm.xRot = -3.0543F;
-			this.left_arm.zRot = 0.0873F;
-		} else if (angel.pose == 6) {
-			this.right_arm.xRot = -0.0436F;
-			this.right_arm.zRot = 1.5708F;
-			this.left_arm.xRot = -0.0436F;
-			this.left_arm.zRot = -1.5708F;
-		} else if (angel.pose == 7) {
+			mainArm.xRot = -3.0543F;
+			mainArm.zRot = target.isLeftHanded ? 0.0873F : -0.0873F;
+			offArm.xRot = -3.0543F;
+			offArm.zRot = target.isLeftHanded ? -0.0873F : 0.0873F;
+		} else if (target.pose == 6) {
+			mainArm.xRot = -0.0436F;
+			mainArm.zRot = target.isLeftHanded ? -1.5708F : 1.5708F;
+			offArm.xRot = -0.0436F;
+			offArm.zRot = target.isLeftHanded ? 1.5708F : -1.5708F;
+		} else if (target.pose == 7) {
 			this.head.xRot = 0.2618F;
-			this.head.yRot = 0.7854F;
+			this.head.yRot = target.isLeftHanded ? -0.7854F : 0.7854F;
 			this.hat.xRot = 0.2618F;
-			this.hat.yRot = 0.7854F;
-			this.right_arm.xRot = -1.9199F;
-			this.right_arm.yRot = 0.7854F;
-			this.left_arm.xRot = -1.9199F;
-			this.left_arm.yRot = 0.8727F;
+			this.hat.yRot = target.isLeftHanded ? -0.7854F : 0.7854F;
+			mainArm.xRot = -1.9199F;
+			mainArm.yRot = target.isLeftHanded ? -0.7854F : 0.7854F;
+			offArm.xRot = -1.9199F;
+			offArm.yRot = target.isLeftHanded ? -0.8727F : 0.8727F;
 		}
 	}
 }

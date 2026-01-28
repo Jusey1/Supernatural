@@ -10,10 +10,10 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.PathfinderMob;
-import net.minecraft.world.level.GameRules;
-import net.minecraft.world.level.Level;
+import net.minecraft.world.level.gamerules.GameRules;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
+import net.minecraft.world.level.Level;
 
 public abstract class AbstractSpellcasterEntity extends PathfinderMob {
     public static final EntityDataAccessor<Integer> SPELL_TICK = SynchedEntityData.defineId(AbstractSpellcasterEntity.class, EntityDataSerializers.INT);
@@ -67,7 +67,7 @@ public abstract class AbstractSpellcasterEntity extends PathfinderMob {
 
     @Override
     protected boolean shouldDropLoot(ServerLevel lvl) {
-        return lvl.getGameRules().getBoolean(GameRules.RULE_DOMOBLOOT);
+        return lvl.getGameRules().get(GameRules.MOB_DROPS);
     }
 
     public SoundEvent getCastingSoundEvent() {

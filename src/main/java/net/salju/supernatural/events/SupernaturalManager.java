@@ -10,7 +10,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.ProblemReporter;
@@ -53,7 +53,7 @@ public class SupernaturalManager {
 	}
 
 	public static Holder<Enchantment> getEnchantment(Level world, String id, String name) {
-		return world.registryAccess().lookupOrThrow(Registries.ENCHANTMENT).getOrThrow(ResourceKey.create(Registries.ENCHANTMENT, ResourceLocation.fromNamespaceAndPath(id, name)));
+		return world.registryAccess().lookupOrThrow(Registries.ENCHANTMENT).getOrThrow(ResourceKey.create(Registries.ENCHANTMENT, Identifier.fromNamespaceAndPath(id, name)));
 	}
 
 	public static AttributeSupplier.Builder createAttributes(double h, double d, double a, double s) {
@@ -100,10 +100,10 @@ public class SupernaturalManager {
 	private static Multimap<Holder<Attribute>, AttributeModifier> createSupernatural() {
 		Multimap<Holder<Attribute>, AttributeModifier> stats = HashMultimap.create();
 		if (SupernaturalConfig.DAMAGE.get() > 0) {
-			stats.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(ResourceLocation.fromNamespaceAndPath(Supernatural.MODID, "vdps"), ((float) SupernaturalConfig.DAMAGE.get()), AttributeModifier.Operation.ADD_VALUE));
+			stats.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(Identifier.fromNamespaceAndPath(Supernatural.MODID, "vdps"), ((float) SupernaturalConfig.DAMAGE.get()), AttributeModifier.Operation.ADD_VALUE));
 		}
 		if (SupernaturalConfig.SPEED.get() > 0) {
-			stats.put(Attributes.MOVEMENT_SPEED, new AttributeModifier(ResourceLocation.fromNamespaceAndPath(Supernatural.MODID, "vspeed"), ((float) SupernaturalConfig.SPEED.get() / 100), AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL));
+			stats.put(Attributes.MOVEMENT_SPEED, new AttributeModifier(Identifier.fromNamespaceAndPath(Supernatural.MODID, "vspeed"), ((float) SupernaturalConfig.SPEED.get() / 100), AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL));
 		}
 		return stats;
 	}
@@ -184,8 +184,13 @@ public class SupernaturalManager {
 		return null;
 	}
 
+    public static boolean shouldVampireBurn(LivingEntity target, ServerLevel lvl) {
+        boolean check = (target.isInWaterOrRain() || target.isInPowderSnow || target.wasInPowderSnow || SupernaturalConfig.SUN.get() || target.hasEffect(MobEffects.FIRE_RESISTANCE));
+        return (lvl.isBrightOutside() && lvl.canSeeSky(BlockPos.containing(target.getX(), target.getEyeY(), target.getZ())) && !check);
+    }
+
 	public static boolean canSoulMagicWork(ServerLevel lvl, BlockPos pos) {
-		return (lvl.dimensionType().natural() && lvl.getBrightness(LightLayer.BLOCK, pos) < 6 && (lvl.getBrightness(LightLayer.SKY, pos) < 6 || lvl.isDarkOutside()));
+		return (lvl.dimension().equals(Level.OVERWORLD) && lvl.getBrightness(LightLayer.BLOCK, pos) < 6 && (lvl.getBrightness(LightLayer.SKY, pos) < 6 || lvl.isDarkOutside()));
 	}
 
 	public static int getPower(ServerLevel lvl, BlockPos pos) {

@@ -11,8 +11,8 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundEvent;
-import net.minecraft.world.entity.monster.Zombie;
-import net.minecraft.world.entity.monster.Skeleton;
+import net.minecraft.world.entity.monster.zombie.Zombie;
+import net.minecraft.world.entity.monster.skeleton.Skeleton;
 import net.minecraft.world.entity.*;
 
 public class NecromancerBoltSpellGoal extends AbstractTargetSpellGoal {

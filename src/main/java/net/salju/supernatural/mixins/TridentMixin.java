@@ -5,7 +5,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.Mixin;
 import net.salju.supernatural.entity.AbstractMerfolkEntity;
-import net.minecraft.world.entity.projectile.ThrownTrident;
+import net.minecraft.world.entity.projectile.arrow.ThrownTrident;
 
 @Mixin(ThrownTrident.class)
 public abstract class TridentMixin {

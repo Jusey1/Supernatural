@@ -2,7 +2,7 @@ package net.salju.supernatural.init;
 
 import net.salju.supernatural.Supernatural;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.equipment.ArmorMaterial;
@@ -37,6 +37,6 @@ public class SupernaturalArmors {
     }
 
 	public static ResourceKey<EquipmentAsset> createId(String name) {
-		return ResourceKey.create(EquipmentAssets.ROOT_ID, ResourceLocation.fromNamespaceAndPath(Supernatural.MODID, name));
+		return ResourceKey.create(EquipmentAssets.ROOT_ID, Identifier.fromNamespaceAndPath(Supernatural.MODID, name));
 	}
 }

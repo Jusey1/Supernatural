@@ -19,7 +19,7 @@ import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.renderer.entity.ArmorModelSet;
 import net.minecraft.client.resources.model.EquipmentClientInfo;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemStack;
 
 @EventBusSubscriber(value = Dist.CLIENT)
@@ -78,7 +78,7 @@ public class SupernaturalClient {
 
 	@SubscribeEvent
 	public static void registerNumProps(RegisterRangeSelectItemModelPropertyEvent event) {
-		event.register(ResourceLocation.fromNamespaceAndPath(Supernatural.MODID, "angle"), RitualCompassAngle.MAP_CODEC);
+		event.register(Identifier.fromNamespaceAndPath(Supernatural.MODID, "angle"), RitualCompassAngle.MAP_CODEC);
 	}
 
     public static ArmorModelSet<ModelLayerLocation> registerArmorSet(String path) {
@@ -86,6 +86,6 @@ public class SupernaturalClient {
     }
 
     public static ModelLayerLocation registerModel(String path, String model) {
-        return new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(Supernatural.MODID, path), model);
+        return new ModelLayerLocation(Identifier.fromNamespaceAndPath(Supernatural.MODID, path), model);
     }
 }

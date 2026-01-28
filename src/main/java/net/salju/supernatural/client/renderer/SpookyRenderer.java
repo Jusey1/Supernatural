@@ -4,7 +4,7 @@ import net.salju.supernatural.Supernatural;
 import net.salju.supernatural.init.SupernaturalClient;
 import net.salju.supernatural.entity.Spooky;
 import net.salju.supernatural.client.model.SpiritModel;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.core.BlockPos;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
@@ -15,8 +15,8 @@ public class SpookyRenderer extends MobRenderer<Spooky, SupernaturalRenderState,
 	}
 
 	@Override
-	public ResourceLocation getTextureLocation(SupernaturalRenderState target) {
-		return ResourceLocation.fromNamespaceAndPath(Supernatural.MODID, "textures/entity/spook.png");
+	public Identifier getTextureLocation(SupernaturalRenderState target) {
+		return Identifier.fromNamespaceAndPath(Supernatural.MODID, "textures/entity/spook.png");
 	}
 
 	@Override

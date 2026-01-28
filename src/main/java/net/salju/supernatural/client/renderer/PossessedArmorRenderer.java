@@ -3,7 +3,7 @@ package net.salju.supernatural.client.renderer;
 import net.salju.supernatural.Supernatural;
 import net.salju.supernatural.entity.PossessedArmor;
 import net.salju.supernatural.client.model.PossessedModel;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.client.renderer.entity.layers.HumanoidArmorLayer;
 import net.minecraft.client.renderer.entity.ArmorModelSet;
 import net.minecraft.client.renderer.entity.HumanoidMobRenderer;
@@ -17,8 +17,8 @@ public class PossessedArmorRenderer extends HumanoidMobRenderer<PossessedArmor, 
 	}
 
 	@Override
-	public ResourceLocation getTextureLocation(SupernaturalRenderState state) {
-		return ResourceLocation.fromNamespaceAndPath(Supernatural.MODID, "textures/entity/empty_texture.png");
+	public Identifier getTextureLocation(SupernaturalRenderState state) {
+		return Identifier.fromNamespaceAndPath(Supernatural.MODID, "textures/entity/empty_texture.png");
 	}
 
     @Override

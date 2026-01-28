@@ -1,7 +1,6 @@
 package net.salju.supernatural.client.model;
 
 import net.salju.supernatural.client.renderer.SupernaturalRenderState;
-import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.model.geom.builders.PartDefinition;
 import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
@@ -10,6 +9,7 @@ import net.minecraft.client.model.geom.builders.CubeDeformation;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.EntityModel;
+import net.minecraft.client.renderer.rendertype.RenderTypes;
 import net.minecraft.util.Mth;
 
 public class SpiritModel<T extends SupernaturalRenderState> extends EntityModel<T> {
@@ -21,7 +21,7 @@ public class SpiritModel<T extends SupernaturalRenderState> extends EntityModel<
 	private final ModelPart leftWing;
 
 	public SpiritModel(ModelPart root) {
-		super(root.getChild("root"), RenderType::entityTranslucent);
+		super(root.getChild("root"), RenderTypes::entityTranslucent);
         this.head = this.root.getChild("head");
         this.body = this.root.getChild("body");
         this.rightArm = this.body.getChild("right_arm");
@@ -44,15 +44,15 @@ public class SpiritModel<T extends SupernaturalRenderState> extends EntityModel<
 	}
 
 	@Override
-	public void setupAnim(T spirit) {
+	public void setupAnim(T target) {
 		this.root().getAllParts().forEach(ModelPart::resetPose);
-		float f = spirit.ageInTicks * 20.0F * ((float) Math.PI / 180F) + spirit.walkAnimationSpeed;
+		float f = target.ageInTicks * 20.0F * ((float) Math.PI / 180F) + target.walkAnimationSpeed;
 		float f1 = Mth.cos(f) * (float) Math.PI * 0.15F;
-		float f3 = spirit.ageInTicks * 9.0F * ((float) Math.PI / 180F);
-		float f4 = Math.min(spirit.walkAnimationSpeed / 0.3F, 1.0F);
+		float f3 = target.ageInTicks * 9.0F * ((float) Math.PI / 180F);
+		float f4 = Math.min(target.walkAnimationSpeed / 0.3F, 1.0F);
 		float f5 = 1.0F - f4;
-		this.head.xRot = spirit.xRot * ((float) Math.PI / 180F);
-		this.head.yRot = spirit.yRot * ((float) Math.PI / 180F);
+		this.head.xRot = target.xRot * ((float) Math.PI / 180F);
+		this.head.yRot = target.yRot * ((float) Math.PI / 180F);
 		this.rightWing.xRot = 0.43633232F;
 		this.rightWing.yRot = -0.61086524F + f1;
 		this.leftWing.xRot = 0.43633232F;
@@ -69,7 +69,7 @@ public class SpiritModel<T extends SupernaturalRenderState> extends EntityModel<
 		this.rightArm.zRot = f15;
 		this.rightArm.yRot = 0.27925268F * f4;
 		this.leftArm.yRot = -0.27925268F * f4;
-		if (spirit.isCastingSpell) {
+		if (target.isCastingSpell) {
 			this.rightArm.xRot = ((float) Math.PI * 1.65F);
 			this.leftArm.xRot = ((float) Math.PI * 1.65F);
 		}

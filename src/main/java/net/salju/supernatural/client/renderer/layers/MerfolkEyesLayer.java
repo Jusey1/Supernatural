@@ -7,8 +7,9 @@ import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.EyesLayer;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.renderer.SubmitNodeCollector;
-import net.minecraft.client.renderer.RenderType;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.client.renderer.rendertype.RenderType;
+import net.minecraft.client.renderer.rendertype.RenderTypes;
+import net.minecraft.resources.Identifier;
 import com.mojang.blaze3d.vertex.PoseStack;
 
 public class MerfolkEyesLayer<S extends SupernaturalRenderState, M extends MerfolkModel<S>> extends EyesLayer<S, M> {
@@ -23,12 +24,12 @@ public class MerfolkEyesLayer<S extends SupernaturalRenderState, M extends Merfo
 
     @Override
     public RenderType renderType() {
-        return RenderType.eyes(ResourceLocation.fromNamespaceAndPath(Supernatural.MODID, "textures/entity/merfolk/diamond_glow.png"));
+        return RenderTypes.eyes(Identifier.fromNamespaceAndPath(Supernatural.MODID, "textures/entity/merfolk/diamond_glow.png"));
     }
 
     public RenderType renderSpecialType(String type) {
         if (!type.isEmpty()) {
-            return RenderType.eyes(ResourceLocation.fromNamespaceAndPath(Supernatural.MODID, "textures/entity/merfolk/" + type + "_glow.png"));
+            return RenderTypes.eyes(Identifier.fromNamespaceAndPath(Supernatural.MODID, "textures/entity/merfolk/" + type + "_glow.png"));
         }
         return this.renderType();
     }

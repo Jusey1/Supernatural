@@ -5,7 +5,7 @@ import net.salju.supernatural.init.SupernaturalClient;
 import net.salju.supernatural.client.model.MerfolkModel;
 import net.salju.supernatural.client.renderer.layers.MerfolkEyesLayer;
 import net.salju.supernatural.entity.AbstractMerfolkEntity;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.client.renderer.entity.layers.ItemInHandLayer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.HumanoidMobRenderer;
@@ -22,8 +22,8 @@ public abstract class AbstractMerfolkRenderer extends MobRenderer<AbstractMerfol
 	}
 
 	@Override
-	public ResourceLocation getTextureLocation(SupernaturalRenderState state) {
-		return ResourceLocation.fromNamespaceAndPath(Supernatural.MODID, "textures/entity/merfolk/" + state.type + ".png");
+	public Identifier getTextureLocation(SupernaturalRenderState state) {
+		return Identifier.fromNamespaceAndPath(Supernatural.MODID, "textures/entity/merfolk/" + state.type + ".png");
 	}
 
     @Override
@@ -43,16 +43,16 @@ public abstract class AbstractMerfolkRenderer extends MobRenderer<AbstractMerfol
     }
 
     @Override
-    public void submit(SupernaturalRenderState merfolk, PoseStack stack, SubmitNodeCollector buffer, CameraRenderState c) {
+    public void submit(SupernaturalRenderState state, PoseStack stack, SubmitNodeCollector buffer, CameraRenderState c) {
         stack.pushPose();
-        if (merfolk.onGround && !merfolk.isInWater) {
+        if (state.onGround && !state.isInWater) {
             stack.translate(0, -0.5, 0);
         } else {
             stack.translate(0, 0, 0);
         }
         float scale = 1.0F;
         stack.scale(scale, scale, scale);
-        super.submit(merfolk, stack, buffer, c);
+        super.submit(state, stack, buffer, c);
         stack.popPose();
     }
 

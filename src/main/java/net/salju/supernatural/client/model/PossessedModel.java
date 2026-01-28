@@ -19,9 +19,30 @@ public class PossessedModel<T extends SupernaturalRenderState> extends HumanoidM
 	}
 
 	@Override
-	public void setupAnim(T ghost) {
-		this.rightArm.xRot = Mth.cos(ghost.walkAnimationPos * 0.6662F + (float) Math.PI) * 2.0F * ghost.walkAnimationSpeed * 0.5F - (0.0025F);
-		this.leftArm.xRot = Mth.cos(ghost.walkAnimationPos * 0.6662F) * 2.0F * ghost.walkAnimationSpeed * 0.5F - (0.0025F);
+	public void setupAnim(T target) {
+		this.defaultPose(target);
+		this.poseArms(target, target.isLeftHanded ? this.leftArm : this.rightArm, target.isLeftHanded ? this.rightArm : this.leftArm);
+		if (target.attackTime > 0.0F) {
+			this.setupAttackAnimation(target);
+		}
+	}
+
+	@Override
+	protected void setupAttackAnimation(T target) {
+		if (target.isAggressive) {
+			ModelPart arm = this.getArm(target.attackArm);
+			float progress = 1.0F - target.attackTime;
+			progress = progress * progress;
+			progress = progress * progress;
+			progress = 1.0F - progress;
+			float f2 = Mth.sin(progress * (float) Math.PI);
+			arm.xRot = (float) ((double) arm.xRot - ((double) f2 / 1.2D - (double) 1.0F));
+		}
+	}
+
+	protected void defaultPose(T target) {
+		this.rightArm.xRot = Mth.cos(target.walkAnimationPos * 0.6662F + (float) Math.PI) * 2.0F * target.walkAnimationSpeed * 0.5F - (0.0025F);
+		this.leftArm.xRot = Mth.cos(target.walkAnimationPos * 0.6662F) * 2.0F * target.walkAnimationSpeed * 0.5F - (0.0025F);
 		this.rightArm.yRot = 0.0F;
 		this.rightArm.zRot = 0.0F;
 		this.leftArm.yRot = 0.0F;
@@ -31,48 +52,25 @@ public class PossessedModel<T extends SupernaturalRenderState> extends HumanoidM
 		this.body.xRot = 0.0F;
 		this.body.yRot = 0.0F;
 		this.body.zRot = 0.0F;
-		this.rightLeg.xRot = Mth.cos(ghost.walkAnimationPos * 0.6662F) * 1.4F * ghost.walkAnimationSpeed + (0.0025F);
-		this.leftLeg.xRot = Mth.cos(ghost.walkAnimationPos * 0.6662F + (float) Math.PI) * 1.4F * ghost.walkAnimationSpeed - (0.0025F);
-		this.head.yRot = ghost.yRot * ((float) Math.PI / 180F);
-		this.head.xRot = ghost.xRot * ((float) Math.PI / 180F);
-		this.hat.yRot = ghost.yRot * ((float) Math.PI / 180F);
-		this.hat.xRot = ghost.xRot * ((float) Math.PI / 180F);
-		if (ghost.isPassenger) {
+		this.rightLeg.xRot = Mth.cos(target.walkAnimationPos * 0.6662F) * 1.4F * target.walkAnimationSpeed + (0.0025F);
+		this.leftLeg.xRot = Mth.cos(target.walkAnimationPos * 0.6662F + (float) Math.PI) * 1.4F * target.walkAnimationSpeed - (0.0025F);
+		this.head.yRot = target.yRot * ((float) Math.PI / 180F);
+		this.head.xRot = target.xRot * ((float) Math.PI / 180F);
+		this.hat.yRot = target.yRot * ((float) Math.PI / 180F);
+		this.hat.xRot = target.xRot * ((float) Math.PI / 180F);
+		if (target.isPassenger) {
 			this.rightLeg.xRot = -1.5708F;
 			this.leftLeg.xRot = -1.5708F;
 			this.rightLeg.yRot = 0.2618F;
 			this.leftLeg.yRot = -0.2618F;
 		}
-		if (!ghost.getMainHandItem().isEmpty()) {
-			if (ghost.isAggressive) {
-				if (ghost.isLeftHanded) {
-					this.leftArm.xRot = -2.0944F;
-					this.leftArm.yRot = -0.1745F;
-				} else {
-					this.rightArm.xRot = -2.0944F;
-					this.rightArm.yRot = 0.1745F;
-				}
-			}
-		}
-		if (ghost.attackTime > 0.0F) {
-			if (ghost.isAggressive) {
-				if (ghost.isLeftHanded) {
-					float progress = ghost.attackTime;
-					progress = 1.0F - ghost.attackTime;
-					progress = progress * progress;
-					progress = progress * progress;
-					progress = 1.0F - progress;
-					float f2 = Mth.sin(progress * (float) Math.PI);
-					leftArm.xRot = (float) ((double) leftArm.xRot - ((double) f2 / 1.2D - (double) 1.0F));
-				} else {
-					float progress = ghost.attackTime;
-					progress = 1.0F - ghost.attackTime;
-					progress = progress * progress;
-					progress = progress * progress;
-					progress = 1.0F - progress;
-					float f2 = Mth.sin(progress * (float) Math.PI);
-					rightArm.xRot = (float) ((double) rightArm.xRot - ((double) f2 / 1.2D - (double) 1.0F));
-				}
+	}
+
+	protected void poseArms(T target, ModelPart mainArm, ModelPart offArm) {
+		if (!target.getMainHandItemStack().isEmpty()) {
+			if (target.isAggressive) {
+				mainArm.xRot = -2.0944F;
+				mainArm.yRot = target.isLeftHanded ? -0.1745F : 0.1745F;
 			}
 		}
 	}

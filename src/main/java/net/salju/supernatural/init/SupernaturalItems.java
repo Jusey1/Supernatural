@@ -8,7 +8,7 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.item.component.*;
 import net.minecraft.world.item.equipment.*;
@@ -49,6 +49,6 @@ public class SupernaturalItems {
 	}
 
 	public static Item.Properties createBaseProps(String name) {
-		return new Item.Properties().setId(ResourceKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(Supernatural.MODID, name)));
+		return new Item.Properties().setId(ResourceKey.create(Registries.ITEM, Identifier.fromNamespaceAndPath(Supernatural.MODID, name)));
 	}
 }

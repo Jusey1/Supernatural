@@ -17,14 +17,13 @@ import net.neoforged.neoforge.event.entity.living.*;
 import net.neoforged.neoforge.event.entity.EntityJoinLevelEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 import net.neoforged.neoforge.event.tick.PlayerTickEvent;
-import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.EntityTypeTags;
 import net.minecraft.world.damagesource.DamageTypes;
-import net.minecraft.world.entity.monster.SpellcasterIllager;
+import net.minecraft.world.entity.monster.illager.SpellcasterIllager;
+import net.minecraft.world.entity.monster.illager.Vindicator;
 import net.minecraft.world.entity.monster.Vex;
-import net.minecraft.world.entity.monster.Vindicator;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -35,6 +34,7 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.level.Level;
 import net.minecraft.util.Mth;
 
 @EventBusSubscriber
@@ -47,16 +47,14 @@ public class SupernaturalEvents {
 			player.getFoodData().setFoodLevel(20);
 			if (player.level() instanceof ServerLevel lvl) {
 				SupernaturalManager.addVampireEffects(player);
-				boolean check = (player.isInWaterOrRain() || player.isInPowderSnow || player.wasInPowderSnow || player.isCreative() || SupernaturalConfig.SUN.get() || player.hasEffect(MobEffects.FIRE_RESISTANCE));
-				if (lvl.isBrightOutside() && lvl.canSeeSky(BlockPos.containing(player.getX(), player.getEyeY(), player.getZ())) && !check) {
-					ItemStack helmet = player.getItemBySlot(EquipmentSlot.HEAD);
-					if (helmet.isEmpty()) {
+				if (SupernaturalManager.shouldVampireBurn(player, lvl) && !player.isCreative() && !player.isSpectator()) {
+					if (player.getItemBySlot(EquipmentSlot.HEAD).isEmpty()) {
 						if (player.getRemainingFireTicks() <= 20) {
 							player.setRemainingFireTicks(120);
-								player.hurt(SupernaturalDamageTypes.causeSunDamage(player.level().registryAccess()), 3);
+							player.hurt(SupernaturalDamageTypes.causeSunDamage(player.level().registryAccess()), 3);
 						}
 					} else if (Mth.nextInt(player.getRandom(), 0, 25) <= 2) {
-						helmet.hurtAndBreak(1, player, EquipmentSlot.HEAD);
+                        player.getItemBySlot(EquipmentSlot.HEAD).hurtAndBreak(1, player, EquipmentSlot.HEAD);
 					}
 				}
 			}
@@ -196,7 +194,7 @@ public class SupernaturalEvents {
 				if (ghost != null) {
 					ghost.setPersistenceRequired();
 				}
-			} else if (lvl.dimensionType().natural() && target instanceof Mob && !target.getType().is(SupernaturalTags.IMMUNITY)) {
+			} else if (lvl.dimension().equals(Level.OVERWORLD) && target instanceof Mob && !target.getType().is(SupernaturalTags.IMMUNITY)) {
 				RitualBlockEntity block = SupernaturalManager.getAltar(target.blockPosition(), lvl, 12, Items.AMETHYST_SHARD);
 				if (block != null) {
 					block.setItem(0, SupernaturalManager.setSoul(new ItemStack(SupernaturalItems.SOULGEM.get()), target));
@@ -232,7 +230,7 @@ public class SupernaturalEvents {
 	public static void onEntitySpawned(EntityJoinLevelEvent event) {
 		if (!event.loadedFromDisk()) {
 			if (event.getLevel() instanceof ServerLevel lvl && event.getEntity() instanceof Vindicator target) {
-				if (SupernaturalConfig.RAIDERS.get() && lvl.isMoonVisible() && target.getCurrentRaid() != null && !(target.isPassenger() || target.isPatrolLeader())) {
+				if (SupernaturalConfig.RAIDERS.get() && lvl.isDarkOutside() && target.getCurrentRaid() != null && !(target.isPassenger() || target.isPatrolLeader())) {
 					if (Math.random() <= SupernaturalConfig.VAMPIRER.get()) {
 						SupernaturalMobs.VAMPIRE.get().spawn(lvl, target.blockPosition(), EntitySpawnReason.EVENT);
 						target.getCurrentRaid().removeFromRaid(lvl, target, true);

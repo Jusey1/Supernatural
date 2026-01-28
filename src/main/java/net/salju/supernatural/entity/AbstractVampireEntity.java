@@ -12,12 +12,11 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.raid.Raider;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.monster.SpellcasterIllager;
-import net.minecraft.world.entity.monster.AbstractIllager;
+import net.minecraft.world.entity.monster.illager.SpellcasterIllager;
+import net.minecraft.world.entity.monster.illager.AbstractIllager;
 import net.minecraft.world.entity.ai.util.GoalUtils;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
@@ -74,6 +73,7 @@ public class AbstractVampireEntity extends SpellcasterIllager {
 		return super.doHurtTarget(lvl, entity);
 	}
 
+    @Override
 	protected void customServerAiStep(ServerLevel lvl) {
 		if (!this.isNoAi() && GoalUtils.hasGroundPathNavigation(this)) {
 			this.getNavigation().setCanOpenDoors(lvl.isRaided(this.blockPosition()));
@@ -84,9 +84,10 @@ public class AbstractVampireEntity extends SpellcasterIllager {
 		super.customServerAiStep(lvl);
 	}
 
+    @Override
 	public void aiStep() {
-		if (this.isAlive()) {
-			if (!SupernaturalConfig.SUN.get() && this.isSunBurnTick() && !this.hasEffect(MobEffects.FIRE_RESISTANCE)) {
+		if (this.isAlive() && this.level() instanceof ServerLevel lvl) {
+			if (SupernaturalManager.shouldVampireBurn(this, lvl) && this.getItemBySlot(EquipmentSlot.HEAD).isEmpty()) {
 				if (this.getRemainingFireTicks() <= 20) {
 					this.setRemainingFireTicks(120);
 					this.hurt(SupernaturalDamageTypes.causeSunDamage(this.level().registryAccess()), 3);

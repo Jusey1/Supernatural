@@ -11,7 +11,7 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.entity.EntityType;
@@ -32,7 +32,7 @@ public class SupernaturalMobs {
     public static final DeferredHolder<EntityType<?>, EntityType<MerfolkDiamond>> MERFOLK_DIAMOND = register("merfolk_diamond", EntityType.Builder.of(MerfolkDiamond::new, MobCategory.MONSTER).sized(0.6F, 1.95F).ridingOffset(-0.15F));
 
 	private static <T extends Entity> DeferredHolder<EntityType<?>, EntityType<T>> register(String name, EntityType.Builder<T> builder) {
-		return REGISTRY.register(name, () -> builder.build(ResourceKey.create(Registries.ENTITY_TYPE, ResourceLocation.fromNamespaceAndPath(Supernatural.MODID, name))));
+		return REGISTRY.register(name, () -> builder.build(ResourceKey.create(Registries.ENTITY_TYPE, Identifier.fromNamespaceAndPath(Supernatural.MODID, name))));
 	}
 
     @SubscribeEvent

@@ -31,7 +31,7 @@ public class RitualCompassItem extends Item {
 		super.appendHoverText(stack, context, display, list, flag);
 		RitualCompassData data = stack.get(SupernaturalData.COMPASS);
 		if (data != null) {
-			if (context.level().dimensionType().natural()) {
+			if (context.level().dimension().equals(Level.OVERWORLD)) {
 				list.accept(Component.translatable(data.getPower()).withStyle(ChatFormatting.DARK_PURPLE));
 			} else {
 				list.accept(Component.translatable("desc.compass.broken").withStyle(ChatFormatting.DARK_PURPLE));
@@ -43,7 +43,7 @@ public class RitualCompassItem extends Item {
 
 	@Override
 	public InteractionResult use(Level world, Player player, InteractionHand hand) {
-		if (player.isCreative() && world.dimensionType().natural()) {
+		if (player.isCreative() && world.dimension().equals(Level.OVERWORLD)) {
 			if (world instanceof ServerLevel lvl) {
 				player.setItemInHand(hand, getRitualCompass(player.blockPosition(), lvl, Mth.nextInt(player.getRandom(), 0, 2)));
 			}

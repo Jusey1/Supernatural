@@ -2,16 +2,17 @@ package net.salju.supernatural.client.renderer;
 
 import net.salju.supernatural.Supernatural;
 import net.salju.supernatural.entity.Vampire;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.client.renderer.entity.state.IllagerRenderState;
 import net.minecraft.client.renderer.entity.layers.ItemInHandLayer;
 import net.minecraft.client.renderer.entity.layers.EyesLayer;
 import net.minecraft.client.renderer.entity.IllagerRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
-import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.rendertype.RenderType;
+import net.minecraft.client.renderer.rendertype.RenderTypes;
 import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.model.geom.ModelLayers;
-import net.minecraft.client.model.IllagerModel;
+import net.minecraft.client.model.monster.illager.IllagerModel;
 import com.mojang.blaze3d.vertex.PoseStack;
 
 public class VampireRenderer extends IllagerRenderer<Vampire, IllagerRenderState> {
@@ -20,7 +21,7 @@ public class VampireRenderer extends IllagerRenderer<Vampire, IllagerRenderState
 		this.addLayer(new EyesLayer<>(this) {
 			@Override
 			public RenderType renderType() {
-				return RenderType.eyes(ResourceLocation.fromNamespaceAndPath(Supernatural.MODID, "textures/entity/vampires/vampire_eyes.png"));
+				return RenderTypes.eyes(Identifier.fromNamespaceAndPath(Supernatural.MODID, "textures/entity/vampires/vampire_eyes.png"));
 			}
 		});
 		this.addLayer(new ItemInHandLayer<>(this) {
@@ -33,8 +34,8 @@ public class VampireRenderer extends IllagerRenderer<Vampire, IllagerRenderState
 	}
 
 	@Override
-	public ResourceLocation getTextureLocation(IllagerRenderState target) {
-		return ResourceLocation.fromNamespaceAndPath(Supernatural.MODID, "textures/entity/vampires/vampire.png");
+	public Identifier getTextureLocation(IllagerRenderState target) {
+		return Identifier.fromNamespaceAndPath(Supernatural.MODID, "textures/entity/vampires/vampire.png");
 	}
 
 	@Override

@@ -5,6 +5,7 @@ import net.salju.supernatural.init.SupernaturalItems;
 import net.salju.supernatural.init.SupernaturalTags;
 import net.salju.supernatural.item.component.SoulgemData;
 import net.salju.supernatural.events.SupernaturalManager;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.component.TooltipDisplay;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.ItemStack;
@@ -13,7 +14,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.network.chat.Component;
 import net.minecraft.ChatFormatting;
 import java.util.function.Consumer;
 
