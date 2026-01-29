@@ -138,7 +138,7 @@ public class SoulMagic {
 					target.setItem(0, EnchantmentHelper.enchantItem(lvl.getRandom(), copy, c, lvl.registryAccess(), Optional.empty()));
 					lvl.playSound(null, pos, SoundEvents.ENCHANTMENT_TABLE_USE, SoundSource.BLOCKS, 1.0F, (float) (0.8F + (Math.random() * 0.2)));
 					if (!player.isCreative()) {
-						player.giveExperiencePoints(c * -2);
+						player.giveExperiencePoints(-c);
 					}
 				} else {
                     RitualEvent event = SupernaturalManager.onRitualEvent(stack, lvl, player, pos, target, i, e);

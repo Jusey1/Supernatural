@@ -20,11 +20,7 @@ public class MerfolkAmethyst extends AbstractMerfolkEntity {
         if (flag && EntitySpawnReason.isSpawner(spawn)) {
             return true;
         } else {
-            return isDeepEnoughToSpawn(pos) && randy.nextInt(56) >= 54 && flag;
+            return pos.getY() <= 54 && randy.nextInt(99) <= 0 && flag;
         }
-    }
-
-    private static boolean isDeepEnoughToSpawn(BlockPos pos) {
-        return pos.getY() <= 56;
     }
 }
