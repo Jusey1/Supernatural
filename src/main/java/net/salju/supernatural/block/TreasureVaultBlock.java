@@ -59,25 +59,17 @@ public class TreasureVaultBlock extends BaseEntityBlock {
             if (world instanceof ServerLevel lvl) {
                 world.setBlock(pos, this.getState(state, true), 2);
                 TreasureVault.playSound(world, pos, SoundEvents.VAULT_OPEN_SHUTTER);
-                List<ItemStack> list = TreasureVault.getRewards(lvl, pos, player, "gameplay/treasure_vault_loot");
+                List<ItemStack> vault = TreasureVault.getRewards(lvl, pos, player, "gameplay/treasure_vault_loot");
                 if (!player.isCreative()) {
                     stack.shrink(1);
                 }
-                this.setRenderStack(list.getLast(), world, pos);
-                this.setCD(world, pos, 6000);
-                for (ItemStack reward : list) {
-                    Supernatural.queueServerWork(20 * list.indexOf(reward), () -> {
-                        TreasureVault.playSound(world, pos, SoundEvents.VAULT_EJECT_ITEM);
-                        TreasureVault.ejectItem(lvl, pos, reward);
-                        if (list.indexOf(reward) >= list.size() - 1) {
-                            Supernatural.queueServerWork(20, () -> {
-                                TreasureVault.playSound(world, pos, SoundEvents.VAULT_CLOSE_SHUTTER);
-                                world.setBlock(pos, this.getState(state, false), 2);
-                                this.setRenderStack(new ItemStack(SupernaturalItems.EBONSTEEL_KEY.get()), world, pos);
-                            });
-                        }
-                    });
+                int i = 20;
+                for (ItemStack reward : vault) {
+                    i = i + 20;
                 }
+                this.setVault(vault, world, pos);
+                this.setRenderStack(vault.getLast(), world, pos);
+                this.setCD(world, pos, i);
             }
         } else {
             TreasureVault.playSound(world, pos, SoundEvents.VAULT_INSERT_ITEM_FAIL);
@@ -127,6 +119,12 @@ public class TreasureVaultBlock extends BaseEntityBlock {
     public void setCD(Level world, BlockPos pos, int i) {
         if (world.getBlockEntity(pos) instanceof TreasureVaultBlockEntity target) {
             target.setCD(i);
+        }
+    }
+
+    public void setVault(List<ItemStack> vault, Level world, BlockPos pos) {
+        if (world.getBlockEntity(pos) instanceof TreasureVaultBlockEntity target) {
+            target.setVault(vault);
         }
     }
 

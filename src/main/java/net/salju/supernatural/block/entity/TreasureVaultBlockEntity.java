@@ -1,12 +1,9 @@
 package net.salju.supernatural.block.entity;
 
-import net.minecraft.util.ProblemReporter;
-import net.minecraft.world.level.storage.TagValueOutput;
-import net.minecraft.world.level.storage.ValueInput;
-import net.minecraft.world.level.storage.ValueOutput;
+import net.salju.supernatural.init.SupernaturalBlocks;
+import net.salju.supernatural.init.SupernaturalItems;
 import net.salju.supernatural.block.TreasureVaultBlock;
 import net.salju.supernatural.block.misc.TreasureVault;
-import net.salju.supernatural.init.SupernaturalBlocks;
 import net.salju.supernatural.block.misc.SoulSpawner;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
@@ -15,15 +12,21 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.network.Connection;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.util.ProblemReporter;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.TagValueOutput;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.ContainerHelper;
-import net.salju.supernatural.init.SupernaturalItems;
+import java.util.List;
 
 public class TreasureVaultBlockEntity extends BlockEntity {
-    private NonNullList<ItemStack> stacks = NonNullList.<ItemStack>withSize(1, new ItemStack(SupernaturalItems.EBONSTEEL_KEY.get()));
+    private NonNullList<ItemStack> stacks = NonNullList.<ItemStack>withSize(1, ItemStack.EMPTY);
+    private List<ItemStack> vault;
     private int dcd;
     private int cd;
 
@@ -72,7 +75,7 @@ public class TreasureVaultBlockEntity extends BlockEntity {
     }
 
     public ItemStack getRenderStack() {
-        return this.stacks.get(0);
+        return this.stacks.getFirst();
     }
 
     public boolean canGiveTreasure() {
@@ -100,6 +103,10 @@ public class TreasureVaultBlockEntity extends BlockEntity {
         this.updateBlock();
     }
 
+    public void setVault(List<ItemStack> vault) {
+        this.vault = vault;
+    }
+
     public void updateBlock() {
         this.setChanged();
         this.getLevel().updateNeighborsAt(this.getBlockPos(), this.getBlockState().getBlock());
@@ -119,6 +126,25 @@ public class TreasureVaultBlockEntity extends BlockEntity {
                 target.setDisplayCD(30);
             }
             if (target.getCD() > 0) {
+                if (state.getValue(TreasureVaultBlock.TREASURE)) {
+                    if (target.vault != null && !target.vault.isEmpty()) {
+                        ItemStack stack = target.vault.getLast();
+                        if (target.getCD() / 20 == target.vault.indexOf(stack)) {
+                            TreasureVault.playSound(world, pos, SoundEvents.VAULT_EJECT_ITEM);
+                            TreasureVault.ejectItem(lvl, pos, stack);
+                            target.vault.remove(stack);
+                            if (!target.vault.isEmpty() && target.vault.getLast() != null) {
+                                target.setRenderItem(target.vault.getLast());
+                            }
+                        }
+                    }
+                    if (target.getCD() == 1 && world.getBlockState(pos).getBlock() instanceof TreasureVaultBlock blok) {
+                        TreasureVault.playSound(world, pos, SoundEvents.VAULT_CLOSE_SHUTTER);
+                        world.setBlock(pos, blok.getState(state, false), 2);
+                        target.setRenderItem(new ItemStack(SupernaturalItems.EBONSTEEL_KEY.get()));
+                        target.setCD(6000);
+                    }
+                }
                 target.setCD(target.getCD() - 1);
             } else if (!target.canGiveTreasure()) {
                 world.setBlock(pos, state.setValue(TreasureVaultBlock.TREASURE, false), 2);
