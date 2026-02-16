@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "treasure=false": {
+      "model": "supernatural:block/treasure_vault"
+    },
+    "treasure=true": {
+      "model": "supernatural:block/treasure_vault_active"
+    }
+  }
+}
