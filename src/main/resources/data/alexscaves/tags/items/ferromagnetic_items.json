@@ -1,0 +1,16 @@
+{
+  "replace": false,
+  "values": [
+    "supernatural:ritual_compass",
+    "supernatural:ebonsteel_ingot",
+    "supernatural:ebonsteel_scrap",
+    "supernatural:ebonsteel_key",
+    "supernatural:ebonsteel_helmet",
+    "supernatural:ebonsteel_chestplate",
+    "supernatural:ebonsteel_leggings",
+    "supernatural:ebonsteel_boots",
+    "supernatural:gothic_iron_helmet",
+    "supernatural:gothic_ebonsteel_helmet",
+    "supernatural:gothic_netherite_helmet"
+  ]
+}

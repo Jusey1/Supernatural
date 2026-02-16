@@ -1,0 +1,8 @@
+{
+  "replace": false,
+  "values": [
+    "supernatural:ritual_altar",
+    "supernatural:treasure_spawner",
+    "supernatural:treasure_vault"
+  ]
+}

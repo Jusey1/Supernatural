@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "R": "minecraft:iron_ingot",
+    "P": "supernatural:plasma",
+    "S": "supernatural:ebonsteel_scrap"
+  },
+  "pattern": [
+    "SSS",
+    "SPR",
+    "RRR"
+  ],
+  "result": {
+    "id": "supernatural:ebonsteel_ingot"
+  }
+}

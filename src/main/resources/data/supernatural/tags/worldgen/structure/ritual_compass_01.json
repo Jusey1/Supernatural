@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    "minecraft:trail_ruins",
+    "minecraft:desert_pyramid",
+    "minecraft:jungle_pyramid",
+    "supernatural:graveyard"
+  ]
+}
