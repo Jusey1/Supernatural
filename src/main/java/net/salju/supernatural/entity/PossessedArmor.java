@@ -4,7 +4,7 @@ import net.salju.supernatural.init.SupernaturalEffects;
 import net.salju.supernatural.init.SupernaturalItems;
 import net.salju.supernatural.init.SupernaturalSounds;
 import net.salju.supernatural.events.SupernaturalManager;
-import net.salju.supernatural.entity.ai.targets.MinionAttackSelector;
+import net.salju.supernatural.entity.ai.MinionAttackSelector;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.util.RandomSource;

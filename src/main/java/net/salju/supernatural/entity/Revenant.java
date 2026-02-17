@@ -1,11 +1,8 @@
 package net.salju.supernatural.entity;
 
 import net.salju.supernatural.init.SupernaturalSounds;
-import net.salju.supernatural.entity.ai.spells.revenant.*;
-import net.salju.supernatural.entity.ai.spells.AbstractSpellcasterGoal;
-import net.salju.supernatural.entity.ai.RevenantPathNavigation;
-import net.salju.supernatural.entity.ai.RevenantRandomFlyingGoal;
-import net.salju.supernatural.entity.ai.RevenantStareGoal;
+import net.salju.supernatural.entity.ai.abstractai.AbstractSpellcasterGoal;
+import net.salju.supernatural.entity.ai.revenant.*;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;

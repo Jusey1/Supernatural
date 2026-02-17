@@ -1,6 +1,6 @@
 package net.salju.supernatural.entity;
 
-import net.salju.supernatural.entity.ai.spells.vampire.*;
+import net.salju.supernatural.entity.ai.vampire.*;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.entity.EntityType;
 
