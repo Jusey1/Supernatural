@@ -1,5 +1,6 @@
 package net.salju.supernatural.entity;
 
+import net.minecraft.world.entity.animal.equine.AbstractHorse;
 import net.salju.supernatural.events.SupernaturalManager;
 import net.salju.supernatural.init.SupernaturalItems;
 import net.salju.supernatural.init.SupernaturalSounds;
@@ -209,16 +210,22 @@ public class Wight extends AbstractSpellcasterEntity implements Enemy, CrossbowA
 	}
 
     public ItemStack getSwapToWeapon() {
-        return this.getMainHandItem().is(Items.CROSSBOW) ? this.getPrimary() : this.getSecondary();
+        return this.hasCrossbow() ? this.getPrimary() : this.getSecondary();
     }
 
     public boolean shouldSwapToWeapon(LivingEntity target) {
         if (this.isCastingSpell()) {
             return false;
-        } else if (this.getMainHandItem().is(Items.CROSSBOW)) {
+        } else if (this.isPassenger()) {
+            if (this.getVehicle() instanceof AbstractHorse) {
+                return this.hasCrossbow();
+            } else {
+                return !this.hasCrossbow();
+            }
+        } else if (this.hasCrossbow()) {
             return this.distanceTo(target) <= 5.76 && !target.isInWater();
         } else {
-            return this.distanceTo(target) >= 7.28 || target.isInWater();
+            return this.distanceTo(target) >= 8.25 || target.isInWater();
         }
     }
 
@@ -233,4 +240,8 @@ public class Wight extends AbstractSpellcasterEntity implements Enemy, CrossbowA
 	public boolean isCaptain() {
 		return this.getEntityData().get(CAPTAIN);
 	}
+
+    public boolean hasCrossbow() {
+        return this.getMainHandItem().getItem() instanceof CrossbowItem;
+    }
 }
