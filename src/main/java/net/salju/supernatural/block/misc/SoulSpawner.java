@@ -8,9 +8,10 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.random.WeightedList;
+import net.minecraft.util.Mth;
 import net.minecraft.util.ProblemReporter;
 import net.minecraft.util.RandomSource;
-import net.minecraft.world.Difficulty;
+import net.minecraft.world.entity.monster.Vex;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.level.block.entity.trialspawner.TrialSpawner;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -23,6 +24,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.SpawnData;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.Difficulty;
 import com.mojang.datafixers.util.Either;
 import com.mojang.logging.LogUtils;
 import org.slf4j.Logger;
@@ -122,6 +124,10 @@ public abstract class SoulSpawner implements IOwnedSpawner {
                                 if (data.getEquipment().isPresent()) {
                                     mob.equip(data.getEquipment().get());
                                 }
+                            }
+                            if (target instanceof Vex ghost) {
+                                ghost.setLimitedLife(Mth.nextInt(ghost.getRandom(), 1200, 2400));
+                                ghost.setBoundOrigin(poz);
                             }
                             if (!lvl.tryAddFreshEntityWithPassengers(target)) {
                                 this.delay(lvl, pos);
