@@ -27,6 +27,7 @@ public class SupernaturalItems {
     public static final DeferredHolder<Item, Item> REVENANT_SPAWN_EGG = REGISTRY.register("revenant_spawn_egg", () -> new SpawnEggItem(createBaseProps("revenant_spawn_egg").spawnEgg(SupernaturalMobs.REVENANT.get())));
     public static final DeferredHolder<Item, Item> SCOURGE_SPAWN_EGG = REGISTRY.register("scourge_spawn_egg", () -> new SpawnEggItem(createBaseProps("scourge_spawn_egg").spawnEgg(SupernaturalMobs.MERFOLK_DIAMOND.get())));
     public static final DeferredHolder<Item, Item> ANGEL_STATUE = REGISTRY.register("angel_statue", () -> new AngelStatueItem(createBaseProps("angel_statue").stacksTo(1)));
+    public static final DeferredHolder<Item, Item> EBONSTEEL_BARS = block(SupernaturalBlocks.EBONSTEEL_BLOCK, "ebonsteel_bars");
     public static final DeferredHolder<Item, Item> RITUAL_ALTAR = block(SupernaturalBlocks.RITUAL_ALTAR, "ritual_altar");
     public static final DeferredHolder<Item, Item> TREASURE_SPAWNER = block(SupernaturalBlocks.TREASURE_SPAWNER, "treasure_spawner");
     public static final DeferredHolder<Item, Item> TREASURE_VAULT = block(SupernaturalBlocks.TREASURE_VAULT, "treasure_vault");

@@ -12,8 +12,9 @@ import net.minecraft.world.entity.ai.village.poi.PoiType;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.IronBarsBlock;
+import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.material.PushReaction;
 import com.google.common.collect.ImmutableSet;
@@ -28,6 +29,7 @@ public class SupernaturalBlocks {
     public static final DeferredHolder<Block, Block> TREASURE_SPAWNER = REGISTRY.register("treasure_spawner", () -> new TreasureSpawnerBlock(createBaseProps("treasure_spawner").mapColor(MapColor.DEEPSLATE).sound(SoundType.TRIAL_SPAWNER).strength(25.0F, 1200.0F).requiresCorrectToolForDrops().noOcclusion()));
     public static final DeferredHolder<Block, Block> TREASURE_VAULT = REGISTRY.register("treasure_vault", () -> new TreasureVaultBlock(createBaseProps("treasure_vault").mapColor(MapColor.DEEPSLATE).sound(SoundType.VAULT).strength(25.0F, 1200.0F).requiresCorrectToolForDrops().noOcclusion()));
 	public static final DeferredHolder<Block, Block> RITUAL_ALTAR = REGISTRY.register("ritual_altar", () -> new RitualAltarBlock(createBaseProps("ritual_altar").mapColor(MapColor.DEEPSLATE).sound(SoundType.DEEPSLATE_BRICKS).strength(1.2F, 8.0F).requiresCorrectToolForDrops()));
+    public static final DeferredHolder<Block, Block> EBONSTEEL_BARS = REGISTRY.register("ebonsteel_bars", () -> new IronBarsBlock(createBaseProps("ebonsteel_bars").mapColor(MapColor.DEEPSLATE).sound(SoundType.NETHERITE_BLOCK).strength(50.0F, 1200.0F).pushReaction(PushReaction.BLOCK).requiresCorrectToolForDrops().noOcclusion()));
     public static final DeferredHolder<Block, Block> EBONSTEEL_BLOCK = REGISTRY.register("ebonsteel_block", () -> new Block(createBaseProps("ebonsteel_block").mapColor(MapColor.DEEPSLATE).sound(SoundType.NETHERITE_BLOCK).strength(50.0F, 1200.0F).pushReaction(PushReaction.BLOCK).requiresCorrectToolForDrops()));
 	public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<RitualAltarEntity>> RITUAL = BE.register("ritual_altar", () -> new BlockEntityType<>(RitualAltarEntity::new, RITUAL_ALTAR.get()));
     public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<TreasureSpawnerBlockEntity>> TP = BE.register("treasure_spawner", () -> new BlockEntityType<>(TreasureSpawnerBlockEntity::new, TREASURE_SPAWNER.get()));
