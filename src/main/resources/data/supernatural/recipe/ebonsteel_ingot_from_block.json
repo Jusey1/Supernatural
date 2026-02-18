@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "R": "supernatural:ebonsteel_block"
+  },
+  "pattern": [
+    "R"
+  ],
+  "result": {
+    "id": "supernatural:ebonsteel_ingot",
+    "count": "9"
+  }
+}
