@@ -1,0 +1,9 @@
+{
+    "parent": "minecraft:block/iron_bars_post_ends",
+    "ambientocclusion": false,
+    "textures": {
+        "particle": "supernatural:block/ebonsteel_bars",
+        "bars": "supernatural:block/ebonsteel_bars",
+        "edge": "supernatural:block/ebonsteel_bars"
+    }
+}
