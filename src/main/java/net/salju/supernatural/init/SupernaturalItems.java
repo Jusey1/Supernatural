@@ -28,9 +28,10 @@ public class SupernaturalItems {
     public static final DeferredHolder<Item, Item> SCOURGE_SPAWN_EGG = REGISTRY.register("scourge_spawn_egg", () -> new SpawnEggItem(createBaseProps("scourge_spawn_egg").spawnEgg(SupernaturalMobs.MERFOLK_DIAMOND.get())));
     public static final DeferredHolder<Item, Item> ANGEL_STATUE = REGISTRY.register("angel_statue", () -> new AngelStatueItem(createBaseProps("angel_statue").stacksTo(1)));
     public static final DeferredHolder<Item, Item> RITUAL_ALTAR = block(SupernaturalBlocks.RITUAL_ALTAR, "ritual_altar");
-    public static final DeferredHolder<Item, Item> GRAVE_SOIL = block(SupernaturalBlocks.GRAVE_SOIL, "grave_soil");
     public static final DeferredHolder<Item, Item> TREASURE_SPAWNER = block(SupernaturalBlocks.TREASURE_SPAWNER, "treasure_spawner");
     public static final DeferredHolder<Item, Item> TREASURE_VAULT = block(SupernaturalBlocks.TREASURE_VAULT, "treasure_vault");
+    public static final DeferredHolder<Item, Item> EBONSTEEL_BLOCK = block(SupernaturalBlocks.EBONSTEEL_BLOCK, "ebonsteel_block");
+    public static final DeferredHolder<Item, Item> GRAVE_SOIL = block(SupernaturalBlocks.GRAVE_SOIL, "grave_soil");
     public static final DeferredHolder<Item, Item> EBONSTEEL_HELMET = REGISTRY.register("ebonsteel_helmet", () -> new Item(createBaseProps("ebonsteel_helmet").durability(ArmorType.HELMET.getDurability(21)).humanoidArmor(SupernaturalArmors.EBONSTEEL, ArmorType.HELMET).rarity(Rarity.UNCOMMON)));
     public static final DeferredHolder<Item, Item> EBONSTEEL_CHESTPLATE = REGISTRY.register("ebonsteel_chestplate", () -> new Item(createBaseProps("ebonsteel_chestplate").durability(ArmorType.CHESTPLATE.getDurability(21)).humanoidArmor(SupernaturalArmors.EBONSTEEL, ArmorType.CHESTPLATE).rarity(Rarity.UNCOMMON)));
     public static final DeferredHolder<Item, Item> EBONSTEEL_LEGGINGS = REGISTRY.register("ebonsteel_leggings", () -> new Item(createBaseProps("ebonsteel_leggings").durability(ArmorType.LEGGINGS.getDurability(21)).humanoidArmor(SupernaturalArmors.EBONSTEEL, ArmorType.LEGGINGS).rarity(Rarity.UNCOMMON)));

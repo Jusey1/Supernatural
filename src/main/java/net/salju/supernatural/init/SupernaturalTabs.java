@@ -47,6 +47,7 @@ public class SupernaturalTabs {
                 tabData.accept(SupernaturalItems.RITUAL_ALTAR.get());
                 tabData.accept(SupernaturalItems.TREASURE_SPAWNER.get());
                 tabData.accept(SupernaturalItems.TREASURE_VAULT.get());
+                tabData.accept(SupernaturalItems.EBONSTEEL_BLOCK.get());
                 tabData.accept(SupernaturalItems.GRAVE_SOIL.get());
 			}).build());
 }
