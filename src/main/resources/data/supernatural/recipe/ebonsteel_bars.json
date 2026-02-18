@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "R": "supernatural:ebonsteel_ingot"
+  },
+  "pattern": [
+    "RRR",
+    "RRR"
+  ],
+  "result": {
+    "id": "supernatural:ebonsteel_bars",
+    "count": 16
+  }
+}
