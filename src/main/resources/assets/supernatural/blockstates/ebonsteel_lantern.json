@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "hanging=false": {
+      "model": "supernatural:block/ebonsteel_lantern"
+    },
+    "hanging=true": {
+      "model": "supernatural:block/ebonsteel_lantern_hanging"
+    }
+  }
+}
