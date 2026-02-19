@@ -32,7 +32,7 @@ public class RevenantSacrificeSpellGoal extends AbstractRevenantSpellGoal {
 
     public boolean hasValidTarget() {
         if (this.getTarget() instanceof Player player && this.revenant.hasLineOfSight(player)) {
-            return player.isSleeping() || player.getFoodData().getFoodLevel() <= 4;
+            return player.isSleeping() || player.getFoodData().getFoodLevel() <= 0;
         }
         return false;
     }

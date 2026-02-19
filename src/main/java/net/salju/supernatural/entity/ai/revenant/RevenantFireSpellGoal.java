@@ -25,6 +25,6 @@ public class RevenantFireSpellGoal extends AbstractRevenantSpellGoal {
 
 	@Override
 	protected int getCastingInterval() {
-		return 580;
+		return 420;
 	}
 }
