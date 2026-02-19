@@ -1,6 +1,8 @@
 {
   "block.supernatural.ebonsteel_bars": "Ebonsteel Bars",
   "block.supernatural.ebonsteel_block": "Block of Ebonsteel",
+  "block.supernatural.ebonsteel_chain": "Ebonsteel Chain",
+  "block.supernatural.ebonsteel_lantern": "Ebonsteel Lantern",
   "block.supernatural.grave_soil": "Grave Soil",
   "block.supernatural.revenant_flame": "Revenant Flame",
   "block.supernatural.ritual_altar": "Ritual Altar",
@@ -70,6 +72,8 @@
   "item.supernatural.ebonsteel_scrap": "Ebonsteel Scrap",
   "item.supernatural.ebonsteel_bars": "Ebonsteel Bars",
   "item.supernatural.ebonsteel_block": "Block of Ebonsteel",
+  "item.supernatural.ebonsteel_chain": "Ebonsteel Chain",
+  "item.supernatural.ebonsteel_lantern": "Ebonsteel Lantern",
   "item.supernatural.gothic_copper_helmet": "Gothic Copper Helmet",
   "item.supernatural.gothic_diamond_helmet": "Gothic Diamond Helmet",
   "item.supernatural.gothic_ebonsteel_helmet": "Gothic Ebonsteel Helmet",
