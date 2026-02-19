@@ -4,6 +4,8 @@
     "supernatural:treasure_spawner",
     "supernatural:treasure_vault",
     "supernatural:ebonsteel_bars",
-    "supernatural:ebonsteel_block"
+    "supernatural:ebonsteel_block",
+    "supernatural:ebonsteel_chain",
+    "supernatural:ebonsteel_lantern"
   ]
 }
