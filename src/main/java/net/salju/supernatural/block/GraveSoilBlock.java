@@ -26,8 +26,8 @@ public class GraveSoilBlock extends Block {
 	}
 
     @Override
-    public void tick(BlockState state, ServerLevel lvl, BlockPos pos, RandomSource rng) {
-        super.tick(state, lvl, pos, rng);
+    public void randomTick(BlockState state, ServerLevel lvl, BlockPos pos, RandomSource rng) {
+        super.randomTick(state, lvl, pos, rng);
         BlockPos poz = BlockPos.containing(pos.getX() + 0.5, pos.getY() + 2, pos.getZ() + 0.5);
         if (lvl.getBlockState(pos.above()).is(Blocks.SOUL_FIRE) && this.canSpawn(lvl, poz) && lvl.getDifficulty() != Difficulty.PEACEFUL) {
             if (lvl.isEmptyBlock(poz) && Math.random() <= 0.15) {
