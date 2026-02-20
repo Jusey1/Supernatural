@@ -1,9 +1,0 @@
-{
-  "parent": "supernatural:block/abstract_treasure_vault",
-  "textures": {
-    "top": "supernatural:block/treasure_vault_top",
-    "bottom": "supernatural:block/treasure_vault_bot",
-    "side": "supernatural:block/treasure_vault_side"
-  },
-    "render_type": "cutout"
-}
