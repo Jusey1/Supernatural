@@ -1,0 +1,28 @@
+{
+  "variants": {
+    "candles=1,lit=false": {
+      "model": "supernatural:block/ritual_candle_one"
+    },
+    "candles=1,lit=true": {
+      "model": "supernatural:block/ritual_candle_one"
+    },
+    "candles=2,lit=false": {
+      "model": "supernatural:block/ritual_candle_two"
+    },
+    "candles=2,lit=true": {
+      "model": "supernatural:block/ritual_candle_two"
+    },
+    "candles=3,lit=false": {
+      "model": "supernatural:block/ritual_candle_three"
+    },
+    "candles=3,lit=true": {
+      "model": "supernatural:block/ritual_candle_three"
+    },
+    "candles=4,lit=false": {
+      "model": "supernatural:block/ritual_candle_four"
+    },
+    "candles=4,lit=true": {
+      "model": "supernatural:block/ritual_candle_four"
+    }
+  }
+}

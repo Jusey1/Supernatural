@@ -1,0 +1,394 @@
+{
+  "variants": {
+    "lit=false,facing=north,face=floor,candles=1": {
+      "model": "supernatural:block/candle_holders/ebonsteel_floor_one"
+    },
+    "lit=false,facing=north,face=floor,candles=2": {
+      "model": "supernatural:block/candle_holders/ebonsteel_floor_two"
+    },
+    "lit=false,facing=north,face=floor,candles=3": {
+      "model": "supernatural:block/candle_holders/ebonsteel_floor_three"
+    },
+    "lit=false,facing=north,face=floor,candles=4": {
+      "model": "supernatural:block/candle_holders/ebonsteel_floor_four"
+    },
+
+    "lit=false,facing=north,face=wall,candles=1": {
+      "model": "supernatural:block/candle_holders/ebonsteel_wall_one"
+    },
+    "lit=false,facing=north,face=wall,candles=2": {
+      "model": "supernatural:block/candle_holders/ebonsteel_wall_two"
+    },
+    "lit=false,facing=north,face=wall,candles=3": {
+      "model": "supernatural:block/candle_holders/ebonsteel_wall_three"
+    },
+    "lit=false,facing=north,face=wall,candles=4": {
+      "model": "supernatural:block/candle_holders/ebonsteel_wall_four"
+    },
+
+    "lit=false,facing=north,face=ceiling,candles=1": {
+      "model": "supernatural:block/candle_holders/ebonsteel_ceiling_one"
+    },
+    "lit=false,facing=north,face=ceiling,candles=2": {
+      "model": "supernatural:block/candle_holders/ebonsteel_ceiling_two"
+    },
+    "lit=false,facing=north,face=ceiling,candles=3": {
+      "model": "supernatural:block/candle_holders/ebonsteel_ceiling_three"
+    },
+    "lit=false,facing=north,face=ceiling,candles=4": {
+      "model": "supernatural:block/candle_holders/ebonsteel_ceiling_four"
+    },
+
+
+    "lit=false,facing=east,face=floor,candles=1": {
+      "model": "supernatural:block/candle_holders/ebonsteel_floor_one",
+      "y": 90
+    },
+    "lit=false,facing=east,face=floor,candles=2": {
+      "model": "supernatural:block/candle_holders/ebonsteel_floor_two",
+      "y": 90
+    },
+    "lit=false,facing=east,face=floor,candles=3": {
+      "model": "supernatural:block/candle_holders/ebonsteel_floor_three",
+      "y": 90
+    },
+    "lit=false,facing=east,face=floor,candles=4": {
+      "model": "supernatural:block/candle_holders/ebonsteel_floor_four",
+      "y": 90
+    },
+
+    "lit=false,facing=east,face=wall,candles=1": {
+      "model": "supernatural:block/candle_holders/ebonsteel_wall_one",
+      "y": 90
+    },
+    "lit=false,facing=east,face=wall,candles=2": {
+      "model": "supernatural:block/candle_holders/ebonsteel_wall_two",
+      "y": 90
+    },
+    "lit=false,facing=east,face=wall,candles=3": {
+      "model": "supernatural:block/candle_holders/ebonsteel_wall_three",
+      "y": 90
+    },
+    "lit=false,facing=east,face=wall,candles=4": {
+      "model": "supernatural:block/candle_holders/ebonsteel_wall_four",
+      "y": 90
+    },
+
+    "lit=false,facing=east,face=ceiling,candles=1": {
+      "model": "supernatural:block/candle_holders/ebonsteel_ceiling_one_f",
+      "y": 90
+    },
+    "lit=false,facing=east,face=ceiling,candles=2": {
+      "model": "supernatural:block/candle_holders/ebonsteel_ceiling_two_f",
+      "y": 90
+    },
+    "lit=false,facing=east,face=ceiling,candles=3": {
+      "model": "supernatural:block/candle_holders/ebonsteel_ceiling_three_f",
+      "y": 90
+    },
+    "lit=false,facing=east,face=ceiling,candles=4": {
+      "model": "supernatural:block/candle_holders/ebonsteel_ceiling_four",
+      "y": 90
+    },
+
+
+    "lit=false,facing=south,face=floor,candles=1": {
+      "model": "supernatural:block/candle_holders/ebonsteel_floor_one",
+      "y": 180
+    },
+    "lit=false,facing=south,face=floor,candles=2": {
+      "model": "supernatural:block/candle_holders/ebonsteel_floor_two",
+      "y": 180
+    },
+    "lit=false,facing=south,face=floor,candles=3": {
+      "model": "supernatural:block/candle_holders/ebonsteel_floor_three",
+      "y": 180
+    },
+    "lit=false,facing=south,face=floor,candles=4": {
+      "model": "supernatural:block/candle_holders/ebonsteel_floor_four",
+      "y": 180
+    },
+
+    "lit=false,facing=south,face=wall,candles=1": {
+      "model": "supernatural:block/candle_holders/ebonsteel_wall_one",
+      "y": 180
+    },
+    "lit=false,facing=south,face=wall,candles=2": {
+      "model": "supernatural:block/candle_holders/ebonsteel_wall_two",
+      "y": 180
+    },
+    "lit=false,facing=south,face=wall,candles=3": {
+      "model": "supernatural:block/candle_holders/ebonsteel_wall_three",
+      "y": 180
+    },
+    "lit=false,facing=south,face=wall,candles=4": {
+      "model": "supernatural:block/candle_holders/ebonsteel_wall_four",
+      "y": 180
+    },
+
+    "lit=false,facing=south,face=ceiling,candles=1": {
+      "model": "supernatural:block/candle_holders/ebonsteel_ceiling_one",
+      "y": 180
+    },
+    "lit=false,facing=south,face=ceiling,candles=2": {
+      "model": "supernatural:block/candle_holders/ebonsteel_ceiling_two",
+      "y": 180
+    },
+    "lit=false,facing=south,face=ceiling,candles=3": {
+      "model": "supernatural:block/candle_holders/ebonsteel_ceiling_three",
+      "y": 180
+    },
+    "lit=false,facing=south,face=ceiling,candles=4": {
+      "model": "supernatural:block/candle_holders/ebonsteel_ceiling_four",
+      "y": 180
+    },
+
+
+    "lit=false,facing=west,face=floor,candles=1": {
+      "model": "supernatural:block/candle_holders/ebonsteel_floor_one",
+      "y": 270
+    },
+    "lit=false,facing=west,face=floor,candles=2": {
+      "model": "supernatural:block/candle_holders/ebonsteel_floor_two",
+      "y": 270
+    },
+    "lit=false,facing=west,face=floor,candles=3": {
+      "model": "supernatural:block/candle_holders/ebonsteel_floor_three",
+      "y": 270
+    },
+    "lit=false,facing=west,face=floor,candles=4": {
+      "model": "supernatural:block/candle_holders/ebonsteel_floor_four",
+      "y": 270
+    },
+
+    "lit=false,facing=west,face=wall,candles=1": {
+      "model": "supernatural:block/candle_holders/ebonsteel_wall_one",
+      "y": 270
+    },
+    "lit=false,facing=west,face=wall,candles=2": {
+      "model": "supernatural:block/candle_holders/ebonsteel_wall_two",
+      "y": 270
+    },
+    "lit=false,facing=west,face=wall,candles=3": {
+      "model": "supernatural:block/candle_holders/ebonsteel_wall_three",
+      "y": 270
+    },
+    "lit=false,facing=west,face=wall,candles=4": {
+      "model": "supernatural:block/candle_holders/ebonsteel_wall_four",
+      "y": 270
+    },
+
+    "lit=false,facing=west,face=ceiling,candles=1": {
+      "model": "supernatural:block/candle_holders/ebonsteel_ceiling_one_f",
+      "y": 270
+    },
+    "lit=false,facing=west,face=ceiling,candles=2": {
+      "model": "supernatural:block/candle_holders/ebonsteel_ceiling_two_f",
+      "y": 270
+    },
+    "lit=false,facing=west,face=ceiling,candles=3": {
+      "model": "supernatural:block/candle_holders/ebonsteel_ceiling_three_f",
+      "y": 270
+    },
+    "lit=false,facing=west,face=ceiling,candles=4": {
+      "model": "supernatural:block/candle_holders/ebonsteel_ceiling_four",
+      "y": 270
+    },
+
+
+    "lit=true,facing=north,face=floor,candles=1": {
+      "model": "supernatural:block/candle_holders/ebonsteel_floor_one"
+    },
+    "lit=true,facing=north,face=floor,candles=2": {
+      "model": "supernatural:block/candle_holders/ebonsteel_floor_two"
+    },
+    "lit=true,facing=north,face=floor,candles=3": {
+      "model": "supernatural:block/candle_holders/ebonsteel_floor_three"
+    },
+    "lit=true,facing=north,face=floor,candles=4": {
+      "model": "supernatural:block/candle_holders/ebonsteel_floor_four"
+    },
+
+    "lit=true,facing=north,face=wall,candles=1": {
+      "model": "supernatural:block/candle_holders/ebonsteel_wall_one"
+    },
+    "lit=true,facing=north,face=wall,candles=2": {
+      "model": "supernatural:block/candle_holders/ebonsteel_wall_two"
+    },
+    "lit=true,facing=north,face=wall,candles=3": {
+      "model": "supernatural:block/candle_holders/ebonsteel_wall_three"
+    },
+    "lit=true,facing=north,face=wall,candles=4": {
+      "model": "supernatural:block/candle_holders/ebonsteel_wall_four"
+    },
+
+    "lit=true,facing=north,face=ceiling,candles=1": {
+      "model": "supernatural:block/candle_holders/ebonsteel_ceiling_one"
+    },
+    "lit=true,facing=north,face=ceiling,candles=2": {
+      "model": "supernatural:block/candle_holders/ebonsteel_ceiling_two"
+    },
+    "lit=true,facing=north,face=ceiling,candles=3": {
+      "model": "supernatural:block/candle_holders/ebonsteel_ceiling_three"
+    },
+    "lit=true,facing=north,face=ceiling,candles=4": {
+      "model": "supernatural:block/candle_holders/ebonsteel_ceiling_four"
+    },
+
+
+    "lit=true,facing=east,face=floor,candles=1": {
+      "model": "supernatural:block/candle_holders/ebonsteel_floor_one",
+      "y": 90
+    },
+    "lit=true,facing=east,face=floor,candles=2": {
+      "model": "supernatural:block/candle_holders/ebonsteel_floor_two",
+      "y": 90
+    },
+    "lit=true,facing=east,face=floor,candles=3": {
+      "model": "supernatural:block/candle_holders/ebonsteel_floor_three",
+      "y": 90
+    },
+    "lit=true,facing=east,face=floor,candles=4": {
+      "model": "supernatural:block/candle_holders/ebonsteel_floor_four",
+      "y": 90
+    },
+
+    "lit=true,facing=east,face=wall,candles=1": {
+      "model": "supernatural:block/candle_holders/ebonsteel_wall_one",
+      "y": 90
+    },
+    "lit=true,facing=east,face=wall,candles=2": {
+      "model": "supernatural:block/candle_holders/ebonsteel_wall_two",
+      "y": 90
+    },
+    "lit=true,facing=east,face=wall,candles=3": {
+      "model": "supernatural:block/candle_holders/ebonsteel_wall_three",
+      "y": 90
+    },
+    "lit=true,facing=east,face=wall,candles=4": {
+      "model": "supernatural:block/candle_holders/ebonsteel_wall_four",
+      "y": 90
+    },
+
+    "lit=true,facing=east,face=ceiling,candles=1": {
+      "model": "supernatural:block/candle_holders/ebonsteel_ceiling_one_f",
+      "y": 90
+    },
+    "lit=true,facing=east,face=ceiling,candles=2": {
+      "model": "supernatural:block/candle_holders/ebonsteel_ceiling_two_f",
+      "y": 90
+    },
+    "lit=true,facing=east,face=ceiling,candles=3": {
+      "model": "supernatural:block/candle_holders/ebonsteel_ceiling_three_f",
+      "y": 90
+    },
+    "lit=true,facing=east,face=ceiling,candles=4": {
+      "model": "supernatural:block/candle_holders/ebonsteel_ceiling_four",
+      "y": 90
+    },
+
+
+    "lit=true,facing=south,face=floor,candles=1": {
+      "model": "supernatural:block/candle_holders/ebonsteel_floor_one",
+      "y": 180
+    },
+    "lit=true,facing=south,face=floor,candles=2": {
+      "model": "supernatural:block/candle_holders/ebonsteel_floor_two",
+      "y": 180
+    },
+    "lit=true,facing=south,face=floor,candles=3": {
+      "model": "supernatural:block/candle_holders/ebonsteel_floor_three",
+      "y": 180
+    },
+    "lit=true,facing=south,face=floor,candles=4": {
+      "model": "supernatural:block/candle_holders/ebonsteel_floor_four",
+      "y": 180
+    },
+
+    "lit=true,facing=south,face=wall,candles=1": {
+      "model": "supernatural:block/candle_holders/ebonsteel_wall_one",
+      "y": 180
+    },
+    "lit=true,facing=south,face=wall,candles=2": {
+      "model": "supernatural:block/candle_holders/ebonsteel_wall_two",
+      "y": 180
+    },
+    "lit=true,facing=south,face=wall,candles=3": {
+      "model": "supernatural:block/candle_holders/ebonsteel_wall_three",
+      "y": 180
+    },
+    "lit=true,facing=south,face=wall,candles=4": {
+      "model": "supernatural:block/candle_holders/ebonsteel_wall_four",
+      "y": 180
+    },
+
+    "lit=true,facing=south,face=ceiling,candles=1": {
+      "model": "supernatural:block/candle_holders/ebonsteel_ceiling_one",
+      "y": 180
+    },
+    "lit=true,facing=south,face=ceiling,candles=2": {
+      "model": "supernatural:block/candle_holders/ebonsteel_ceiling_two",
+      "y": 180
+    },
+    "lit=true,facing=south,face=ceiling,candles=3": {
+      "model": "supernatural:block/candle_holders/ebonsteel_ceiling_three",
+      "y": 180
+    },
+    "lit=true,facing=south,face=ceiling,candles=4": {
+      "model": "supernatural:block/candle_holders/ebonsteel_ceiling_four",
+      "y": 180
+    },
+
+
+    "lit=true,facing=west,face=floor,candles=1": {
+      "model": "supernatural:block/candle_holders/ebonsteel_floor_one",
+      "y": 270
+    },
+    "lit=true,facing=west,face=floor,candles=2": {
+      "model": "supernatural:block/candle_holders/ebonsteel_floor_two",
+      "y": 270
+    },
+    "lit=true,facing=west,face=floor,candles=3": {
+      "model": "supernatural:block/candle_holders/ebonsteel_floor_three",
+      "y": 270
+    },
+    "lit=true,facing=west,face=floor,candles=4": {
+      "model": "supernatural:block/candle_holders/ebonsteel_floor_four",
+      "y": 270
+    },
+
+    "lit=true,facing=west,face=wall,candles=1": {
+      "model": "supernatural:block/candle_holders/ebonsteel_wall_one",
+      "y": 270
+    },
+    "lit=true,facing=west,face=wall,candles=2": {
+      "model": "supernatural:block/candle_holders/ebonsteel_wall_two",
+      "y": 270
+    },
+    "lit=true,facing=west,face=wall,candles=3": {
+      "model": "supernatural:block/candle_holders/ebonsteel_wall_three",
+      "y": 270
+    },
+    "lit=true,facing=west,face=wall,candles=4": {
+      "model": "supernatural:block/candle_holders/ebonsteel_wall_four",
+      "y": 270
+    },
+
+    "lit=true,facing=west,face=ceiling,candles=1": {
+      "model": "supernatural:block/candle_holders/ebonsteel_ceiling_one_f",
+      "y": 270
+    },
+    "lit=true,facing=west,face=ceiling,candles=2": {
+      "model": "supernatural:block/candle_holders/ebonsteel_ceiling_two_f",
+      "y": 270
+    },
+    "lit=true,facing=west,face=ceiling,candles=3": {
+      "model": "supernatural:block/candle_holders/ebonsteel_ceiling_three_f",
+      "y": 270
+    },
+    "lit=true,facing=west,face=ceiling,candles=4": {
+      "model": "supernatural:block/candle_holders/ebonsteel_ceiling_four",
+      "y": 270
+    }
+  }
+}
