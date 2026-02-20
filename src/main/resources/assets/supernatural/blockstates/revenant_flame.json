@@ -3,45 +3,45 @@
     {
       "apply": [
         {
-          "model": "supernatural:block/revenant_flame_floor0"
+          "model": "supernatural:block/revenant_flame_floor_zero"
         },
         {
-          "model": "supernatural:block/revenant_flame_floor1"
+          "model": "supernatural:block/revenant_flame_floor_one"
         }
       ]
     },
     {
       "apply": [
         {
-          "model": "supernatural:block/revenant_flame_side0"
+          "model": "supernatural:block/revenant_flame_side_zero"
         },
         {
-          "model": "supernatural:block/revenant_flame_side1"
+          "model": "supernatural:block/revenant_flame_side_one"
         },
         {
-          "model": "supernatural:block/revenant_flame_side_alt0"
+          "model": "supernatural:block/revenant_flame_side_alt_zero"
         },
         {
-          "model": "supernatural:block/revenant_flame_side_alt1"
+          "model": "supernatural:block/revenant_flame_side_alt_one"
         }
       ]
     },
     {
       "apply": [
         {
-          "model": "supernatural:block/revenant_flame_side0",
+          "model": "supernatural:block/revenant_flame_side_zero",
           "y": 90
         },
         {
-          "model": "supernatural:block/revenant_flame_side1",
+          "model": "supernatural:block/revenant_flame_side_one",
           "y": 90
         },
         {
-          "model": "supernatural:block/revenant_flame_side_alt0",
+          "model": "supernatural:block/revenant_flame_side_alt_zero",
           "y": 90
         },
         {
-          "model": "supernatural:block/revenant_flame_side_alt1",
+          "model": "supernatural:block/revenant_flame_side_alt_one",
           "y": 90
         }
       ]
@@ -49,19 +49,19 @@
     {
       "apply": [
         {
-          "model": "supernatural:block/revenant_flame_side0",
+          "model": "supernatural:block/revenant_flame_side_zero",
           "y": 180
         },
         {
-          "model": "supernatural:block/revenant_flame_side1",
+          "model": "supernatural:block/revenant_flame_side_one",
           "y": 180
         },
         {
-          "model": "supernatural:block/revenant_flame_side_alt0",
+          "model": "supernatural:block/revenant_flame_side_alt_zero",
           "y": 180
         },
         {
-          "model": "supernatural:block/revenant_flame_side_alt1",
+          "model": "supernatural:block/revenant_flame_side_alt_one",
           "y": 180
         }
       ]
@@ -69,19 +69,19 @@
     {
       "apply": [
         {
-          "model": "supernatural:block/revenant_flame_side0",
+          "model": "supernatural:block/revenant_flame_side_zero",
           "y": 270
         },
         {
-          "model": "supernatural:block/revenant_flame_side1",
+          "model": "supernatural:block/revenant_flame_side_one",
           "y": 270
         },
         {
-          "model": "supernatural:block/revenant_flame_side_alt0",
+          "model": "supernatural:block/revenant_flame_side_alt_zero",
           "y": 270
         },
         {
-          "model": "supernatural:block/revenant_flame_side_alt1",
+          "model": "supernatural:block/revenant_flame_side_alt_one",
           "y": 270
         }
       ]
