@@ -2,7 +2,7 @@
 	"parent": "supplementaries:block/candle_holders/floor_1",
 	"ambientocclusion": false,
 	"textures": {
-		"2": "supernatural:block/ebonsteel_candle_holder",
+		"1": "supernatural:block/ebonsteel_candle_holder",
 		"particle": "supernatural:block/ebonsteel_candle_holder",
 		"all": "supernatural:block/ritual_candle"
 	},
