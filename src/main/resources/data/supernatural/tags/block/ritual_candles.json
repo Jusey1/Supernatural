@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    "supernatural:ritual_candle",
+    {
+      "id": "supernatural:ebonsteel_candle_holder",
+      "required": false
+    }
+  ]
+}
