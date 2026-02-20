@@ -1,0 +1,11 @@
+{
+	"parent": "supplementaries:block/candle_holders/ceiling_1f",
+	"ambientocclusion": false,
+	"textures": {
+		"4": "supernatural:block/ebonsteel_candle_holder_ceiling",
+		"particle": "supernatural:block/ebonsteel_candle_holder_ceiling",
+		"chain": "supernatural:block/ebonsteel_chain",
+		"all": "supernatural:block/ritual_candle"
+	},
+	"render_type": "cutout"
+}

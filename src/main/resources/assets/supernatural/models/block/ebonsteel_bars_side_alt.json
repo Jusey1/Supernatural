@@ -1,10 +1,10 @@
 {
-    "parent": "minecraft:block/iron_bars_side_alt",
-    "ambientocclusion": false,
-    "textures": {
-        "particle": "supernatural:block/ebonsteel_bars",
-        "bars": "supernatural:block/ebonsteel_bars",
-        "edge": "supernatural:block/ebonsteel_bars"
-    },
-    "render_type": "cutout"
+	"parent": "minecraft:block/iron_bars_side_alt",
+	"ambientocclusion": false,
+	"textures": {
+		"particle": "supernatural:block/ebonsteel_bars",
+		"bars": "supernatural:block/ebonsteel_bars",
+		"edge": "supernatural:block/ebonsteel_bars"
+	},
+	"render_type": "cutout"
 }

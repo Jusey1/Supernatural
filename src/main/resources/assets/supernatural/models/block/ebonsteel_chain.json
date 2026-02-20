@@ -1,9 +1,9 @@
 {
-    "parent": "minecraft:block/chain",
-    "ambientocclusion": false,
-    "textures": {
-        "particle": "supernatural:block/ebonsteel_chain",
-        "all": "supernatural:block/ebonsteel_chain"
-    },
-    "render_type": "cutout"
+	"parent": "minecraft:block/chain",
+	"ambientocclusion": false,
+	"textures": {
+		"particle": "supernatural:block/ebonsteel_chain",
+		"all": "supernatural:block/ebonsteel_chain"
+	},
+	"render_type": "cutout"
 }
