@@ -6,14 +6,19 @@ import net.salju.supernatural.events.SupernaturalManager;
 import net.salju.supernatural.block.entity.RitualAltarEntity;
 import net.neoforged.neoforge.event.EventHooks;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Holder;
+import net.minecraft.core.HolderSet;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.tags.EnchantmentTags;
 import net.minecraft.world.entity.monster.zombie.ZombieVillager;
 import net.minecraft.world.entity.npc.villager.Villager;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.*;
+import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.Item;
@@ -22,6 +27,8 @@ import net.minecraft.world.phys.Vec3;
 import javax.annotation.Nullable;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
+import java.util.stream.Stream;
 
 public class RitualManager {
 	public static void defaultResult(RitualAltarEntity target, ItemStack stack, ServerLevel lvl, Player player, BlockPos pos) {
@@ -82,6 +89,12 @@ public class RitualManager {
 		map.put(SupernaturalItems.GOTHIC_IRON_HELMET.get(), SupernaturalItems.GOTHIC_EBONSTEEL_HELMET.get());
 		return map.getOrDefault(target, Items.AIR);
 	}
+
+    @Nullable
+    public static Stream<Holder<Enchantment>> getEnchantments(ServerLevel lvl) {
+        Optional<HolderSet.Named<Enchantment>> set = lvl.registryAccess().lookupOrThrow(Registries.ENCHANTMENT).get(EnchantmentTags.IN_ENCHANTING_TABLE);
+        return set.isEmpty() ? null : set.get().stream();
+    }
 
 	@Nullable
 	public static Mob getSacrifice(ServerLevel lvl, Class<? extends Mob> mob, BlockPos pos) {

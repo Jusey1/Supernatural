@@ -1,7 +1,5 @@
 package net.salju.supernatural.block.misc;
 
-import net.minecraft.world.level.portal.TeleportTransition;
-import net.minecraft.world.phys.Vec3;
 import net.salju.supernatural.init.*;
 import net.salju.supernatural.events.RitualEvent;
 import net.salju.supernatural.events.SupernaturalManager;
@@ -23,9 +21,10 @@ import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.gameevent.GameEvent;
+import net.minecraft.world.level.portal.TeleportTransition;
 import net.minecraft.world.level.Spawner;
 import net.minecraft.world.phys.AABB;
-import java.util.Optional;
+import net.minecraft.world.phys.Vec3;
 
 public class SoulMagic {
 	public static void performRitual(ItemStack stack, ItemStack offer, ServerLevel lvl, Player player, BlockPos pos) {
@@ -143,11 +142,11 @@ public class SoulMagic {
                             break;
                         }
                     }
-				} else if (stack.isEnchantable() && (player.experienceLevel >= 30 || player.isCreative())) {
+				} else if (stack.isEnchantable() && RitualManager.getEnchantments(lvl) != null && (player.experienceLevel >= 30 || player.isCreative())) {
 					ItemStack copy = stack.copy();
 					RitualManager.defaultResult(target, offer, lvl, player, pos);
 					int c = e * SupernaturalConfig.SOULPOWER.get() + i;
-					target.setItem(0, EnchantmentHelper.enchantItem(lvl.getRandom(), copy, c, lvl.registryAccess(), Optional.empty()));
+					target.setItem(0, EnchantmentHelper.enchantItem(lvl.getRandom(), copy, c, RitualManager.getEnchantments(lvl)));
 					lvl.playSound(null, pos, SoundEvents.ENCHANTMENT_TABLE_USE, SoundSource.BLOCKS, 1.0F, (float) (0.8F + (Math.random() * 0.2)));
 					if (!player.isCreative()) {
 						player.giveExperiencePoints(-c);
