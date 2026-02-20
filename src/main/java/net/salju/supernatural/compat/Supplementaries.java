@@ -2,9 +2,8 @@ package net.salju.supernatural.compat;
 
 import net.salju.supernatural.Supernatural;
 import net.salju.supernatural.init.SupernaturalBlocks;
-import net.salju.supernatural.init.SupernaturalCandle;
 import net.salju.supernatural.init.SupernaturalItems;
-import net.mehvahdjukaar.supplementaries.common.block.blocks.CandleHolderBlock;
+import net.salju.supernatural.compat.supplementaries.EbonsteelCandleHolderBlock;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import net.minecraft.core.registries.Registries;
@@ -19,7 +18,7 @@ public class Supplementaries  {
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(Registries.BLOCK, Supernatural.MODID);
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.createItems(Supernatural.MODID);
 
-    public static final DeferredHolder<Block, Block> EBONSTEEL_CANDLE_HOLDER_BLOCK = BLOCKS.register("ebonsteel_candle_holder", () -> new CandleHolderBlock(null, SupernaturalBlocks.createBaseProps("ebonsteel_candle_holder").mapColor(MapColor.DEEPSLATE).sound(SoundType.NETHERITE_BLOCK).strength(25.0F, 1200.0F).pushReaction(PushReaction.DESTROY).lightLevel((state) -> state.getValue(CandleHolderBlock.LIT) ? 2 * state.getValue(CandleHolderBlock.CANDLES) : 0).requiresCorrectToolForDrops().noOcclusion().forceSolidOn(), SupernaturalCandle.FLAME::get, CandleHolderBlock::getDefaultParticleOffsets));
+    public static final DeferredHolder<Block, Block> EBONSTEEL_CANDLE_HOLDER_BLOCK = BLOCKS.register("ebonsteel_candle_holder", () -> new EbonsteelCandleHolderBlock(SupernaturalBlocks.createBaseProps("ebonsteel_candle_holder").mapColor(MapColor.DEEPSLATE).sound(SoundType.NETHERITE_BLOCK).strength(25.0F, 1200.0F).pushReaction(PushReaction.DESTROY).requiresCorrectToolForDrops().noOcclusion().forceSolidOn()));
     public static final DeferredHolder<Item, Item> EBONSTEEL_CANDLE_HOLDER_ITEM = block(EBONSTEEL_CANDLE_HOLDER_BLOCK, "ebonsteel_candle_holder");
 
     private static DeferredHolder<Item, Item> block(DeferredHolder<Block, Block> block, String name) {
