@@ -1,9 +1,9 @@
 {
   "variants": {
-    "facing=east,half=bot,open=false": {
+    "facing=east,half=bottom,open=false": {
       "model": "supernatural:block/ebonsteel_trapdoor_bot"
     },
-    "facing=east,half=bot,open=true": {
+    "facing=east,half=bottom,open=true": {
       "model": "supernatural:block/ebonsteel_trapdoor_open",
       "y": 90
     },
@@ -14,10 +14,10 @@
       "model": "supernatural:block/ebonsteel_trapdoor_open",
       "y": 90
     },
-    "facing=north,half=bot,open=false": {
+    "facing=north,half=bottom,open=false": {
       "model": "supernatural:block/ebonsteel_trapdoor_bot"
     },
-    "facing=north,half=bot,open=true": {
+    "facing=north,half=bottom,open=true": {
       "model": "supernatural:block/ebonsteel_trapdoor_open"
     },
     "facing=north,half=top,open=false": {
@@ -26,10 +26,10 @@
     "facing=north,half=top,open=true": {
       "model": "supernatural:block/ebonsteel_trapdoor_open"
     },
-    "facing=south,half=bot,open=false": {
+    "facing=south,half=bottom,open=false": {
       "model": "supernatural:block/ebonsteel_trapdoor_bot"
     },
-    "facing=south,half=bot,open=true": {
+    "facing=south,half=bottom,open=true": {
       "model": "supernatural:block/ebonsteel_trapdoor_open",
       "y": 180
     },
@@ -40,10 +40,10 @@
       "model": "supernatural:block/ebonsteel_trapdoor_open",
       "y": 180
     },
-    "facing=west,half=bot,open=false": {
+    "facing=west,half=bottom,open=false": {
       "model": "supernatural:block/ebonsteel_trapdoor_bot"
     },
-    "facing=west,half=bot,open=true": {
+    "facing=west,half=bottom,open=true": {
       "model": "supernatural:block/ebonsteel_trapdoor_open",
       "y": 270
     },
