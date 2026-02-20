@@ -194,7 +194,7 @@ public class SupernaturalManager {
 	}
 
 	public static boolean canSoulMagicWork(ServerLevel lvl, BlockPos pos) {
-		return (lvl.dimension().equals(Level.OVERWORLD) && lvl.getBrightness(LightLayer.BLOCK, pos) <= 3 && (lvl.getBrightness(LightLayer.SKY, pos) <= 3 || lvl.isDarkOutside()));
+		return (lvl.dimension().equals(Level.OVERWORLD) && lvl.getBrightness(LightLayer.BLOCK, pos) <= 4 && (lvl.getBrightness(LightLayer.SKY, pos) <= 4 || lvl.isDarkOutside()));
 	}
 
 	public static int getPower(ServerLevel lvl, BlockPos pos, Player player) {
