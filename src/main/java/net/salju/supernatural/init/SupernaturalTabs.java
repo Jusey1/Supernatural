@@ -38,15 +38,16 @@ public class SupernaturalTabs {
                 tabData.accept(SupernaturalItems.EBONSTEEL_SCRAP.get());
                 tabData.accept(SupernaturalItems.EBONSTEEL_KEY.get());
                 tabData.accept(SupernaturalItems.COMPASS.get());
+                tabData.accept(SupernaturalItems.SOULGEM.get());
                 tabData.accept(SupernaturalItems.REVENANT_CORE.get());
                 tabData.accept(SupernaturalItems.RITUAL_BOOK.get());
-                tabData.accept(SupernaturalItems.SOULGEM.get());
                 tabData.accept(SupernaturalItems.CONTRACT.get());
                 tabData.accept(SupernaturalItems.BLOOD.get());
                 tabData.accept(SupernaturalItems.VAMPIRE_DUST.get());
                 tabData.accept(SupernaturalItems.MERFOLK_SCALE.get());
                 tabData.accept(SupernaturalItems.PLASMA.get());
                 tabData.accept(SupernaturalItems.EBONSTEEL_BARS.get());
+                tabData.accept(SupernaturalItems.EBONSTEEL_DOOR.get());
                 tabData.accept(SupernaturalItems.EBONSTEEL_CHAIN.get());
                 tabData.accept(SupernaturalItems.EBONSTEEL_LANTERN.get());
                 if (ModList.get().isLoaded("supplementaries")) {

@@ -28,6 +28,7 @@ public class SupernaturalItems {
     public static final DeferredHolder<Item, Item> SCOURGE_SPAWN_EGG = REGISTRY.register("scourge_spawn_egg", () -> new SpawnEggItem(createBaseProps("scourge_spawn_egg").spawnEgg(SupernaturalMobs.MERFOLK_DIAMOND.get())));
     public static final DeferredHolder<Item, Item> ANGEL_STATUE = REGISTRY.register("angel_statue", () -> new AngelStatueItem(createBaseProps("angel_statue").stacksTo(1)));
     public static final DeferredHolder<Item, Item> EBONSTEEL_BARS = block(SupernaturalBlocks.EBONSTEEL_BARS, "ebonsteel_bars");
+    public static final DeferredHolder<Item, Item> EBONSTEEL_DOOR = block(SupernaturalBlocks.EBONSTEEL_DOOR, "ebonsteel_door");
     public static final DeferredHolder<Item, Item> EBONSTEEL_CHAIN = block(SupernaturalBlocks.EBONSTEEL_CHAIN, "ebonsteel_chain");
     public static final DeferredHolder<Item, Item> EBONSTEEL_LANTERN = block(SupernaturalBlocks.EBONSTEEL_LANTERN, "ebonsteel_lantern");
     public static final DeferredHolder<Item, Item> RITUAL_CANDLE = block(SupernaturalBlocks.RITUAL_CANDLE, "ritual_candle");
