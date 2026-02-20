@@ -1,6 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
-  "category": "misc",
+  "category": "building",
   "key": {
     "R": "minecraft:soul_lantern",
     "S": "supernatural:ebonsteel_scrap"

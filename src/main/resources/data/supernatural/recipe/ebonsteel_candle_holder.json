@@ -1,0 +1,22 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "supplementaries:flag",
+      "flag": "candle_holder"
+    }
+  ],
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "group": "candle_holder",
+  "key": {
+    "R": "supernatural:ritual_candle",
+    "S": "supernatural:ebonsteel_scrap"
+  },
+  "pattern": [
+    "R",
+    "S"
+  ],
+  "result": {
+    "id": "supernatural:ebonsteel_candle_holder"
+  }
+}

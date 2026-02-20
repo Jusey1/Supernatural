@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "R": "minecraft:honeycomb",
+    "P": "supernatural:plasma",
+    "S": "minecraft:soul_soil"
+  },
+  "pattern": [
+    "P",
+    "R",
+    "S"
+  ],
+  "result": {
+    "id": "supernatural:ritual_candle"
+  }
+}
