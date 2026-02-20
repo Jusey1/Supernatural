@@ -1,7 +1,9 @@
 package net.salju.supernatural.init;
 
 import net.salju.supernatural.Supernatural;
+import net.salju.supernatural.compat.Supplementaries;
 import net.salju.supernatural.events.SupernaturalManager;
+import net.neoforged.fml.ModList;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import net.minecraft.core.registries.Registries;
@@ -45,6 +47,12 @@ public class SupernaturalTabs {
                 tabData.accept(SupernaturalItems.MERFOLK_SCALE.get());
                 tabData.accept(SupernaturalItems.PLASMA.get());
                 tabData.accept(SupernaturalItems.EBONSTEEL_BARS.get());
+                tabData.accept(SupernaturalItems.EBONSTEEL_CHAIN.get());
+                tabData.accept(SupernaturalItems.EBONSTEEL_LANTERN.get());
+                if (ModList.get().isLoaded("supplementaries")) {
+                    tabData.accept(Supplementaries.getCandleHolder());
+                }
+                tabData.accept(SupernaturalItems.RITUAL_CANDLE.get());
                 tabData.accept(SupernaturalItems.RITUAL_ALTAR.get());
                 tabData.accept(SupernaturalItems.TREASURE_SPAWNER.get());
                 tabData.accept(SupernaturalItems.TREASURE_VAULT.get());
