@@ -48,6 +48,7 @@ public class SupernaturalTabs {
                 tabData.accept(SupernaturalItems.PLASMA.get());
                 tabData.accept(SupernaturalItems.EBONSTEEL_BARS.get());
                 tabData.accept(SupernaturalItems.EBONSTEEL_DOOR.get());
+                tabData.accept(SupernaturalItems.EBONSTEEL_TRAPDOOR.get());
                 tabData.accept(SupernaturalItems.EBONSTEEL_CHAIN.get());
                 tabData.accept(SupernaturalItems.EBONSTEEL_LANTERN.get());
                 if (ModList.get().isLoaded("supplementaries")) {
