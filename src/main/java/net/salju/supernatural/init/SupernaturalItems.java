@@ -34,8 +34,8 @@ public class SupernaturalItems {
     public static final DeferredHolder<Item, Item> EBONSTEEL_LANTERN = block(SupernaturalBlocks.EBONSTEEL_LANTERN, "ebonsteel_lantern");
     public static final DeferredHolder<Item, Item> RITUAL_CANDLE = block(SupernaturalBlocks.RITUAL_CANDLE, "ritual_candle");
     public static final DeferredHolder<Item, Item> RITUAL_ALTAR = block(SupernaturalBlocks.RITUAL_ALTAR, "ritual_altar");
-    public static final DeferredHolder<Item, Item> TREASURE_SPAWNER = block(SupernaturalBlocks.TREASURE_SPAWNER, "treasure_spawner");
-    public static final DeferredHolder<Item, Item> TREASURE_VAULT = block(SupernaturalBlocks.TREASURE_VAULT, "treasure_vault");
+    public static final DeferredHolder<Item, Item> REVENANT_SPAWNER = block(SupernaturalBlocks.REVENANT_SPAWNER, "revenant_spawner");
+    public static final DeferredHolder<Item, Item> REVENANT_VAULT = block(SupernaturalBlocks.REVENANT_VAULT, "revenant_vault");
     public static final DeferredHolder<Item, Item> EBONSTEEL_BLOCK = block(SupernaturalBlocks.EBONSTEEL_BLOCK, "ebonsteel_block");
     public static final DeferredHolder<Item, Item> GRAVE_SOIL = block(SupernaturalBlocks.GRAVE_SOIL, "grave_soil");
     public static final DeferredHolder<Item, Item> EBONSTEEL_HELMET = REGISTRY.register("ebonsteel_helmet", () -> new Item(createBaseProps("ebonsteel_helmet").durability(ArmorType.HELMET.getDurability(21)).humanoidArmor(SupernaturalArmors.EBONSTEEL, ArmorType.HELMET).rarity(Rarity.UNCOMMON)));

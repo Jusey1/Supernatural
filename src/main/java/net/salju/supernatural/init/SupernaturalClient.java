@@ -51,8 +51,8 @@ public class SupernaturalClient {
         event.registerEntityRenderer(SupernaturalMobs.REVENANT.get(), RevenantRenderer::new);
         event.registerEntityRenderer(SupernaturalMobs.SCOURGE.get(), ScourgeRenderer::new);
 		event.registerBlockEntityRenderer(SupernaturalBlocks.RITUAL.get(), RitualBlockRenderer::new);
-        event.registerBlockEntityRenderer(SupernaturalBlocks.TP.get(), TreasureSpawnerRenderer::new);
-        event.registerBlockEntityRenderer(SupernaturalBlocks.TV.get(), TreasureVaultRenderer::new);
+        event.registerBlockEntityRenderer(SupernaturalBlocks.RP.get(), TreasureSpawnerRenderer::new);
+        event.registerBlockEntityRenderer(SupernaturalBlocks.RV.get(), TreasureVaultRenderer::new);
 	}
 
     @SubscribeEvent
