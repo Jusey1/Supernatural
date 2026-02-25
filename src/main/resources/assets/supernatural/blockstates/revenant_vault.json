@@ -1,9 +1,9 @@
 {
   "variants": {
-    "revenant=false": {
+    "treasure=false": {
       "model": "supernatural:block/revenant_vault"
     },
-    "revenant=true": {
+    "treasure=true": {
       "model": "supernatural:block/revenant_vault_active"
     }
   }
