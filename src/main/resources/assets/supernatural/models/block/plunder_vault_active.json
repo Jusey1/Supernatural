@@ -1,0 +1,9 @@
+{
+	"parent": "supernatural:block/abstract_plunder_block",
+	"textures": {
+		"top": "supernatural:block/plunder_vault_top_open",
+		"bottom": "supernatural:block/plunder_vault_bot",
+		"side": "supernatural:block/plunder_vault_side"
+	},
+	"render_type": "cutout"
+}
