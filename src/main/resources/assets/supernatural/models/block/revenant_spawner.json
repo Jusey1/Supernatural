@@ -1,0 +1,9 @@
+{
+	"parent": "supernatural:block/abstract_revenant_block",
+	"textures": {
+		"top": "supernatural:block/revenant_vault_bot",
+		"bottom": "supernatural:block/revenant_vault_bot",
+		"side": "supernatural:block/revenant_spawner_side"
+	},
+	"render_type": "cutout"
+}
