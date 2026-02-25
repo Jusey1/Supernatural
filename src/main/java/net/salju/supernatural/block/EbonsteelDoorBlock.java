@@ -1,8 +1,8 @@
 package net.salju.supernatural.block;
 
+import net.minecraft.world.level.gameevent.GameEvent;
 import net.salju.supernatural.init.SupernaturalItems;
 import net.minecraft.core.BlockPos;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
@@ -34,15 +34,14 @@ public class EbonsteelDoorBlock extends DoorBlock {
     public InteractionResult useItemOn(ItemStack stack, BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult rez) {
         if (state.getValue(EbonsteelManager.LOCKED)) {
             if (stack.is(SupernaturalItems.EBONSTEEL_KEY.get())) {
-                if (world instanceof ServerLevel) {
-                    world.setBlock(pos, this.getState(state, false), 2);
-                    world.playSound(null, pos, SoundEvents.AMETHYST_BLOCK_RESONATE, SoundSource.BLOCKS);
-                    if (!player.isCreative()) {
-                        stack.shrink(1);
-                    }
+                world.setBlock(pos, this.getState(state, false).cycle(OPEN), 10);
+                world.playSound(player, pos, SoundEvents.WOODEN_DOOR_OPEN, SoundSource.BLOCKS);
+                world.gameEvent(player, this.isOpen(state) ? GameEvent.BLOCK_OPEN : GameEvent.BLOCK_CLOSE, pos);
+                if (!player.isCreative()) {
+                    stack.shrink(1);
                 }
             } else {
-                world.playSound(null, pos, SoundEvents.VAULT_INSERT_ITEM_FAIL, SoundSource.BLOCKS);
+                world.playSound(player, pos, SoundEvents.VAULT_INSERT_ITEM_FAIL, SoundSource.BLOCKS);
             }
             return InteractionResult.SUCCESS;
         }

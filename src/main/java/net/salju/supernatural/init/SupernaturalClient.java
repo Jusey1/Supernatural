@@ -33,6 +33,8 @@ public class SupernaturalClient {
     public static final ModelLayerLocation WIGHT = registerModel("wight", "main");
     public static final ModelLayerLocation WIGHT_CLOTHING = registerModel("wight", "clothing");
     public static final ModelLayerLocation REVENANT = registerModel("revenant", "main");
+    public static final ModelLayerLocation SCOURGE = registerModel("scourge", "main");
+    public static final ModelLayerLocation SCOURGE_ARMOR = registerModel("scourge", "armor");
 	public static final ArmorModelSet<ModelLayerLocation> GOTHIC = registerArmorSet("gothic");
 
 	@SubscribeEvent
@@ -47,6 +49,7 @@ public class SupernaturalClient {
         event.registerEntityRenderer(SupernaturalMobs.MERFOLK_DIAMOND.get(), MerfolkDiamondRenderer::new);
         event.registerEntityRenderer(SupernaturalMobs.WIGHT.get(), WightRenderer::new);
         event.registerEntityRenderer(SupernaturalMobs.REVENANT.get(), RevenantRenderer::new);
+        event.registerEntityRenderer(SupernaturalMobs.SCOURGE.get(), ScourgeRenderer::new);
 		event.registerBlockEntityRenderer(SupernaturalBlocks.RITUAL.get(), RitualBlockRenderer::new);
         event.registerBlockEntityRenderer(SupernaturalBlocks.TP.get(), TreasureSpawnerRenderer::new);
         event.registerBlockEntityRenderer(SupernaturalBlocks.TV.get(), TreasureVaultRenderer::new);
@@ -61,6 +64,8 @@ public class SupernaturalClient {
         event.registerLayerDefinition(WIGHT, WightModel::createBodyLayer);
         event.registerLayerDefinition(WIGHT_CLOTHING, WightModel::createClothingLayer);
         event.registerLayerDefinition(REVENANT, RevenantModel::createBodyLayer);
+        event.registerLayerDefinition(SCOURGE, ScourgeModel::createBodyLayer);
+        event.registerLayerDefinition(SCOURGE_ARMOR, ScourgeModel::createBodyLayer);
         event.registerLayerDefinition(GOTHIC.head(), GothicArmorModel::createHeadLayer);
         event.registerLayerDefinition(GOTHIC.chest(), GothicArmorModel::createBodyLayer);
         event.registerLayerDefinition(GOTHIC.legs(), GothicArmorModel::createLegsLayer);

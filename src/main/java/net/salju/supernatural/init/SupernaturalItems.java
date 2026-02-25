@@ -25,7 +25,7 @@ public class SupernaturalItems {
     public static final DeferredHolder<Item, Item> MERFOLK_SPAWN_EGG = REGISTRY.register("merfolk_spawn_egg", () -> new SpawnEggItem(createBaseProps("merfolk_spawn_egg").spawnEgg(SupernaturalMobs.MERFOLK_AMETHYST.get())));
     public static final DeferredHolder<Item, Item> WIGHT_SPAWN_EGG = REGISTRY.register("wight_spawn_egg", () -> new SpawnEggItem(createBaseProps("wight_spawn_egg").spawnEgg(SupernaturalMobs.WIGHT.get())));
     public static final DeferredHolder<Item, Item> REVENANT_SPAWN_EGG = REGISTRY.register("revenant_spawn_egg", () -> new SpawnEggItem(createBaseProps("revenant_spawn_egg").spawnEgg(SupernaturalMobs.REVENANT.get())));
-    public static final DeferredHolder<Item, Item> SCOURGE_SPAWN_EGG = REGISTRY.register("scourge_spawn_egg", () -> new SpawnEggItem(createBaseProps("scourge_spawn_egg").spawnEgg(SupernaturalMobs.MERFOLK_DIAMOND.get())));
+    public static final DeferredHolder<Item, Item> SCOURGE_SPAWN_EGG = REGISTRY.register("scourge_spawn_egg", () -> new SpawnEggItem(createBaseProps("scourge_spawn_egg").spawnEgg(SupernaturalMobs.SCOURGE.get())));
     public static final DeferredHolder<Item, Item> ANGEL_STATUE = REGISTRY.register("angel_statue", () -> new AngelStatueItem(createBaseProps("angel_statue").stacksTo(1)));
     public static final DeferredHolder<Item, Item> EBONSTEEL_BARS = block(SupernaturalBlocks.EBONSTEEL_BARS, "ebonsteel_bars");
     public static final DeferredHolder<Item, Item> EBONSTEEL_DOOR = block(SupernaturalBlocks.EBONSTEEL_DOOR, "ebonsteel_door");
