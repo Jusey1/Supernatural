@@ -1,0 +1,6 @@
+{
+	"parent": "minecraft:block/wall_inventory",
+	"textures": {
+		"wall": "supernatural:block/plasmastone_bricks_mid"
+	}
+}

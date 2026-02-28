@@ -1,0 +1,8 @@
+{
+	"parent": "minecraft:block/cube_bottom_top",
+	"textures": {
+		"bottom": "supernatural:block/plasmastone_bricks_mid",
+		"side": "supernatural:block/plasmastone_bricks_top",
+		"top": "supernatural:block/plasmastone"
+	}
+}

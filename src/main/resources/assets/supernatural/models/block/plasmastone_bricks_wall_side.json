@@ -1,0 +1,6 @@
+{
+	"parent": "supernatural:block/abstract_plasmastone_wall",
+	"textures": {
+		"wall": "supernatural:block/plasmastone_bricks_mid"
+	}
+}
