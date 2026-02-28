@@ -3,6 +3,7 @@
   "values": [
     "minecraft:drowned",
     "minecraft:glow_squid",
+    "supernatural:wight",
     {
       "id": "alexscaves:deep_one",
       "required": false
