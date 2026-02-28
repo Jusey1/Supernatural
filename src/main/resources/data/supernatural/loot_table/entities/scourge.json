@@ -10,8 +10,8 @@
             {
               "function": "minecraft:set_count",
               "count": {
-                "min": 0.0,
                 "max": 2.0,
+                "min": 1.0,
                 "type": "minecraft:uniform"
               }
             },
@@ -25,22 +25,7 @@
               "function": "minecraft:enchanted_count_increase"
             }
           ],
-          "name": "supernatural:vampire_dust"
-        }
-      ]
-    },
-    {
-      "rolls": 1,
-      "entries": [
-		{
-          "type": "minecraft:item",
-          "name": "supernatural:ritual_book",
-          "weight": 76
-        }
-      ],
-      "conditions": [
-        {
-          "condition": "minecraft:killed_by_player"
+          "name": "supernatural:plasma"
         }
       ]
     }
