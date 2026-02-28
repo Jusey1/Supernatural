@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "R": "supernatural:plasmastone_bricks"
+  },
+  "pattern": [
+    "RRR"
+  ],
+  "result": {
+    "id": "supernatural:plasmastone_bricks_slab",
+    "count": 6
+  }
+}

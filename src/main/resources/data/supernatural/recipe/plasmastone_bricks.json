@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "R": "minecraft:cobblestone",
+    "P": "supernatural:plasma"
+  },
+  "pattern": [
+    "PRP",
+    "RPR",
+    "PRP"
+  ],
+  "result": {
+    "id": "supernatural:plasmastone_bricks",
+    "count": 4
+  }
+}
