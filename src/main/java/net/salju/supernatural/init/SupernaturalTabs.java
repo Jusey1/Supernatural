@@ -60,5 +60,9 @@ public class SupernaturalTabs {
                 tabData.accept(SupernaturalItems.REVENANT_VAULT.get());
                 tabData.accept(SupernaturalItems.EBONSTEEL_BLOCK.get());
                 tabData.accept(SupernaturalItems.GRAVE_SOIL.get());
+                tabData.accept(SupernaturalItems.PLASMASTONE_BRICKS.get());
+                tabData.accept(SupernaturalItems.PLASMASTONE_BRICKS_STAIRS.get());
+                tabData.accept(SupernaturalItems.PLASMASTONE_BRICKS_SLAB.get());
+                tabData.accept(SupernaturalItems.PLASMASTONE_BRICKS_WALL.get());
 			}).build());
 }

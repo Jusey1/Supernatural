@@ -38,6 +38,10 @@ public class SupernaturalItems {
     public static final DeferredHolder<Item, Item> REVENANT_VAULT = block(SupernaturalBlocks.REVENANT_VAULT, "revenant_vault");
     public static final DeferredHolder<Item, Item> EBONSTEEL_BLOCK = block(SupernaturalBlocks.EBONSTEEL_BLOCK, "ebonsteel_block");
     public static final DeferredHolder<Item, Item> GRAVE_SOIL = block(SupernaturalBlocks.GRAVE_SOIL, "grave_soil");
+    public static final DeferredHolder<Item, Item> PLASMASTONE_BRICKS = block(SupernaturalBlocks.PLASMASTONE_BRICKS, "plasmastone_bricks");
+    public static final DeferredHolder<Item, Item> PLASMASTONE_BRICKS_STAIRS = block(SupernaturalBlocks.PLASMASTONE_BRICKS_STAIRS, "plasmastone_bricks_stairs");
+    public static final DeferredHolder<Item, Item> PLASMASTONE_BRICKS_SLAB = block(SupernaturalBlocks.PLASMASTONE_BRICKS_SLAB, "plasmastone_bricks_slab");
+    public static final DeferredHolder<Item, Item> PLASMASTONE_BRICKS_WALL = block(SupernaturalBlocks.PLASMASTONE_BRICKS_WALL, "plasmastone_bricks_wall");
     public static final DeferredHolder<Item, Item> EBONSTEEL_HELMET = REGISTRY.register("ebonsteel_helmet", () -> new Item(createBaseProps("ebonsteel_helmet").durability(ArmorType.HELMET.getDurability(21)).humanoidArmor(SupernaturalArmors.EBONSTEEL, ArmorType.HELMET).rarity(Rarity.UNCOMMON)));
     public static final DeferredHolder<Item, Item> EBONSTEEL_CHESTPLATE = REGISTRY.register("ebonsteel_chestplate", () -> new Item(createBaseProps("ebonsteel_chestplate").durability(ArmorType.CHESTPLATE.getDurability(21)).humanoidArmor(SupernaturalArmors.EBONSTEEL, ArmorType.CHESTPLATE).rarity(Rarity.UNCOMMON)));
     public static final DeferredHolder<Item, Item> EBONSTEEL_LEGGINGS = REGISTRY.register("ebonsteel_leggings", () -> new Item(createBaseProps("ebonsteel_leggings").durability(ArmorType.LEGGINGS.getDurability(21)).humanoidArmor(SupernaturalArmors.EBONSTEEL, ArmorType.LEGGINGS).rarity(Rarity.UNCOMMON)));
