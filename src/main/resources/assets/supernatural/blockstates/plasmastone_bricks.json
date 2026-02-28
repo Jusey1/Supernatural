@@ -1,0 +1,16 @@
+{
+	"variants": {
+		"type=1": {
+			"model": "supernatural:block/plasmastone_bricks_top"
+		},
+		"type=2": {
+			"model": "supernatural:block/plasmastone_bricks_mid"
+		},
+		"type=3": {
+			"model": "supernatural:block/plasmastone_bricks_bot"
+		},
+		"type=4": {
+			"model": "supernatural:block/plasmastone_bricks_none"
+		}
+	}
+}
