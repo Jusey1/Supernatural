@@ -27,10 +27,8 @@ public record RitualBookData(int page) {
 		map.put(6, "item.minecraft.compass");
 		map.put(7, "block.supernatural.grave_soil");
 		map.put(8, "item.minecraft.totem_of_undying");
-		map.put(9, "item.supernatural.vampire_dust");
-		map.put(10, "item.supernatural.ebonsteel_ingot");
-        map.put(11, "item.supernatural.spectral_core");
-        map.put(12, "item.supernatural.spectral_core");
+        map.put(9, "item.supernatural.spectral_core");
+        map.put(10, "item.supernatural.spectral_core");
 		return map.getOrDefault(this.page, "item.minecraft.writable_book");
 	}
 
@@ -45,9 +43,7 @@ public record RitualBookData(int page) {
 		map.put(7, "item.supernatural.soulgem");
 		map.put(8, "item.supernatural.soulgem");
 		map.put(9, "soulgem.supernatural.greater");
-		map.put(10, "soulgem.supernatural.greater");
-		map.put(11, "soulgem.supernatural.greater");
-		map.put(12, "soulgem.supernatural.common");
+		map.put(10, "soulgem.supernatural.common");
 		return map.getOrDefault(this.page, "soulgem.supernatural.common");
 	}
 
@@ -62,9 +58,7 @@ public record RitualBookData(int page) {
 		map.put(7, "XXVIII");
 		map.put(8, "XXVIII");
 		map.put(9, "XVI");
-        map.put(10, "XXVIII");
-		map.put(11, "XVI");
-		map.put(12, "XII");
+		map.put(10, "XII");
 		return map.getOrDefault(this.page, "XII");
 	}
 
@@ -75,6 +69,6 @@ public record RitualBookData(int page) {
 	}
 
 	public int getMaxRituals() {
-		return 13;
+		return 11;
 	}
 }

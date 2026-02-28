@@ -4,7 +4,6 @@ import net.salju.supernatural.init.*;
 import net.salju.supernatural.events.RitualEvent;
 import net.salju.supernatural.events.SupernaturalManager;
 import net.salju.supernatural.block.entity.RitualAltarEntity;
-import net.salju.supernatural.entity.Angel;
 import net.salju.supernatural.item.component.AnchorballData;
 import net.salju.supernatural.item.RitualCompassItem;
 import net.minecraft.core.particles.ParticleTypes;
@@ -23,7 +22,6 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.level.portal.TeleportTransition;
 import net.minecraft.world.level.Spawner;
-import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 
 public class SoulMagic {
@@ -32,20 +30,7 @@ public class SoulMagic {
 			if (SupernaturalManager.canSoulMagicWork(lvl, pos)) {
 				int i = SupernaturalManager.getPower(lvl, pos, player);
 				int e = SupernaturalManager.getSoulLevel(SupernaturalManager.getSoulgem(offer));
-				if (stack.is(SupernaturalItems.CONTRACT.get()) && i == 20 && e >= 5 && !SupernaturalManager.isVampire(player)) {
-					Mob goat = RitualManager.getSacrifice(lvl, Goat.class, pos);
-					if (goat != null) {
-						RitualManager.defaultResult(target, offer, lvl, player, pos);
-						player.hurt(SupernaturalDamageTypes.causeRitualDamage(player.level().registryAccess(), player), 0.25F);
-						if (player.isAlive()) {
-							player.setHealth(1.0F);
-						}
-						SupernaturalManager.setVampire(player, true);
-						if (SupernaturalConfig.SACRIFICE.get()) {
-							goat.hurt(SupernaturalDamageTypes.causeRitualDamage(goat.level().registryAccess(), player), goat.getMaxHealth() * 100.0F);
-						}
-					}
-				} else if (stack.is(SupernaturalItems.GRAVE_SOIL.get()) && i == 28 && e >= 0) {
+				if (stack.is(SupernaturalItems.GRAVE_SOIL.get()) && i == 28 && e >= 0) {
 					RitualManager.defaultResult(target, offer, lvl, player, pos);
 					if (SupernaturalConfig.SACRIFICE.get()) {
 						Mob sacrifice = RitualManager.getSacrifice(lvl, offer, Mob.class, pos);
@@ -63,14 +48,19 @@ public class SoulMagic {
 								lvl.setBlock(poz, SupernaturalBlocks.GRAVE_SOIL.get().defaultBlockState(), 3);
 							}
 						}
-					} else if (i == 16 && e >= 4) {
-						RitualManager.defaultResult(target, offer, lvl, player, pos);
-						for (Angel statue : lvl.getEntitiesOfClass(Angel.class, new AABB(pos).inflate(SupernaturalConfig.ALTARRANGE.get()))) {
-							if (!statue.isCursed()) {
-								statue.getEntityData().set(Angel.CURSED, true);
-								lvl.sendParticles(ParticleTypes.SOUL, (statue.getX() + 0.5), (statue.getY() + 0.5), (statue.getZ() + 0.5), 8, 0.25, 0.35, 0.25, 0);
-							}
-						}
+					} else if (i == 20 && e >= 5 && !SupernaturalManager.isVampire(player)) {
+                        Mob goat = RitualManager.getSacrifice(lvl, Goat.class, pos);
+                        if (goat != null) {
+                            RitualManager.defaultResult(target, offer, lvl, player, pos);
+                            player.hurt(SupernaturalDamageTypes.causeRitualDamage(player.level().registryAccess(), player), 0.25F);
+                            if (player.isAlive()) {
+                                player.setHealth(1.0F);
+                            }
+                            SupernaturalManager.setVampire(player, true);
+                            if (SupernaturalConfig.SACRIFICE.get()) {
+                                goat.hurt(SupernaturalDamageTypes.causeRitualDamage(goat.level().registryAccess(), player), goat.getMaxHealth() * 100.0F);
+                            }
+                        }
 					}
 				} else if (stack.is(SupernaturalTags.INGOTS) && i == 12 && e >= 2) {
 					RitualManager.defaultResult(target, offer, lvl, player, pos);
