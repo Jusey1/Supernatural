@@ -1,6 +1,6 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "supernatural:item/spectral_core"
+    "layer0": "supernatural:item/revenant_spawn_egg"
   }
 }
