@@ -1,8 +1,8 @@
 {
 	"parent": "minecraft:block/slab_top",
 	"textures": {
-		"bottom": "supernatural:block/plasmastone",
-		"side": "supernatural:block/plasmastone_bricks_top",
-		"top": "supernatural:block/plasmastone"
+		"bottom": "supernatural:block/plasmastone_bricks_mid",
+		"side": "supernatural:block/plasmastone_bricks_mid",
+		"top": "supernatural:block/plasmastone_bricks_mid"
 	}
 }
