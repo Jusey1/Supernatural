@@ -1,5 +1,10 @@
 {
   "layers": {
+    "horse_body": [
+      {
+        "texture": "supernatural:ebonsteel"
+      }
+    ],
     "humanoid": [
       {
         "texture": "supernatural:ebonsteel"
