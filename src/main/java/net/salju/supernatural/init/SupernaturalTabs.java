@@ -34,14 +34,14 @@ public class SupernaturalTabs {
                 tabData.accept(SupernaturalManager.dyeHelmet(SupernaturalItems.GOTHIC_DIAMOND_HELMET.get()));
                 tabData.accept(SupernaturalManager.dyeHelmet(SupernaturalItems.GOTHIC_NETHERITE_HELMET.get()));
                 tabData.accept(SupernaturalManager.dyeHelmet(SupernaturalItems.GOTHIC_EBONSTEEL_HELMET.get()));
+                tabData.accept(SupernaturalItems.EBONSTEEL_HORSE_ARMOR.get());
                 tabData.accept(SupernaturalItems.EBONSTEEL_INGOT.get());
                 tabData.accept(SupernaturalItems.EBONSTEEL_SCRAP.get());
                 tabData.accept(SupernaturalItems.EBONSTEEL_KEY.get());
                 tabData.accept(SupernaturalItems.COMPASS.get());
-                tabData.accept(SupernaturalItems.SOULGEM.get());
                 tabData.accept(SupernaturalItems.REVENANT_CORE.get());
+                tabData.accept(SupernaturalItems.SOULGEM.get());
                 tabData.accept(SupernaturalItems.RITUAL_BOOK.get());
-                tabData.accept(SupernaturalItems.CONTRACT.get());
                 tabData.accept(SupernaturalItems.BLOOD.get());
                 tabData.accept(SupernaturalItems.VAMPIRE_DUST.get());
                 tabData.accept(SupernaturalItems.MERFOLK_SCALE.get());
@@ -64,5 +64,7 @@ public class SupernaturalTabs {
                 tabData.accept(SupernaturalItems.PLASMASTONE_BRICKS_STAIRS.get());
                 tabData.accept(SupernaturalItems.PLASMASTONE_BRICKS_SLAB.get());
                 tabData.accept(SupernaturalItems.PLASMASTONE_BRICKS_WALL.get());
+                tabData.accept(SupernaturalItems.CUT_PLASMASTONE_BRICKS.get());
+                tabData.accept(SupernaturalItems.CUT_PLASMASTONE_BRICKS_SLAB.get());
 			}).build());
 }
