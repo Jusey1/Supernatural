@@ -1,0 +1,7 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": "supernatural:plasmastone_bricks",
+  "result": {
+    "id": "supernatural:cut_plasmastone_bricks"
+  }
+}
