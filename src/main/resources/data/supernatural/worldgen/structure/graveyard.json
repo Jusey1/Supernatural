@@ -1,6 +1,6 @@
 {
   "type": "minecraft:jigsaw",
-  "start_pool": "supernatural:graveyardpool",
+  "start_pool": "supernatural:graveyard_pool",
   "size": 1,
   "max_distance_from_center": 80,
   "biomes": "#supernatural:has_structure/graveyard",
