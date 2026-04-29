@@ -1,0 +1,8 @@
+{
+	"parent": "minecraft:block/slab",
+	"textures": {
+		"bottom": "supernatural:block/plasmastone",
+		"side": "supernatural:block/plasmastone_bricks_cut",
+		"top": "supernatural:block/plasmastone"
+	}
+}
