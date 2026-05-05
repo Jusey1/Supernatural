@@ -1,6 +1,6 @@
 package net.salju.supernatural.client.renderer;
 
-import net.salju.supernatural.block.entity.TreasureSpawnerBlockEntity;
+import net.salju.supernatural.block.entity.RevenantSpawnerBlockEntity;
 import net.minecraft.client.renderer.blockentity.state.BlockEntityRenderState;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
@@ -15,7 +15,7 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import com.mojang.blaze3d.vertex.PoseStack;
 
-public class TreasureSpawnerRenderer implements BlockEntityRenderer<TreasureSpawnerBlockEntity, SupernaturalBlockState> {
+public class TreasureSpawnerRenderer implements BlockEntityRenderer<RevenantSpawnerBlockEntity, SupernaturalBlockState> {
     private final EntityRenderDispatcher render;
 
 	public TreasureSpawnerRenderer(BlockEntityRendererProvider.Context context) {
@@ -28,12 +28,12 @@ public class TreasureSpawnerRenderer implements BlockEntityRenderer<TreasureSpaw
     }
 
     @Override
-    public AABB getRenderBoundingBox(TreasureSpawnerBlockEntity target) {
+    public AABB getRenderBoundingBox(RevenantSpawnerBlockEntity target) {
         return new AABB(target.getBlockPos().getX() - 1.0, target.getBlockPos().getY() - 1.0, target.getBlockPos().getZ() - 1.0, target.getBlockPos().getX() + 2.0, target.getBlockPos().getY() + 2.0, target.getBlockPos().getZ() + 2.0);
     }
 
     @Override
-    public void extractRenderState(TreasureSpawnerBlockEntity target, SupernaturalBlockState state, float f1, Vec3 v, ModelFeatureRenderer.CrumblingOverlay progress) {
+    public void extractRenderState(RevenantSpawnerBlockEntity target, SupernaturalBlockState state, float f1, Vec3 v, ModelFeatureRenderer.CrumblingOverlay progress) {
         BlockEntityRenderState.extractBase(target, state, progress);
         state.time = target.getLevel().getGameTime();
         state.main = f1;
