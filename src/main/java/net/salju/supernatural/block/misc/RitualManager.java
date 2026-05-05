@@ -14,6 +14,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.EnchantmentTags;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.monster.zombie.ZombieVillager;
 import net.minecraft.world.entity.npc.villager.Villager;
 import net.minecraft.world.entity.player.Player;
@@ -103,23 +104,35 @@ public class RitualManager {
 
 	@Nullable
 	public static Mob getSacrifice(ServerLevel lvl, ItemStack stack, Class<? extends Mob> mob, BlockPos pos) {
-		return getSacrifice(lvl, stack, new AABB(pos).inflate(SupernaturalConfig.ALTARRANGE.get()), mob);
+		return getSacrifice(lvl, stack, new AABB(pos).inflate(SupernaturalConfig.ALTARRANGE.get()), mob, null);
 	}
 
+    @Nullable
+    public static Mob getSacrifice(ServerLevel lvl, TagKey<EntityType<?>> tag, BlockPos pos) {
+        return getSacrifice(lvl, ItemStack.EMPTY, new AABB(pos).inflate(SupernaturalConfig.ALTARRANGE.get()), Mob.class, tag);
+    }
+
 	@Nullable
-	public static Mob getSacrifice(ServerLevel lvl, ItemStack stack, AABB box, Class<? extends Mob> mob) {
+	public static Mob getSacrifice(ServerLevel lvl, ItemStack stack, AABB box, Class<? extends Mob> mob, @Nullable TagKey<EntityType<?>> tag) {
 		for (Mob target : lvl.getEntitiesOfClass(mob, box)) {
-			if (isValidSacrificeTarget(target, stack) && !target.getType().is(SupernaturalTags.IMMUNITY)) {
+			if (isValidSacrificeTarget(target, stack, tag) && !target.getType().is(SupernaturalTags.IMMUNITY)) {
 				return target;
 			}
 		}
 		return null;
 	}
 
-	private static boolean isValidSacrificeTarget(Mob target, ItemStack stack) {
+	private static boolean isValidSacrificeTarget(Mob target, ItemStack stack, @Nullable TagKey<EntityType<?>> tag) {
 		if (!stack.isEmpty()) {
 			return SupernaturalManager.getSoulLevel(SupernaturalManager.getSoulLevel(target)) >= SupernaturalManager.getSoulLevel(SupernaturalManager.getSoulgem(stack));
 		}
-		return true;
-	}
+        return isValidTarget(target, tag);
+    }
+
+    private static boolean isValidTarget(Mob target, @Nullable TagKey<EntityType<?>> tag) {
+        if (tag != null) {
+            return target.getType().is(tag);
+        }
+        return true;
+    }
 }

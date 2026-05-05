@@ -6,6 +6,9 @@ import net.salju.supernatural.events.SupernaturalManager;
 import net.salju.supernatural.block.entity.RitualAltarEntity;
 import net.salju.supernatural.item.component.AnchorballData;
 import net.salju.supernatural.item.RitualCompassItem;
+import net.salju.supernatural.entity.Scourge;
+import net.salju.supernatural.entity.Wight;
+import net.neoforged.neoforge.event.EventHooks;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.GlobalPos;
@@ -13,6 +16,8 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.tags.EntityTypeTags;
+import net.minecraft.world.entity.animal.equine.SkeletonHorse;
 import net.minecraft.world.entity.animal.goat.Goat;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.*;
@@ -30,7 +35,7 @@ public class SoulMagic {
 			if (SupernaturalManager.canSoulMagicWork(lvl, pos)) {
 				int i = SupernaturalManager.getPower(lvl, pos, player);
 				int e = SupernaturalManager.getSoulLevel(SupernaturalManager.getSoulgem(offer));
-				if (stack.is(SupernaturalItems.GRAVE_SOIL.get()) && i == 28 && e >= 0) {
+				if (stack.is(SupernaturalItems.GRAVE_SOIL.get()) && i == 42 && e >= 0) {
 					RitualManager.defaultResult(target, offer, lvl, player, pos);
 					if (SupernaturalConfig.SACRIFICE.get()) {
 						Mob sacrifice = RitualManager.getSacrifice(lvl, offer, Mob.class, pos);
@@ -48,7 +53,7 @@ public class SoulMagic {
 								lvl.setBlock(poz, SupernaturalBlocks.GRAVE_SOIL.get().defaultBlockState(), 3);
 							}
 						}
-					} else if (i == 20 && e >= 5 && !SupernaturalManager.isVampire(player)) {
+					} else if (i == 32 && e >= 5 && !SupernaturalManager.isVampire(player)) {
                         Mob goat = RitualManager.getSacrifice(lvl, Goat.class, pos);
                         if (goat != null) {
                             RitualManager.defaultResult(target, offer, lvl, player, pos);
@@ -96,7 +101,7 @@ public class SoulMagic {
 				} else if (stack.is(Items.WRITABLE_BOOK) && i == 12 && e >= 3) {
 					RitualManager.defaultResult(target, offer, lvl, player, pos);
 					target.setItem(0, new ItemStack(SupernaturalItems.RITUAL_BOOK.get()));
-				} else if (stack.is(Items.TOTEM_OF_UNDYING) && i == 28 && e >= 0) {
+				} else if (stack.is(Items.TOTEM_OF_UNDYING) && i == 42 && e >= 0) {
 					Entity entity = EntityType.loadEntityRecursive(SupernaturalManager.getSoulTag(offer), lvl, EntitySpawnReason.LOAD, o -> o);
 					if (lvl.getBlockEntity(pos.above()) instanceof Spawner blok && entity != null && entity.getType().is(SupernaturalTags.SPAWNER)) {
 						blok.setEntityId(entity.getType(), lvl.getRandom());
@@ -120,7 +125,7 @@ public class SoulMagic {
 					RitualManager.defaultResult(target, offer, lvl, player, pos);
 					copy.set(SupernaturalData.ANCHOR, new AnchorballData(GlobalPos.of(lvl.dimension(), pos)));
 					target.setItem(0, copy);
-                } else if (stack.is(SupernaturalItems.EBONSTEEL_INGOT.get()) && i == 28 && e >= 4 && SupernaturalManager.hasIronArmor(player)) {
+                } else if (stack.is(SupernaturalItems.EBONSTEEL_INGOT.get()) && i == 32 && e >= 4 && SupernaturalManager.hasIronArmor(player)) {
                     RitualManager.defaultResult(target, offer, lvl, player, pos);
                     for (EquipmentSlot slot : EquipmentSlot.values()) {
                         ItemStack copy = player.getItemBySlot(slot).copy();
@@ -130,6 +135,24 @@ public class SoulMagic {
                             lvl.playSound(null, player.blockPosition(), SoundEvents.BLASTFURNACE_FIRE_CRACKLE, SoundSource.PLAYERS, 1.0F, (float) (0.8F + (Math.random() * 0.2)));
                             lvl.sendParticles(ParticleTypes.SOUL_FIRE_FLAME, player.getX(), player.getY() + 1.25, player.getZ(), 15, 0.45, 0.25, 0.45, 0);
                             break;
+                        }
+                    }
+                } else if (stack.is(SupernaturalItems.PLASMA.get()) && i == 35 && e >= 4) {
+                    Mob kevin = RitualManager.getSacrifice(lvl, EntityTypeTags.SKELETONS, pos);
+                    if (kevin != null) {
+                        RitualManager.defaultResult(target, offer, lvl, player, pos);
+                        lvl.sendParticles(ParticleTypes.SOUL_FIRE_FLAME, kevin.getX(), kevin.getY() + 1.25, kevin.getZ(), 15, 0.45, 0.25, 0.45, 0);
+                        if (kevin instanceof SkeletonHorse) {
+                            Scourge horse = kevin.convertTo(SupernaturalMobs.SCOURGE.get(), ConversionParams.single(kevin, true, true), newbie -> { EventHooks.onLivingConvert(kevin, newbie); });
+                            if (horse != null) {
+                                horse.setBodyArmorItem(new ItemStack(SupernaturalItems.EBONSTEEL_HORSE_ARMOR.get()));
+                            }
+                        } else {
+                            Wight wyght = kevin.convertTo(SupernaturalMobs.WIGHT.get(), ConversionParams.single(kevin, true, true), newbie -> { EventHooks.onLivingConvert(kevin, newbie); });
+                            if (wyght != null) {
+                                wyght.setItemSlot(EquipmentSlot.MAINHAND, wyght.getSecondary());
+                                wyght.setCanPickUpLoot(false);
+                            }
                         }
                     }
 				} else if (stack.isEnchantable() && RitualManager.getEnchantments(lvl) != null && (player.experienceLevel >= 30 || player.isCreative())) {

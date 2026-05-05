@@ -138,16 +138,14 @@ public class RevenantVaultBlockEntity extends BlockEntity {
                             }
                         }
                     }
-                    if (target.getCD() == 1 && world.getBlockState(pos).getBlock() instanceof RevenantVaultBlock blok) {
+                    if (target.getCD() == 1) {
                         RevenantVault.playSound(world, pos, SoundEvents.VAULT_CLOSE_SHUTTER);
-                        world.setBlock(pos, blok.getState(state, false), 2);
+                        world.setBlock(pos, state.setValue(RevenantVaultBlock.TREASURE, false), 2);
                         target.setRenderItem(new ItemStack(SupernaturalItems.EBONSTEEL_KEY.get()));
                         target.setCD(6000);
                     }
                 }
                 target.setCD(target.getCD() - 1);
-            } else if (!target.canGiveTreasure()) {
-                world.setBlock(pos, state.setValue(RevenantVaultBlock.TREASURE, false), 2);
             }
         }
     }

@@ -56,7 +56,7 @@ public class RevenantVaultBlock extends BaseEntityBlock {
     public InteractionResult useItemOn(ItemStack stack, BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult rez) {
         if (stack.is(SupernaturalItems.EBONSTEEL_KEY.get()) && this.canGiveTreasure(state, world, pos)) {
             if (world instanceof ServerLevel lvl) {
-                world.setBlock(pos, this.getState(state, true), 2);
+                world.setBlock(pos, state.setValue(RevenantVaultBlock.TREASURE, true), 2);
                 RevenantVault.playSound(world, pos, SoundEvents.VAULT_OPEN_SHUTTER);
                 List<ItemStack> vault = RevenantVault.getRewards(lvl, pos, player, "gameplay/treasure_vault_loot");
                 if (!player.isCreative()) {
@@ -103,10 +103,6 @@ public class RevenantVaultBlock extends BaseEntityBlock {
 	public RenderShape getRenderShape(BlockState state) {
 		return RenderShape.MODEL;
 	}
-
-    public BlockState getState(BlockState state, boolean check) {
-        return state.setValue(TREASURE, check);
-    }
 
     public boolean canGiveTreasure(BlockState state, Level world, BlockPos pos) {
         if (world.getBlockEntity(pos) instanceof RevenantVaultBlockEntity target) {
