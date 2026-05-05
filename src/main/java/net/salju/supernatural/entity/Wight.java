@@ -45,28 +45,28 @@ public class Wight extends AbstractSpellcasterEntity implements Enemy, CrossbowA
 		this.setPathfindingMalus(PathType.WATER, -1.0F);
 	}
 
-    @Override
-    public void addAdditionalSaveData(ValueOutput tag) {
+	@Override
+	public void addAdditionalSaveData(ValueOutput tag) {
 		super.addAdditionalSaveData(tag);
 		tag.putBoolean("Captain", this.isCaptain());
-        if (!this.getPrimary().isEmpty()) {
-            tag.store("Primary", ItemStack.CODEC, this.getPrimary());
-        }
-        if (!this.getSecondary().isEmpty()) {
-            tag.store("Secondary", ItemStack.CODEC, this.getSecondary());
-        }
+		if (!this.getPrimary().isEmpty()) {
+			tag.store("Primary", ItemStack.CODEC, this.getPrimary());
+		}
+		if (!this.getSecondary().isEmpty()) {
+			tag.store("Secondary", ItemStack.CODEC, this.getSecondary());
+		}
 	}
 
-    @Override
-    public void readAdditionalSaveData(ValueInput tag) {
+	@Override
+	public void readAdditionalSaveData(ValueInput tag) {
 		super.readAdditionalSaveData(tag);
 		this.getEntityData().set(CAPTAIN, tag.getBooleanOr("Captain", false));
-        if (tag.read("Primary", ItemStack.CODEC).isPresent()) {
-            this.setPrimary(tag.read("Primary", ItemStack.CODEC).orElse(ItemStack.EMPTY));
-        }
-        if (tag.read("Secondary", ItemStack.CODEC).isPresent()) {
-            this.setSecondary(tag.read("Secondary", ItemStack.CODEC).orElse(ItemStack.EMPTY));
-        }
+		if (tag.read("Primary", ItemStack.CODEC).isPresent()) {
+			this.setPrimary(tag.read("Primary", ItemStack.CODEC).orElse(ItemStack.EMPTY));
+		}
+		if (tag.read("Secondary", ItemStack.CODEC).isPresent()) {
+			this.setSecondary(tag.read("Secondary", ItemStack.CODEC).orElse(ItemStack.EMPTY));
+		}
 	}
 
 	@Override
@@ -80,7 +80,6 @@ public class Wight extends AbstractSpellcasterEntity implements Enemy, CrossbowA
 	protected void registerGoals() {
 		super.registerGoals();
 		this.goalSelector.addGoal(0, new AbstractSpellcasterGoal(this));
-		this.goalSelector.addGoal(0, new WightTeleportSpellGoal(this));
 		this.goalSelector.addGoal(1, new WightLifeSpellGoal(this));
 		this.goalSelector.addGoal(2, new WightCrossbowGoal<>(this, 1.0D, 12.0F));
 		this.goalSelector.addGoal(3, new MeleeAttackGoal(this, 1.2, true));
@@ -88,7 +87,7 @@ public class Wight extends AbstractSpellcasterEntity implements Enemy, CrossbowA
 		this.goalSelector.addGoal(4, new LookAtPlayerGoal(this, LivingEntity.class, 8));
 		this.goalSelector.addGoal(4, new RandomLookAroundGoal(this));
 		this.targetSelector.addGoal(0, new HurtByTargetGoal(this, Wight.class).setAlertOthers());
-        this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, LivingEntity.class, 12, true, false, new WightAttackSelector(this)));
+		this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, LivingEntity.class, 12, true, false, new WightAttackSelector(this)));
 	}
 
 	@Override
@@ -128,18 +127,18 @@ public class Wight extends AbstractSpellcasterEntity implements Enemy, CrossbowA
 				this.level().addParticle(ParticleTypes.SOUL_FIRE_FLAME, this.getRandomX(0.5), this.getRandomY(), this.getRandomZ(0.5), 0.0, 0.0, 0.0);
 			}
 			if (this.getTarget() != null && this.getTarget().isAlive() && this.shouldSwapToWeapon(this.getTarget())) {
-                this.setItemSlot(EquipmentSlot.MAINHAND, this.getSwapToWeapon());
+				this.setItemSlot(EquipmentSlot.MAINHAND, this.getSwapToWeapon());
 			}
 		}
 	}
 
-    @Override
-    protected void dropCustomDeathLoot(ServerLevel lvl, DamageSource source, boolean check) {
-        super.dropCustomDeathLoot(lvl, source, check);
-        if (this.isCaptain()) {
-            this.spawnAtLocation(lvl, new ItemStack(SupernaturalItems.EBONSTEEL_KEY.get()));
-        }
-    }
+	@Override
+	protected void dropCustomDeathLoot(ServerLevel lvl, DamageSource source, boolean check) {
+		super.dropCustomDeathLoot(lvl, source, check);
+		if (this.isCaptain()) {
+			this.spawnAtLocation(lvl, new ItemStack(SupernaturalItems.EBONSTEEL_KEY.get()));
+		}
+	}
 
 	@Override
 	public SpawnGroupData finalizeSpawn(ServerLevelAccessor lvl, DifficultyInstance difficulty, EntitySpawnReason reason, @Nullable SpawnGroupData data) {
@@ -208,25 +207,25 @@ public class Wight extends AbstractSpellcasterEntity implements Enemy, CrossbowA
 		return this.secondary;
 	}
 
-    public ItemStack getSwapToWeapon() {
-        return this.hasCrossbow() ? this.getPrimary() : this.getSecondary();
-    }
+	public ItemStack getSwapToWeapon() {
+		return this.hasCrossbow() ? this.getPrimary() : this.getSecondary();
+	}
 
-    public boolean shouldSwapToWeapon(LivingEntity target) {
-        if (this.isCastingSpell()) {
-            return false;
-        } else if (this.isPassenger()) {
-            if (this.getVehicle() instanceof AbstractHorse) {
-                return this.hasCrossbow();
-            } else {
-                return !this.hasCrossbow();
-            }
-        } else if (this.hasCrossbow()) {
-            return this.distanceTo(target) <= 5.76 && !target.isInWater();
-        } else {
-            return this.distanceTo(target) >= 8.25 || target.isInWater();
-        }
-    }
+	public boolean shouldSwapToWeapon(LivingEntity target) {
+		if (this.isCastingSpell()) {
+			return false;
+		} else if (this.isPassenger()) {
+			if (this.getVehicle() instanceof AbstractHorse) {
+				return this.hasCrossbow();
+			} else {
+				return !this.hasCrossbow();
+			}
+		} else if (this.hasCrossbow()) {
+			return this.distanceTo(target) <= 5.76 && !target.isInWater();
+		} else {
+			return this.distanceTo(target) >= 8.25 || target.isInWater();
+		}
+	}
 
 	public void setPrimary(ItemStack stack) {
 		this.primary = stack;
@@ -240,7 +239,7 @@ public class Wight extends AbstractSpellcasterEntity implements Enemy, CrossbowA
 		return this.getEntityData().get(CAPTAIN);
 	}
 
-    public boolean hasCrossbow() {
-        return this.getMainHandItem().getItem() instanceof CrossbowItem;
-    }
+	public boolean hasCrossbow() {
+		return this.getMainHandItem().getItem() instanceof CrossbowItem;
+	}
 }
