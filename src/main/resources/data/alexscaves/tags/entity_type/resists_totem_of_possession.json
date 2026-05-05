@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    "supernatural:possessed_armor",
+    "supernatural:spooky",
+    "supernatural:angel",
+    "supernatural:wight",
+    "supernatural:revenant"
+  ]
+}
