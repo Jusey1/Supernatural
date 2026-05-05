@@ -209,7 +209,7 @@ public class SupernaturalManager {
                 }
 			}
 		}
-		return Math.min(28, i);
+		return Math.min(48, i);
 	}
 
 	public static List<BlockPos> getCircle(BlockPos pos) {

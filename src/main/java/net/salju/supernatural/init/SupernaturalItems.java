@@ -48,7 +48,7 @@ public class SupernaturalItems {
     public static final DeferredHolder<Item, Item> EBONSTEEL_CHESTPLATE = REGISTRY.register("ebonsteel_chestplate", () -> new Item(createBaseProps("ebonsteel_chestplate").durability(ArmorType.CHESTPLATE.getDurability(21)).humanoidArmor(SupernaturalArmors.EBONSTEEL, ArmorType.CHESTPLATE).rarity(Rarity.UNCOMMON)));
     public static final DeferredHolder<Item, Item> EBONSTEEL_LEGGINGS = REGISTRY.register("ebonsteel_leggings", () -> new Item(createBaseProps("ebonsteel_leggings").durability(ArmorType.LEGGINGS.getDurability(21)).humanoidArmor(SupernaturalArmors.EBONSTEEL, ArmorType.LEGGINGS).rarity(Rarity.UNCOMMON)));
     public static final DeferredHolder<Item, Item> EBONSTEEL_BOOTS = REGISTRY.register("ebonsteel_boots", () -> new Item(createBaseProps("ebonsteel_boots").durability(ArmorType.BOOTS.getDurability(21)).humanoidArmor(SupernaturalArmors.EBONSTEEL, ArmorType.BOOTS).rarity(Rarity.UNCOMMON)));
-    public static final DeferredHolder<Item, Item> EBONSTEEL_HORSE_ARMOR = REGISTRY.register("ebonsteel_horse_armor", () -> new Item(new Item.Properties().horseArmor(SupernaturalArmors.EBONSTEEL).rarity(Rarity.UNCOMMON)));
+    public static final DeferredHolder<Item, Item> EBONSTEEL_HORSE_ARMOR = REGISTRY.register("ebonsteel_horse_armor", () -> new Item(createBaseProps("ebonsteel_horse_armor").horseArmor(SupernaturalArmors.EBONSTEEL).rarity(Rarity.UNCOMMON)));
     public static final DeferredHolder<Item, Item> GOTHIC_COPPER_HELMET = REGISTRY.register("gothic_copper_helmet", () -> new Item(createBaseProps("gothic_copper_helmet").durability(ArmorType.HELMET.getDurability(11)).humanoidArmor(SupernaturalArmors.COPPER, ArmorType.HELMET)));
     public static final DeferredHolder<Item, Item> GOTHIC_IRON_HELMET = REGISTRY.register("gothic_iron_helmet", () -> new Item(createBaseProps("gothic_iron_helmet").durability(ArmorType.HELMET.getDurability(15)).humanoidArmor(SupernaturalArmors.IRON, ArmorType.HELMET)));
 	public static final DeferredHolder<Item, Item> GOTHIC_DIAMOND_HELMET = REGISTRY.register("gothic_diamond_helmet", () -> new Item(createBaseProps("gothic_diamond_helmet").durability(ArmorType.HELMET.getDurability(33)).humanoidArmor(SupernaturalArmors.DIAMOND, ArmorType.HELMET)));
@@ -64,7 +64,6 @@ public class SupernaturalItems {
     public static final DeferredHolder<Item, Item> EBONSTEEL_SCRAP = REGISTRY.register("ebonsteel_scrap", () -> new Item(createBaseProps("ebonsteel_scrap").rarity(Rarity.UNCOMMON)));
     public static final DeferredHolder<Item, Item> EBONSTEEL_KEY = REGISTRY.register("ebonsteel_key", () -> new Item(createBaseProps("ebonsteel_key").rarity(Rarity.UNCOMMON)));
     public static final DeferredHolder<Item, Item> VAMPIRE_DUST = REGISTRY.register("vampire_dust", () -> new Item(createBaseProps("vampire_dust")));
-    public static final DeferredHolder<Item, Item> MERFOLK_SCALE = REGISTRY.register("merfolk_scale", () -> new Item(createBaseProps("merfolk_scale")));
     public static final DeferredHolder<Item, Item> PLASMA = REGISTRY.register("plasma", () -> new Item(createBaseProps("plasma")));
 
 	private static DeferredHolder<Item, Item> block(DeferredHolder<Block, Block> block, String name) {

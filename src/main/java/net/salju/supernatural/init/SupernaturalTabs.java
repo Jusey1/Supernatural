@@ -44,7 +44,6 @@ public class SupernaturalTabs {
                 tabData.accept(SupernaturalItems.RITUAL_BOOK.get());
                 tabData.accept(SupernaturalItems.BLOOD.get());
                 tabData.accept(SupernaturalItems.VAMPIRE_DUST.get());
-                tabData.accept(SupernaturalItems.MERFOLK_SCALE.get());
                 tabData.accept(SupernaturalItems.PLASMA.get());
                 tabData.accept(SupernaturalItems.EBONSTEEL_BARS.get());
                 tabData.accept(SupernaturalItems.EBONSTEEL_DOOR.get());
