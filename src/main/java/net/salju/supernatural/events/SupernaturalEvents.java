@@ -200,28 +200,7 @@ public class SupernaturalEvents {
 					block.setItem(0, SupernaturalManager.setSoul(new ItemStack(SupernaturalItems.SOULGEM.get()), target));
 					lvl.sendParticles(ParticleTypes.SOUL, (block.getBlockPos().getX() + 0.5), (block.getBlockPos().getY() + 0.5), (block.getBlockPos().getZ() + 0.5), 6, 0.1, 0.15, 0.1, 0);
 					lvl.sendParticles(ParticleTypes.SOUL, (target.getX() + 0.5), (target.getY() + 0.5), (target.getZ() + 0.5), 8, 0.25, 0.35, 0.25, 0);
-					target.getPersistentData().putBoolean("SoulTrapped", true);
 				}
-			}
-		}
-	}
-
-	@SubscribeEvent
-	public static void onDrops(LivingDropsEvent event) {
-		LivingEntity target = event.getEntity();
-		if (target.level() instanceof ServerLevel) {
-			if (target.getPersistentData().getBoolean("SoulTrapped").isPresent()) {
-				event.setCanceled(target.getPersistentData().getBoolean("SoulTrapped").get());
-			}
-		}
-	}
-
-	@SubscribeEvent
-	public static void onXpDrops(LivingExperienceDropEvent event) {
-		LivingEntity target = event.getEntity();
-		if (target.level() instanceof ServerLevel) {
-			if (target.getPersistentData().getBoolean("SoulTrapped").isPresent()) {
-				event.setCanceled(target.getPersistentData().getBoolean("SoulTrapped").get());
 			}
 		}
 	}

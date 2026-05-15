@@ -35,15 +35,7 @@ public class SoulMagic {
 			if (SupernaturalManager.canSoulMagicWork(lvl, pos)) {
 				int i = SupernaturalManager.getPower(lvl, pos, player);
 				int e = SupernaturalManager.getSoulLevel(SupernaturalManager.getSoulgem(offer));
-				if (stack.is(SupernaturalItems.GRAVE_SOIL.get()) && i == 42 && e >= 0) {
-					RitualManager.defaultResult(target, offer, lvl, player, pos);
-					if (SupernaturalConfig.SACRIFICE.get()) {
-						Mob sacrifice = RitualManager.getSacrifice(lvl, offer, Mob.class, pos);
-						(sacrifice != null ? sacrifice : player).hurt(SupernaturalDamageTypes.causeRitualDamage(player.level().registryAccess(), player), (sacrifice != null ? sacrifice : player).getMaxHealth() * 100.F);
-					}
-					RitualManager.summonMob(lvl, pos.above(), offer);
-					lvl.playSound(null, pos, SoundEvents.SOUL_ESCAPE.value(), SoundSource.BLOCKS, 1.0F, (float) (0.8F + (Math.random() * 0.2)));
-				} else if (stack.is(SupernaturalItems.VAMPIRE_DUST.get())) {
+				if (stack.is(SupernaturalItems.VAMPIRE_DUST.get())) {
 					if (i == 8 && e >= 1) {
 						RitualManager.defaultResult(target, offer, lvl, player, pos);
 						BlockPos top = BlockPos.containing((pos.getX() + 3), (pos.getY() - 1), (pos.getZ() + 3));

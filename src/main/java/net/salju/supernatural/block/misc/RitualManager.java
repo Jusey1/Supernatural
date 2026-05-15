@@ -4,7 +4,6 @@ import net.salju.supernatural.init.*;
 import net.salju.supernatural.events.GothicEvent;
 import net.salju.supernatural.events.SupernaturalManager;
 import net.salju.supernatural.block.entity.RitualAltarEntity;
-import net.neoforged.neoforge.event.EventHooks;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.core.BlockPos;
@@ -15,8 +14,6 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.EnchantmentTags;
 import net.minecraft.tags.TagKey;
-import net.minecraft.world.entity.monster.zombie.ZombieVillager;
-import net.minecraft.world.entity.npc.villager.Villager;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.item.enchantment.Enchantment;
@@ -24,7 +21,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.phys.AABB;
-import net.minecraft.world.phys.Vec3;
 import javax.annotation.Nullable;
 import java.util.HashMap;
 import java.util.Map;
@@ -38,31 +34,6 @@ public class RitualManager {
 		if (!player.isCreative()) {
 			stack.shrink(1);
             target.clearContent();
-		}
-	}
-
-	public static void summonMob(ServerLevel lvl, BlockPos pos, ItemStack stack) {
-		Entity entity = EntityType.loadEntityRecursive(SupernaturalManager.getSoulTag(stack), lvl, EntitySpawnReason.MOB_SUMMONED, o -> o);
-		if (entity != null) {
-			entity.teleportTo(Vec3.atBottomCenterOf(pos).x, Vec3.atBottomCenterOf(pos).y, Vec3.atBottomCenterOf(pos).z);
-			if (entity instanceof Villager bob) {
-				ZombieVillager zomby = bob.convertTo(EntityType.ZOMBIE_VILLAGER, ConversionParams.single(bob, true, true), newbie -> { EventHooks.onLivingConvert(bob, newbie); });
-				if (zomby != null) {
-					zomby.setVillagerData(bob.getVillagerData());
-					zomby.setGossips(bob.getGossips());
-					zomby.setTradeOffers(bob.getOffers());
-					zomby.setVillagerXp(bob.getVillagerXp());
-				}
-			}
-			if (lvl.canSeeSky(pos)) {
-				LightningBolt bolt = EntityType.LIGHTNING_BOLT.create(lvl, EntitySpawnReason.MOB_SUMMONED);
-				if (bolt != null) {
-					bolt.move(MoverType.SELF, Vec3.atBottomCenterOf(pos));
-					bolt.setVisualOnly(true);
-					lvl.addFreshEntity(bolt);
-				}
-			}
-			lvl.addFreshEntity(entity);
 		}
 	}
 
@@ -99,35 +70,23 @@ public class RitualManager {
 
 	@Nullable
 	public static Mob getSacrifice(ServerLevel lvl, Class<? extends Mob> mob, BlockPos pos) {
-		return getSacrifice(lvl, ItemStack.EMPTY, mob, pos);
-	}
-
-	@Nullable
-	public static Mob getSacrifice(ServerLevel lvl, ItemStack stack, Class<? extends Mob> mob, BlockPos pos) {
-		return getSacrifice(lvl, stack, new AABB(pos).inflate(SupernaturalConfig.ALTARRANGE.get()), mob, null);
+		return getSacrifice(lvl, new AABB(pos).inflate(SupernaturalConfig.ALTARRANGE.get()), mob, null);
 	}
 
     @Nullable
     public static Mob getSacrifice(ServerLevel lvl, TagKey<EntityType<?>> tag, BlockPos pos) {
-        return getSacrifice(lvl, ItemStack.EMPTY, new AABB(pos).inflate(SupernaturalConfig.ALTARRANGE.get()), Mob.class, tag);
+        return getSacrifice(lvl, new AABB(pos).inflate(SupernaturalConfig.ALTARRANGE.get()), Mob.class, tag);
     }
 
 	@Nullable
-	public static Mob getSacrifice(ServerLevel lvl, ItemStack stack, AABB box, Class<? extends Mob> mob, @Nullable TagKey<EntityType<?>> tag) {
+	public static Mob getSacrifice(ServerLevel lvl, AABB box, Class<? extends Mob> mob, @Nullable TagKey<EntityType<?>> tag) {
 		for (Mob target : lvl.getEntitiesOfClass(mob, box)) {
-			if (isValidSacrificeTarget(target, stack, tag) && !target.getType().is(SupernaturalTags.IMMUNITY)) {
+			if (isValidTarget(target, tag) && !target.getType().is(SupernaturalTags.IMMUNITY)) {
 				return target;
 			}
 		}
 		return null;
 	}
-
-	private static boolean isValidSacrificeTarget(Mob target, ItemStack stack, @Nullable TagKey<EntityType<?>> tag) {
-		if (!stack.isEmpty()) {
-			return SupernaturalManager.getSoulLevel(SupernaturalManager.getSoulLevel(target)) >= SupernaturalManager.getSoulLevel(SupernaturalManager.getSoulgem(stack));
-		}
-        return isValidTarget(target, tag);
-    }
 
     private static boolean isValidTarget(Mob target, @Nullable TagKey<EntityType<?>> tag) {
         if (tag != null) {
