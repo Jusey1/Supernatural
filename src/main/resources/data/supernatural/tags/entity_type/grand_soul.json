@@ -2,15 +2,59 @@
   "replace": false,
   "values": [
     "minecraft:villager",
+    "minecraft:zombie_villager",
     "minecraft:wandering_trader",
     "minecraft:piglin_brute",
     "minecraft:piglin",
+    "minecraft:ender_dragon",
+    "minecraft:wither",
+    "minecraft:warden",
+    {
+      "id": "alexscaves:deep_one",
+      "required": false
+    },
+    {
+      "id": "alexscaves:deep_one_knight",
+      "required": false
+    },
+    {
+      "id": "alexscaves:deep_one_mage",
+      "required": false
+    },
+    {
+      "id": "alexscaves:forsaken",
+      "required": false
+    },
+    {
+      "id": "alexscaves:luxtructosaurus",
+      "required": false
+    },
+    {
+      "id": "alexscaves:tremorzilla",
+      "required": false
+    },
+    {
+      "id": "alexsmobs:warped_mosco",
+      "required": false
+    },
+    {
+      "id": "alexsmobs:void_worm",
+      "required": false
+    },
+    {
+      "id": "galosphere:berserker",
+      "required": false
+    },
     {
       "id": "iwannaskate:wandering_skater",
       "required": false
     },
     {
       "id": "#kobolds:kobolds",
+      "required": false
+    },
+    {
+      "id": "revotedwildfire:wildfire",
       "required": false
     },
     {

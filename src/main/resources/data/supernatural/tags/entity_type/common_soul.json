@@ -4,10 +4,15 @@
     "#minecraft:skeletons",
     "#minecraft:zombies",
     "minecraft:phantom",
+    "minecraft:ghast",
     "minecraft:creeper",
     "minecraft:hoglin",
     "minecraft:ravager",
     "minecraft:cave_spider",
-    "minecraft:spider"
+    "minecraft:spider",
+    {
+      "id": "alexsmobs:underminer",
+      "required": false
+    }
   ]
 }
