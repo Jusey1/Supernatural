@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "minecraft:dark_forest",
+    "minecraft:pale_garden",
+    {
+      "id": "goodending:oak_hammock_forest",
+      "required": false
+    }
+  ]
+}
