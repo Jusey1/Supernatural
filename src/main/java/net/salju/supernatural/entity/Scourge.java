@@ -15,6 +15,8 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
+import net.salju.supernatural.init.SupernaturalItems;
+
 import javax.annotation.Nullable;
 
 public class Scourge extends AbstractHorse {
@@ -45,7 +47,7 @@ public class Scourge extends AbstractHorse {
     @Override
     public SpawnGroupData finalizeSpawn(ServerLevelAccessor lvl, DifficultyInstance difficulty, EntitySpawnReason reason, @Nullable SpawnGroupData data) {
         this.setItemSlotAndDropWhenKilled(EquipmentSlot.SADDLE, new ItemStack(Items.SADDLE));
-        this.setBodyArmorItem(new ItemStack(Items.IRON_HORSE_ARMOR));
+        this.setBodyArmorItem(new ItemStack(SupernaturalItems.EBONSTEEL_HORSE_ARMOR.get()));
         this.setTamed(true);
         return super.finalizeSpawn(lvl, difficulty, reason, data);
     }

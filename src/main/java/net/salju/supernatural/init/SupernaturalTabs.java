@@ -15,15 +15,15 @@ public class SupernaturalTabs {
 	public static final DeferredRegister<CreativeModeTab> REGISTRY = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, Supernatural.MODID);
 	public static final DeferredHolder<CreativeModeTab, CreativeModeTab> SUPERNATURAL = REGISTRY.register("supernatural",
 			() -> CreativeModeTab.builder().title(Component.translatable("itemGroup.supernatural")).icon(() -> new ItemStack(SupernaturalItems.SOULGEM.get())).displayItems((parameters, tabData) -> {
+                tabData.accept(SupernaturalItems.RITUAL_BOOK.get());
                 tabData.accept(SupernaturalItems.VAMPIRE_SPAWN_EGG.get());
                 tabData.accept(SupernaturalItems.NECROMANCER_SPAWN_EGG.get());
                 tabData.accept(SupernaturalItems.ARMOR_SPAWN_EGG.get());
                 tabData.accept(SupernaturalItems.SPOOKY_SPAWN_EGG.get());
-                tabData.accept(SupernaturalItems.ANGEL_STATUE.get());
                 tabData.accept(SupernaturalItems.MERFOLK_SPAWN_EGG.get());
                 tabData.accept(SupernaturalItems.WIGHT_SPAWN_EGG.get());
                 tabData.accept(SupernaturalItems.REVENANT_SPAWN_EGG.get());
-                tabData.accept(SupernaturalItems.SCOURGE_SPAWN_EGG.get());
+                tabData.accept(SupernaturalItems.ANGEL_STATUE.get());
                 tabData.accept(SupernaturalItems.EBONSTEEL_HELMET.get());
                 tabData.accept(SupernaturalItems.EBONSTEEL_CHESTPLATE.get());
                 tabData.accept(SupernaturalItems.EBONSTEEL_LEGGINGS.get());
@@ -34,14 +34,12 @@ public class SupernaturalTabs {
                 tabData.accept(SupernaturalManager.dyeHelmet(SupernaturalItems.GOTHIC_DIAMOND_HELMET.get()));
                 tabData.accept(SupernaturalManager.dyeHelmet(SupernaturalItems.GOTHIC_NETHERITE_HELMET.get()));
                 tabData.accept(SupernaturalManager.dyeHelmet(SupernaturalItems.GOTHIC_EBONSTEEL_HELMET.get()));
-                tabData.accept(SupernaturalItems.EBONSTEEL_HORSE_ARMOR.get());
                 tabData.accept(SupernaturalItems.EBONSTEEL_INGOT.get());
                 tabData.accept(SupernaturalItems.EBONSTEEL_SCRAP.get());
                 tabData.accept(SupernaturalItems.EBONSTEEL_KEY.get());
                 tabData.accept(SupernaturalItems.COMPASS.get());
                 tabData.accept(SupernaturalItems.REVENANT_CORE.get());
                 tabData.accept(SupernaturalItems.SOULGEM.get());
-                tabData.accept(SupernaturalItems.RITUAL_BOOK.get());
                 tabData.accept(SupernaturalItems.BLOOD.get());
                 tabData.accept(SupernaturalItems.VAMPIRE_DUST.get());
                 tabData.accept(SupernaturalItems.PLASMA.get());
