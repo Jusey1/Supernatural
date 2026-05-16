@@ -1,5 +1,5 @@
 {
-	"parent": "minecraft:block/chain",
+	"parent": "minecraft:block/template_chain",
 	"ambientocclusion": false,
 	"textures": {
 		"particle": "supernatural:block/ebonsteel_chain",
