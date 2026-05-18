@@ -2,25 +2,10 @@
   "replace": false,
   "values": [
     "minecraft:villager",
-    "minecraft:zombie_villager",
     "minecraft:wandering_trader",
-    "minecraft:piglin_brute",
-    "minecraft:piglin",
     "minecraft:ender_dragon",
     "minecraft:wither",
     "minecraft:warden",
-    {
-      "id": "alexscaves:deep_one",
-      "required": false
-    },
-    {
-      "id": "alexscaves:deep_one_knight",
-      "required": false
-    },
-    {
-      "id": "alexscaves:deep_one_mage",
-      "required": false
-    },
     {
       "id": "alexscaves:forsaken",
       "required": false
@@ -50,7 +35,35 @@
       "required": false
     },
     {
-      "id": "#kobolds:kobolds",
+      "id": "kobolds:kobold",
+      "required": false
+    },
+    {
+      "id": "kobolds:kobold_warrior",
+      "required": false
+    },
+    {
+      "id": "kobolds:kobold_enchanter",
+      "required": false
+    },
+    {
+      "id": "kobolds:kobold_engineer",
+      "required": false
+    },
+    {
+      "id": "kobolds:kobold_rascal",
+      "required": false
+    },
+    {
+      "id": "kobolds:kobold_captain",
+      "required": false
+    },
+    {
+      "id": "kobolds:kobold_pirate",
+      "required": false
+    },
+    {
+      "id": "kobolds:kobold_child",
       "required": false
     },
     {

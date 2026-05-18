@@ -7,6 +7,7 @@
     "minecraft:creaking",
     "minecraft:enderman",
     "minecraft:happy_ghast",
+    "minecraft:piglin_brute",
     "minecraft:witch",
     "supernatural:merfolk_amethyst",
     "supernatural:merfolk_diamond",
@@ -15,6 +16,18 @@
     "supernatural:revenant",
     {
       "id": "alexscaves:atlatitan",
+      "required": false
+    },
+    {
+      "id": "alexscaves:deep_one",
+      "required": false
+    },
+    {
+      "id": "alexscaves:deep_one_knight",
+      "required": false
+    },
+    {
+      "id": "alexscaves:deep_one_mage",
       "required": false
     },
     {

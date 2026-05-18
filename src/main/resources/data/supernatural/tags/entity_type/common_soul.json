@@ -3,6 +3,7 @@
   "values": [
     "#minecraft:skeletons",
     "#minecraft:zombies",
+    "minecraft:piglin",
     "minecraft:phantom",
     "minecraft:ghast",
     "minecraft:creeper",
