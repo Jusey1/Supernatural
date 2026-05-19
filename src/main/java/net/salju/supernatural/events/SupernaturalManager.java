@@ -204,7 +204,7 @@ public class SupernaturalManager {
 			BlockState state = lvl.getBlockState(poz);
 			if (state.getBlock() instanceof CandleBlock && state.getValue(CandleBlock.LIT)) {
 				i = (i + state.getValue(CandleBlock.CANDLES));
-                if (!player.isCreative()) {
+                if (!player.isCreative() && !state.is(SupernaturalTags.CANDLES)) {
                     lvl.setBlock(poz, state.setValue(CandleBlock.LIT, false), 3);
                 }
 			}

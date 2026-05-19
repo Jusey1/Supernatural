@@ -47,16 +47,19 @@ public class SupernaturalEvents {
 			player.getFoodData().setFoodLevel(20);
 			if (player.level() instanceof ServerLevel lvl) {
 				SupernaturalManager.addVampireEffects(player);
-				if (SupernaturalManager.shouldVampireBurn(player, lvl) && !player.isCreative() && !player.isSpectator()) {
-					if (player.getItemBySlot(EquipmentSlot.HEAD).isEmpty()) {
-						if (player.getRemainingFireTicks() <= 20) {
-							player.setRemainingFireTicks(120);
-							player.hurt(SupernaturalDamageTypes.causeSunDamage(player.level().registryAccess()), 3);
-						}
-					} else if (Mth.nextInt(player.getRandom(), 0, 25) <= 2) {
-                        player.getItemBySlot(EquipmentSlot.HEAD).hurtAndBreak(1, player, EquipmentSlot.HEAD);
-					}
-				}
+                ItemStack helmet = player.getItemBySlot(EquipmentSlot.HEAD);
+                if (!helmet.is(SupernaturalTags.DARK_ARMOR)) {
+                    if (SupernaturalManager.shouldVampireBurn(player, lvl) && !player.isCreative() && !player.isSpectator()) {
+                        if (helmet.isEmpty()) {
+                            if (player.getRemainingFireTicks() <= 20) {
+                                player.setRemainingFireTicks(120);
+                                player.hurt(SupernaturalDamageTypes.causeSunDamage(player.level().registryAccess()), 3);
+                            }
+                        } else if (Mth.nextInt(player.getRandom(), 0, 25) <= 2) {
+                            helmet.hurtAndBreak(1, player, EquipmentSlot.HEAD);
+                        }
+                    }
+                }
 			}
 		}
 	}
@@ -140,7 +143,7 @@ public class SupernaturalEvents {
 			if (SupernaturalManager.isVampire(target)) {
 				int i = SupernaturalManager.getEnchantmentLevel(weapon, target.level(), "minecraft", "smite");
 				if (weapon.is(Items.WOODEN_SWORD) && target.getHealth() <= target.getMaxHealth() * SupernaturalConfig.WOOD.get().floatValue()) {
-					event.setAmount(Float.MAX_VALUE);
+					event.setAmount(target.getMaxHealth() * 10.0F);
 					if (target.level() instanceof ServerLevel lvl) {
 						EntityType.BAT.spawn(lvl, target.blockPosition(), EntitySpawnReason.MOB_SUMMONED);
 					}
