@@ -17,7 +17,7 @@ public class RevenantSacrificeSpellGoal extends AbstractRevenantSpellGoal {
 	@Override
 	protected void performSpellCasting() {
         if (this.hasValidTarget()) {
-            this.getTarget().hurt(SupernaturalDamageTypes.causeNightmareDamage(this.revenant.level().registryAccess(), this.revenant), this.getTarget().getMaxHealth() * 100.F);
+            this.getTarget().hurt(SupernaturalDamageTypes.causeNightmareDamage(this.revenant.level().registryAccess()), this.getTarget().getMaxHealth() * 100.F);
         }
 	}
 

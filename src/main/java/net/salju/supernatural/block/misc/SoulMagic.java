@@ -49,13 +49,13 @@ public class SoulMagic {
                         Mob goat = RitualManager.getSacrifice(lvl, Goat.class, pos);
                         if (goat != null) {
                             RitualManager.defaultResult(target, offer, lvl, player, pos);
-                            player.hurt(SupernaturalDamageTypes.causeRitualDamage(player.level().registryAccess(), player), 0.25F);
+                            player.hurt(SupernaturalDamageTypes.causeRitualDamage(player.level().registryAccess()), 0.25F);
                             if (player.isAlive()) {
                                 player.setHealth(1.0F);
                             }
                             SupernaturalManager.setVampire(player, true);
                             if (SupernaturalConfig.SACRIFICE.get()) {
-                                goat.hurt(SupernaturalDamageTypes.causeRitualDamage(goat.level().registryAccess(), player), goat.getMaxHealth() * 100.0F);
+                                goat.hurt(SupernaturalDamageTypes.causeRitualDamage(goat.level().registryAccess()), goat.getMaxHealth() * 100.0F);
                             }
                         }
 					}
