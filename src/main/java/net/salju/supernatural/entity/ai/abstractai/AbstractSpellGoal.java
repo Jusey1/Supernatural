@@ -71,7 +71,7 @@ public abstract class AbstractSpellGoal extends Goal {
 	protected abstract void performSpellCasting();
 
 	protected int getCastWarmupTime() {
-		return 20;
+		return this.getCastingTime() - 20;
 	}
 
 	protected abstract int getCastingTime();

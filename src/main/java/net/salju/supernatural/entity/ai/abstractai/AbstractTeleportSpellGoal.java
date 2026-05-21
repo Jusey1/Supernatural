@@ -25,7 +25,7 @@ public abstract class AbstractTeleportSpellGoal extends AbstractSpellGoal {
 
     @Override
     protected int getCastingTime() {
-        return 20;
+        return 40;
     }
 
     @Override

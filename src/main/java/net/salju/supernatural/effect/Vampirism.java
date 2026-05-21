@@ -16,7 +16,7 @@ public class Vampirism extends MobEffect {
 	@Override
 	public boolean applyEffectTick(ServerLevel lvl, LivingEntity target, int str) {
 		if (target instanceof Player player && !SupernaturalManager.isVampire(player)) {
-			player.hurt(SupernaturalDamageTypes.causeRitualDamage(player.level().registryAccess()), 0.25F);
+			player.hurt(SupernaturalDamageTypes.causeRitualDamage(player.level().registryAccess(), null), 0.25F);
 			if (player.isAlive()) {
 				player.setHealth(1.0F);
 			}

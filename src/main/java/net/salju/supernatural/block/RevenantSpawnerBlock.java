@@ -3,6 +3,7 @@ package net.salju.supernatural.block;
 import net.salju.supernatural.init.SupernaturalBlocks;
 import net.salju.supernatural.init.SupernaturalMobs;
 import net.salju.supernatural.block.entity.RevenantSpawnerBlockEntity;
+import net.salju.supernatural.entity.Revenant;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.player.Player;
@@ -37,7 +38,10 @@ public class RevenantSpawnerBlock extends BaseEntityBlock {
     @Override
     public boolean onDestroyedByPlayer(BlockState state, Level world, BlockPos pos, Player player, ItemStack stack, boolean check, FluidState fluid) {
         if (world instanceof ServerLevel lvl && !player.isCreative()) {
-            SupernaturalMobs.REVENANT.get().spawn(lvl, pos, EntitySpawnReason.MOB_SUMMONED);
+            Revenant ghost = SupernaturalMobs.REVENANT.get().spawn(lvl, pos, EntitySpawnReason.MOB_SUMMONED);
+            if (ghost != null) {
+                ghost.setTarget(player);
+            }
         }
         return super.onDestroyedByPlayer(state, world, pos, player, stack, check, fluid);
     }
