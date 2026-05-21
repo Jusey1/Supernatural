@@ -1,6 +1,7 @@
 {
   "replace": false,
   "values": [
-    "supernatural:ritual"
+    "supernatural:ritual",
+    "supernatural:nightmare"
   ]
 }
