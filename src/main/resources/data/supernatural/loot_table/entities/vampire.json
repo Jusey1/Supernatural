@@ -10,7 +10,7 @@
             {
               "function": "minecraft:set_count",
               "count": {
-                "min": 0.0,
+                "min": 1.0,
                 "max": 2.0,
                 "type": "minecraft:uniform"
               }
@@ -26,6 +26,26 @@
             }
           ],
           "name": "supernatural:vampire_dust"
+        }
+      ]
+    },
+    {
+      "rolls": 1,
+      "entries": [
+		{
+          "type": "minecraft:item",
+          "name": "supernatural:ritual_book",
+          "weight": 2
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:air",
+          "weight": 8
+        }
+      ],
+      "conditions": [
+        {
+          "condition": "minecraft:killed_by_player"
         }
       ]
     }
