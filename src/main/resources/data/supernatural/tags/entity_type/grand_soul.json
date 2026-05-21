@@ -35,35 +35,7 @@
       "required": false
     },
     {
-      "id": "kobolds:kobold",
-      "required": false
-    },
-    {
-      "id": "kobolds:kobold_warrior",
-      "required": false
-    },
-    {
-      "id": "kobolds:kobold_enchanter",
-      "required": false
-    },
-    {
-      "id": "kobolds:kobold_engineer",
-      "required": false
-    },
-    {
-      "id": "kobolds:kobold_rascal",
-      "required": false
-    },
-    {
-      "id": "kobolds:kobold_captain",
-      "required": false
-    },
-    {
-      "id": "kobolds:kobold_pirate",
-      "required": false
-    },
-    {
-      "id": "kobolds:kobold_child",
+      "id": "#kobolds:kobolds",
       "required": false
     },
     {
