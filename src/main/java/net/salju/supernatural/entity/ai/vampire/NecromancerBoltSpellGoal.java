@@ -2,7 +2,7 @@ package net.salju.supernatural.entity.ai.vampire;
 
 import net.salju.supernatural.entity.ai.abstractai.AbstractTargetSpellGoal;
 import net.salju.supernatural.entity.ai.MinionTargetGoal;
-import net.salju.supernatural.entity.Necromancer;
+import net.salju.supernatural.entity.Vampire;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
@@ -13,7 +13,7 @@ import net.minecraft.world.entity.monster.skeleton.Skeleton;
 import net.minecraft.world.entity.*;
 
 public class NecromancerBoltSpellGoal extends AbstractTargetSpellGoal {
-	public NecromancerBoltSpellGoal(Necromancer source) {
+	public NecromancerBoltSpellGoal(Vampire source) {
 		super(source);
 	}
 
@@ -51,7 +51,7 @@ public class NecromancerBoltSpellGoal extends AbstractTargetSpellGoal {
 
 	@Override
 	protected int getCastingTime() {
-		return 40;
+		return 60;
 	}
 
 	@Override

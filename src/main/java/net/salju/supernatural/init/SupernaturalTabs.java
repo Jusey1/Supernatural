@@ -17,12 +17,12 @@ public class SupernaturalTabs {
 			() -> CreativeModeTab.builder().title(Component.translatable("itemGroup.supernatural")).icon(() -> new ItemStack(SupernaturalItems.SOULGEM.get())).displayItems((parameters, tabData) -> {
                 tabData.accept(SupernaturalItems.RITUAL_BOOK.get());
                 tabData.accept(SupernaturalItems.VAMPIRE_SPAWN_EGG.get());
-                tabData.accept(SupernaturalItems.NECROMANCER_SPAWN_EGG.get());
                 tabData.accept(SupernaturalItems.ARMOR_SPAWN_EGG.get());
                 tabData.accept(SupernaturalItems.SPOOKY_SPAWN_EGG.get());
                 tabData.accept(SupernaturalItems.MERFOLK_SPAWN_EGG.get());
                 tabData.accept(SupernaturalItems.WIGHT_SPAWN_EGG.get());
                 tabData.accept(SupernaturalItems.REVENANT_SPAWN_EGG.get());
+                tabData.accept(SupernaturalItems.SCOURGE_SPAWN_EGG.get());
                 tabData.accept(SupernaturalItems.ANGEL_STATUE.get());
                 tabData.accept(SupernaturalItems.EBONSTEEL_HELMET.get());
                 tabData.accept(SupernaturalItems.EBONSTEEL_CHESTPLATE.get());

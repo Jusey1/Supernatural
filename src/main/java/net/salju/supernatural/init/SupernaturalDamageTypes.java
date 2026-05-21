@@ -15,6 +15,8 @@ import net.minecraft.world.damagesource.DamageSource;
 public class SupernaturalDamageTypes {
 	public static final ResourceKey<DamageType> SUN = ResourceKey.create(Registries.DAMAGE_TYPE, Identifier.fromNamespaceAndPath(Supernatural.MODID, "sun"));
 	public static final ResourceKey<DamageType> RITUAL = ResourceKey.create(Registries.DAMAGE_TYPE, Identifier.fromNamespaceAndPath(Supernatural.MODID, "ritual"));
+    public static final ResourceKey<DamageType> NIGHTMARE = ResourceKey.create(Registries.DAMAGE_TYPE, Identifier.fromNamespaceAndPath(Supernatural.MODID, "nightmare"));
+    public static final ResourceKey<DamageType> CHECKMATE = ResourceKey.create(Registries.DAMAGE_TYPE, Identifier.fromNamespaceAndPath(Supernatural.MODID, "checkmate"));
 
 	public static DamageSource causeSunDamage(RegistryAccess ra) {
 		return new SupernaturalDamage(ra.lookupOrThrow(Registries.DAMAGE_TYPE).getOrThrow(SUN));
@@ -23,6 +25,14 @@ public class SupernaturalDamageTypes {
 	public static DamageSource causeRitualDamage(RegistryAccess ra, LivingEntity target) {
 		return new SupernaturalDamage(ra.lookupOrThrow(Registries.DAMAGE_TYPE).getOrThrow(RITUAL), target);
 	}
+
+    public static DamageSource causeNightmareDamage(RegistryAccess ra, LivingEntity target) {
+        return new SupernaturalDamage(ra.lookupOrThrow(Registries.DAMAGE_TYPE).getOrThrow(NIGHTMARE), target);
+    }
+
+    public static DamageSource getCheckmated(RegistryAccess ra, LivingEntity target) {
+        return new SupernaturalDamage(ra.lookupOrThrow(Registries.DAMAGE_TYPE).getOrThrow(CHECKMATE), target);
+    }
 
 	private static class SupernaturalDamage extends DamageSource {
 		public SupernaturalDamage(Holder.Reference<DamageType> message) {

@@ -142,8 +142,7 @@ public class Wight extends AbstractSpellcasterEntity implements Enemy, CrossbowA
 
 	@Override
 	public SpawnGroupData finalizeSpawn(ServerLevelAccessor lvl, DifficultyInstance difficulty, EntitySpawnReason reason, @Nullable SpawnGroupData data) {
-		int i = Mth.nextInt(this.getRandom(), 1, 100);
-		if (i >= 85 || reason.equals(EntitySpawnReason.CONVERSION)) {
+		if (Mth.nextInt(this.getRandom(), 1, 100) >= 85) {
 			this.getEntityData().set(CAPTAIN, true);
 		}
 		this.getSecondary().enchant(SupernaturalManager.getEnchantment(lvl.getLevel(), "minecraft", "quick_charge"), 2);
