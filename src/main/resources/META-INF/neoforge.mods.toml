@@ -4,7 +4,7 @@ license="MIT License"
 
 [[mods]]
 modId="supernatural"
-version="3.3.0"
+version="3.3.4"
 displayName="Supernatural"
 displayURL="https://discord.gg/s7QaYGUzZU"
 logoFile="logo.png"
@@ -18,4 +18,11 @@ description="Adds supernatural entities, blocks, & items."
     type="required"
     versionRange="[1.21.11]"
     ordering="NONE"
+    side="BOTH"
+
+[[dependencies.supernatural]]
+    modId="amendments"
+    type="optional"
+    versionRange="[0,)"
+    ordering="AFTER"
     side="BOTH"
