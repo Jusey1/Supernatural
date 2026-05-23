@@ -4,12 +4,14 @@ import net.salju.supernatural.init.*;
 import net.salju.supernatural.events.GothicEvent;
 import net.salju.supernatural.events.SupernaturalManager;
 import net.salju.supernatural.block.entity.RitualAltarEntity;
+import net.salju.supernatural.item.component.AnchorballData;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderSet;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.EnchantmentTags;
@@ -20,7 +22,9 @@ import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.level.portal.TeleportTransition;
 import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.Vec3;
 import javax.annotation.Nullable;
 import java.util.HashMap;
 import java.util.Map;
@@ -36,6 +40,27 @@ public class RitualManager {
             target.clearContent();
 		}
 	}
+
+    public static void teleportUser(AnchorballData data, Player player, ServerLevel lvl) {
+        if (data != null) {
+            ServerLevel loc = lvl.getServer().getLevel(data.target().dimension());
+            double x = data.getPos().getX() + 0.5;
+            double y = data.getPos().getY() + 0.7;
+            double z = data.getPos().getZ() + 0.5;
+            if (loc != null && player instanceof ServerPlayer ply) {
+                ply.teleport(new TeleportTransition(loc, new Vec3(x, y, z), ply.getDeltaMovement(), ply.getYRot(), ply.getXRot(), TeleportTransition.DO_NOTHING));
+                loc.playSound(null, data.getPos(), SupernaturalSounds.SPOOK_POOF.get(), SoundSource.BLOCKS, 1.0F, (float) (0.8F + (Math.random() * 0.2)));
+                loc.sendParticles(ParticleTypes.SOUL_FIRE_FLAME, x, y, z, 12, 0.5, 0.5, 0.5, 0.65);
+            }
+        }
+    }
+
+    public static boolean canTeleportTo(AnchorballData data, ServerLevel lvl) {
+        if (data != null) {
+            return lvl.isInWorldBounds(data.getPos()) && lvl.getPoiManager().existsAtPosition(SupernaturalBlocks.RITUAL_POI.getKey(), data.getPos());
+        }
+        return false;
+    }
 
 	public static Item getHelmet(Item target) {
 		GothicEvent event = SupernaturalManager.onGothicEvent(target);

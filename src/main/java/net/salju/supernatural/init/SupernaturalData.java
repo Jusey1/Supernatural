@@ -13,7 +13,8 @@ public class SupernaturalData {
 	public static final DeferredHolder<DataComponentType<?>, DataComponentType<SoulgemData>> SOULGEM = register("soulgem", (stuffs) -> {return stuffs.persistent(SoulgemData.CODEC).networkSynchronized(SoulgemData.STREAM_CODEC).cacheEncoding();});
 	public static final DeferredHolder<DataComponentType<?>, DataComponentType<RitualBookData>> BOOK = register("ritual_book", (stuffs) -> {return stuffs.persistent(RitualBookData.CODEC).networkSynchronized(RitualBookData.STREAM_CODEC).cacheEncoding();});
 	public static final DeferredHolder<DataComponentType<?>, DataComponentType<RitualCompassData>> COMPASS = register("ritual_compass", (stuffs) -> {return stuffs.persistent(RitualCompassData.CODEC).networkSynchronized(RitualCompassData.STREAM_CODEC).cacheEncoding();});
-	public static final DeferredHolder<DataComponentType<?>, DataComponentType<AnchorballData>> ANCHOR = register("anchorball", (stuffs) -> {return stuffs.persistent(AnchorballData.CODEC).networkSynchronized(AnchorballData.STREAM_CODEC).cacheEncoding();});
+    public static final DeferredHolder<DataComponentType<?>, DataComponentType<AnchorballData>> ANCHOR = register("anchorball", (stuffs) -> {return stuffs.persistent(AnchorballData.CODEC).networkSynchronized(AnchorballData.STREAM_CODEC).cacheEncoding();});
+    public static final DeferredHolder<DataComponentType<?>, DataComponentType<CommanderWandData>> COMMANDER = register("commander", (stuffs) -> {return stuffs.persistent(CommanderWandData.CODEC).networkSynchronized(CommanderWandData.STREAM_CODEC).cacheEncoding();});
 
 	private static <T> DeferredHolder<DataComponentType<?>, DataComponentType<T>> register(String name, UnaryOperator<DataComponentType.Builder<T>> stuffs) {
 		return REGISTRY.register(name, () -> stuffs.apply(DataComponentType.builder()).build());

@@ -59,6 +59,7 @@ public class SupernaturalItems {
 	public static final DeferredHolder<Item, Item> COMPASS = REGISTRY.register("ritual_compass", () -> new RitualCompassItem(createBaseProps("ritual_compass").stacksTo(1).rarity(Rarity.UNCOMMON)));
 	public static final DeferredHolder<Item, Item> REVENANT_CORE = REGISTRY.register("spectral_core", () -> new SpectralCoreItem(createBaseProps("spectral_core").stacksTo(1).rarity(Rarity.RARE)));
 	public static final DeferredHolder<Item, Item> BLOOD = REGISTRY.register("blood_bottle", () -> new BloodBottleItem(createBaseProps("blood_bottle").stacksTo(16).component(DataComponents.CONSUMABLE, BLOODY).craftRemainder(Items.GLASS_BOTTLE).usingConvertsTo(Items.GLASS_BOTTLE)));
+    public static final DeferredHolder<Item, Item> EBONSTEEL_MIRROR = REGISTRY.register("ebonsteel_mirror", () -> new SpectralMirrorItem(createBaseProps("ebonsteel_mirror").stacksTo(1).rarity(Rarity.UNCOMMON)));
     public static final DeferredHolder<Item, Item> EBONSTEEL_INGOT = REGISTRY.register("ebonsteel_ingot", () -> new Item(createBaseProps("ebonsteel_ingot").rarity(Rarity.UNCOMMON)));
     public static final DeferredHolder<Item, Item> EBONSTEEL_SCRAP = REGISTRY.register("ebonsteel_scrap", () -> new Item(createBaseProps("ebonsteel_scrap").rarity(Rarity.UNCOMMON)));
     public static final DeferredHolder<Item, Item> EBONSTEEL_KEY = REGISTRY.register("ebonsteel_key", () -> new Item(createBaseProps("ebonsteel_key").rarity(Rarity.UNCOMMON)));

@@ -38,7 +38,7 @@ public class SpectralCoreItem extends Item {
 
 	@Override
 	public InteractionResult useOn(UseOnContext context) {
-		if (context.getLevel().getBlockState(context.getClickedPos()).is(SupernaturalBlocks.RITUAL_ALTAR) && context.getPlayer() != null && context.getPlayer().isCreative() && context.getItemInHand().is(SupernaturalItems.REVENANT_CORE)) {
+		if (context.getLevel().getBlockState(context.getClickedPos()).is(SupernaturalBlocks.RITUAL_ALTAR) && context.getPlayer() != null && context.getPlayer().isCreative() && context.getItemInHand().getItem() instanceof SpectralCoreItem) {
 			context.getItemInHand().set(SupernaturalData.ANCHOR, new AnchorballData(GlobalPos.of(context.getLevel().dimension(), context.getClickedPos())));
 			return InteractionResult.SUCCESS;
 		}

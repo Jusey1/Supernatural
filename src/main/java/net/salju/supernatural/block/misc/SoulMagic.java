@@ -4,6 +4,7 @@ import net.salju.supernatural.init.*;
 import net.salju.supernatural.events.RitualEvent;
 import net.salju.supernatural.events.SupernaturalManager;
 import net.salju.supernatural.block.entity.RitualAltarEntity;
+import net.salju.supernatural.item.SpectralCoreItem;
 import net.salju.supernatural.item.component.AnchorballData;
 import net.salju.supernatural.item.RitualCompassItem;
 import net.salju.supernatural.entity.Scourge;
@@ -13,7 +14,6 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.GlobalPos;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.EntityTypeTags;
@@ -25,9 +25,7 @@ import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.gameevent.GameEvent;
-import net.minecraft.world.level.portal.TeleportTransition;
 import net.minecraft.world.level.Spawner;
-import net.minecraft.world.phys.Vec3;
 
 public class SoulMagic {
 	public static void performRitual(ItemStack stack, ItemStack offer, ServerLevel lvl, Player player, BlockPos pos) {
@@ -70,26 +68,16 @@ public class SoulMagic {
 					ItemStack copy = stack.copy();
 					RitualManager.defaultResult(target, offer, lvl, player, pos);
 					target.setItem(0, copy);
-				} else if (stack.is(SupernaturalItems.REVENANT_CORE.get()) && i == 12 && e >= 3) {
+				} else if (stack.getItem() instanceof SpectralCoreItem && i == 12 && e >= 3) {
 					ItemStack copy = stack.copy();
 					AnchorballData data = copy.get(SupernaturalData.ANCHOR.get());
 					RitualManager.defaultResult(target, offer, lvl, player, pos);
-					if (data != null) {
-						if (lvl.isInWorldBounds(data.getPos()) && lvl.getPoiManager().existsAtPosition(SupernaturalBlocks.RITUAL_POI.getKey(), data.getPos())) {
-							target.setItem(0, copy);
-							ServerLevel loc = lvl.getServer().getLevel(data.target().dimension());
-							double x = data.getPos().getX() + 0.5;
-							double y = data.getPos().getY() + 0.7;
-							double z = data.getPos().getZ() + 0.5;
-							if (loc != null && player instanceof ServerPlayer ply) {
-								lvl.playSound(null, pos, SupernaturalSounds.SPOOK_POOF.get(), SoundSource.BLOCKS, 1.0F, (float) (0.8F + (Math.random() * 0.2)));
-								lvl.sendParticles(ParticleTypes.SOUL_FIRE_FLAME, pos.getX(), pos.getY() + 0.75, pos.getZ(), 12, 0.5, 0.5, 0.5, 0.65);
-								ply.teleport(new TeleportTransition(loc, new Vec3(x, y, z), ply.getDeltaMovement(), ply.getYRot(), ply.getXRot(), TeleportTransition.DO_NOTHING));
-								loc.playSound(null, data.getPos(), SupernaturalSounds.SPOOK_POOF.get(), SoundSource.BLOCKS, 1.0F, (float) (0.8F + (Math.random() * 0.2)));
-								loc.sendParticles(ParticleTypes.SOUL_FIRE_FLAME, x, y, z, 12, 0.5, 0.5, 0.5, 0.65);
-							}
-						}
-					}
+                    target.setItem(0, copy);
+                    if (RitualManager.canTeleportTo(data, lvl)) {
+                        lvl.playSound(null, pos, SupernaturalSounds.SPOOK_POOF.get(), SoundSource.BLOCKS, 1.0F, (float) (0.8F + (Math.random() * 0.2)));
+                        lvl.sendParticles(ParticleTypes.SOUL_FIRE_FLAME, pos.getX(), pos.getY() + 0.75, pos.getZ(), 12, 0.5, 0.5, 0.5, 0.65);
+                        RitualManager.teleportUser(data, player, lvl);
+                    }
 				} else if (stack.is(Items.WRITABLE_BOOK) && i == 12 && e >= 3) {
 					RitualManager.defaultResult(target, offer, lvl, player, pos);
 					target.setItem(0, new ItemStack(SupernaturalItems.RITUAL_BOOK.get()));
@@ -112,8 +100,8 @@ public class SoulMagic {
 						RitualManager.defaultResult(target, offer, lvl, player, pos);
 						target.setItem(0, RitualCompassItem.getRitualCompass(pos, lvl, 2));
 					}
-				} else if (stack.is(SupernaturalItems.REVENANT_CORE.get()) && i == 16 && e >= 4) {
-					ItemStack copy = new ItemStack(SupernaturalItems.REVENANT_CORE.get());
+				} else if (stack.getItem() instanceof SpectralCoreItem && i == 16 && e >= 4) {
+					ItemStack copy = stack.copy();
 					RitualManager.defaultResult(target, offer, lvl, player, pos);
 					copy.set(SupernaturalData.ANCHOR, new AnchorballData(GlobalPos.of(lvl.dimension(), pos)));
 					target.setItem(0, copy);

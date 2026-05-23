@@ -38,6 +38,7 @@ public class SupernaturalTabs {
                 tabData.accept(SupernaturalItems.EBONSTEEL_SCRAP.get());
                 tabData.accept(SupernaturalItems.EBONSTEEL_KEY.get());
                 tabData.accept(SupernaturalItems.COMPASS.get());
+                tabData.accept(SupernaturalItems.EBONSTEEL_MIRROR.get());
                 tabData.accept(SupernaturalItems.REVENANT_CORE.get());
                 tabData.accept(SupernaturalItems.SOULGEM.get());
                 tabData.accept(SupernaturalItems.BLOOD.get());

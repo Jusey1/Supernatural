@@ -1,14 +1,10 @@
 package net.salju.supernatural.events;
 
-import net.salju.supernatural.init.SupernaturalTags;
-import net.salju.supernatural.init.SupernaturalMobs;
-import net.salju.supernatural.init.SupernaturalItems;
-import net.salju.supernatural.init.SupernaturalEffects;
-import net.salju.supernatural.init.SupernaturalDamageTypes;
-import net.salju.supernatural.init.SupernaturalConfig;
+import net.salju.supernatural.init.*;
 import net.salju.supernatural.block.entity.RitualAltarEntity;
 import net.salju.supernatural.compat.Thirst;
 import net.salju.supernatural.entity.Spooky;
+import net.salju.supernatural.item.component.AnchorballData;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.ModList;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -16,6 +12,7 @@ import net.neoforged.bus.api.EventPriority;
 import net.neoforged.neoforge.event.entity.living.*;
 import net.neoforged.neoforge.event.entity.EntityJoinLevelEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
+import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
@@ -116,6 +113,16 @@ public class SupernaturalEvents {
 			}
 		}
 	}
+
+    @SubscribeEvent
+    public static void onCrafted(PlayerEvent.ItemCraftedEvent event) {
+        if (event.getCrafting().is(SupernaturalItems.EBONSTEEL_MIRROR.get())) {
+            AnchorballData data = event.getInventory().getItem(4).get(SupernaturalData.ANCHOR);
+            if (data != null) {
+                event.getCrafting().set(SupernaturalData.ANCHOR, data);
+            }
+        }
+    }
 
 	@SubscribeEvent
 	public static void onEffectAdded(MobEffectEvent.Applicable event) {
