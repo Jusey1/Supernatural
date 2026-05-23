@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "P": "supernatural:spectral_core",
+    "I": "supernatural:ebonsteel_ingot",
+    "S": "supernatural:ebonsteel_scrap"
+  },
+  "pattern": [
+    " SI",
+    " PS",
+    "S  "
+  ],
+  "result": {
+    "id": "supernatural:ebonsteel_mirror"
+  }
+}
