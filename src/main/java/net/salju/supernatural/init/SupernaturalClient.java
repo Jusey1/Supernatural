@@ -43,9 +43,7 @@ public class SupernaturalClient {
 		event.registerEntityRenderer(SupernaturalMobs.POSSESSED_ARMOR.get(), PossessedArmorRenderer::new);
 		event.registerEntityRenderer(SupernaturalMobs.SPOOKY.get(), SpookyRenderer::new);
         event.registerEntityRenderer(SupernaturalMobs.ANGEL.get(), AngelRenderer::new);
-        event.registerEntityRenderer(SupernaturalMobs.MERFOLK_AMETHYST.get(), MerfolkAmethystRenderer::new);
-        event.registerEntityRenderer(SupernaturalMobs.MERFOLK_EMERALD.get(), MerfolkEmeraldRenderer::new);
-        event.registerEntityRenderer(SupernaturalMobs.MERFOLK_DIAMOND.get(), MerfolkDiamondRenderer::new);
+        event.registerEntityRenderer(SupernaturalMobs.MERFOLK.get(), MerfolkRenderer::new);
         event.registerEntityRenderer(SupernaturalMobs.WIGHT.get(), WightRenderer::new);
         event.registerEntityRenderer(SupernaturalMobs.REVENANT.get(), RevenantRenderer::new);
         event.registerEntityRenderer(SupernaturalMobs.SCOURGE.get(), ScourgeRenderer::new);

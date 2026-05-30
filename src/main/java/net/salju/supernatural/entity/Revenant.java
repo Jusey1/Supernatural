@@ -164,6 +164,11 @@ public class Revenant extends AbstractSpellcasterEntity implements Enemy {
         return false;
     }
 
+    @Override
+    public boolean canFreeze() {
+        return false;
+    }
+
     public void setWeaknessTick(int i) {
         this.getEntityData().set(WEAK_TICK, i);
     }

@@ -27,9 +27,7 @@ public class SupernaturalMobs {
 	public static final DeferredHolder<EntityType<?>, EntityType<PossessedArmor>> POSSESSED_ARMOR = register("possessed_armor", EntityType.Builder.of(PossessedArmor::new, MobCategory.MISC).sized(0.6F, 1.95F));
 	public static final DeferredHolder<EntityType<?>, EntityType<Spooky>> SPOOKY = register("spooky", EntityType.Builder.of(Spooky::new, MobCategory.MISC).sized(0.4F, 0.75F).eyeHeight(0.52F).fireImmune());
 	public static final DeferredHolder<EntityType<?>, EntityType<Angel>> ANGEL = register("angel", EntityType.Builder.of(Angel::new, MobCategory.MISC).sized(0.6F, 1.95F));
-	public static final DeferredHolder<EntityType<?>, EntityType<Merfolk>> MERFOLK_AMETHYST = register("merfolk_amethyst", EntityType.Builder.of(Merfolk::new, MobCategory.MONSTER).sized(0.6F, 1.95F).ridingOffset(-0.15F));
-	public static final DeferredHolder<EntityType<?>, EntityType<Merfolk>> MERFOLK_EMERALD = register("merfolk_emerald", EntityType.Builder.of(Merfolk::new, MobCategory.MONSTER).sized(0.6F, 1.95F).ridingOffset(-0.15F));
-	public static final DeferredHolder<EntityType<?>, EntityType<Merfolk>> MERFOLK_DIAMOND = register("merfolk_diamond", EntityType.Builder.of(Merfolk::new, MobCategory.MONSTER).sized(0.6F, 1.95F).ridingOffset(-0.15F));
+	public static final DeferredHolder<EntityType<?>, EntityType<Merfolk>> MERFOLK = register("merfolk", EntityType.Builder.of(Merfolk::new, MobCategory.MONSTER).sized(0.6F, 1.95F).ridingOffset(-0.15F));
 	public static final DeferredHolder<EntityType<?>, EntityType<Wight>> WIGHT = register("wight", EntityType.Builder.of(Wight::new, MobCategory.MONSTER).sized(0.6F, 1.95F).ridingOffset(-0.6F).fireImmune());
 	public static final DeferredHolder<EntityType<?>, EntityType<Revenant>> REVENANT = register("revenant", EntityType.Builder.of(Revenant::new, MobCategory.MONSTER).sized(0.75F, 2.05F).ridingOffset(-0.6F).fireImmune());
 	public static final DeferredHolder<EntityType<?>, EntityType<Scourge>> SCOURGE = register("scourge", EntityType.Builder.of(Scourge::new, MobCategory.CREATURE).sized(1.3964844F, 1.6F).eyeHeight(1.52F).passengerAttachments(1.31875F).clientTrackingRange(10).fireImmune());
@@ -44,9 +42,7 @@ public class SupernaturalMobs {
 		event.put(POSSESSED_ARMOR.get(), SupernaturalManager.createAttributes(20, 1, 0, 0.25).add(Attributes.KNOCKBACK_RESISTANCE, 0.5).build());
 		event.put(SPOOKY.get(), SupernaturalManager.createAttributes(12, 1, 0, 0.25).add(Attributes.FLYING_SPEED, 0.35).build());
 		event.put(ANGEL.get(), SupernaturalManager.createAttributes(24, 7, 0, 0.25).add(Attributes.KNOCKBACK_RESISTANCE, 1).add(Attributes.FOLLOW_RANGE, 32).add(Attributes.STEP_HEIGHT, 1.25).build());
-		event.put(MERFOLK_AMETHYST.get(), SupernaturalManager.createAttributes(18, 3, 0, 0.25).build());
-		event.put(MERFOLK_EMERALD.get(), SupernaturalManager.createAttributes(21, 3, 2, 0.25).build());
-		event.put(MERFOLK_DIAMOND.get(), SupernaturalManager.createAttributes(24, 4, 4, 0.25).add(Attributes.KNOCKBACK_RESISTANCE, 0.25).build());
+		event.put(MERFOLK.get(), SupernaturalManager.createAttributes(21, 3, 2, 0.25).add(Attributes.KNOCKBACK_RESISTANCE, 0.25).build());
 		event.put(WIGHT.get(), SupernaturalManager.createAttributes(30, 1, 0, 0.25).build());
 		event.put(REVENANT.get(), SupernaturalManager.createAttributes(50, 1, 0, 0.25).add(Attributes.FLYING_SPEED, 0.45).add(Attributes.KNOCKBACK_RESISTANCE, 1.0).add(Attributes.FOLLOW_RANGE, 32).build());
 		event.put(SCOURGE.get(), SupernaturalManager.createAttributes(40, 1, 0, 0.3).add(Attributes.JUMP_STRENGTH, 0.75).add(Attributes.STEP_HEIGHT, 1.0F).add(Attributes.SAFE_FALL_DISTANCE, 7.0F).add(Attributes.FALL_DAMAGE_MULTIPLIER, 0.5F).build());
@@ -57,9 +53,7 @@ public class SupernaturalMobs {
 		event.register(VAMPIRE.get(), SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Monster::checkMonsterSpawnRules, RegisterSpawnPlacementsEvent.Operation.REPLACE);
 		event.register(POSSESSED_ARMOR.get(), SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Monster::checkMobSpawnRules, RegisterSpawnPlacementsEvent.Operation.REPLACE);
 		event.register(SPOOKY.get(), SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Monster::checkMobSpawnRules, RegisterSpawnPlacementsEvent.Operation.REPLACE);
-		event.register(MERFOLK_AMETHYST.get(), SpawnPlacementTypes.IN_WATER, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, SupernaturalManager::checkMerfolkSpawnRules, RegisterSpawnPlacementsEvent.Operation.REPLACE);
-		event.register(MERFOLK_EMERALD.get(), SpawnPlacementTypes.IN_WATER, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, SupernaturalManager::checkMerfolkSpawnRules, RegisterSpawnPlacementsEvent.Operation.REPLACE);
-		event.register(MERFOLK_DIAMOND.get(), SpawnPlacementTypes.IN_WATER, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, SupernaturalManager::checkMerfolkSpawnRules, RegisterSpawnPlacementsEvent.Operation.REPLACE);
+		event.register(MERFOLK.get(), SpawnPlacementTypes.IN_WATER, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, SupernaturalManager::checkMerfolkSpawnRules, RegisterSpawnPlacementsEvent.Operation.REPLACE);
 		event.register(WIGHT.get(), SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, SupernaturalManager::checkVaultSpawnRules, RegisterSpawnPlacementsEvent.Operation.REPLACE);
 		event.register(REVENANT.get(), SpawnPlacementTypes.NO_RESTRICTIONS, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, SupernaturalManager::checkVaultSpawnRules, RegisterSpawnPlacementsEvent.Operation.REPLACE);
 		event.register(SCOURGE.get(), SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, SupernaturalManager::checkVaultSpawnRules, RegisterSpawnPlacementsEvent.Operation.REPLACE);

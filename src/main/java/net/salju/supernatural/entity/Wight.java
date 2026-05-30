@@ -198,6 +198,11 @@ public class Wight extends AbstractSpellcasterEntity implements Enemy, CrossbowA
 		return SoundEvents.EVOKER_CAST_SPELL;
 	}
 
+    @Override
+    public boolean canFreeze() {
+        return false;
+    }
+
 	public ItemStack getPrimary() {
 		return this.primary;
 	}

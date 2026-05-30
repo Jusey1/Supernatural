@@ -2,11 +2,13 @@ package net.salju.supernatural.entity;
 
 import net.salju.supernatural.events.SupernaturalManager;
 import net.salju.supernatural.init.SupernaturalItems;
-import net.salju.supernatural.init.SupernaturalMobs;
 import net.salju.supernatural.init.SupernaturalSounds;
 import net.salju.supernatural.entity.ai.merfolk.*;
-import net.neoforged.neoforge.event.EventHooks;
 import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
@@ -41,13 +43,15 @@ import javax.annotation.Nullable;
 import java.util.Optional;
 
 public class Merfolk extends Monster implements RangedAttackMob {
+    private static final EntityDataAccessor<Boolean> CAPTAIN = SynchedEntityData.defineId(Merfolk.class, EntityDataSerializers.BOOLEAN);
+    private static final EntityDataAccessor<Boolean> SEADOG = SynchedEntityData.defineId(Merfolk.class, EntityDataSerializers.BOOLEAN);
     private Optional<EntityReference<Entity>> thrownTrident = Optional.empty();
     private ItemStack trident = new ItemStack(Items.TRIDENT);
     private int cooldown;
 
 	public Merfolk(EntityType<? extends Merfolk> type, Level world) {
 		super(type, world);
-		this.xpReward = 6;
+		this.xpReward = 8;
         this.moveControl = new MerfolkMoveControl(this);
         this.setPathfindingMalus(PathType.WATER, 0.0F);
 	}
@@ -55,6 +59,8 @@ public class Merfolk extends Monster implements RangedAttackMob {
     @Override
     public void addAdditionalSaveData(ValueOutput tag) {
         super.addAdditionalSaveData(tag);
+        tag.putBoolean("Captain", this.isCaptain());
+        tag.putBoolean("Seadog", this.isSeadog());
         if (!this.getTrident().isEmpty()) {
             tag.store("Trident", ItemStack.CODEC, this.getTrident());
         }
@@ -67,6 +73,8 @@ public class Merfolk extends Monster implements RangedAttackMob {
     @Override
     public void readAdditionalSaveData(ValueInput tag) {
         super.readAdditionalSaveData(tag);
+        this.getEntityData().set(CAPTAIN, tag.getBooleanOr("Captain", false));
+        this.getEntityData().set(SEADOG, tag.getBooleanOr("Seadog", false));
         if (tag.read("Trident", ItemStack.CODEC).isPresent()) {
             this.setTrident(tag.read("Trident", ItemStack.CODEC).orElse(ItemStack.EMPTY));
         }
@@ -79,6 +87,25 @@ public class Merfolk extends Monster implements RangedAttackMob {
         if (tag.getInt("CD").isPresent()) {
             this.setCD(tag.getInt("CD").get());
         }
+    }
+
+    @Override
+    protected void defineSynchedData(SynchedEntityData.Builder builder) {
+        super.defineSynchedData(builder);
+        builder.define(CAPTAIN, false);
+        builder.define(SEADOG, false);
+    }
+
+    @Override
+    public Component getName() {
+        if (this.getCustomName() == null) {
+            if (this.isCaptain()) {
+                return Component.translatable(this.getType().getDescriptionId() + "_captain");
+            } else if (this.isSeadog()) {
+                return Component.translatable(this.getType().getDescriptionId() + "_seadog");
+            }
+        }
+        return super.getName();
     }
 
     @Override
@@ -141,20 +168,14 @@ public class Merfolk extends Monster implements RangedAttackMob {
 
     @Override
     public SpawnGroupData finalizeSpawn(ServerLevelAccessor world, DifficultyInstance difficulty, EntitySpawnReason reason, @Nullable SpawnGroupData data) {
-        int i = Mth.nextInt(this.getRandom(), 1, 100);
-        if (this.getType().equals(SupernaturalMobs.MERFOLK_DIAMOND.get()) || i <= 15) {
+        this.setType(Mth.nextInt(this.getRandom(), 1, 100));
+        if (this.isCaptain()) {
             this.getTrident().enchant(SupernaturalManager.getEnchantment(world.getLevel(), "minecraft", "loyalty"), 3);
         }
         this.setItemInHand(InteractionHand.MAIN_HAND, this.getTrident());
         this.setDropChance(EquipmentSlot.MAINHAND, 0.05F);
-        if (this.getType().equals(SupernaturalMobs.MERFOLK_AMETHYST.get())) {
-            if (i >= 75) {
-                this.convertTo(SupernaturalMobs.MERFOLK_EMERALD.get(), ConversionParams.single(this, true, true), newbie -> { EventHooks.onLivingConvert(this, newbie); });
-            } else if (i <= 15) {
-                this.convertTo(SupernaturalMobs.MERFOLK_DIAMOND.get(), ConversionParams.single(this, true, true), newbie -> { EventHooks.onLivingConvert(this, newbie); });
-            } else {
-                this.setItemInHand(InteractionHand.MAIN_HAND, ItemStack.EMPTY);
-            }
+        if (!this.isCaptain() && !this.isSeadog()) {
+            this.setItemInHand(InteractionHand.MAIN_HAND, ItemStack.EMPTY);
         }
         return super.finalizeSpawn(world, difficulty, reason, data);
     }
@@ -174,6 +195,14 @@ public class Merfolk extends Monster implements RangedAttackMob {
             if (this.getCD() > 0) {
                 this.setCD(this.getCD() - 1);
             }
+        }
+    }
+
+    @Override
+    protected void dropCustomDeathLoot(ServerLevel lvl, DamageSource source, boolean check) {
+        super.dropCustomDeathLoot(lvl, source, check);
+        if (Mth.nextInt(this.getRandom(), 1, 100) <= 5) {
+            this.spawnAtLocation(lvl, new ItemStack(this.isCaptain() ? Items.DIAMOND : this.isSeadog() ? Items.EMERALD : Items.AMETHYST_SHARD));
         }
     }
 
@@ -274,6 +303,14 @@ public class Merfolk extends Monster implements RangedAttackMob {
         this.cooldown = i;
     }
 
+    public void setType(int i) {
+        if (i <= 15) {
+            this.getEntityData().set(CAPTAIN, true);
+        } else if (i >= 65) {
+            this.getEntityData().set(SEADOG, true);
+        }
+    }
+
     public ItemStack getTrident() {
         return this.trident;
     }
@@ -289,5 +326,13 @@ public class Merfolk extends Monster implements RangedAttackMob {
 
     public boolean wantsToSwim() {
         return this.getTarget() != null && this.getTarget().isInWater();
+    }
+
+    public boolean isCaptain() {
+        return this.getEntityData().get(CAPTAIN);
+    }
+
+    public boolean isSeadog() {
+        return this.getEntityData().get(SEADOG);
     }
 }

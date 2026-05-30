@@ -1,6 +1,9 @@
 package net.salju.supernatural.entity;
 
+import net.salju.supernatural.init.SupernaturalItems;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.FluidTags;
@@ -15,8 +18,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
-import net.salju.supernatural.init.SupernaturalItems;
-
+import net.minecraft.world.level.block.Blocks;
 import javax.annotation.Nullable;
 
 public class Scourge extends AbstractHorse {
@@ -40,6 +42,14 @@ public class Scourge extends AbstractHorse {
         if (this.isAlive()) {
             if (this.level().isClientSide()) {
                 this.level().addParticle(ParticleTypes.SOUL_FIRE_FLAME, this.getRandomX(0.5), this.getRandomY(), this.getRandomZ(0.5), 0.0, 0.0, 0.0);
+            } else if (this.level() instanceof ServerLevel lvl) {
+                BlockPos top = BlockPos.containing((this.blockPosition().getX() + 2), (this.blockPosition().getY() - 1), (this.blockPosition().getZ() + 2));
+                BlockPos bot = BlockPos.containing((this.blockPosition().getX() - 2), (this.blockPosition().getY() - 1), (this.blockPosition().getZ() - 2));
+                for (BlockPos pos : BlockPos.betweenClosed(top, bot)) {
+                    if (lvl.getBlockState(pos).is(Blocks.WATER) && !lvl.getBlockState(pos.above()).is(Blocks.WATER)) {
+                        lvl.setBlock(pos, Blocks.FROSTED_ICE.defaultBlockState(), 3);
+                    }
+                }
             }
         }
     }
@@ -55,6 +65,11 @@ public class Scourge extends AbstractHorse {
     @Override
     public boolean canUseSlot(EquipmentSlot slot) {
         return true;
+    }
+
+    @Override
+    public boolean canFreeze() {
+        return false;
     }
 
     @Override
