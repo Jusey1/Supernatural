@@ -2,16 +2,12 @@
   "replace": false,
   "values": [
     "#supernatural:is_vampire",
-    "supernatural:possessed_armor",
-    "supernatural:spooky",
     "supernatural:angel",
     "minecraft:snow_golem",
     "minecraft:iron_golem",
     "minecraft:shulker",
-    "minecraft:allay",
     "minecraft:elder_guardian",
     "minecraft:guardian",
-    "minecraft:vex",
     {
       "id": "alexscaves:mine_guardian",
       "required": false

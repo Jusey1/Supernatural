@@ -1,17 +1,19 @@
 {
   "replace": false,
   "values": [
+    "supernatural:merfolk",
+    "supernatural:revenant",
+    "supernatural:wight",
     "#minecraft:illager",
+    "minecraft:allay",
     "minecraft:blaze",
     "minecraft:breeze",
     "minecraft:creaking",
     "minecraft:enderman",
     "minecraft:happy_ghast",
     "minecraft:piglin_brute",
+    "minecraft:vex",
     "minecraft:witch",
-    "supernatural:merfolk",
-    "supernatural:wight",
-    "supernatural:revenant",
     {
       "id": "alexscaves:atlatitan",
       "required": false
