@@ -9,6 +9,8 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.level.redstone.Orientation;
+import net.salju.supernatural.init.SupernaturalTags;
+
 import javax.annotation.Nullable;
 
 public class PlasmastoneBlock extends Block {
@@ -30,7 +32,7 @@ public class PlasmastoneBlock extends Block {
         super.neighborChanged(state, world, pos, blok, ori, check);
         int i = this.getPlasmaType(world, pos);
         if (state.getValue(TYPE) != i) {
-            world.setBlock(pos, this.getState(state, i), 2);
+            world.setBlock(pos, state.setValue(TYPE, i), 2);
         }
     }
 
@@ -40,29 +42,25 @@ public class PlasmastoneBlock extends Block {
         if (state != null) {
             int i = this.getPlasmaType(context.getLevel(), context.getClickedPos());
             if (state.getValue(TYPE) != i) {
-                return this.getState(state, i);
+                return state.setValue(TYPE, i);
             }
         }
         return state;
     }
 
-    public boolean isCorrectBlock(Block blok) {
-        return blok instanceof PlasmastoneBlock;
+    public boolean isCorrectBlock(BlockState state) {
+        return state.is(SupernaturalTags.PLASMASTONE);
     }
 
     public int getPlasmaType(Level world, BlockPos pos) {
-        if (this.isCorrectBlock(world.getBlockState(pos.above()).getBlock())) {
-            if (this.isCorrectBlock(world.getBlockState(pos.below()).getBlock())) {
+        if (this.isCorrectBlock(world.getBlockState(pos.above()))) {
+            if (this.isCorrectBlock(world.getBlockState(pos.below()))) {
                 return 2;
             }
             return 3;
-        } else if (this.isCorrectBlock(world.getBlockState(pos.below()).getBlock())) {
+        } else if (this.isCorrectBlock(world.getBlockState(pos.below()))) {
             return 1;
         }
         return 4;
-    }
-
-    public BlockState getState(BlockState state, int i) {
-        return state.setValue(TYPE, i);
     }
 }

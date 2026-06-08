@@ -28,6 +28,7 @@ public class SupernaturalTags {
 	public static final TagKey<EntityType<?>> PETTY = TagKey.create(Registries.ENTITY_TYPE, Identifier.fromNamespaceAndPath(Supernatural.MODID, "petty_soul"));
 	public static final TagKey<Block> SOIL = BlockTags.create(Identifier.fromNamespaceAndPath(Supernatural.MODID, "transmutable_soil_blocks"));
     public static final TagKey<Block> CANDLES = BlockTags.create(Identifier.fromNamespaceAndPath(Supernatural.MODID, "ritual_candles"));
+    public static final TagKey<Block> PLASMASTONE = BlockTags.create(Identifier.fromNamespaceAndPath(Supernatural.MODID, "valid_plasmastone_blocks"));
     public static final TagKey<Block> EBONSTEEL_PIECES = BlockTags.create(Identifier.fromNamespaceAndPath(Supernatural.MODID, "ebonsteel_chess_pieces"));
     public static final TagKey<Block> QUARTZ_PIECES = BlockTags.create(Identifier.fromNamespaceAndPath(Supernatural.MODID, "quartz_chess_pieces"));
     public static final TagKey<Block> CHESSBOARD = BlockTags.create(Identifier.fromNamespaceAndPath(Supernatural.MODID, "valid_chessboard_blocks"));

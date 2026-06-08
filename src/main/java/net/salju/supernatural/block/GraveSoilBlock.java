@@ -1,7 +1,5 @@
 package net.salju.supernatural.block;
 
-import net.minecraft.util.RandomSource;
-import net.minecraft.world.level.LightLayer;
 import net.salju.supernatural.init.SupernaturalMobs;
 import net.salju.supernatural.init.SupernaturalConfig;
 import net.minecraft.core.particles.ParticleTypes;
@@ -10,6 +8,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.monster.Vex;
 import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.EntityType;
@@ -18,6 +17,7 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LightLayer;
 import net.minecraft.world.Difficulty;
 
 public class GraveSoilBlock extends Block {
