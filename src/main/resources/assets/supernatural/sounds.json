@@ -1,38 +1,4 @@
 {
-  "armor_death": {
-    "subtitle": "subtitles.armor_death",
-    "sounds": [
-      {
-        "name": "supernatural:armor/armor_death_1",
-        "stream": false
-      },
-      {
-        "name": "supernatural:armor/armor_death_2",
-        "stream": false
-      },
-      {
-        "name": "supernatural:armor/armor_death_3",
-        "stream": false
-      }
-    ]
-  },
-  "armor_hurt": {
-    "subtitle": "subtitles.armor_hurt",
-    "sounds": [
-      {
-        "name": "supernatural:armor/armor_hurt_1",
-        "stream": false
-      },
-      {
-        "name": "supernatural:armor/armor_hurt_2",
-        "stream": false
-      },
-      {
-        "name": "supernatural:armor/armor_hurt_3",
-        "stream": false
-      }
-    ]
-  },
   "merfolk_death": {
     "subtitle": "subtitles.merfolk_death",
     "sounds": [
@@ -119,15 +85,6 @@
       },
       {
         "name": "supernatural:merfolk/merland_idle_2",
-        "stream": false
-      }
-    ]
-  },
-  "spook_poof": {
-    "subtitle": "subtitles.spook_poof",
-    "sounds": [
-      {
-        "name": "supernatural:spooky/spook_poof",
         "stream": false
       }
     ]
