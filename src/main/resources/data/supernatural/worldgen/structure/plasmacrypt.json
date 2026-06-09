@@ -1,0 +1,39 @@
+{
+  "type": "minecraft:jigsaw",
+  "start_pool": "supernatural:dungeon_main_pool",
+  "size": 12,
+  "max_distance_from_center": 100,
+  "biomes": "#supernatural:has_structure/plasmacrypt",
+  "step": "surface_structures",
+  "liquid_settings": "ignore_waterlogging",
+  "start_height": {
+    "absolute": -32
+  },
+  "project_start_to_heightmap": "WORLD_SURFACE_WG",
+  "use_expansion_hack": false,
+  "spawn_overrides": {
+    "monster": {
+      "bounding_box": "full",
+      "spawns": [
+        {
+          "type": "supernatural:wight",
+          "weight": 25,
+          "minCount": 1,
+          "maxCount": 2
+        },
+        {
+          "type": "minecraft:zombie",
+          "weight": 75,
+          "minCount": 1,
+          "maxCount": 4
+        },
+        {
+          "type": "minecraft:skeleton",
+          "weight": 75,
+          "minCount": 1,
+          "maxCount": 4
+        }
+      ]
+    }
+  }
+}
