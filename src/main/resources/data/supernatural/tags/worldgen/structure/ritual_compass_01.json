@@ -3,7 +3,6 @@
   "values": [
     "minecraft:trail_ruins",
     "minecraft:desert_pyramid",
-    "minecraft:jungle_pyramid",
-    "supernatural:graveyard"
+    "minecraft:jungle_pyramid"
   ]
 }
