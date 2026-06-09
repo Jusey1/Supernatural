@@ -1,0 +1,10 @@
+{
+  "type": "neoforge:add_spawns",
+  "biomes": "#supernatural:has_vampires",
+  "spawners": {
+    "type": "supernatural:vampire",
+    "weight": 2,
+    "minCount": 1,
+    "maxCount": 1
+  }
+}
