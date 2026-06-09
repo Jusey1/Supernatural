@@ -1,7 +1,6 @@
 package net.salju.supernatural.entity.ai;
 
 import net.salju.supernatural.entity.AbstractMinionEntity;
-import net.salju.supernatural.init.SupernaturalTags;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.entity.player.Player;
@@ -23,9 +22,6 @@ public class MinionAttackSelector implements TargetingConditions.Selector {
                     return target.equals(owner.getLastHurtByMob());
                 } else if (owner.getLastHurtMob() != null && owner.getLastHurtMob().isAlive()) {
                     return target.equals(owner.getLastHurtMob());
-                }
-                if (owner instanceof Player) {
-                    return target.getType().is(SupernaturalTags.SUMMON);
                 }
 			}
 		}
