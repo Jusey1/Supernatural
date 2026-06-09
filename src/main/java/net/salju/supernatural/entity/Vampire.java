@@ -40,7 +40,6 @@ public class Vampire extends SpellcasterIllager {
 
 	public Vampire(EntityType<Vampire> type, Level world) {
 		super(type, world);
-        this.setPersistenceRequired();
         this.getNavigation().setCanOpenDoors(true);
 		this.xpReward = 10;
 	}
@@ -148,11 +147,6 @@ public class Vampire extends SpellcasterIllager {
         } else {
             return this.isCelebrating() ? AbstractIllager.IllagerArmPose.CELEBRATING : AbstractIllager.IllagerArmPose.NEUTRAL;
         }
-    }
-
-    @Override
-    public boolean removeWhenFarAway(double d) {
-        return false;
     }
 
     @Override
