@@ -20,7 +20,6 @@ import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.decoration.ArmorStand;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
@@ -32,7 +31,6 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.item.component.DyedItemColor;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.DyeColor;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.state.BlockState;
@@ -247,42 +245,6 @@ public class SupernaturalManager {
 			}
 		}
 		return (i >= 1);
-	}
-
-	public static boolean hasArmor(LivingEntity target) {
-		int i = 0;
-		for (EquipmentSlot slot : EquipmentSlot.values()) {
-			if (slot.isArmor() && !target.getItemBySlot(slot).isEmpty()) {
-				i++;
-			}
-		}
-		return (i >= 4);
-	}
-
-	public static <T extends Mob> T convertArmor(ArmorStand target, EntityType<T> type, boolean equip) {
-		T armor = type.create(target.level(), EntitySpawnReason.CONVERSION);
-		armor.copyPosition(target);
-		if (target.hasCustomName()) {
-			armor.setCustomName(target.getCustomName());
-			armor.setCustomNameVisible(target.isCustomNameVisible());
-		}
-		armor.setPersistenceRequired();
-		armor.addEffect(new MobEffectInstance(SupernaturalEffects.POSSESSION, 999999, 0));
-		armor.setItemSlot(EquipmentSlot.MAINHAND, new ItemStack(Items.IRON_SWORD));
-		armor.setDropChance(EquipmentSlot.MAINHAND, 0.0F);
-		if (equip) {
-			for (EquipmentSlot slot : EquipmentSlot.values()) {
-				ItemStack stack = target.getItemBySlot(slot);
-				if (!stack.isEmpty()) {
-					armor.setItemSlot(slot, stack.copy());
-					armor.setDropChance(slot, 1.0F);
-					stack.setCount(0);
-				}
-			}
-		}
-		target.level().addFreshEntity(armor);
-		target.discard();
-		return armor;
 	}
 
     public static boolean checkMerfolkSpawnRules(EntityType<? extends Monster> type, ServerLevelAccessor world, EntitySpawnReason spawn, BlockPos pos, RandomSource rng) {

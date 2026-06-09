@@ -26,8 +26,6 @@ import net.minecraft.world.item.ItemStack;
 
 @EventBusSubscriber(value = Dist.CLIENT)
 public class SupernaturalClient {
-    public static final ModelLayerLocation POSSESSED = registerModel("possessed", "main");
-    public static final ModelLayerLocation SPIRIT = registerModel("spirit", "main");
     public static final ModelLayerLocation ANGEL = registerModel("angel", "main");
     public static final ModelLayerLocation MERFOLK = registerModel("merfolk", "main");
     public static final ModelLayerLocation WIGHT = registerModel("wight", "main");
@@ -40,8 +38,6 @@ public class SupernaturalClient {
 	@SubscribeEvent
 	public static void registerEntityRenderers(EntityRenderersEvent.RegisterRenderers event) {
 		event.registerEntityRenderer(SupernaturalMobs.VAMPIRE.get(), VampireRenderer::new);
-		event.registerEntityRenderer(SupernaturalMobs.POSSESSED_ARMOR.get(), PossessedArmorRenderer::new);
-		event.registerEntityRenderer(SupernaturalMobs.SPOOKY.get(), SpookyRenderer::new);
         event.registerEntityRenderer(SupernaturalMobs.ANGEL.get(), AngelRenderer::new);
         event.registerEntityRenderer(SupernaturalMobs.MERFOLK.get(), MerfolkRenderer::new);
         event.registerEntityRenderer(SupernaturalMobs.WIGHT.get(), WightRenderer::new);
@@ -54,8 +50,6 @@ public class SupernaturalClient {
 
     @SubscribeEvent
     public static void registerLayerDefinitions(EntityRenderersEvent.RegisterLayerDefinitions event) {
-        event.registerLayerDefinition(POSSESSED, PossessedModel::createBodyLayer);
-        event.registerLayerDefinition(SPIRIT, SpiritModel::createBodyLayer);
         event.registerLayerDefinition(ANGEL, AngelModel::createBodyLayer);
         event.registerLayerDefinition(MERFOLK, MerfolkModel::createBodyLayer);
         event.registerLayerDefinition(WIGHT, WightModel::createBodyLayer);

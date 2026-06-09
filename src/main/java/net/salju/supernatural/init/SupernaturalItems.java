@@ -19,8 +19,6 @@ public class SupernaturalItems {
 
 	public static final DeferredRegister<Item> REGISTRY = DeferredRegister.createItems(Supernatural.MODID);
 	public static final DeferredHolder<Item, Item> VAMPIRE_SPAWN_EGG = REGISTRY.register("vampire_spawn_egg", () -> new SpawnEggItem(createBaseProps("vampire_spawn_egg").spawnEgg(SupernaturalMobs.VAMPIRE.get())));
-	public static final DeferredHolder<Item, Item> ARMOR_SPAWN_EGG = REGISTRY.register("armor_spawn_egg", () -> new SpawnEggItem(createBaseProps("armor_spawn_egg").spawnEgg(SupernaturalMobs.POSSESSED_ARMOR.get())));
-    public static final DeferredHolder<Item, Item> SPOOKY_SPAWN_EGG = REGISTRY.register("spooky_spawn_egg", () -> new SpawnEggItem(createBaseProps("spooky_spawn_egg").spawnEgg(SupernaturalMobs.SPOOKY.get())));
     public static final DeferredHolder<Item, Item> MERFOLK_SPAWN_EGG = REGISTRY.register("merfolk_spawn_egg", () -> new SpawnEggItem(createBaseProps("merfolk_spawn_egg").spawnEgg(SupernaturalMobs.MERFOLK.get())));
     public static final DeferredHolder<Item, Item> WIGHT_SPAWN_EGG = REGISTRY.register("wight_spawn_egg", () -> new SpawnEggItem(createBaseProps("wight_spawn_egg").spawnEgg(SupernaturalMobs.WIGHT.get())));
     public static final DeferredHolder<Item, Item> REVENANT_SPAWN_EGG = REGISTRY.register("revenant_spawn_egg", () -> new SpawnEggItem(createBaseProps("revenant_spawn_egg").spawnEgg(SupernaturalMobs.REVENANT.get())));

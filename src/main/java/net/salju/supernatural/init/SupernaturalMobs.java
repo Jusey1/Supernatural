@@ -24,8 +24,6 @@ import net.minecraft.world.level.levelgen.Heightmap;
 public class SupernaturalMobs {
 	public static final DeferredRegister<EntityType<?>> REGISTRY = DeferredRegister.create(Registries.ENTITY_TYPE, Supernatural.MODID);
 	public static final DeferredHolder<EntityType<?>, EntityType<Vampire>> VAMPIRE = register("vampire", EntityType.Builder.of(Vampire::new, MobCategory.MONSTER).sized(0.6F, 1.95F).ridingOffset(-0.6F));
-	public static final DeferredHolder<EntityType<?>, EntityType<PossessedArmor>> POSSESSED_ARMOR = register("possessed_armor", EntityType.Builder.of(PossessedArmor::new, MobCategory.MISC).sized(0.6F, 1.95F));
-	public static final DeferredHolder<EntityType<?>, EntityType<Spooky>> SPOOKY = register("spooky", EntityType.Builder.of(Spooky::new, MobCategory.MISC).sized(0.4F, 0.75F).eyeHeight(0.52F).fireImmune());
 	public static final DeferredHolder<EntityType<?>, EntityType<Angel>> ANGEL = register("angel", EntityType.Builder.of(Angel::new, MobCategory.MISC).sized(0.6F, 1.95F));
 	public static final DeferredHolder<EntityType<?>, EntityType<Merfolk>> MERFOLK = register("merfolk", EntityType.Builder.of(Merfolk::new, MobCategory.MONSTER).sized(0.6F, 1.95F).ridingOffset(-0.15F));
 	public static final DeferredHolder<EntityType<?>, EntityType<Wight>> WIGHT = register("wight", EntityType.Builder.of(Wight::new, MobCategory.MONSTER).sized(0.6F, 1.95F).ridingOffset(-0.6F).fireImmune());
@@ -39,8 +37,6 @@ public class SupernaturalMobs {
 	@SubscribeEvent
 	public static void registerAttributes(EntityAttributeCreationEvent event) {
 		event.put(VAMPIRE.get(), SupernaturalManager.createAttributes(32, 1, 2, 0.3).build());
-		event.put(POSSESSED_ARMOR.get(), SupernaturalManager.createAttributes(20, 1, 0, 0.25).add(Attributes.KNOCKBACK_RESISTANCE, 0.5).build());
-		event.put(SPOOKY.get(), SupernaturalManager.createAttributes(12, 1, 0, 0.25).add(Attributes.FLYING_SPEED, 0.35).build());
 		event.put(ANGEL.get(), SupernaturalManager.createAttributes(24, 7, 0, 0.25).add(Attributes.KNOCKBACK_RESISTANCE, 1).add(Attributes.FOLLOW_RANGE, 32).add(Attributes.STEP_HEIGHT, 1.25).build());
 		event.put(MERFOLK.get(), SupernaturalManager.createAttributes(21, 3, 2, 0.25).add(Attributes.KNOCKBACK_RESISTANCE, 0.25).build());
 		event.put(WIGHT.get(), SupernaturalManager.createAttributes(30, 1, 0, 0.25).build());
@@ -51,8 +47,6 @@ public class SupernaturalMobs {
 	@SubscribeEvent
 	public static void registerSpawnPlacements(RegisterSpawnPlacementsEvent event) {
 		event.register(VAMPIRE.get(), SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Monster::checkMonsterSpawnRules, RegisterSpawnPlacementsEvent.Operation.REPLACE);
-		event.register(POSSESSED_ARMOR.get(), SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Monster::checkMobSpawnRules, RegisterSpawnPlacementsEvent.Operation.REPLACE);
-		event.register(SPOOKY.get(), SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Monster::checkMobSpawnRules, RegisterSpawnPlacementsEvent.Operation.REPLACE);
 		event.register(MERFOLK.get(), SpawnPlacementTypes.IN_WATER, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, SupernaturalManager::checkMerfolkSpawnRules, RegisterSpawnPlacementsEvent.Operation.REPLACE);
 		event.register(WIGHT.get(), SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, SupernaturalManager::checkVaultSpawnRules, RegisterSpawnPlacementsEvent.Operation.REPLACE);
 		event.register(REVENANT.get(), SpawnPlacementTypes.NO_RESTRICTIONS, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, SupernaturalManager::checkVaultSpawnRules, RegisterSpawnPlacementsEvent.Operation.REPLACE);

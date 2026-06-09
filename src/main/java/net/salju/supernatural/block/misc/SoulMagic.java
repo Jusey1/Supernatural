@@ -74,7 +74,6 @@ public class SoulMagic {
 					RitualManager.defaultResult(target, offer, lvl, player, pos);
                     target.setItem(0, copy);
                     if (RitualManager.canTeleportTo(data, lvl)) {
-                        lvl.playSound(null, pos, SupernaturalSounds.SPOOK_POOF.get(), SoundSource.BLOCKS, 1.0F, (float) (0.8F + (Math.random() * 0.2)));
                         lvl.sendParticles(ParticleTypes.SOUL_FIRE_FLAME, pos.getX(), pos.getY() + 0.75, pos.getZ(), 12, 0.5, 0.5, 0.5, 0.65);
                         RitualManager.teleportUser(data, player, lvl);
                     }

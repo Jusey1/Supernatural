@@ -3,7 +3,6 @@ package net.salju.supernatural.events;
 import net.salju.supernatural.init.*;
 import net.salju.supernatural.block.entity.RitualAltarEntity;
 import net.salju.supernatural.compat.Thirst;
-import net.salju.supernatural.entity.Spooky;
 import net.salju.supernatural.item.component.AnchorballData;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.ModList;
@@ -87,20 +86,6 @@ public class SupernaturalEvents {
 		}
 	}
 
-	@SubscribeEvent(priority = EventPriority.HIGHEST)
-	public static void onRightClickBlock(PlayerInteractEvent.RightClickBlock event) {
-		if (event.getEntity().hasEffect(SupernaturalEffects.POSSESSION)) {
-			event.setCanceled(true);
-		}
-	}
-
-	@SubscribeEvent(priority = EventPriority.HIGHEST)
-	public static void onLeftClickBlock(PlayerInteractEvent.LeftClickBlock event) {
-		if (event.getEntity().hasEffect(SupernaturalEffects.POSSESSION)) {
-			event.setCanceled(true);
-		}
-	}
-
 	@SubscribeEvent
 	public static void onUseItemFinish(LivingEntityUseItemEvent.Finish event) {
 		if (event.getEntity() instanceof Player player && SupernaturalManager.isVampire(player)) {
@@ -129,15 +114,6 @@ public class SupernaturalEvents {
 		if (SupernaturalManager.isVampire(event.getEntity())) {
 			if (event.getEffectInstance().is(MobEffects.POISON) || event.getEffectInstance().is(MobEffects.HUNGER)) {
 				event.setResult(MobEffectEvent.Applicable.Result.DO_NOT_APPLY);
-			}
-		}
-	}
-
-	@SubscribeEvent
-	public static void onEffectRemoval(MobEffectEvent.Remove event) {
-		if (event.getEffectInstance() != null) {
-			if (event.getEffectInstance().is(SupernaturalEffects.POSSESSION) && event.getEntity().level() instanceof ServerLevel lvl) {
-				SupernaturalMobs.SPOOKY.get().spawn(lvl, event.getEntity().blockPosition(), EntitySpawnReason.MOB_SUMMONED);
 			}
 		}
 	}
@@ -199,12 +175,7 @@ public class SupernaturalEvents {
 	public static void onDeath(LivingDeathEvent event) {
 		LivingEntity target = event.getEntity();
 		if (target.level() instanceof ServerLevel lvl) {
-			if (target.hasEffect(SupernaturalEffects.POSSESSION)) {
-				Spooky ghost = SupernaturalMobs.SPOOKY.get().spawn(lvl, target.blockPosition(), EntitySpawnReason.MOB_SUMMONED);
-				if (ghost != null) {
-					ghost.setPersistenceRequired();
-				}
-			} else if (lvl.dimension().equals(Level.OVERWORLD) && target instanceof Mob && !target.getType().is(SupernaturalTags.IMMUNITY)) {
+			if (lvl.dimension().equals(Level.OVERWORLD) && target instanceof Mob && !target.getType().is(SupernaturalTags.IMMUNITY)) {
 				RitualAltarEntity block = SupernaturalManager.getAltar(target.blockPosition(), lvl, 12, Items.AMETHYST_SHARD);
 				if (block != null) {
 					block.setItem(0, SupernaturalManager.setSoul(new ItemStack(SupernaturalItems.SOULGEM.get()), target));

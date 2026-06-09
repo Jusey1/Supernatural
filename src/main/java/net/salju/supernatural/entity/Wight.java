@@ -33,7 +33,7 @@ import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.DifficultyInstance;
 import javax.annotation.Nullable;
 
-public class Wight extends AbstractSpellcasterEntity implements Enemy, CrossbowAttackMob, RangedAttackMob {
+public class Wight extends AbstractMinionEntity implements Enemy, CrossbowAttackMob, RangedAttackMob {
 	private static final EntityDataAccessor<Boolean> DATA_CHARGING_STATE = SynchedEntityData.defineId(Wight.class, EntityDataSerializers.BOOLEAN);
 	private static final EntityDataAccessor<Boolean> CAPTAIN = SynchedEntityData.defineId(Wight.class, EntityDataSerializers.BOOLEAN);
 	private ItemStack primary = new ItemStack(Items.IRON_SWORD);

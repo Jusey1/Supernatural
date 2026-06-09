@@ -23,8 +23,6 @@ public class SupernaturalConfig {
 	public static final ModConfigSpec.BooleanValue SACRIFICE;
 	public static final ModConfigSpec.DoubleValue ALTARRANGE;
 
-	public static final ModConfigSpec.BooleanValue VEX;
-	public static final ModConfigSpec.BooleanValue ARMOR;
 	public static final ModConfigSpec.BooleanValue FURIA;
 
 	static {
@@ -47,8 +45,6 @@ public class SupernaturalConfig {
 		ALTARRANGE = BUILDER.comment("What is the Ritual Altar's range for rituals?").defineInRange("Ritual Range", 12.85, 0.0, Double.MAX_VALUE);
 		BUILDER.pop();
 		BUILDER.push("Misc");
-		VEX = BUILDER.comment("Should Vexes spawn from Grave Soil?").define("Gravy Vexes", true);
-		ARMOR = BUILDER.comment("Should Spooks target armor stands?").define("Possessed Armor", true);
 		FURIA = BUILDER.comment("Should Angels have a holy aura that burns nearby vampires and undead?").define("Holy Blessing", true);
 		BUILDER.pop();
 		CONFIG = BUILDER.build();
