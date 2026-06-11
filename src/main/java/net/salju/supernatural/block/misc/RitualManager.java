@@ -48,6 +48,7 @@ public class RitualManager {
             double y = data.getPos().getY() + 0.7;
             double z = data.getPos().getZ() + 0.5;
             if (loc != null && player instanceof ServerPlayer ply) {
+                loc.playSound(null, BlockPos.containing(x, y, z), SoundEvents.PLAYER_TELEPORT, SoundSource.PLAYERS, 1.0F, (float) (0.8F + (Math.random() * 0.2)));
                 ply.teleport(new TeleportTransition(loc, new Vec3(x, y, z), ply.getDeltaMovement(), ply.getYRot(), ply.getXRot(), TeleportTransition.DO_NOTHING));
                 loc.sendParticles(ParticleTypes.SOUL_FIRE_FLAME, x, y, z, 12, 0.5, 0.5, 0.5, 0.65);
             }

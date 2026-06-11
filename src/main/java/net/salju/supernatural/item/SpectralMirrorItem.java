@@ -6,6 +6,8 @@ import net.salju.supernatural.item.component.AnchorballData;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
@@ -44,6 +46,8 @@ public class SpectralMirrorItem extends SpectralCoreItem {
 	public boolean releaseUsing(ItemStack stack, Level world, LivingEntity target, int i) {
         AnchorballData data = stack.get(SupernaturalData.ANCHOR.get());
 		if (i <= 10 && target instanceof ServerPlayer ply && world instanceof ServerLevel lvl && RitualManager.canTeleportTo(data, lvl)) {
+            lvl.playSound(null, ply.blockPosition(), SoundEvents.PLAYER_TELEPORT, SoundSource.PLAYERS, 1.0F, (float) (0.8F + (Math.random() * 0.2)));
+            lvl.sendParticles(ParticleTypes.SOUL_FIRE_FLAME, ply.blockPosition().getX(), ply.blockPosition().getY() + 0.75, ply.blockPosition().getZ(), 12, 0.5, 0.5, 0.5, 0.65);
 			RitualManager.teleportUser(data, ply, lvl);
 			ply.getCooldowns().addCooldown(stack, 200);
 		}
