@@ -27,6 +27,7 @@ public class MinionAttackSelector implements TargetingConditions.Selector {
                     return target instanceof Enemy;
                 }
 			}
+            return false;
 		}
 		return target instanceof Player;
 	}
