@@ -18,15 +18,13 @@ public class MinionAttackSelector implements TargetingConditions.Selector {
     @Override
 	public boolean test(@Nullable LivingEntity target, ServerLevel lvl) {
 		if (mob.getOwner() != null && target != null) {
-			if (mob.getOwner() instanceof LivingEntity owner) {
-                if (owner.getLastHurtByMob() != null && owner.getLastHurtByMob().isAlive()) {
-                    return target.equals(owner.getLastHurtByMob());
-                } else if (owner.getLastHurtMob() != null && owner.getLastHurtMob().isAlive()) {
-                    return target.equals(owner.getLastHurtMob());
-                } else if (mob.getOwner() instanceof Player && !(target instanceof AbstractMinionEntity)) {
-                    return target instanceof Enemy;
-                }
-			}
+            if (mob.getOwner().getLastHurtByMob() != null && mob.getOwner().getLastHurtByMob().isAlive()) {
+                return target.equals(mob.getOwner().getLastHurtByMob());
+            } else if (mob.getOwner().getLastHurtMob() != null && mob.getOwner().getLastHurtMob().isAlive()) {
+                return target.equals(mob.getOwner().getLastHurtMob());
+            } else if (mob.getOwner() instanceof Player && !(target instanceof AbstractMinionEntity)) {
+                return target instanceof Enemy;
+            }
             return false;
 		}
 		return target instanceof Player;
