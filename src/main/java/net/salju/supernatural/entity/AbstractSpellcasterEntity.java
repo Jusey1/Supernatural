@@ -61,11 +61,6 @@ public abstract class AbstractSpellcasterEntity extends PathfinderMob {
     }
 
     @Override
-    public boolean shouldDropExperience() {
-        return true;
-    }
-
-    @Override
     protected boolean shouldDropLoot(ServerLevel lvl) {
         return lvl.getGameRules().get(GameRules.MOB_DROPS);
     }
