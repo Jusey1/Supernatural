@@ -68,15 +68,22 @@ public class SoulMagic {
 					ItemStack copy = stack.copy();
 					RitualManager.defaultResult(target, offer, lvl, player, pos);
 					target.setItem(0, copy);
-				} else if (stack.getItem() instanceof SpectralCoreItem && i == 12 && e >= 3) {
-					ItemStack copy = stack.copy();
-					AnchorballData data = copy.get(SupernaturalData.ANCHOR.get());
-					RitualManager.defaultResult(target, offer, lvl, player, pos);
-                    target.setItem(0, copy);
-                    if (RitualManager.canTeleportTo(data, lvl)) {
-                        lvl.playSound(null, pos, SoundEvents.PLAYER_TELEPORT, SoundSource.PLAYERS, 1.0F, (float) (0.8F + (Math.random() * 0.2)));
-                        lvl.sendParticles(ParticleTypes.SOUL_FIRE_FLAME, pos.getX(), pos.getY() + 0.75, pos.getZ(), 12, 0.5, 0.5, 0.5, 0.65);
-                        RitualManager.teleportUser(data, player, lvl);
+				} else if (stack.getItem() instanceof SpectralCoreItem) {
+                    if (i == 12 && e >= 3) {
+                        ItemStack copy = stack.copy();
+                        AnchorballData data = copy.get(SupernaturalData.ANCHOR.get());
+                        RitualManager.defaultResult(target, offer, lvl, player, pos);
+                        target.setItem(0, copy);
+                        if (RitualManager.canTeleportTo(data, lvl)) {
+                            lvl.playSound(null, pos, SoundEvents.PLAYER_TELEPORT, SoundSource.PLAYERS, 1.0F, (float) (0.8F + (Math.random() * 0.2)));
+                            lvl.sendParticles(ParticleTypes.SOUL_FIRE_FLAME, pos.getX(), pos.getY() + 0.75, pos.getZ(), 12, 0.5, 0.5, 0.5, 0.65);
+                            RitualManager.teleportUser(data, player, lvl);
+                        }
+                    } else if (i == 16 && e >= 4) {
+                        ItemStack copy = stack.copy();
+                        RitualManager.defaultResult(target, offer, lvl, player, pos);
+                        copy.set(SupernaturalData.ANCHOR, new AnchorballData(GlobalPos.of(lvl.dimension(), pos)));
+                        target.setItem(0, copy);
                     }
 				} else if (stack.is(Items.WRITABLE_BOOK) && i == 12 && e >= 3) {
 					RitualManager.defaultResult(target, offer, lvl, player, pos);
@@ -100,12 +107,7 @@ public class SoulMagic {
 						RitualManager.defaultResult(target, offer, lvl, player, pos);
 						target.setItem(0, RitualCompassItem.getRitualCompass(pos, lvl, 2));
 					}
-				} else if (stack.getItem() instanceof SpectralCoreItem && i == 16 && e >= 4) {
-					ItemStack copy = stack.copy();
-					RitualManager.defaultResult(target, offer, lvl, player, pos);
-					copy.set(SupernaturalData.ANCHOR, new AnchorballData(GlobalPos.of(lvl.dimension(), pos)));
-					target.setItem(0, copy);
-                } else if (stack.is(SupernaturalItems.EBONSTEEL_INGOT.get()) && i == 32 && e >= 4 && SupernaturalManager.hasIronArmor(player)) {
+				} else if (stack.is(SupernaturalItems.EBONSTEEL_INGOT.get()) && i == 32 && e >= 4 && SupernaturalManager.hasIronArmor(player)) {
                     RitualManager.defaultResult(target, offer, lvl, player, pos);
                     for (EquipmentSlot slot : EquipmentSlot.values()) {
                         ItemStack copy = player.getItemBySlot(slot).copy();
@@ -126,6 +128,9 @@ public class SoulMagic {
                             Scourge horse = kevin.convertTo(SupernaturalMobs.SCOURGE.get(), ConversionParams.single(kevin, true, true), newbie -> { EventHooks.onLivingConvert(kevin, newbie); });
                             if (horse != null) {
                                 horse.setBodyArmorItem(new ItemStack(SupernaturalItems.EBONSTEEL_HORSE_ARMOR.get()));
+                                horse.setOwner(player);
+                                horse.setTamed(true);
+                                horse.setSaddle();
                             }
                         } else {
                             Wight wyght = kevin.convertTo(SupernaturalMobs.WIGHT.get(), ConversionParams.single(kevin, true, true), newbie -> { EventHooks.onLivingConvert(kevin, newbie); });

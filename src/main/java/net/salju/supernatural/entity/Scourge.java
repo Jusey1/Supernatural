@@ -1,9 +1,9 @@
 package net.salju.supernatural.entity;
 
-import net.salju.supernatural.init.SupernaturalItems;
-import net.minecraft.core.BlockPos;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
+import net.salju.supernatural.events.SupernaturalManager;
+import net.salju.supernatural.init.SupernaturalItems;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.FluidTags;
@@ -18,7 +18,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
-import net.minecraft.world.level.block.Blocks;
 import javax.annotation.Nullable;
 
 public class Scourge extends AbstractHorse {
@@ -42,23 +41,15 @@ public class Scourge extends AbstractHorse {
         if (this.isAlive()) {
             if (this.level().isClientSide()) {
                 this.level().addParticle(ParticleTypes.SOUL_FIRE_FLAME, this.getRandomX(0.5), this.getRandomY(), this.getRandomZ(0.5), 0.0, 0.0, 0.0);
-            } else if (this.level() instanceof ServerLevel lvl) {
-                BlockPos top = BlockPos.containing((this.blockPosition().getX() + 2), (this.blockPosition().getY() - 1), (this.blockPosition().getZ() + 2));
-                BlockPos bot = BlockPos.containing((this.blockPosition().getX() - 2), (this.blockPosition().getY() - 1), (this.blockPosition().getZ() - 2));
-                for (BlockPos pos : BlockPos.betweenClosed(top, bot)) {
-                    if (lvl.getBlockState(pos).is(Blocks.WATER) && !lvl.getBlockState(pos.above()).is(Blocks.WATER)) {
-                        lvl.setBlock(pos, Blocks.FROSTED_ICE.defaultBlockState(), 3);
-                    }
-                }
             }
         }
     }
 
     @Override
     public SpawnGroupData finalizeSpawn(ServerLevelAccessor lvl, DifficultyInstance difficulty, EntitySpawnReason reason, @Nullable SpawnGroupData data) {
-        this.setItemSlotAndDropWhenKilled(EquipmentSlot.SADDLE, new ItemStack(Items.SADDLE));
         this.setBodyArmorItem(new ItemStack(SupernaturalItems.EBONSTEEL_HORSE_ARMOR.get()));
         this.setTamed(true);
+        this.setSaddle();
         return super.finalizeSpawn(lvl, difficulty, reason, data);
     }
 
@@ -75,6 +66,14 @@ public class Scourge extends AbstractHorse {
     @Override
     public boolean isFood(ItemStack stack) {
         return false;
+    }
+
+    @Override
+    public ItemStack getItemBySlot(EquipmentSlot slot) {
+        if (slot.equals(EquipmentSlot.FEET)) {
+            return this.getBoots(new ItemStack(SupernaturalItems.EBONSTEEL_BOOTS));
+        }
+        return super.getItemBySlot(slot);
     }
 
     @Override
@@ -130,5 +129,14 @@ public class Scourge extends AbstractHorse {
     @Override
     protected float getWaterSlowDown() {
         return 0.96F;
+    }
+
+    public ItemStack getBoots(ItemStack stack) {
+        stack.enchant(SupernaturalManager.getEnchantment(this.level(), "minecraft", "frost_walker"), 2);
+        return stack;
+    }
+
+    public void setSaddle() {
+        this.setItemSlotAndDropWhenKilled(EquipmentSlot.SADDLE, new ItemStack(Items.SADDLE));
     }
 }

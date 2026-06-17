@@ -140,23 +140,11 @@ public class SupernaturalEvents {
 			}
 			if (SupernaturalManager.isVampire(source)&& !SupernaturalManager.isVampire(target) && !target.getType().is(EntityTypeTags.UNDEAD) && !target.getType().is(SupernaturalTags.IMMUNITY)) {
 				source.heal(SupernaturalConfig.LEECH.get().floatValue() + 1.25F);
-				if (source instanceof Player player && SupernaturalConfig.BLOOD.get() && (target instanceof Player || target.getType().is(SupernaturalTags.BLOODY))) {
-					ItemStack stack = player.getOffhandItem();
-					if (stack.is(Items.GLASS_BOTTLE)) {
-						if (!player.isCreative()) {
-							stack.shrink(1);
-						}
-						ItemStack blood = new ItemStack(SupernaturalItems.BLOOD.get());
-						if (!player.getInventory().add(blood)) {
-							player.drop(blood, false);
-						}
-					}
-				}
 			}
 		}
-        int i = SupernaturalManager.getDarkArmor(target);
-        if (i >= 1) {
-            if (event.getSource().is(SupernaturalTags.MAGIC)) {
+        if (event.getSource().is(SupernaturalTags.MAGIC)) {
+            int i = SupernaturalManager.getDarkArmor(target);
+            if (i >= 1) {
                 event.setAmount(event.getAmount() * (1.0F - (0.1F * i)));
             }
         }
