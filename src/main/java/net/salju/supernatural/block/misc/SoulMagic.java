@@ -68,7 +68,7 @@ public class SoulMagic {
 					ItemStack copy = stack.copy();
 					RitualManager.defaultResult(target, offer, lvl, player, pos);
 					target.setItem(0, copy);
-				} else if (stack.getItem() instanceof SpectralCoreItem) {
+				} else if (stack.is(SupernaturalItems.REVENANT_CORE.get())) {
                     if (i == 12 && e >= 3) {
                         ItemStack copy = stack.copy();
                         AnchorballData data = copy.get(SupernaturalData.ANCHOR.get());

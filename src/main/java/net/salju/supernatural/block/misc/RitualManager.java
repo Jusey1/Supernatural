@@ -43,7 +43,7 @@ public class RitualManager {
 
     public static void teleportUser(AnchorballData data, Player player, ServerLevel lvl) {
         if (data != null) {
-            ServerLevel loc = lvl.getServer().getLevel(data.target().dimension());
+            ServerLevel loc = lvl.getServer().getLevel(data.getDimension());
             double x = data.getPos().getX() + 0.5;
             double y = data.getPos().getY() + 0.7;
             double z = data.getPos().getZ() + 0.5;

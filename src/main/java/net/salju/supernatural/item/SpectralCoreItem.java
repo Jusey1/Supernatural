@@ -28,6 +28,10 @@ public class SpectralCoreItem extends Item {
         AnchorballData data = stack.get(SupernaturalData.ANCHOR);
         if (data != null) {
             list.accept(Component.literal(data.getPos().getX() + ", " + data.getPos().getY() + ", " + data.getPos().getZ()).withStyle(ChatFormatting.DARK_PURPLE));
+            if (stack.is(SupernaturalItems.EBONSTEEL_MIRROR)) {
+                String str = "desc.mirror." + data.getDimension().registry().getPath();
+                list.accept(Component.translatable(str).withStyle(this.getColor(str)));
+            }
         }
     }
 
@@ -54,5 +58,14 @@ public class SpectralCoreItem extends Item {
             }
         }
         return super.onEntityItemUpdate(stack, target);
+    }
+
+    public ChatFormatting getColor(String str) {
+        if (str.contains("the_nether")) {
+            return ChatFormatting.RED;
+        } else if (str.contains("the_end")) {
+            return ChatFormatting.LIGHT_PURPLE;
+        }
+        return ChatFormatting.GREEN;
     }
 }
