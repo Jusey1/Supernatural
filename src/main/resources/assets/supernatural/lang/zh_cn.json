@@ -87,7 +87,6 @@
 	"entity.supernatural.merfolk": "受诅鱼人",
 	"entity.supernatural.merfolk_captain": "受诅鱼人首领",
 	"entity.supernatural.merfolk_seadog": "受诅鱼人老手",
-	"entity.supernatural.revenant": "幽魂",
 	"entity.supernatural.scourge": "灾骥",
 	"entity.supernatural.vampire": "吸血鬼",
 	"entity.supernatural.wight": "怨灵",
@@ -150,7 +149,6 @@
 	"item.supernatural.vampire_spawn_egg": "吸血鬼刷怪蛋",
 	"item.supernatural.merfolk_spawn_egg": "受诅人鱼刷怪蛋",
 	"item.supernatural.wight_spawn_egg": "怨灵刷怪蛋",
-	"item.supernatural.revenant_spawn_egg": "幽魂刷怪蛋",
 	"item.supernatural.scourge_spawn_egg": "灾骥刷怪蛋",
 	"item.supernatural.spectral_core": "幽灵核心",
 	"item.supernatural.soulgem": "灵魂晶石",
@@ -173,11 +171,5 @@
 	"subtitles.vampire_idle": "吸血鬼：生气地嘟囔",
 	"subtitles.wight_death": "怨灵：死亡",
 	"subtitles.wight_hurt": "怨灵：受伤",
-	"subtitles.wight_idle": "怨灵：嗟怨",
-	"subtitles.wraith_attack": "幽魂：嘘",
-	"subtitles.wraith_death": "幽魂：死亡",
-	"subtitles.wraith_firespell": "幽魂：燃焰",
-	"subtitles.wraith_hurt": "幽魂：受伤",
-	"subtitles.wraith_idle": "幽魂：吓",
-	"subtitles.wraith_teleport": "幽魂：传送"
+	"subtitles.wight_idle": "怨灵：嗟怨"
 }
