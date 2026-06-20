@@ -2,16 +2,13 @@ package net.salju.supernatural.block;
 
 import net.salju.supernatural.init.SupernaturalBlocks;
 import net.salju.supernatural.init.SupernaturalItems;
-import net.salju.supernatural.init.SupernaturalMobs;
 import net.salju.supernatural.block.entity.RevenantVaultBlockEntity;
 import net.salju.supernatural.block.misc.RevenantVault;
-import net.salju.supernatural.entity.Revenant;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.BlockState;
@@ -80,9 +77,8 @@ public class RevenantVaultBlock extends BaseEntityBlock {
     @Override
     public boolean onDestroyedByPlayer(BlockState state, Level world, BlockPos pos, Player player, ItemStack stack, boolean check, FluidState fluid) {
         if (world instanceof ServerLevel lvl && !player.isCreative()) {
-            Revenant ghost = SupernaturalMobs.REVENANT.get().spawn(lvl, pos, EntitySpawnReason.MOB_SUMMONED);
-            if (ghost != null) {
-                ghost.setTarget(player);
+            if (world.getBlockEntity(pos) instanceof RevenantVaultBlockEntity target && !target.canGiveTreasure()) {
+                RevenantVault.ejectItem(lvl, pos, target.getRenderStack());
             }
         }
         return super.onDestroyedByPlayer(state, world, pos, player, stack, check, fluid);

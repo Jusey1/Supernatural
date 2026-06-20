@@ -141,7 +141,7 @@ public class RevenantVaultBlockEntity extends BlockEntity {
                     if (target.getCD() == 1) {
                         RevenantVault.playSound(world, pos, SoundEvents.VAULT_CLOSE_SHUTTER);
                         world.setBlock(pos, state.setValue(RevenantVaultBlock.TREASURE, false), 2);
-                        target.setRenderItem(new ItemStack(SupernaturalItems.EBONSTEEL_KEY.get()));
+                        target.setRenderItem(new ItemStack(SupernaturalItems.REVENANT_CORE.get()));
                         target.setCD(6000);
                     }
                 }
