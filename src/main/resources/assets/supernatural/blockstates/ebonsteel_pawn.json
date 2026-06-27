@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "supernatural:block/chess/ebonsteel_pawn",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "supernatural:block/chess/ebonsteel_pawn"
+    },
+    "facing=south": {
+      "model": "supernatural:block/chess/ebonsteel_pawn",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "supernatural:block/chess/ebonsteel_pawn",
+      "y": 270
+    }
+  }
+}
