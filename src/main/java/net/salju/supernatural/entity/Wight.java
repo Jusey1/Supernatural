@@ -25,7 +25,6 @@ import net.minecraft.world.item.CrossbowItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.ProjectileWeaponItem;
-import net.minecraft.world.level.pathfinder.PathType;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.level.Level;
@@ -36,37 +35,21 @@ import javax.annotation.Nullable;
 public class Wight extends AbstractMinionEntity implements Enemy, CrossbowAttackMob, RangedAttackMob {
 	private static final EntityDataAccessor<Boolean> DATA_CHARGING_STATE = SynchedEntityData.defineId(Wight.class, EntityDataSerializers.BOOLEAN);
 	private static final EntityDataAccessor<Boolean> CAPTAIN = SynchedEntityData.defineId(Wight.class, EntityDataSerializers.BOOLEAN);
-	private ItemStack primary = new ItemStack(Items.IRON_SWORD);
-	private ItemStack secondary = new ItemStack(Items.CROSSBOW);
 
 	public Wight(EntityType<Wight> type, Level world) {
 		super(type, world);
-		this.xpReward = 10;
-		this.setPathfindingMalus(PathType.WATER, -1.0F);
 	}
 
 	@Override
 	public void addAdditionalSaveData(ValueOutput tag) {
 		super.addAdditionalSaveData(tag);
 		tag.putBoolean("Captain", this.isCaptain());
-		if (!this.getPrimary().isEmpty()) {
-			tag.store("Primary", ItemStack.CODEC, this.getPrimary());
-		}
-		if (!this.getSecondary().isEmpty()) {
-			tag.store("Secondary", ItemStack.CODEC, this.getSecondary());
-		}
 	}
 
 	@Override
 	public void readAdditionalSaveData(ValueInput tag) {
 		super.readAdditionalSaveData(tag);
 		this.getEntityData().set(CAPTAIN, tag.getBooleanOr("Captain", false));
-		if (tag.read("Primary", ItemStack.CODEC).isPresent()) {
-			this.setPrimary(tag.read("Primary", ItemStack.CODEC).orElse(ItemStack.EMPTY));
-		}
-		if (tag.read("Secondary", ItemStack.CODEC).isPresent()) {
-			this.setSecondary(tag.read("Secondary", ItemStack.CODEC).orElse(ItemStack.EMPTY));
-		}
 	}
 
 	@Override
@@ -86,7 +69,7 @@ public class Wight extends AbstractMinionEntity implements Enemy, CrossbowAttack
 		this.goalSelector.addGoal(4, new RandomStrollGoal(this, 1));
 		this.goalSelector.addGoal(4, new LookAtPlayerGoal(this, LivingEntity.class, 8));
 		this.goalSelector.addGoal(4, new RandomLookAroundGoal(this));
-		this.targetSelector.addGoal(0, new HurtByTargetGoal(this, Wight.class).setAlertOthers());
+		this.targetSelector.addGoal(0, new HurtByTargetGoal(this));
 		this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, LivingEntity.class, 12, true, false, new WightAttackSelector(this)));
 	}
 
@@ -147,6 +130,7 @@ public class Wight extends AbstractMinionEntity implements Enemy, CrossbowAttack
 		}
 		this.getSecondary().enchant(SupernaturalManager.getEnchantment(lvl.getLevel(), "minecraft", "quick_charge"), 2);
 		this.populateDefaultEquipmentSlots(lvl.getRandom(), difficulty);
+        this.setCanPickUpLoot(true);
 		return super.finalizeSpawn(lvl, difficulty, reason, data);
 	}
 
@@ -198,19 +182,6 @@ public class Wight extends AbstractMinionEntity implements Enemy, CrossbowAttack
 		return SoundEvents.EVOKER_CAST_SPELL;
 	}
 
-    @Override
-    public boolean canFreeze() {
-        return false;
-    }
-
-	public ItemStack getPrimary() {
-		return this.primary;
-	}
-
-	public ItemStack getSecondary() {
-		return this.secondary;
-	}
-
 	public ItemStack getSwapToWeapon() {
 		return this.hasCrossbow() ? this.getPrimary() : this.getSecondary();
 	}
@@ -229,14 +200,6 @@ public class Wight extends AbstractMinionEntity implements Enemy, CrossbowAttack
 		} else {
 			return this.distanceTo(target) >= 8.25 || target.isInWater();
 		}
-	}
-
-	public void setPrimary(ItemStack stack) {
-		this.primary = stack;
-	}
-
-	public void setSecondary(ItemStack stack) {
-		this.secondary = stack;
 	}
 
 	public boolean isCaptain() {

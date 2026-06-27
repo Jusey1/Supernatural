@@ -1,18 +1,15 @@
 package net.salju.supernatural.events;
 
 import net.salju.supernatural.init.*;
-import net.salju.supernatural.block.entity.RitualAltarEntity;
 import net.salju.supernatural.compat.Thirst;
-import net.salju.supernatural.item.component.AnchorballData;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.ModList;
 import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.bus.api.EventPriority;
 import net.neoforged.neoforge.event.entity.living.*;
 import net.neoforged.neoforge.event.entity.EntityJoinLevelEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
-import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.neoforge.event.tick.PlayerTickEvent;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.EntityTypeTags;
@@ -30,7 +27,6 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.level.Level;
 import net.minecraft.util.Mth;
 
 @EventBusSubscriber
@@ -40,7 +36,7 @@ public class SupernaturalEvents {
 		Player player = event.getEntity();
 		if (SupernaturalManager.isVampire(player)) {
 			player.getFoodData().setSaturation(1);
-			player.getFoodData().setFoodLevel(20);
+			player.getFoodData().setFoodLevel(18);
 			if (player.level() instanceof ServerLevel lvl) {
 				SupernaturalManager.addVampireEffects(player);
                 ItemStack helmet = player.getItemBySlot(EquipmentSlot.HEAD);
@@ -89,6 +85,9 @@ public class SupernaturalEvents {
 	@SubscribeEvent
 	public static void onUseItemFinish(LivingEntityUseItemEvent.Finish event) {
 		if (event.getEntity() instanceof Player player && SupernaturalManager.isVampire(player)) {
+            if (event.getItem().has(DataComponents.FOOD)) {
+                player.getFoodData().setFoodLevel(0);
+            }
 			if (event.getItem().is(Items.ENCHANTED_GOLDEN_APPLE) && player.getOffhandItem().is(Items.TOTEM_OF_UNDYING)) {
 				player.level().broadcastEntityEvent(player, (byte) 35);
 				SupernaturalManager.setVampire(player, false);
@@ -98,16 +97,6 @@ public class SupernaturalEvents {
 			}
 		}
 	}
-
-    @SubscribeEvent
-    public static void onCrafted(PlayerEvent.ItemCraftedEvent event) {
-        if (event.getCrafting().is(SupernaturalItems.EBONSTEEL_MIRROR.get())) {
-            AnchorballData data = event.getInventory().getItem(4).get(SupernaturalData.ANCHOR);
-            if (data != null) {
-                event.getCrafting().set(SupernaturalData.ANCHOR, data);
-            }
-        }
-    }
 
 	@SubscribeEvent
 	public static void onEffectAdded(MobEffectEvent.Applicable event) {
@@ -163,14 +152,21 @@ public class SupernaturalEvents {
 	public static void onDeath(LivingDeathEvent event) {
 		LivingEntity target = event.getEntity();
 		if (target.level() instanceof ServerLevel lvl) {
-			if (lvl.dimension().equals(Level.OVERWORLD) && target instanceof Mob && !target.getType().is(SupernaturalTags.IMMUNITY)) {
-				RitualAltarEntity block = SupernaturalManager.getAltar(target.blockPosition(), lvl, 12, Items.AMETHYST_SHARD);
-				if (block != null) {
-					block.setItem(0, SupernaturalManager.setSoul(new ItemStack(SupernaturalItems.SOULGEM.get()), target));
-					lvl.sendParticles(ParticleTypes.SOUL, (block.getBlockPos().getX() + 0.5), (block.getBlockPos().getY() + 0.5), (block.getBlockPos().getZ() + 0.5), 6, 0.1, 0.15, 0.1, 0);
-					lvl.sendParticles(ParticleTypes.SOUL, (target.getX() + 0.5), (target.getY() + 0.5), (target.getZ() + 0.5), 8, 0.25, 0.35, 0.25, 0);
-				}
-			}
+            if (target instanceof Mob && !target.getType().is(SupernaturalTags.IMMUNITY)) {
+                if (event.getSource().getDirectEntity() instanceof LivingEntity bob && SupernaturalManager.canSoulbind(bob)) {
+                    if (bob.getOffhandItem().is(Items.AMETHYST_SHARD)) {
+                        lvl.sendParticles(ParticleTypes.SOUL, target.getX() + 0.5, target.getY() + 0.5, target.getZ() + 0.5, 8, 0.25, 0.35, 0.25, 0);
+                        if (bob instanceof Player player) {
+                            if (!player.isCreative()) {
+                                player.getOffhandItem().shrink(1);
+                            }
+                            player.addItem(SupernaturalManager.setSoul(new ItemStack(SupernaturalItems.SOULGEM.get()), target));
+                        } else {
+                            bob.setItemSlot(EquipmentSlot.OFFHAND, SupernaturalManager.setSoul(new ItemStack(SupernaturalItems.SOULGEM.get()), target));
+                        }
+                    }
+                }
+            }
 		}
 	}
 

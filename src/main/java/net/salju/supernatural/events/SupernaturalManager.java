@@ -81,22 +81,25 @@ public class SupernaturalManager {
 			player.getPersistentData().put(Player.PERSISTED_NBT_TAG, new CompoundTag());
 		}
 		CompoundTag data = player.getPersistentData().getCompound(Player.PERSISTED_NBT_TAG).get();
-		if (!check) {
-			data.remove("isVampire");
-			player.getPersistentData().put(Player.PERSISTED_NBT_TAG, data);
-			player.getAttributes().removeAttributeModifiers(createSupernatural());
-		} else {
-			data.putBoolean("isVampire", true);
-			player.getPersistentData().put(Player.PERSISTED_NBT_TAG, data);
-		}
+        if (check) {
+            data.putBoolean("isVampire", true);
+            player.getPersistentData().put(Player.PERSISTED_NBT_TAG, data);
+            addVampireEffects(player);
+        } else {
+            data.remove("isVampire");
+            player.getPersistentData().put(Player.PERSISTED_NBT_TAG, data);
+            player.getAttributes().removeAttributeModifiers(createSupernatural());
+            if (player.hasEffect(SupernaturalEffects.VAMPIRISM)) {
+                player.removeEffect(SupernaturalEffects.VAMPIRISM);
+            }
+        }
 	}
 
 	public static void addVampireEffects(Player player) {
 		player.getAttributes().addTransientAttributeModifiers(createSupernatural());
-		player.addEffect(new MobEffectInstance(SupernaturalEffects.VAMPIRISM, 5, 4, false, false, false));
-		if (player.isCrouching()) {
-			player.addEffect(new MobEffectInstance(MobEffects.INVISIBILITY, 10, 0, false, false, false));
-		}
+        if (!player.hasEffect(SupernaturalEffects.VAMPIRISM)) {
+            player.addEffect(new MobEffectInstance(SupernaturalEffects.VAMPIRISM, -1, 4, false, false, false));
+        }
 	}
 
 	private static Multimap<Holder<Attribute>, AttributeModifier> createSupernatural() {
@@ -110,6 +113,10 @@ public class SupernaturalManager {
 		return stats;
 	}
 
+    public static boolean canSoulbind(LivingEntity target) {
+        return isVampire(target) || getEnchantmentLevel(target.getWeaponItem(), target.level(), Supernatural.MODID, "soulbinding") > 0 || target.getType().equals(SupernaturalMobs.THRALL.get());
+    }
+
 	public static ItemStack dyeHelmet(Item item) {
 		ItemStack stack = new ItemStack(item);
 		stack.set(DataComponents.DYED_COLOR, new DyedItemColor(DyeColor.RED.getTextureDiffuseColor()));
@@ -117,17 +124,11 @@ public class SupernaturalManager {
 	}
 
 	public static ItemStack setSoul(ItemStack stack, LivingEntity target) {
-		TagValueOutput value = TagValueOutput.createWithoutContext(ProblemReporter.DISCARDING);
-		target.save(value);
-		CompoundTag mobster = value.buildResult();
-		mobster.remove("ActiveEffects");
-		mobster.remove("Passengers");
-		mobster.remove("DeathTime");
-		mobster.remove("Health");
-		mobster.remove("Leash");
-		mobster.remove("Fire");
-		mobster.remove("UUID");
-		stack.set(SupernaturalData.SOULGEM, new SoulgemData(mobster, getSoulLevel(target)));
+		TagValueOutput tag = TagValueOutput.createWithoutContext(ProblemReporter.DISCARDING);
+        if (target.getEncodeId() != null) {
+            tag.putString("id", target.getEncodeId());
+        }
+		stack.set(SupernaturalData.SOULGEM, new SoulgemData(tag.buildResult(), getSoulLevel(target)));
 		return stack;
 	}
 
@@ -171,19 +172,6 @@ public class SupernaturalManager {
 	public static String getSoulgem(ItemStack stack) {
 		SoulgemData data = stack.getOrDefault(SupernaturalData.SOULGEM, SoulgemData.EMPTY);
 		return data.getSoulPower();
-	}
-
-	@Nullable
-	public static RitualAltarEntity getAltar(BlockPos pos, ServerLevel lvl, int r, Item i) {
-		Stream<PoiRecord> stream = lvl.getPoiManager().getInRange(type -> type.is(SupernaturalBlocks.RITUAL_POI.getKey()), pos, r, PoiManager.Occupancy.ANY);
-		for (PoiRecord record : stream.toList()) {
-			if (lvl.getBlockEntity(record.getPos()) instanceof RitualAltarEntity target) {
-				if (target.getItem(0).is(i) && pos.closerThan(record.getPos(), r) && canSoulMagicWork(lvl, record.getPos())) {
-					return target;
-				}
-			}
-		}
-		return null;
 	}
 
 	public static boolean shouldVampireBurn(LivingEntity target, ServerLevel lvl) {

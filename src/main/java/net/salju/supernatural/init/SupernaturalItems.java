@@ -20,6 +20,7 @@ public class SupernaturalItems {
 	public static final DeferredRegister<Item> REGISTRY = DeferredRegister.createItems(Supernatural.MODID);
 	public static final DeferredHolder<Item, Item> VAMPIRE_SPAWN_EGG = REGISTRY.register("vampire_spawn_egg", () -> new SpawnEggItem(createBaseProps("vampire_spawn_egg").spawnEgg(SupernaturalMobs.VAMPIRE.get())));
     public static final DeferredHolder<Item, Item> MERFOLK_SPAWN_EGG = REGISTRY.register("merfolk_spawn_egg", () -> new SpawnEggItem(createBaseProps("merfolk_spawn_egg").spawnEgg(SupernaturalMobs.MERFOLK.get())));
+    public static final DeferredHolder<Item, Item> THRALL_SPAWN_EGG = REGISTRY.register("thrall_spawn_egg", () -> new SpawnEggItem(createBaseProps("thrall_spawn_egg").spawnEgg(SupernaturalMobs.THRALL.get())));
     public static final DeferredHolder<Item, Item> WIGHT_SPAWN_EGG = REGISTRY.register("wight_spawn_egg", () -> new SpawnEggItem(createBaseProps("wight_spawn_egg").spawnEgg(SupernaturalMobs.WIGHT.get())));
     public static final DeferredHolder<Item, Item> SCOURGE_SPAWN_EGG = REGISTRY.register("scourge_spawn_egg", () -> new SpawnEggItem(createBaseProps("scourge_spawn_egg").spawnEgg(SupernaturalMobs.SCOURGE.get())));
     public static final DeferredHolder<Item, Item> ANGEL_STATUE = REGISTRY.register("angel_statue", () -> new AngelStatueItem(createBaseProps("angel_statue").stacksTo(1)));
@@ -52,9 +53,9 @@ public class SupernaturalItems {
     public static final DeferredHolder<Item, Item> GOTHIC_NETHERITE_HELMET = REGISTRY.register("gothic_netherite_helmet", () -> new Item(createBaseProps("gothic_netherite_helmet").fireResistant().durability(ArmorType.HELMET.getDurability(37)).humanoidArmor(SupernaturalArmors.NETHERITE, ArmorType.HELMET)));
     public static final DeferredHolder<Item, Item> GOTHIC_EBONSTEEL_HELMET = REGISTRY.register("gothic_ebonsteel_helmet", () -> new Item(createBaseProps("gothic_ebonsteel_helmet").durability(ArmorType.HELMET.getDurability(21)).humanoidArmor(SupernaturalArmors.EBONSTEEL_GOTHIC, ArmorType.HELMET).rarity(Rarity.UNCOMMON)));
 	public static final DeferredHolder<Item, Item> RITUAL_BOOK = REGISTRY.register("ritual_book", () -> new RitualBookItem(createBaseProps("ritual_book").stacksTo(1).rarity(Rarity.UNCOMMON)));
-	public static final DeferredHolder<Item, Item> SOULGEM = REGISTRY.register("soulgem", () -> new SoulgemItem(createBaseProps("soulgem").stacksTo(1).rarity(Rarity.UNCOMMON)));
-	public static final DeferredHolder<Item, Item> COMPASS = REGISTRY.register("ritual_compass", () -> new RitualCompassItem(createBaseProps("ritual_compass").stacksTo(1).rarity(Rarity.UNCOMMON)));
-	public static final DeferredHolder<Item, Item> REVENANT_CORE = REGISTRY.register("spectral_core", () -> new SpectralCoreItem(createBaseProps("spectral_core").stacksTo(1).rarity(Rarity.RARE)));
+	public static final DeferredHolder<Item, Item> SOULGEM = REGISTRY.register("soulgem", () -> new SoulgemItem(createBaseProps("soulgem").stacksTo(16).rarity(Rarity.UNCOMMON)));
+	public static final DeferredHolder<Item, Item> COMPASS = REGISTRY.register("ritual_compass", () -> new RitualCompassItem(createBaseProps("ritual_compass").rarity(Rarity.UNCOMMON)));
+	public static final DeferredHolder<Item, Item> REVENANT_CORE = REGISTRY.register("spectral_core", () -> new SpectralCoreItem(createBaseProps("spectral_core").rarity(Rarity.RARE)));
 	public static final DeferredHolder<Item, Item> BLOOD = REGISTRY.register("blood_bottle", () -> new BloodBottleItem(createBaseProps("blood_bottle").stacksTo(16).component(DataComponents.CONSUMABLE, BLOODY).craftRemainder(Items.GLASS_BOTTLE).usingConvertsTo(Items.GLASS_BOTTLE)));
     public static final DeferredHolder<Item, Item> EBONSTEEL_MIRROR = REGISTRY.register("ebonsteel_mirror", () -> new SpectralMirrorItem(createBaseProps("ebonsteel_mirror").stacksTo(1).rarity(Rarity.UNCOMMON)));
     public static final DeferredHolder<Item, Item> EBONSTEEL_INGOT = REGISTRY.register("ebonsteel_ingot", () -> new Item(createBaseProps("ebonsteel_ingot").rarity(Rarity.UNCOMMON)));

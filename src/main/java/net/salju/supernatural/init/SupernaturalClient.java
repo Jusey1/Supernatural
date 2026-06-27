@@ -28,8 +28,8 @@ import net.minecraft.world.item.ItemStack;
 public class SupernaturalClient {
     public static final ModelLayerLocation ANGEL = registerModel("angel", "main");
     public static final ModelLayerLocation MERFOLK = registerModel("merfolk", "main");
+    public static final ModelLayerLocation THRALL = registerModel("thrall", "main");
     public static final ModelLayerLocation WIGHT = registerModel("wight", "main");
-    public static final ModelLayerLocation WIGHT_CLOTHING = registerModel("wight", "clothing");
     public static final ModelLayerLocation SCOURGE = registerModel("scourge", "main");
     public static final ModelLayerLocation SCOURGE_ARMOR = registerModel("scourge", "armor");
 	public static final ArmorModelSet<ModelLayerLocation> GOTHIC = registerArmorSet("gothic");
@@ -39,6 +39,7 @@ public class SupernaturalClient {
 		event.registerEntityRenderer(SupernaturalMobs.VAMPIRE.get(), VampireRenderer::new);
         event.registerEntityRenderer(SupernaturalMobs.ANGEL.get(), AngelRenderer::new);
         event.registerEntityRenderer(SupernaturalMobs.MERFOLK.get(), MerfolkRenderer::new);
+        event.registerEntityRenderer(SupernaturalMobs.THRALL.get(), ThrallRenderer::new);
         event.registerEntityRenderer(SupernaturalMobs.WIGHT.get(), WightRenderer::new);
         event.registerEntityRenderer(SupernaturalMobs.SCOURGE.get(), ScourgeRenderer::new);
 		event.registerBlockEntityRenderer(SupernaturalBlocks.RITUAL.get(), RitualBlockRenderer::new);
@@ -50,8 +51,8 @@ public class SupernaturalClient {
     public static void registerLayerDefinitions(EntityRenderersEvent.RegisterLayerDefinitions event) {
         event.registerLayerDefinition(ANGEL, AngelModel::createBodyLayer);
         event.registerLayerDefinition(MERFOLK, MerfolkModel::createBodyLayer);
+        event.registerLayerDefinition(THRALL, ThrallModel::createBodyLayer);
         event.registerLayerDefinition(WIGHT, WightModel::createBodyLayer);
-        event.registerLayerDefinition(WIGHT_CLOTHING, WightModel::createClothingLayer);
         event.registerLayerDefinition(SCOURGE, ScourgeModel::createBodyLayer);
         event.registerLayerDefinition(SCOURGE_ARMOR, ScourgeModel::createBodyLayer);
         event.registerLayerDefinition(GOTHIC.head(), GothicArmorModel::createHeadLayer);

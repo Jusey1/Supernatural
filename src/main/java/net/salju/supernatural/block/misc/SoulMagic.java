@@ -1,5 +1,7 @@
 package net.salju.supernatural.block.misc;
 
+import net.minecraft.world.entity.monster.skeleton.AbstractSkeleton;
+import net.salju.supernatural.entity.Thrall;
 import net.salju.supernatural.init.*;
 import net.salju.supernatural.events.RitualEvent;
 import net.salju.supernatural.events.SupernaturalManager;
@@ -120,35 +122,43 @@ public class SoulMagic {
                         }
                     }
                 } else if (stack.is(SupernaturalItems.PLASMA.get()) && i == 35 && e >= 4) {
-                    Mob kevin = RitualManager.getSacrifice(lvl, EntityTypeTags.SKELETONS, pos);
-                    if (kevin != null) {
+                    Mob bob = RitualManager.getSacrifice(lvl, SupernaturalTags.PLASMA, pos);
+                    if (bob != null) {
+                        bob.dropPreservedEquipment(lvl);
                         RitualManager.defaultResult(target, offer, lvl, player, pos);
-                        lvl.sendParticles(ParticleTypes.SOUL_FIRE_FLAME, kevin.getX(), kevin.getY() + 1.25, kevin.getZ(), 15, 0.45, 0.25, 0.45, 0);
-                        if (kevin instanceof SkeletonHorse) {
-                            Scourge horse = kevin.convertTo(SupernaturalMobs.SCOURGE.get(), ConversionParams.single(kevin, true, true), newbie -> { EventHooks.onLivingConvert(kevin, newbie); });
+                        lvl.sendParticles(ParticleTypes.SOUL_FIRE_FLAME, bob.getX(), bob.getY() + 1.25, bob.getZ(), 15, 0.45, 0.25, 0.45, 0);
+                        if (bob instanceof SkeletonHorse) {
+                            Scourge horse = bob.convertTo(SupernaturalMobs.SCOURGE.get(), ConversionParams.single(bob, true, true), newbie -> { EventHooks.onLivingConvert(bob, newbie); });
                             if (horse != null) {
                                 horse.setBodyArmorItem(new ItemStack(SupernaturalItems.EBONSTEEL_HORSE_ARMOR.get()));
                                 horse.setOwner(player);
                                 horse.setTamed(true);
                                 horse.setSaddle();
                             }
-                        } else {
-                            Wight wyght = kevin.convertTo(SupernaturalMobs.WIGHT.get(), ConversionParams.single(kevin, true, true), newbie -> { EventHooks.onLivingConvert(kevin, newbie); });
+                        } else if (bob instanceof AbstractSkeleton) {
+                            Wight wyght = bob.convertTo(SupernaturalMobs.WIGHT.get(), ConversionParams.single(bob, true, true), newbie -> { EventHooks.onLivingConvert(bob, newbie); });
                             if (wyght != null) {
+                                wyght.setOwner(player);
                                 wyght.setItemSlot(EquipmentSlot.MAINHAND, wyght.getSecondary());
-                                wyght.setCanPickUpLoot(false);
+                            }
+                        } else {
+                            Thrall zombo = bob.convertTo(SupernaturalMobs.THRALL.get(), ConversionParams.single(bob, true, true), newbie -> { EventHooks.onLivingConvert(bob, newbie); });
+                            if (zombo != null) {
+                                zombo.setOwner(player);
                             }
                         }
                     }
-				} else if (stack.isEnchantable() && RitualManager.getEnchantments(lvl) != null && (player.experienceLevel >= 30 || player.isCreative())) {
-					ItemStack copy = stack.copy();
-					RitualManager.defaultResult(target, offer, lvl, player, pos);
-					int c = e * SupernaturalConfig.SOULPOWER.get() + i;
-					target.setItem(0, EnchantmentHelper.enchantItem(lvl.getRandom(), copy, c, RitualManager.getEnchantments(lvl)));
-					lvl.playSound(null, pos, SoundEvents.ENCHANTMENT_TABLE_USE, SoundSource.BLOCKS, 1.0F, (float) (0.8F + (Math.random() * 0.2)));
-					if (!player.isCreative()) {
-						player.giveExperiencePoints(-c);
-					}
+				} else if (stack.isEnchantable() && RitualManager.getEnchantments(lvl) != null) {
+                    int c = e * SupernaturalConfig.SOULPOWER.get() + i;
+                    if (player.isCreative() || player.totalExperience >= c * 2) {
+                        ItemStack copy = stack.copy();
+                        RitualManager.defaultResult(target, offer, lvl, player, pos);
+                        target.setItem(0, EnchantmentHelper.enchantItem(lvl.getRandom(), copy, c, RitualManager.getEnchantments(lvl)));
+                        lvl.playSound(null, pos, SoundEvents.ENCHANTMENT_TABLE_USE, SoundSource.BLOCKS, 1.0F, (float) (0.8F + (Math.random() * 0.2)));
+                        if (!player.isCreative()) {
+                            player.giveExperiencePoints(-c * 2);
+                        }
+                    }
 				} else {
 					RitualEvent event = SupernaturalManager.onRitualEvent(stack, lvl, player, pos, target, i, e);
 					if (event.isRitualSuccessful()) {
