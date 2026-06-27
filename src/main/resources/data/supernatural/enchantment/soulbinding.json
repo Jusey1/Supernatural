@@ -1,0 +1,21 @@
+{
+  "description": {
+    "translate": "enchantment.supernatural.soulbinding"
+  },
+  "supported_items": "#minecraft:swords",
+  "exclusive_set": "minecraft:mending",
+  "max_cost": {
+    "base": 50,
+    "per_level_above_first": 0
+  },
+  "min_cost": {
+    "base": 20,
+    "per_level_above_first": 0
+  },
+  "slots": [
+    "mainhand"
+  ],
+  "anvil_cost": 2,
+  "max_level": 1,
+  "weight": 1
+}

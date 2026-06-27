@@ -11,6 +11,17 @@
         },
         {
           "type": "minecraft:item",
+          "name": "minecraft:book",
+          "weight": 4,
+          "functions": [
+            {
+              "function": "minecraft:enchant_randomly",
+              "options": "supernatural:soulbinding"
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
           "name": "minecraft:enchanted_golden_apple",
           "weight": 2
         }
