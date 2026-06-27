@@ -1,10 +1,14 @@
 package net.salju.supernatural.entity;
 
 import net.salju.supernatural.init.SupernaturalTags;
+import net.minecraft.core.Holder;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.world.entity.*;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.item.enchantment.ItemEnchantments;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.pathfinder.PathType;
@@ -63,10 +67,31 @@ public abstract class AbstractMinionEntity extends AbstractSpellcasterEntity imp
     @Override
     protected boolean canReplaceCurrentItem(ItemStack drop, ItemStack hand, EquipmentSlot slot) {
         if (drop.is(SupernaturalTags.DARK_ARMOR)) {
-            return !hand.is(SupernaturalTags.DARK_ARMOR) || !hand.isEnchanted();
-        } else if (drop.is(Items.IRON_SWORD) && !hand.isEnchanted()) {
+            return hand.isEmpty() || this.canReplaceEqualItem(drop, hand);
+        } else if (drop.is(Items.IRON_SWORD) && (hand.isEmpty() || this.canReplaceEqualItem(drop, hand))) {
             this.setPrimary(drop);
             return true;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean canReplaceEqualItem(ItemStack drop, ItemStack hand) {
+        if (drop.isEnchanted()) {
+            if (hand.isEnchanted()) {
+                int id = 0;
+                ItemEnchantments.Mutable dropMap = new ItemEnchantments.Mutable(EnchantmentHelper.getEnchantmentsForCrafting(drop));
+                for (Holder<Enchantment> e : dropMap.keySet()) {
+                    id = (id + dropMap.getLevel(e));
+                }
+                int ih = 0;
+                ItemEnchantments.Mutable handMap = new ItemEnchantments.Mutable(EnchantmentHelper.getEnchantmentsForCrafting(hand));
+                for (Holder<Enchantment> e : handMap.keySet()) {
+                    ih = (ih + handMap.getLevel(e));
+                }
+                return id > ih;
+            }
+            return !hand.isEnchanted();
         }
         return false;
     }
