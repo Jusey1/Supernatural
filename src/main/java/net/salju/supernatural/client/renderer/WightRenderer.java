@@ -2,7 +2,6 @@ package net.salju.supernatural.client.renderer;
 
 import net.salju.supernatural.Supernatural;
 import net.salju.supernatural.init.SupernaturalClient;
-import net.salju.supernatural.client.renderer.layers.WightClothingLayer;
 import net.salju.supernatural.client.renderer.layers.WightEyesLayer;
 import net.salju.supernatural.client.model.WightModel;
 import net.salju.supernatural.entity.Wight;
@@ -17,7 +16,6 @@ public class WightRenderer extends HumanoidMobRenderer<Wight, SupernaturalRender
 	public WightRenderer(EntityRendererProvider.Context context) {
 		super(context, new WightModel<>(context.bakeLayer(SupernaturalClient.WIGHT)), 0.5F);
         this.addLayer(new HumanoidArmorLayer<>(this, ArmorModelSet.bake(ModelLayers.SKELETON_ARMOR, context.getModelSet(), WightModel::new), context.getEquipmentRenderer()));
-        this.addLayer(new WightClothingLayer<>(this, context.getModelSet()));
         this.addLayer(new WightEyesLayer<>(this));
 	}
 
