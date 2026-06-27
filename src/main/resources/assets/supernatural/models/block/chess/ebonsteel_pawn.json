@@ -1,0 +1,7 @@
+{
+	"parent": "supernatural:block/chess/abstract_pawn",
+	"textures": {
+		"0": "supernatural:block/ebonsteel_pawn",
+		"particle": "supernatural:block/ebonsteel_block"
+	}
+}
