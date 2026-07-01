@@ -12,6 +12,11 @@ public class WightCrossbowGoal<T extends Wight & CrossbowAttackMob> extends Rang
 		this.target = t;
 	}
 
+    @Override
+    public boolean canUse() {
+        return super.canUse() && this.target.shouldUseCrossbow();
+    }
+
 	@Override
 	public void start() {
 		super.start();

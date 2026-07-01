@@ -33,7 +33,7 @@ public class WightRenderer extends HumanoidMobRenderer<Wight, SupernaturalRender
     public void extractRenderState(Wight target, SupernaturalRenderState state, float f1) {
         super.extractRenderState(target, state, f1);
         state.isAggressive = target.isAggressive();
-        state.isCastingSpell = target.isCastingSpell();
+        state.isCastingSpell = target.shouldUseCrossbow();
         state.isCharging = target.isCharging();
         state.isLeftHanded = target.isLeftHanded();
     }

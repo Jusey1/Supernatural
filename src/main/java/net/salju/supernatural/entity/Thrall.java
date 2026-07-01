@@ -32,7 +32,7 @@ import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.DifficultyInstance;
 import javax.annotation.Nullable;
 
-public class Thrall extends AbstractMinionEntity implements Enemy {
+public class Thrall extends AbstractMinionEntity {
     private static final Identifier SPEED_BABY_ID = Identifier.fromNamespaceAndPath(Supernatural.MODID, "baby");
     private static final EntityDataAccessor<Boolean> BABY = SynchedEntityData.defineId(Thrall.class, EntityDataSerializers.BOOLEAN);
 
@@ -97,8 +97,8 @@ public class Thrall extends AbstractMinionEntity implements Enemy {
 
 	@Override
 	protected void populateDefaultEquipmentSlots(RandomSource randy, DifficultyInstance difficulty) {
-        this.getPrimary().enchant(SupernaturalManager.getEnchantment(this.level(), Supernatural.MODID, "soulbinding"), 1);
-        this.setItemSlot(EquipmentSlot.MAINHAND, this.getPrimary());
+        this.setItemSlot(EquipmentSlot.MAINHAND, new ItemStack(Items.IRON_SWORD));
+        this.getMainHandItem().enchant(SupernaturalManager.getEnchantment(this.level(), Supernatural.MODID, "soulbinding"), 1);
         this.setItemSlot(EquipmentSlot.HEAD, new ItemStack(SupernaturalItems.EBONSTEEL_HELMET.get()));
         this.setDropChance(EquipmentSlot.MAINHAND, 0.15F);
         if (randy.nextFloat() < 0.12F) {

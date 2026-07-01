@@ -7,8 +7,6 @@ import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.HumanoidArm;
-import net.minecraft.world.item.CrossbowItem;
-import net.minecraft.world.item.Item;
 import com.mojang.blaze3d.vertex.PoseStack;
 
 public class WightModel<T extends SupernaturalRenderState> extends HumanoidModel<T> {
@@ -33,7 +31,7 @@ public class WightModel<T extends SupernaturalRenderState> extends HumanoidModel
 	@Override
 	public void setupAnim(T target) {
 		this.defaultPose(target);
-		this.poseArms(target, target.getMainHandItemStack().getItem(), target.isLeftHanded ? this.leftArm : this.rightArm, target.isLeftHanded ? this.rightArm : this.leftArm);
+		this.poseArms(target, target.isLeftHanded ? this.leftArm : this.rightArm, target.isLeftHanded ? this.rightArm : this.leftArm);
 		if (target.attackTime > 0.0F) {
 			this.setupAttackAnimation(target, target.isLeftHanded ? this.leftArm : this.rightArm);
 		}
@@ -78,18 +76,13 @@ public class WightModel<T extends SupernaturalRenderState> extends HumanoidModel
 		}
 	}
 
-	protected void poseArms(T target, Item item, ModelPart mainArm, ModelPart offArm) {
-		if (target.isCastingSpell) {
-			offArm.xRot = Mth.cos(target.ageInTicks * 0.6662F) * 0.25F;
-			offArm.yRot = 0.0F;
-			offArm.zRot = target.isLeftHanded ? 2.3561945F : -2.3561945F;
-		}
+	protected void poseArms(T target, ModelPart mainArm, ModelPart offArm) {
 		if (target.isAggressive) {
-			if (item instanceof CrossbowItem) {
+            if (target.isCastingSpell) {
 				if (target.isCharging) {
-					mainArm.xRot = -2.4876F;
+					offArm.xRot = -2.4876F;
 				} else {
-					mainArm.xRot = -1.4399F;
+					offArm.xRot = -1.4399F;
 				}
 			} else {
 				 mainArm.xRot = -2.0944F;
