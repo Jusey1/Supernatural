@@ -2,7 +2,6 @@ package net.salju.supernatural.entity;
 
 import net.salju.supernatural.Supernatural;
 import net.salju.supernatural.events.SupernaturalManager;
-import net.salju.supernatural.init.SupernaturalConfig;
 import net.salju.supernatural.init.SupernaturalItems;
 import net.salju.supernatural.init.SupernaturalSounds;
 import net.salju.supernatural.entity.ai.thrall.*;
@@ -131,7 +130,7 @@ public class Thrall extends AbstractMinionEntity {
         if (super.doHurtTarget(lvl, target)) {
             if (target.canFreeze()) {
                 if (target instanceof LivingEntity bob) {
-                    SupernaturalManager.hurtWithFrostbite(bob, SupernaturalConfig.FROSTBITE.get() / 2);
+                    SupernaturalManager.hurtWithFrostbite(bob, 125);
                 }
             }
             return true;

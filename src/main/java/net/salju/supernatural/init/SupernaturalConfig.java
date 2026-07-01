@@ -17,7 +17,6 @@ public class SupernaturalConfig {
 	public static final ModConfigSpec.DoubleValue DR;
 	public static final ModConfigSpec.DoubleValue ATTACKED;
 	public static final ModConfigSpec.DoubleValue BITE;
-    public static final ModConfigSpec.IntValue FROSTBITE;
 
 	public static final ModConfigSpec.IntValue SOULPOWER;
 	public static final ModConfigSpec.BooleanValue SACRIFICE;
@@ -37,7 +36,6 @@ public class SupernaturalConfig {
         DR = BUILDER.comment("How much damage does a Vampire takes from all sources?").defineInRange("Damage-Reduction", 0.85, 0.0, 1.0);
         ATTACKED = BUILDER.comment("Chance of being infected by a Vampire Illager's attack").defineInRange("Vampire-Infection", 0.15, 0.0, 1.0);
         BITE = BUILDER.comment("Chance of being infected by a Vampire Player's bite").defineInRange("Player-Infection", 0.35, 0.0, 1.0);
-        FROSTBITE = BUILDER.comment("Frostbite ticks applied by a Death Knight Player").defineInRange("Frostbite", 250, 0, Integer.MAX_VALUE);
         BUILDER.pop();
         BUILDER.push("Ritual Altar");
         SOULPOWER = BUILDER.comment("What should be the base power for soul enchanting?").defineInRange("Ritual-Soulpower", 3, 0, Integer.MAX_VALUE);

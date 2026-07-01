@@ -126,13 +126,10 @@ public class SupernaturalEvents {
                 if (!target.getType().is(EntityTypeTags.UNDEAD) && !target.getType().is(SupernaturalTags.IMMUNITY)) {
                     source.heal(SupernaturalConfig.LEECH.get().floatValue() + 1.25F);
                 }
-                if (target.canFreeze() && SupernaturalManager.hasVampirism(source, 9)) {
-                    SupernaturalManager.hurtWithFrostbite(target, SupernaturalConfig.FROSTBITE.get());
-                }
             }
 		}
         if (event.getSource().is(SupernaturalTags.MAGIC)) {
-            int i = SupernaturalManager.getDarkArmor(target, true);
+            int i = SupernaturalManager.getDarkArmor(target);
             if (i >= 1) {
                 event.setAmount(event.getAmount() * (1.0F - (0.1F * i)));
             }

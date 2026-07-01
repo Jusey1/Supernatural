@@ -125,7 +125,7 @@ public class Angel extends Mob {
                         for (ServerPlayer ply : list) {
                             if (ply.isCloseEnough(this, 32)) {
                                 if (this.isLookingAtMe(ply)) {
-                                    ++i;
+                                    i++;
                                 }
                             }
                         }

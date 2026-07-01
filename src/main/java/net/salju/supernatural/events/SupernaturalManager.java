@@ -95,16 +95,6 @@ public class SupernaturalManager {
         player.getAttributes().addTransientAttributeModifiers(createSupernatural());
         if (!player.hasEffect(SupernaturalEffects.VAMPIRISM)) {
             player.addEffect(new MobEffectInstance(SupernaturalEffects.VAMPIRISM, -1, 4, false, false, false));
-        } else {
-            int i = 4 + getDarkArmor(player, false);
-            if (player.hasEffect(SupernaturalEffects.VAMPIRISM)) {
-                int e = player.getEffect(SupernaturalEffects.VAMPIRISM).getAmplifier();
-                if (e < i) {
-                    player.addEffect(new MobEffectInstance(SupernaturalEffects.VAMPIRISM, -1, i, false, false, false));
-                } else if (e > i) {
-                    player.removeEffect(SupernaturalEffects.VAMPIRISM);
-                }
-            }
         }
     }
 
@@ -226,13 +216,11 @@ public class SupernaturalManager {
 		return list;
 	}
 
-    public static int getDarkArmor(LivingEntity target, boolean check) {
+    public static int getDarkArmor(LivingEntity target) {
         int i = 0;
         for (EquipmentSlot slot : EquipmentSlot.values()) {
             if (slot.isArmor() && target.getItemBySlot(slot).is(SupernaturalTags.DARK_ARMOR)) {
-                if (check || getEnchantmentLevel(target.getItemBySlot(slot), target.level(), "minecraft", "binding_curse") >= 1) {
-                    i++;
-                }
+                i++;
             }
         }
         return i >= 4 ? 5 : i;
