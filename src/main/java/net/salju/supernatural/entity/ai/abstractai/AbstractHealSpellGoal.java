@@ -45,11 +45,6 @@ public class AbstractHealSpellGoal extends AbstractTargetSpellGoal {
 	}
 
 	@Override
-	protected int getSpell() {
-		return 2;
-	}
-
-	@Override
 	protected SoundEvent getSpellPrepareSound() {
 		return SoundEvents.EVOKER_PREPARE_ATTACK;
 	}

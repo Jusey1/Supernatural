@@ -28,7 +28,6 @@ public class SupernaturalTags {
 	public static final TagKey<EntityType<?>> LESSER = TagKey.create(Registries.ENTITY_TYPE, Identifier.fromNamespaceAndPath(Supernatural.MODID, "lesser_soul"));
 	public static final TagKey<EntityType<?>> PETTY = TagKey.create(Registries.ENTITY_TYPE, Identifier.fromNamespaceAndPath(Supernatural.MODID, "petty_soul"));
 	public static final TagKey<Block> SOIL = BlockTags.create(Identifier.fromNamespaceAndPath(Supernatural.MODID, "transmutable_soil_blocks"));
-    public static final TagKey<Block> CANDLES = BlockTags.create(Identifier.fromNamespaceAndPath(Supernatural.MODID, "ritual_candles"));
     public static final TagKey<Block> PLASMASTONE = BlockTags.create(Identifier.fromNamespaceAndPath(Supernatural.MODID, "valid_plasmastone_blocks"));
     public static final TagKey<Block> EBONSTEEL_PIECES = BlockTags.create(Identifier.fromNamespaceAndPath(Supernatural.MODID, "ebonsteel_chess_pieces"));
     public static final TagKey<Block> QUARTZ_PIECES = BlockTags.create(Identifier.fromNamespaceAndPath(Supernatural.MODID, "quartz_chess_pieces"));
@@ -36,7 +35,6 @@ public class SupernaturalTags {
 	public static final TagKey<Item> INGOTS = ItemTags.create(Identifier.fromNamespaceAndPath(Supernatural.MODID, "transmutable_ingots"));
 	public static final TagKey<Item> HELMS = ItemTags.create(Identifier.fromNamespaceAndPath(Supernatural.MODID, "transmutable_helmets"));
 	public static final TagKey<Item> KEPT = ItemTags.create(Identifier.fromNamespaceAndPath(Supernatural.MODID, "altar_kept_items"));
-	public static final TagKey<Item> BLOOD = ItemTags.create(Identifier.fromNamespaceAndPath(Supernatural.MODID, "blood"));
 	public static final TagKey<Item> DARK_ARMOR = ItemTags.create(Identifier.fromNamespaceAndPath(Supernatural.MODID, "ebonsteel_armor"));
 	public static final TagKey<Item> IRON_ARMOR = ItemTags.create(Identifier.fromNamespaceAndPath(Supernatural.MODID, "iron_armor"));
 	public static final TagKey<Structure> RUINS = TagKey.create(Registries.STRUCTURE, Identifier.fromNamespaceAndPath(Supernatural.MODID, "ritual_compass_01"));

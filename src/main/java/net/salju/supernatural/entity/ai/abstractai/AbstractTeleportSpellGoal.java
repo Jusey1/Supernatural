@@ -34,11 +34,6 @@ public abstract class AbstractTeleportSpellGoal extends AbstractSpellGoal {
     }
 
     @Override
-    protected int getSpell() {
-        return 0;
-    }
-
-    @Override
     protected SoundEvent getSpellPrepareSound() {
         return SoundEvents.EVOKER_PREPARE_SUMMON;
     }

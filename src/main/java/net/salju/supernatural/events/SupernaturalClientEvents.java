@@ -1,7 +1,6 @@
 package net.salju.supernatural.events;
 
 import net.salju.supernatural.init.SupernaturalData;
-import net.salju.supernatural.init.SupernaturalEffects;
 import net.salju.supernatural.init.SupernaturalItems;
 import net.salju.supernatural.item.component.RitualBookData;
 import net.neoforged.api.distmarker.Dist;
@@ -45,7 +44,7 @@ public class SupernaturalClientEvents {
 	@SubscribeEvent(receiveCanceled = true)
 	public static void onGui(RenderGuiLayerEvent.Pre event) {
 		Player player = Minecraft.getInstance().player;
-		if (player != null && SupernaturalManager.hasVampirism(player)) {
+		if (player != null && SupernaturalManager.hasVampirism(player, 1)) {
 			if (event.getName().equals(VanillaGuiLayers.FOOD_LEVEL)) {
 				event.setCanceled(true);
 			}

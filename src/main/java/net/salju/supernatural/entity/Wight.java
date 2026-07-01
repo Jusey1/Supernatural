@@ -32,9 +32,10 @@ import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.DifficultyInstance;
 import javax.annotation.Nullable;
 
-public class Wight extends AbstractMinionEntity implements Enemy, CrossbowAttackMob, RangedAttackMob {
+public class Wight extends AbstractMinionEntity implements Enemy, Spellcaster, CrossbowAttackMob, RangedAttackMob {
 	private static final EntityDataAccessor<Boolean> DATA_CHARGING_STATE = SynchedEntityData.defineId(Wight.class, EntityDataSerializers.BOOLEAN);
 	private static final EntityDataAccessor<Boolean> CAPTAIN = SynchedEntityData.defineId(Wight.class, EntityDataSerializers.BOOLEAN);
+    private static final EntityDataAccessor<Integer> SPELL_TICK = SynchedEntityData.defineId(Wight.class, EntityDataSerializers.INT);
 
 	public Wight(EntityType<Wight> type, Level world) {
 		super(type, world);
@@ -44,12 +45,14 @@ public class Wight extends AbstractMinionEntity implements Enemy, CrossbowAttack
 	public void addAdditionalSaveData(ValueOutput tag) {
 		super.addAdditionalSaveData(tag);
 		tag.putBoolean("Captain", this.isCaptain());
+        tag.putInt("SpellTick", this.getSpellTick());
 	}
 
 	@Override
 	public void readAdditionalSaveData(ValueInput tag) {
 		super.readAdditionalSaveData(tag);
 		this.getEntityData().set(CAPTAIN, tag.getBooleanOr("Captain", false));
+        this.setSpellTick(tag.getIntOr("SpellTick", 0));
 	}
 
 	@Override
@@ -57,6 +60,7 @@ public class Wight extends AbstractMinionEntity implements Enemy, CrossbowAttack
 		super.defineSynchedData(builder);
 		builder.define(DATA_CHARGING_STATE, false);
 		builder.define(CAPTAIN, false);
+        builder.define(SPELL_TICK, 0);
 	}
 
 	@Override
@@ -97,14 +101,15 @@ public class Wight extends AbstractMinionEntity implements Enemy, CrossbowAttack
 	@Override
 	public void baseTick() {
 		super.baseTick();
+        this.updateSpellTick();
 		if (this.isAlive()) {
 			if (this.level().isClientSide()) {
 				if (this.isCastingSpell()) {
 					float f = this.yBodyRot * ((float) Math.PI / 180F) + Mth.cos((float) this.tickCount * 0.6662F) * 0.25F;
 					if (this.isLeftHanded()) {
-						this.applySpellEffects(this.getX() - (double) Mth.cos(f) * 0.6 * (double) this.getScale(), this.getY() + 1.8 * (double) this.getScale(), this.getZ() - (double) Mth.sin(f) * 0.6 * (double) this.getScale());
+						this.applySpellEffects(this.level(), this.getX() - (double) Mth.cos(f) * 0.6 * (double) this.getScale(), this.getY() + 1.8 * (double) this.getScale(), this.getZ() - (double) Mth.sin(f) * 0.6 * (double) this.getScale());
 					} else {
-						this.applySpellEffects(this.getX() + (double) Mth.cos(f) * 0.6 * (double) this.getScale(), this.getY() + 1.8 * (double) this.getScale(), this.getZ() + (double) Mth.sin(f) * 0.6 * (double) this.getScale());
+						this.applySpellEffects(this.level(), this.getX() + (double) Mth.cos(f) * 0.6 * (double) this.getScale(), this.getY() + 1.8 * (double) this.getScale(), this.getZ() + (double) Mth.sin(f) * 0.6 * (double) this.getScale());
 					}
 				}
 				this.level().addParticle(ParticleTypes.SOUL_FIRE_FLAME, this.getRandomX(0.5), this.getRandomY(), this.getRandomZ(0.5), 0.0, 0.0, 0.0);
@@ -182,6 +187,16 @@ public class Wight extends AbstractMinionEntity implements Enemy, CrossbowAttack
 		return SoundEvents.EVOKER_CAST_SPELL;
 	}
 
+    @Override
+    public void setSpellTick(int i) {
+        this.getEntityData().set(SPELL_TICK, i);
+    }
+
+    @Override
+    public int getSpellTick() {
+        return this.getEntityData().get(SPELL_TICK);
+    }
+
 	public ItemStack getSwapToWeapon() {
 		return this.hasCrossbow() ? this.getPrimary() : this.getSecondary();
 	}
@@ -196,9 +211,9 @@ public class Wight extends AbstractMinionEntity implements Enemy, CrossbowAttack
 				return !this.hasCrossbow();
 			}
 		} else if (this.hasCrossbow()) {
-			return this.distanceTo(target) <= 5.76 && !target.isInWater();
+			return this.distanceTo(target) <= 5.76;
 		} else {
-			return this.distanceTo(target) >= 8.25 || target.isInWater();
+			return this.distanceTo(target) >= 8.25;
 		}
 	}
 

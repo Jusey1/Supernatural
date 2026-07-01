@@ -10,7 +10,7 @@ public class Appleskin  {
     @SubscribeEvent
     public void onExhaustion(HUDOverlayEvent.Exhaustion event) {
         Player player = Minecraft.getInstance().player;
-        if (player != null && SupernaturalManager.hasVampirism(player)) {
+        if (player != null && SupernaturalManager.hasVampirism(player, 1)) {
             event.setCanceled(true);
         }
     }
@@ -18,7 +18,7 @@ public class Appleskin  {
     @SubscribeEvent
     public void onSaturation(HUDOverlayEvent.Saturation event) {
         Player player = Minecraft.getInstance().player;
-        if (player != null && SupernaturalManager.hasVampirism(player)) {
+        if (player != null && SupernaturalManager.hasVampirism(player, 1)) {
             event.setCanceled(true);
         }
     }
@@ -26,7 +26,7 @@ public class Appleskin  {
     @SubscribeEvent
     public void onHunger(HUDOverlayEvent.HungerRestored event) {
         Player player = Minecraft.getInstance().player;
-        if (player != null && SupernaturalManager.hasVampirism(player)) {
+        if (player != null && SupernaturalManager.hasVampirism(player, 1)) {
             event.setCanceled(true);
         }
     }

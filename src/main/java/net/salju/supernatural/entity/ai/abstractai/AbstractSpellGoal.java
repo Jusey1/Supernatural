@@ -1,7 +1,6 @@
 package net.salju.supernatural.entity.ai.abstractai;
 
-import net.salju.supernatural.entity.AbstractSpellcasterEntity;
-import net.salju.supernatural.entity.Vampire;
+import net.salju.supernatural.entity.Spellcaster;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
@@ -19,10 +18,8 @@ public abstract class AbstractSpellGoal extends Goal {
 
 	@Override
 	public boolean canUse() {
-		if (this.user instanceof Vampire target && target.isCastingSpell()) {
-			return false;
-		} else if (this.user instanceof AbstractSpellcasterEntity target && target.isCastingSpell()) {
-        	return false;
+		if (this.user instanceof Spellcaster target) {
+        	return !target.isCastingSpell();
         }
         return this.user.tickCount >= this.nextAttackTickCount;
 	}
@@ -36,10 +33,7 @@ public abstract class AbstractSpellGoal extends Goal {
 	public void start() {
 		this.attackWarmupDelay = this.adjustedTickDelay(this.getCastWarmupTime());
 		this.nextAttackTickCount = this.user.tickCount + this.getCastingInterval();
-		if (this.user instanceof Vampire target) {
-			target.setSpellCastingTime(this.getCastingTime());
-			target.setIsCastingSpell(this.getSpell());
-		} else if (this.user instanceof AbstractSpellcasterEntity target) {
+		if (this.user instanceof Spellcaster target) {
             target.setSpellTick(this.getCastingTime());
         }
 		if (this.getSpellPrepareSound() != null) {
@@ -52,9 +46,7 @@ public abstract class AbstractSpellGoal extends Goal {
 		--this.attackWarmupDelay;
 		if (this.attackWarmupDelay == 0) {
 			this.performSpellCasting();
-			if (this.user instanceof Vampire target) {
-				this.user.playSound(target.getCastingSoundEvent(), 1.0F, 1.0F);
-			} else if (this.user instanceof AbstractSpellcasterEntity target) {
+			if (this.user instanceof Spellcaster target) {
                 this.user.playSound(target.getCastingSoundEvent(), 1.0F, 1.0F);
             }
 		}
@@ -80,6 +72,4 @@ public abstract class AbstractSpellGoal extends Goal {
 
 	@Nullable
 	protected abstract SoundEvent getSpellPrepareSound();
-
-	protected abstract int getSpell();
 }

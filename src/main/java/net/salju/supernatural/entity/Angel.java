@@ -37,8 +37,8 @@ import net.minecraft.util.Mth;
 import java.util.List;
 
 public class Angel extends Mob {
-	public static final EntityDataAccessor<Integer> POSE = SynchedEntityData.defineId(Angel.class, EntityDataSerializers.INT);
-	public static final EntityDataAccessor<Boolean> CURSED = SynchedEntityData.defineId(Angel.class, EntityDataSerializers.BOOLEAN);
+	private static final EntityDataAccessor<Integer> POSE = SynchedEntityData.defineId(Angel.class, EntityDataSerializers.INT);
+	private static final EntityDataAccessor<Boolean> CURSED = SynchedEntityData.defineId(Angel.class, EntityDataSerializers.BOOLEAN);
 
 	public Angel(EntityType<Angel> type, Level world) {
 		super(type, world);
@@ -55,9 +55,7 @@ public class Angel extends Mob {
 	@Override
 	public void readAdditionalSaveData(ValueInput tag) {
 		super.readAdditionalSaveData(tag);
-		if (tag.getInt("Angel").isPresent()) {
-			this.getEntityData().set(POSE, tag.getInt("Angel").get());
-		}
+		this.getEntityData().set(POSE, tag.getIntOr("Angel", 1));
 		this.getEntityData().set(CURSED, tag.getBooleanOr("Cursed", false));
 	}
 
@@ -124,20 +122,18 @@ public class Angel extends Mob {
 						this.getEntityData().set(POSE, 3);
 						int i = 0;
 						List<ServerPlayer> list = lvl.getPlayers(LivingEntity::isAlive);
-						for (ServerPlayer ply : list) {
-							if (!SupernaturalManager.isVampire(ply)) {
-								if (this.isLookingAtMe(ply)) {
-									++i;
-								} else {
-									--i;
-								}
-							}
-							if (i <= 0) {
-								this.getNavigation().moveTo(player, 1.25);
-							} else {
-								this.getNavigation().stop();
-							}
-						}
+                        for (ServerPlayer ply : list) {
+                            if (ply.isCloseEnough(this, 32)) {
+                                if (this.isLookingAtMe(ply)) {
+                                    ++i;
+                                }
+                            }
+                        }
+                        if (i <= 0) {
+                            this.getNavigation().moveTo(player, 1.25);
+                        } else {
+                            this.getNavigation().stop();
+                        }
 					}
 				} else {
 					this.getEntityData().set(POSE, 3);
@@ -220,6 +216,10 @@ public class Angel extends Mob {
 	public boolean isCursed() {
 		return this.getEntityData().get(CURSED);
 	}
+
+    public void setCursed(boolean check) {
+        this.getEntityData().set(CURSED, check);
+    }
 
 	private void showBreakingParticles() {
 		if (this.level() instanceof ServerLevel lvl) {

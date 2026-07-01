@@ -1,6 +1,8 @@
 package net.salju.supernatural.entity;
 
 import net.salju.supernatural.Supernatural;
+import net.salju.supernatural.events.SupernaturalManager;
+import net.salju.supernatural.init.SupernaturalConfig;
 import net.salju.supernatural.init.SupernaturalItems;
 import net.salju.supernatural.init.SupernaturalSounds;
 import net.salju.supernatural.entity.ai.thrall.*;
@@ -10,12 +12,9 @@ import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.resources.Identifier;
 import net.minecraft.sounds.SoundEvent;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.RandomSource;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
@@ -93,22 +92,23 @@ public class Thrall extends AbstractMinionEntity implements Enemy {
 	public SpawnGroupData finalizeSpawn(ServerLevelAccessor lvl, DifficultyInstance difficulty, EntitySpawnReason reason, @Nullable SpawnGroupData data) {
         this.setBaby(lvl.getRandom().nextFloat() < 0.05F);
         this.setCanPickUpLoot(true);
-        if (lvl.getRandom().nextFloat() < 0.12F) {
-            this.setItemSlot(EquipmentSlot.OFFHAND, new ItemStack(Items.AMETHYST_SHARD));
-            this.setDropChance(EquipmentSlot.OFFHAND, 1.0F);
-        }
 		return super.finalizeSpawn(lvl, difficulty, reason, data);
 	}
 
 	@Override
 	protected void populateDefaultEquipmentSlots(RandomSource randy, DifficultyInstance difficulty) {
-		this.setItemSlot(EquipmentSlot.MAINHAND, this.getPrimary());
+        this.getPrimary().enchant(SupernaturalManager.getEnchantment(this.level(), Supernatural.MODID, "soulbinding"), 1);
+        this.setItemSlot(EquipmentSlot.MAINHAND, this.getPrimary());
         this.setItemSlot(EquipmentSlot.HEAD, new ItemStack(SupernaturalItems.EBONSTEEL_HELMET.get()));
-		this.setDropChance(EquipmentSlot.MAINHAND, 0.0F);
-		this.setDropChance(EquipmentSlot.HEAD, 0.0F);
-		this.setDropChance(EquipmentSlot.CHEST, 0.0F);
-		this.setDropChance(EquipmentSlot.LEGS, 0.0F);
-		this.setDropChance(EquipmentSlot.FEET, 0.0F);
+        this.setDropChance(EquipmentSlot.MAINHAND, 0.15F);
+        if (randy.nextFloat() < 0.12F) {
+            this.setItemSlot(EquipmentSlot.OFFHAND, new ItemStack(Items.AMETHYST_SHARD));
+        }
+        this.setDropChance(EquipmentSlot.OFFHAND, 1.0F);
+        this.setDropChance(EquipmentSlot.HEAD, 0.0F);
+        this.setDropChance(EquipmentSlot.CHEST, 0.0F);
+        this.setDropChance(EquipmentSlot.LEGS, 0.0F);
+        this.setDropChance(EquipmentSlot.FEET, 0.0F);
 	}
 
     @Override
@@ -130,9 +130,8 @@ public class Thrall extends AbstractMinionEntity implements Enemy {
     public boolean doHurtTarget(ServerLevel lvl, Entity target) {
         if (super.doHurtTarget(lvl, target)) {
             if (target.canFreeze()) {
-                target.setTicksFrozen(target.getTicksFrozen() + 125);
                 if (target instanceof LivingEntity bob) {
-                    bob.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 300, 0));
+                    SupernaturalManager.hurtWithFrostbite(bob, SupernaturalConfig.FROSTBITE.get() / 2);
                 }
             }
             return true;
@@ -154,11 +153,6 @@ public class Thrall extends AbstractMinionEntity implements Enemy {
 	public SoundEvent getDeathSound() {
 		return SupernaturalSounds.WIGHT_DEATH.get();
 	}
-
-    @Override
-    public SoundEvent getCastingSoundEvent() {
-        return SoundEvents.EVOKER_CAST_SPELL;
-    }
 
     @Override
     public boolean isBaby() {

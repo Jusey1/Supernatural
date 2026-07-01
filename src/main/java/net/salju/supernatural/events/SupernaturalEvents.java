@@ -1,9 +1,7 @@
 package net.salju.supernatural.events;
 
 import net.salju.supernatural.init.*;
-import net.salju.supernatural.compat.Thirst;
 import net.neoforged.fml.common.EventBusSubscriber;
-import net.neoforged.fml.ModList;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.event.entity.living.*;
 import net.neoforged.neoforge.event.entity.EntityJoinLevelEvent;
@@ -68,9 +66,6 @@ public class SupernaturalEvents {
 		if (SupernaturalManager.isVampire(event.getEntity()) && event.getTarget() instanceof LivingEntity target && event.getEntity().isCrouching()) {
 			if (!SupernaturalManager.isVampire(target) && target.isSleeping() && (target instanceof Player || target.getType().is(SupernaturalTags.BLOODY))) {
 				event.getEntity().heal(6.0F);
-				if (ModList.get().isLoaded("thirst")) {
-					Thirst.vampireBite(event.getEntity());
-				}
 				if (Math.random() <= SupernaturalConfig.BITE.get()) {
 					target.hurt(target.damageSources().source(DamageTypes.PLAYER_ATTACK, event.getEntity()), 3.0F);
 					if (target instanceof Player) {
@@ -127,12 +122,17 @@ public class SupernaturalEvents {
 					event.setAmount(event.getAmount() * SupernaturalConfig.DR.get().floatValue());
 				}
 			}
-			if (SupernaturalManager.isVampire(source)&& !SupernaturalManager.isVampire(target) && !target.getType().is(EntityTypeTags.UNDEAD) && !target.getType().is(SupernaturalTags.IMMUNITY)) {
-				source.heal(SupernaturalConfig.LEECH.get().floatValue() + 1.25F);
-			}
+            if (SupernaturalManager.isVampire(source) && !SupernaturalManager.isVampire(target)) {
+                if (!target.getType().is(EntityTypeTags.UNDEAD) && !target.getType().is(SupernaturalTags.IMMUNITY)) {
+                    source.heal(SupernaturalConfig.LEECH.get().floatValue() + 1.25F);
+                }
+                if (target.canFreeze() && SupernaturalManager.hasVampirism(source, 9)) {
+                    SupernaturalManager.hurtWithFrostbite(target, SupernaturalConfig.FROSTBITE.get());
+                }
+            }
 		}
         if (event.getSource().is(SupernaturalTags.MAGIC)) {
-            int i = SupernaturalManager.getDarkArmor(target);
+            int i = SupernaturalManager.getDarkArmor(target, true);
             if (i >= 1) {
                 event.setAmount(event.getAmount() * (1.0F - (0.1F * i)));
             }

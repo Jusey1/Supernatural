@@ -43,12 +43,9 @@ public class RitualBookItem extends Item {
                 list.accept(Component.translatable("desc.book.tutorial_4").withStyle(ChatFormatting.GRAY));
                 list.accept(Component.translatable("desc.book.tutorial_5").withStyle(ChatFormatting.DARK_PURPLE));
                 list.accept(Component.translatable("desc.book.tutorial_6").withStyle(ChatFormatting.GOLD));
+                list.accept(Component.empty());
                 list.accept(Component.translatable("desc.book.tutorial_7").withStyle(ChatFormatting.GRAY));
-                list.accept(Component.empty());
                 list.accept(Component.translatable("desc.book.tutorial_8").withStyle(ChatFormatting.GRAY));
-                list.accept(Component.translatable("desc.book.tutorial_9").withStyle(ChatFormatting.GRAY));
-                list.accept(Component.empty());
-                list.accept(Component.translatable("desc.book.tutorial_10").withStyle(ChatFormatting.GRAY));
             }
 			list.accept(Component.empty());
 			list.accept(Component.translatable("desc.book.wheel").withStyle(ChatFormatting.GRAY));

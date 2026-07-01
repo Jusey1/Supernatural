@@ -24,8 +24,6 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attribute;
-import net.minecraft.world.entity.ai.village.poi.PoiManager;
-import net.minecraft.world.entity.ai.village.poi.PoiRecord;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.item.component.DyedItemColor;
@@ -40,11 +38,9 @@ import net.minecraft.world.level.LightLayer;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.Difficulty;
-import javax.annotation.Nullable;
 import java.util.Map;
 import java.util.List;
 import java.util.HashMap;
-import java.util.stream.Stream;
 import com.google.common.collect.Multimap;
 import com.google.common.collect.Lists;
 import com.google.common.collect.HashMultimap;
@@ -72,8 +68,8 @@ public class SupernaturalManager {
 		return target.getType().is(SupernaturalTags.VAMPIRE);
 	}
 
-	public static boolean hasVampirism(LivingEntity target) {
-		return target.hasEffect(SupernaturalEffects.VAMPIRISM) && target.getEffect(SupernaturalEffects.VAMPIRISM).getAmplifier() >= 1;
+	public static boolean hasVampirism(LivingEntity target, int i) {
+		return target.hasEffect(SupernaturalEffects.VAMPIRISM) && target.getEffect(SupernaturalEffects.VAMPIRISM).getAmplifier() >= i;
 	}
 
 	public static void setVampire(Player player, boolean check) {
@@ -95,12 +91,22 @@ public class SupernaturalManager {
         }
 	}
 
-	public static void addVampireEffects(Player player) {
-		player.getAttributes().addTransientAttributeModifiers(createSupernatural());
+    public static void addVampireEffects(Player player) {
+        player.getAttributes().addTransientAttributeModifiers(createSupernatural());
         if (!player.hasEffect(SupernaturalEffects.VAMPIRISM)) {
             player.addEffect(new MobEffectInstance(SupernaturalEffects.VAMPIRISM, -1, 4, false, false, false));
+        } else {
+            int i = 4 + getDarkArmor(player, false);
+            if (player.hasEffect(SupernaturalEffects.VAMPIRISM)) {
+                int e = player.getEffect(SupernaturalEffects.VAMPIRISM).getAmplifier();
+                if (e < i) {
+                    player.addEffect(new MobEffectInstance(SupernaturalEffects.VAMPIRISM, -1, i, false, false, false));
+                } else if (e > i) {
+                    player.removeEffect(SupernaturalEffects.VAMPIRISM);
+                }
+            }
         }
-	}
+    }
 
 	private static Multimap<Holder<Attribute>, AttributeModifier> createSupernatural() {
 		Multimap<Holder<Attribute>, AttributeModifier> stats = HashMultimap.create();
@@ -114,7 +120,12 @@ public class SupernaturalManager {
 	}
 
     public static boolean canSoulbind(LivingEntity target) {
-        return isVampire(target) || getEnchantmentLevel(target.getWeaponItem(), target.level(), Supernatural.MODID, "soulbinding") > 0 || target.getType().equals(SupernaturalMobs.THRALL.get());
+        return isVampire(target) || getEnchantmentLevel(target.getWeaponItem(), target.level(), Supernatural.MODID, "soulbinding") > 0;
+    }
+
+    public static void hurtWithFrostbite(LivingEntity target, int i) {
+        target.setTicksFrozen(target.getTicksFrozen() + i);
+        target.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 300, 0));
     }
 
 	public static ItemStack dyeHelmet(Item item) {
@@ -190,7 +201,7 @@ public class SupernaturalManager {
 			BlockState state = lvl.getBlockState(poz);
 			if (state.getBlock() instanceof CandleBlock && state.getValue(CandleBlock.LIT)) {
 				i = (i + state.getValue(CandleBlock.CANDLES));
-                if (!player.isCreative() && !state.is(SupernaturalTags.CANDLES)) {
+                if (!player.isCreative() && !state.is(SupernaturalBlocks.RITUAL_CANDLE.get())) {
                     lvl.setBlock(poz, state.setValue(CandleBlock.LIT, false), 3);
                 }
 			}
@@ -215,15 +226,17 @@ public class SupernaturalManager {
 		return list;
 	}
 
-	public static int getDarkArmor(LivingEntity target) {
-		int i = 0;
-		for (EquipmentSlot slot : EquipmentSlot.values()) {
-			if (slot.isArmor() && target.getItemBySlot(slot).is(SupernaturalTags.DARK_ARMOR)) {
-				i++;
-			}
-		}
-		return i;
-	}
+    public static int getDarkArmor(LivingEntity target, boolean check) {
+        int i = 0;
+        for (EquipmentSlot slot : EquipmentSlot.values()) {
+            if (slot.isArmor() && target.getItemBySlot(slot).is(SupernaturalTags.DARK_ARMOR)) {
+                if (check || getEnchantmentLevel(target.getItemBySlot(slot), target.level(), "minecraft", "binding_curse") >= 1) {
+                    i++;
+                }
+            }
+        }
+        return i >= 4 ? 5 : i;
+    }
 
 	public static boolean hasIronArmor(LivingEntity target) {
 		int i = 0;

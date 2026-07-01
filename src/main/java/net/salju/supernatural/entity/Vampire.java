@@ -20,7 +20,6 @@ import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.raid.Raider;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.monster.illager.SpellcasterIllager;
 import net.minecraft.world.entity.monster.illager.AbstractIllager;
 import net.minecraft.world.entity.ai.util.GoalUtils;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
@@ -35,8 +34,9 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.level.ServerLevelAccessor;
 import javax.annotation.Nullable;
 
-public class Vampire extends SpellcasterIllager {
+public class Vampire extends AbstractIllager implements Spellcaster {
     private static final EntityDataAccessor<Boolean> NECROMANCER = SynchedEntityData.defineId(Vampire.class, EntityDataSerializers.BOOLEAN);
+    public static final EntityDataAccessor<Integer> SPELL_TICK = SynchedEntityData.defineId(Vampire.class, EntityDataSerializers.INT);
 
 	public Vampire(EntityType<Vampire> type, Level world) {
 		super(type, world);
@@ -48,18 +48,21 @@ public class Vampire extends SpellcasterIllager {
     public void addAdditionalSaveData(ValueOutput tag) {
         super.addAdditionalSaveData(tag);
         tag.putBoolean("Necromancer", this.isNecromancer());
+        tag.putInt("SpellTick", this.getSpellTick());
     }
 
     @Override
     public void readAdditionalSaveData(ValueInput tag) {
         super.readAdditionalSaveData(tag);
         this.getEntityData().set(NECROMANCER, tag.getBooleanOr("Necromancer", false));
+        this.setSpellTick(tag.getIntOr("SpellTick", 0));
     }
 
     @Override
     protected void defineSynchedData(SynchedEntityData.Builder builder) {
         super.defineSynchedData(builder);
         builder.define(NECROMANCER, false);
+        builder.define(SPELL_TICK, 0);
     }
 
     @Override
@@ -124,18 +127,17 @@ public class Vampire extends SpellcasterIllager {
         super.aiStep();
     }
 
-    public void setIsCastingSpell(int i) {
-        if (i == 0) {
-            this.setIsCastingSpell(SpellcasterIllager.IllagerSpell.NONE);
-        } else if (i == 1) {
-            this.setIsCastingSpell(SpellcasterIllager.IllagerSpell.SUMMON_VEX);
-        } else if (i == 2) {
-            this.setIsCastingSpell(SpellcasterIllager.IllagerSpell.FANGS);
+    @Override
+    public void baseTick() {
+        super.baseTick();
+        this.updateSpellTick();
+        if (this.level().isClientSide()) {
+            if (this.isCastingSpell()) {
+                float f = this.yBodyRot * ((float) Math.PI / 180F) + Mth.cos((float) this.tickCount * 0.6662F) * 0.25F;
+                this.applySpellEffects(this.level(), this.getX() - (double) Mth.cos(f) * 0.6 * (double) this.getScale(), this.getY() + 1.8 * (double) this.getScale(), this.getZ() - (double) Mth.sin(f) * 0.6 * (double) this.getScale());
+                this.applySpellEffects(this.level(), this.getX() + (double) Mth.cos(f) * 0.6 * (double) this.getScale(), this.getY() + 1.8 * (double) this.getScale(), this.getZ() + (double) Mth.sin(f) * 0.6 * (double) this.getScale());
+            }
         }
-    }
-
-    public void setSpellCastingTime(int i) {
-        this.spellCastingTickCount = i;
     }
 
     @Override
@@ -177,6 +179,16 @@ public class Vampire extends SpellcasterIllager {
     @Override
     public SoundEvent getCastingSoundEvent() {
         return SoundEvents.EVOKER_CAST_SPELL;
+    }
+
+    @Override
+    public void setSpellTick(int i) {
+        this.getEntityData().set(SPELL_TICK, i);
+    }
+
+    @Override
+    public int getSpellTick() {
+        return this.getEntityData().get(SPELL_TICK);
     }
 
     public boolean isNecromancer() {

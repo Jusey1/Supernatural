@@ -1,5 +1,6 @@
 package net.salju.supernatural.block;
 
+import net.salju.supernatural.entity.Angel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
@@ -8,7 +9,6 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.InsideBlockEffectApplier;
-import net.minecraft.world.entity.InsideBlockEffectType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
@@ -33,11 +33,14 @@ public class RevenantFlameBlock extends BaseFireBlock {
 
     @Override
     protected void entityInside(BlockState state, Level world, BlockPos pos, Entity target, InsideBlockEffectApplier apply, boolean check) {
-        apply.apply(InsideBlockEffectType.CLEAR_FREEZE);
-        if (target.getType().is(EntityTypeTags.UNDEAD)) {
-            apply.runAfter(InsideBlockEffectType.CLEAR_FREEZE, RevenantFlameBlock::applyUndead);
-        } else {
-            apply.runAfter(InsideBlockEffectType.CLEAR_FREEZE, RevenantFlameBlock::applyLiving);
+        if (target instanceof Angel devil) {
+            if (!devil.isCursed()) {
+                devil.setCursed(true);
+            }
+        } else if (target.getType().is(EntityTypeTags.UNDEAD)) {
+            RevenantFlameBlock.applyUndead(target);
+        } else if (target instanceof LivingEntity) {
+            RevenantFlameBlock.applyLiving(target);
         }
     }
 
@@ -56,19 +59,25 @@ public class RevenantFlameBlock extends BaseFireBlock {
         return false;
     }
 
-    public static void applyUndead(Entity ent) {
-        if (ent instanceof LivingEntity target && target.level() instanceof ServerLevel lvl) {
-            target.heal(getFireDamage(lvl));
+    public static void applyUndead(Entity target) {
+        if (target instanceof LivingEntity mob && target.level() instanceof ServerLevel lvl) {
+            if (mob.getTicksFrozen() <= 5) {
+                mob.setTicksFrozen(mob.getTicksFrozen() + 25);
+                mob.heal(getDamage(lvl));
+            }
         }
     }
 
     public static void applyLiving(Entity target) {
         if (target.level() instanceof ServerLevel lvl) {
-            target.hurtServer(lvl, lvl.damageSources().magic(), getFireDamage(lvl));
+            if (target.getTicksFrozen() <= 25) {
+                target.setTicksFrozen(target.getTicksFrozen() + 50);
+                target.hurt(lvl.damageSources().magic(), getDamage(lvl));
+            }
         }
     }
 
-    public static float getFireDamage(ServerLevel lvl) {
+    public static float getDamage(ServerLevel lvl) {
         if (lvl.getDifficulty().equals(Difficulty.HARD)) {
             return 3.0F;
         } else if (lvl.getDifficulty().equals(Difficulty.NORMAL)) {

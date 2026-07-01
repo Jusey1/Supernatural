@@ -17,8 +17,7 @@ public class Supernatural {
 	public static final String MODID = "supernatural";
 
 	public Supernatural(ModContainer mod, IEventBus bus) {
-		NeoForge.EVENT_BUS.register(this);
-        SupernaturalCandle.REGISTRY.register(bus);
+		SupernaturalCandle.REGISTRY.register(bus);
 		SupernaturalData.REGISTRY.register(bus);
 		SupernaturalSounds.REGISTRY.register(bus);
 		SupernaturalBlocks.BE.register(bus);
@@ -28,20 +27,15 @@ public class Supernatural {
 		SupernaturalTabs.REGISTRY.register(bus);
 		SupernaturalMobs.REGISTRY.register(bus);
 		SupernaturalEffects.REGISTRY.register(bus);
-        if (ModList.get().isLoaded("supplementaries")) {
-            Supplementaries.BLOCKS.register(bus);
-            Supplementaries.ITEMS.register(bus);
-        }
+		if (ModList.get().isLoaded("supplementaries")) {
+			Supplementaries.BLOCKS.register(bus);
+			Supplementaries.ITEMS.register(bus);
+		}
 		mod.registerConfig(ModConfig.Type.COMMON, SupernaturalConfig.CONFIG, "supernatural-common.toml");
 		if (FMLEnvironment.getDist().isClient()) {
 			if (ModList.get().isLoaded("appleskin")) {
 				NeoForge.EVENT_BUS.register(new Appleskin());
 			}
 		}
-	}
-
-	@SubscribeEvent
-	public void tick(ServerTickEvent.Post event) {
-		//
 	}
 }

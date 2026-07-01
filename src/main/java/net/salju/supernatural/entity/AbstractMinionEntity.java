@@ -5,12 +5,14 @@ import net.minecraft.core.Holder;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.ItemEnchantments;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.level.gamerules.GameRules;
 import net.minecraft.world.level.pathfinder.PathType;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
@@ -18,7 +20,7 @@ import net.minecraft.world.level.Level;
 import javax.annotation.Nullable;
 import java.util.Optional;
 
-public abstract class AbstractMinionEntity extends AbstractSpellcasterEntity implements OwnableEntity {
+public abstract class AbstractMinionEntity extends PathfinderMob implements OwnableEntity {
 	private static final EntityDataAccessor<Optional<EntityReference<LivingEntity>>> OWNER = SynchedEntityData.defineId(AbstractMinionEntity.class, EntityDataSerializers.OPTIONAL_LIVING_ENTITY_REFERENCE);
     private ItemStack primary = new ItemStack(Items.IRON_SWORD);
     private ItemStack secondary = new ItemStack(Items.CROSSBOW);
@@ -65,6 +67,15 @@ public abstract class AbstractMinionEntity extends AbstractSpellcasterEntity imp
 	}
 
     @Override
+    public void aiStep() {
+        this.updateSwingTime();
+        if (this.getLightLevelDependentMagicValue() > 0.5F) {
+            this.noActionTime += 2;
+        }
+        super.aiStep();
+    }
+
+    @Override
     protected boolean canReplaceCurrentItem(ItemStack drop, ItemStack hand, EquipmentSlot slot) {
         if (drop.is(SupernaturalTags.DARK_ARMOR)) {
             return hand.isEmpty() || this.canReplaceEqualItem(drop, hand);
@@ -104,6 +115,11 @@ public abstract class AbstractMinionEntity extends AbstractSpellcasterEntity imp
     @Override
     public boolean shouldDropExperience() {
         return this.isNatural();
+    }
+
+    @Override
+    protected boolean shouldDropLoot(ServerLevel lvl) {
+        return lvl.getGameRules().get(GameRules.MOB_DROPS);
     }
 
     @Override

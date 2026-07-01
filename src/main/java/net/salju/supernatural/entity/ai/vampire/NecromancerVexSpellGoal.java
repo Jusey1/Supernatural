@@ -60,11 +60,6 @@ public class NecromancerVexSpellGoal extends AbstractTargetSpellGoal {
 	}
 
 	@Override
-	protected int getSpell() {
-		return 1;
-	}
-
-	@Override
 	protected SoundEvent getSpellPrepareSound() {
 		return SoundEvents.EVOKER_PREPARE_SUMMON;
 	}
