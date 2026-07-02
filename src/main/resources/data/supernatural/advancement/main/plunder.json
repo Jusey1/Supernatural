@@ -1,0 +1,44 @@
+{
+  "parent": "supernatural:main/plasmacrypt",
+  "criteria": {
+    "plunder": {
+      "conditions": {
+        "location": [
+          {
+            "condition": "minecraft:location_check",
+            "predicate": {
+              "block": {
+                "blocks": "supernatural:revenant_vault"
+              }
+            }
+          },
+          {
+            "condition": "minecraft:match_tool",
+            "predicate": {
+              "items": "supernatural:ebonsteel_key"
+            }
+          }
+        ]
+      },
+      "trigger": "minecraft:item_used_on_block"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancement.supernatural.plunder.desc"
+    },
+    "icon": {
+      "id": "supernatural:ebonsteel_key"
+    },
+    "title": {
+      "translate": "advancement.supernatural.plunder.title"
+    },
+    "frame": "goal"
+  },
+  "requirements": [
+    [
+      "plunder"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

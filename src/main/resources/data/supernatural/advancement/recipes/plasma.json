@@ -1,0 +1,41 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_plasma": {
+      "conditions": {
+        "items": [
+          {
+            "items": "supernatural:plasma"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "has_plasma"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "supernatural:stonecut/cut_plasmastone_bricks_from_bricks",
+      "supernatural:stonecut/cut_plasmastone_bricks_slab_from_bricks",
+      "supernatural:stonecut/cut_plasmastone_bricks_slab_from_cut_bricks",
+      "supernatural:stonecut/plasmastone_bricks_slab_from_bricks",
+      "supernatural:stonecut/plasmastone_bricks_stairs_from_bricks",
+      "supernatural:stonecut/plasmastone_bricks_wall_from_bricks",
+      "supernatural:ebonsteel_ingot",
+      "supernatural:ebonsteel_pawn",
+      "supernatural:gothic_netherite_helm",
+      "supernatural:plasmastone_bricks",
+      "supernatural:plasmastone_bricks_cut",
+      "supernatural:plasmastone_bricks_cut_slab",
+      "supernatural:plasmastone_bricks_slab",
+      "supernatural:plasmastone_bricks_stairs",
+      "supernatural:plasmastone_bricks_wall",
+      "supernatural:ritual_altar",
+      "supernatural:ritual_candle"
+    ]
+  }
+}

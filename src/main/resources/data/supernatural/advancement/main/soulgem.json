@@ -1,0 +1,32 @@
+{
+  "parent": "supernatural:main/plunder",
+  "criteria": {
+    "soulgem": {
+      "conditions": {
+        "items": [
+          {
+            "items": "supernatural:soulgem"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancement.supernatural.soulgem.desc"
+    },
+    "icon": {
+      "id": "supernatural:soulgem"
+    },
+    "title": {
+      "translate": "advancement.supernatural.soulgem.title"
+    }
+  },
+  "requirements": [
+    [
+      "soulgem"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

@@ -1,0 +1,55 @@
+{
+  "parent": "supernatural:main/plasmacrypt",
+  "criteria": {
+    "slayer": {
+      "conditions": {
+        "entity": {
+          "type": "supernatural:vampire"
+        },
+        "damage": {
+          "type": {
+            "direct_entity": {
+              "type": "minecraft:player",
+              "equipment": {
+                "mainhand": {
+                  "items": "minecraft:wooden_sword"
+                }
+              }
+            },
+            "tags": [
+              {
+                "expected": true,
+                "id": "minecraft:is_player_attack"
+              }
+            ]
+          },
+          "dealt": {
+            "min": 100.0
+          }
+        }
+      },
+      "trigger": "minecraft:player_hurt_entity"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancement.supernatural.vampire_slayer.desc"
+    },
+    "icon": {
+      "id": "minecraft:wooden_sword"
+    },
+    "title": {
+      "translate": "advancement.supernatural.vampire_slayer.title"
+    },
+    "frame": "challenge"
+  },
+  "requirements": [
+    [
+      "slayer"
+    ]
+  ],
+  "rewards": {
+    "experience": 15
+  },
+  "sends_telemetry_event": true
+}

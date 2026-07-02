@@ -1,0 +1,27 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_pawn": {
+      "conditions": {
+        "items": [
+          {
+            "items": "supernatural:ebonsteel_pawn"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "has_pawn"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "supernatural:ebonsteel_board_tile",
+      "supernatural:quartz_board_tile",
+      "supernatural:quartz_pawn"
+    ]
+  }
+}

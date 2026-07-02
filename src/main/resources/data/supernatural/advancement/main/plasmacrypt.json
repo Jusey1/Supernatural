@@ -1,0 +1,38 @@
+{
+  "criteria": {
+    "plasmacrypt": {
+      "conditions": {
+        "player": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "location": {
+                "structures": "supernatural:plasmacrypt"
+              }
+            }
+          }
+        ]
+      },
+      "trigger": "minecraft:location"
+    }
+  },
+  "display": {
+    "background": "supernatural:textures/gui/advancements/backgrounds/plasmacrypt.png",
+    "description": {
+      "translate": "advancement.supernatural.plasmacrypt.desc"
+    },
+    "icon": {
+      "id": "supernatural:plasmastone_bricks"
+    },
+    "title": {
+      "translate": "advancement.supernatural.plasmacrypt.title"
+    }
+  },
+  "requirements": [
+    [
+      "plasmacrypt"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

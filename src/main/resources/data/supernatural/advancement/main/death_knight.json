@@ -1,0 +1,73 @@
+{
+  "parent": "supernatural:main/vampirism",
+  "criteria": {
+    "death": {
+      "conditions": {
+        "player": {
+          "equipment": {
+            "head": {
+              "items": "#supernatural:ebonsteel_armor",
+              "components": {
+                "minecraft:enchantments": {
+                  "minecraft:binding_curse": 1
+                }
+              }
+            },
+            "chest": {
+              "items": "#supernatural:ebonsteel_armor",
+              "components": {
+                "minecraft:enchantments": {
+                  "minecraft:binding_curse": 1
+                }
+              }
+            },
+            "legs": {
+              "items": "#supernatural:ebonsteel_armor",
+              "components": {
+                "minecraft:enchantments": {
+                  "minecraft:binding_curse": 1
+                }
+              }
+            },
+            "feet": {
+              "items": "#supernatural:ebonsteel_armor",
+              "components": {
+                "minecraft:enchantments": {
+                  "minecraft:binding_curse": 1
+                }
+              }
+            }
+          }
+        },
+        "effects": {
+          "supernatural:vampirism": {
+            "amplifier": {
+              "min": 4,
+              "max": 6
+            }
+          }
+        }
+      },
+      "trigger": "minecraft:effects_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancement.supernatural.death_knight.desc"
+    },
+    "icon": {
+      "id": "supernatural:ebonsteel_helmet"
+    },
+    "title": {
+      "translate": "advancement.supernatural.death_knight.title"
+    },
+    "frame": "challenge",
+    "hidden": true
+  },
+  "requirements": [
+    [
+      "death"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

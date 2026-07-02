@@ -1,0 +1,32 @@
+{
+  "parent": "supernatural:main/plunder",
+  "criteria": {
+    "spectral": {
+      "conditions": {
+        "items": [
+          {
+            "items": "supernatural:spectral_core"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancement.supernatural.spectral.desc"
+    },
+    "icon": {
+      "id": "supernatural:spectral_core"
+    },
+    "title": {
+      "translate": "advancement.supernatural.spectral.title"
+    }
+  },
+  "requirements": [
+    [
+      "spectral"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

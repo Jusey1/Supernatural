@@ -1,0 +1,35 @@
+{
+  "parent": "supernatural:main/plasmacrypt",
+  "criteria": {
+    "vampirism": {
+      "conditions": {
+        "effects": {
+          "supernatural:vampirism": {
+            "amplifier": {
+              "min": 4,
+              "max": 6
+            }
+          }
+        }
+      },
+      "trigger": "minecraft:effects_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancement.supernatural.vampirism.desc"
+    },
+    "icon": {
+      "id": "supernatural:blood_bottle"
+    },
+    "title": {
+      "translate": "advancement.supernatural.vampirism.title"
+    }
+  },
+  "requirements": [
+    [
+      "vampirism"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

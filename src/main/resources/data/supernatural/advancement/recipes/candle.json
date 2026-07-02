@@ -1,0 +1,25 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_candle": {
+      "conditions": {
+        "items": [
+          {
+            "items": "supernatural:ritual_candle"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "has_candle"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "supernatural:ebonsteel_candle_holder"
+    ]
+  }
+}

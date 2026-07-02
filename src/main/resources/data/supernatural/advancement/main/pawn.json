@@ -1,0 +1,32 @@
+{
+  "parent": "supernatural:main/ebonsteel",
+  "criteria": {
+    "pawn": {
+      "conditions": {
+        "items": [
+          {
+            "items": "supernatural:ebonsteel_pawn"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancement.supernatural.pawn.desc"
+    },
+    "icon": {
+      "id": "supernatural:ebonsteel_pawn"
+    },
+    "title": {
+      "translate": "advancement.supernatural.pawn.title"
+    }
+  },
+  "requirements": [
+    [
+      "pawn"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

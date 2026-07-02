@@ -1,0 +1,55 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_book": {
+      "conditions": {
+        "items": [
+          {
+            "items": "supernatural:ritual_book"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "has_book"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "supernatural:rituals/angel_statue",
+      "supernatural:rituals/coldflame_ebonsteel_boots",
+      "supernatural:rituals/coldflame_ebonsteel_chestplate",
+      "supernatural:rituals/coldflame_ebonsteel_gothic_helmet",
+      "supernatural:rituals/coldflame_ebonsteel_helmet",
+      "supernatural:rituals/coldflame_ebonsteel_leggings",
+      "supernatural:rituals/coldflame_ebonsteel_mirror",
+      "supernatural:rituals/coldflame_revenant_spawner",
+      "supernatural:rituals/coldflame_spawner",
+      "supernatural:rituals/promotion_pawn_ebonsteel",
+      "supernatural:rituals/promotion_pawn_quartz",
+      "supernatural:rituals/revenant_core_creation",
+      "supernatural:rituals/revenant_core_teleportation",
+      "supernatural:rituals/seeking_compass_one",
+      "supernatural:rituals/seeking_compass_three",
+      "supernatural:rituals/seeking_compass_two",
+      "supernatural:rituals/summon_scourge",
+      "supernatural:rituals/summon_thrall",
+      "supernatural:rituals/summon_wight",
+      "supernatural:rituals/transmute_book",
+      "supernatural:rituals/transmute_copper_helmet",
+      "supernatural:rituals/transmute_diamond_helmet",
+      "supernatural:rituals/transmute_ebonsteel_helmet",
+      "supernatural:rituals/transmute_gold_ingot",
+      "supernatural:rituals/transmute_golden_helmet",
+      "supernatural:rituals/transmute_grave_soil",
+      "supernatural:rituals/transmute_grave_soil_alt",
+      "supernatural:rituals/transmute_iron_helmet",
+      "supernatural:rituals/transmute_iron_ingot",
+      "supernatural:rituals/transmute_netherite_helmet",
+      "supernatural:rituals/vampirism_bottle"
+    ]
+  }
+}
