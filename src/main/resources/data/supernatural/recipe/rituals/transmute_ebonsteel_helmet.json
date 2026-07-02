@@ -1,0 +1,12 @@
+{
+  "type": "supernatural:ritual",
+  "group": "transmute_helmet",
+  "ingredient": {
+    "item": "supernatural:ebonsteel_helmet"
+  },
+  "result": {
+    "id": "supernatural:gothic_ebonsteel_helmet"
+  },
+  "candle_power": 16,
+  "soul_power": 3
+}

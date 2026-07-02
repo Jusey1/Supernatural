@@ -1,0 +1,15 @@
+{
+  "type": "supernatural:ritual",
+  "group": "summon",
+  "ingredient": {
+    "item": "minecraft:zombie_head"
+  },
+  "result": {
+    "id": "supernatural:plasma"
+  },
+  "candle_power": 42,
+  "soul_power": 5,
+  "block": {
+    "id": "supernatural:thrall_spawn_egg"
+  }
+}

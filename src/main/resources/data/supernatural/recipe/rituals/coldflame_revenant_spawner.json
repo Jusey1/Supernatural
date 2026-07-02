@@ -1,0 +1,15 @@
+{
+  "type": "supernatural:ritual",
+  "group": "spawner",
+  "ingredient": {
+    "item": "supernatural:ebonsteel_ingot"
+  },
+  "result": {
+    "id": "supernatural:revenant_spawner"
+  },
+  "candle_power": 32,
+  "soul_power": 1,
+  "block": {
+    "id": "supernatural:revenant_spawner"
+  }
+}

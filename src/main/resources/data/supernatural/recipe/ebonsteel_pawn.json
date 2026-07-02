@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "R": "supernatural:ebonsteel_ingot",
+    "P": "supernatural:plasma",
+    "S": "supernatural:ebonsteel_scrap"
+  },
+  "pattern": [
+    " R ",
+    " S ",
+    "SPS"
+  ],
+  "result": {
+    "id": "supernatural:ebonsteel_pawn"
+  }
+}

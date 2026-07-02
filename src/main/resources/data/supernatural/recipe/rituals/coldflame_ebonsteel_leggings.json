@@ -1,0 +1,14 @@
+{
+  "type": "supernatural:ritual",
+  "ingredient": {
+    "item": "minecraft:iron_leggings"
+  },
+  "result": {
+    "id": "supernatural:ebonsteel_leggings"
+  },
+  "candle_power": 32,
+  "soul_power": 4,
+  "offhand": {
+    "id": "supernatural:ebonsteel_ingot"
+  }
+}

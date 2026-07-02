@@ -1,0 +1,15 @@
+{
+  "type": "supernatural:ritual",
+  "group": "summon",
+  "ingredient": {
+    "item": "minecraft:skeleton_skull"
+  },
+  "result": {
+    "id": "supernatural:plasma"
+  },
+  "candle_power": 42,
+  "soul_power": 5,
+  "block": {
+    "id": "supernatural:wight_spawn_egg"
+  }
+}

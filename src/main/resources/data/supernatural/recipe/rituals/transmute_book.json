@@ -1,0 +1,11 @@
+{
+  "type": "supernatural:ritual",
+  "ingredient": {
+    "item": "minecraft:writable_book"
+  },
+  "result": {
+    "id": "supernatural:ritual_book"
+  },
+  "candle_power": 12,
+  "soul_power": 3
+}

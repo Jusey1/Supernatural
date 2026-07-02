@@ -1,0 +1,12 @@
+{
+  "type": "supernatural:ritual",
+  "group": "transmute_helmet",
+  "ingredient": {
+    "item": "minecraft:copper_helmet"
+  },
+  "result": {
+    "id": "supernatural:gothic_copper_helmet"
+  },
+  "candle_power": 16,
+  "soul_power": 3
+}

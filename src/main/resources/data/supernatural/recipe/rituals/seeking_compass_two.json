@@ -1,0 +1,13 @@
+{
+  "type": "supernatural:ritual",
+  "group": "seeker",
+  "ingredient": {
+    "item": "supernatural:ritual_compass"
+  },
+  "result": {
+    "id": "supernatural:ritual_compass",
+    "count": 2
+  },
+  "candle_power": 20,
+  "soul_power": 4
+}

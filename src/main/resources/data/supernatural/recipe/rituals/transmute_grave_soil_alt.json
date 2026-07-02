@@ -1,0 +1,15 @@
+{
+  "type": "supernatural:ritual",
+  "group": "grave",
+  "ingredient": {
+    "item": "supernatural:vampire_dust"
+  },
+  "result": {
+    "id": "supernatural:grave_soil"
+  },
+  "candle_power": 8,
+  "soul_power": 1,
+  "block": {
+    "id": "minecraft:soul_soil"
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "type": "supernatural:ritual",
+  "ingredient": {
+    "item": "minecraft:iron_ingot"
+  },
+  "result": {
+    "id": "minecraft:gold_ingot"
+  },
+  "candle_power": 12,
+  "soul_power": 2
+}

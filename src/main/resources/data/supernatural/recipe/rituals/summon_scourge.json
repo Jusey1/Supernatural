@@ -1,0 +1,15 @@
+{
+  "type": "supernatural:ritual",
+  "group": "summon",
+  "ingredient": {
+    "item": "supernatural:spectral_core"
+  },
+  "result": {
+    "id": "supernatural:plasma"
+  },
+  "candle_power": 42,
+  "soul_power": 5,
+  "block": {
+    "id": "supernatural:scourge_spawn_egg"
+  }
+}

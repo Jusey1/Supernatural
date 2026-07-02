@@ -1,0 +1,14 @@
+{
+  "type": "supernatural:ritual",
+  "ingredient": {
+    "item": "minecraft:glass_bottle"
+  },
+  "result": {
+    "id": "supernatural:blood_bottle"
+  },
+  "candle_power": 42,
+  "soul_power": 4,
+  "offhand": {
+    "id": "supernatural:vampire_dust"
+  }
+}

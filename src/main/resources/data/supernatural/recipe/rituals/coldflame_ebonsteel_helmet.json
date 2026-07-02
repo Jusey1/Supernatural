@@ -1,0 +1,14 @@
+{
+  "type": "supernatural:ritual",
+  "ingredient": {
+    "item": "minecraft:iron_helmet"
+  },
+  "result": {
+    "id": "supernatural:ebonsteel_helmet"
+  },
+  "candle_power": 32,
+  "soul_power": 4,
+  "offhand": {
+    "id": "supernatural:ebonsteel_ingot"
+  }
+}

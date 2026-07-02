@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "R": "minecraft:quartz",
+    "P": "supernatural:ebonsteel_board_tile"
+  },
+  "pattern": [
+    "PR"
+  ],
+  "result": {
+    "id": "supernatural:quartz_board_tile"
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "type": "supernatural:ritual",
+  "group": "summon",
+  "ingredient": {
+    "item": "supernatural:grave_soil"
+  },
+  "result": {
+    "id": "supernatural:plasma"
+  },
+  "candle_power": 35,
+  "soul_power": 1,
+  "block": {
+    "id": "supernatural:quartz_pawn"
+  }
+}

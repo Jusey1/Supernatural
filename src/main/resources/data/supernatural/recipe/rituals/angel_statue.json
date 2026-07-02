@@ -1,0 +1,11 @@
+{
+  "type": "supernatural:ritual",
+  "ingredient": {
+    "item": "supernatural:spectral_core"
+  },
+  "result": {
+    "id": "supernatural:angel_statue"
+  },
+  "candle_power": 42,
+  "soul_power": 5
+}
