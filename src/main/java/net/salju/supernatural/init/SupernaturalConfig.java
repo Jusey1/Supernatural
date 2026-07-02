@@ -19,9 +19,6 @@ public class SupernaturalConfig {
 	public static final ModConfigSpec.DoubleValue BITE;
 
 	public static final ModConfigSpec.IntValue SOULPOWER;
-	public static final ModConfigSpec.BooleanValue SACRIFICE;
-	public static final ModConfigSpec.DoubleValue ALTARRANGE;
-
 	public static final ModConfigSpec.BooleanValue FURIA;
 
     static {
@@ -37,12 +34,8 @@ public class SupernaturalConfig {
         ATTACKED = BUILDER.comment("Chance of being infected by a Vampire Illager's attack").defineInRange("Vampire-Infection", 0.15, 0.0, 1.0);
         BITE = BUILDER.comment("Chance of being infected by a Vampire Player's bite").defineInRange("Player-Infection", 0.35, 0.0, 1.0);
         BUILDER.pop();
-        BUILDER.push("Ritual Altar");
-        SOULPOWER = BUILDER.comment("What should be the base power for soul enchanting?").defineInRange("Ritual-Soulpower", 3, 0, Integer.MAX_VALUE);
-        SACRIFICE = BUILDER.comment("Should Rituals require sacrifices?").define("Ritual-Sacrifice", true);
-        ALTARRANGE = BUILDER.comment("What is the Ritual Altar's range for rituals?").defineInRange("Ritual-Range", 12.85, 0.0, Double.MAX_VALUE);
-        BUILDER.pop();
         BUILDER.push("Misc");
+        SOULPOWER = BUILDER.comment("Base Power for soul enchanting").defineInRange("Ritual-Soulpower", 3, 0, Integer.MAX_VALUE);
         FURIA = BUILDER.comment("Should Angels have a holy aura that burns nearby undead?").define("Holy-Blessing", true);
         BUILDER.pop();
         CONFIG = BUILDER.build();

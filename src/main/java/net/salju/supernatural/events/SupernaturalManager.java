@@ -219,22 +219,12 @@ public class SupernaturalManager {
     public static int getDarkArmor(LivingEntity target) {
         int i = 0;
         for (EquipmentSlot slot : EquipmentSlot.values()) {
-            if (slot.isArmor() && target.getItemBySlot(slot).is(SupernaturalTags.DARK_ARMOR)) {
+            if (slot.isArmor() && target.getItemBySlot(slot).is(SupernaturalTags.EBON)) {
                 i++;
             }
         }
         return i >= 4 ? 5 : i;
     }
-
-	public static boolean hasIronArmor(LivingEntity target) {
-		int i = 0;
-		for (EquipmentSlot slot : EquipmentSlot.values()) {
-			if (slot.isArmor() && target.getItemBySlot(slot).is(SupernaturalTags.IRON_ARMOR)) {
-				i++;
-			}
-		}
-		return (i >= 1);
-	}
 
     public static boolean checkMerfolkSpawnRules(EntityType<? extends Monster> type, ServerLevelAccessor world, EntitySpawnReason spawn, BlockPos pos, RandomSource rng) {
         return pos.getY() <= 54 && rng.nextInt(76) <= 0 && world.getDifficulty() != Difficulty.PEACEFUL && (EntitySpawnReason.ignoresLightRequirements(spawn) || Monster.isDarkEnoughToSpawn(world, pos, rng)) && world.getFluidState(pos).is(FluidTags.WATER);
@@ -246,12 +236,6 @@ public class SupernaturalManager {
 
 	public static RitualEvent onRitualEvent(ItemStack stack, ServerLevel lvl, Player player, BlockPos pos, RitualAltarEntity target, int i, int e) {
 		RitualEvent event = new RitualEvent(stack, lvl, player, pos, target, i, e);
-		NeoForge.EVENT_BUS.post(event);
-		return event;
-	}
-
-	public static GothicEvent onGothicEvent(Item target) {
-		GothicEvent event = new GothicEvent(target);
 		NeoForge.EVENT_BUS.post(event);
 		return event;
 	}

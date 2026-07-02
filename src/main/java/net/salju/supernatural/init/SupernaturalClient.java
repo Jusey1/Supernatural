@@ -4,16 +4,15 @@ import net.salju.supernatural.Supernatural;
 import net.salju.supernatural.client.compass.RitualCompassAngle;
 import net.salju.supernatural.client.model.*;
 import net.salju.supernatural.client.renderer.*;
+import net.salju.supernatural.client.screens.*;
 import net.salju.supernatural.compat.Kobolds;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
-import net.neoforged.neoforge.client.event.EntityRenderersEvent;
-import net.neoforged.neoforge.client.event.RegisterRangeSelectItemModelPropertyEvent;
-import net.neoforged.neoforge.client.event.RegisterParticleProvidersEvent;
 import net.neoforged.neoforge.client.extensions.common.IClientItemExtensions;
 import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsEvent;
 import net.neoforged.neoforge.client.ClientHooks;
+import net.neoforged.neoforge.client.event.*;
 import net.neoforged.fml.ModList;
 import net.minecraft.client.model.Model;
 import net.minecraft.client.model.HumanoidModel;
@@ -62,6 +61,11 @@ public class SupernaturalClient {
         if (ModList.get().isLoaded("kobolds")) {
             Kobolds.registerKoboldArmor(event);
         }
+    }
+
+    @SubscribeEvent
+    public static void registerMenuScreens(RegisterMenuScreensEvent event) {
+        //event.register(SupernaturalRecipes.RITUAL_BOOK.get(), RitualBookScreen::new);
     }
 
     @SubscribeEvent

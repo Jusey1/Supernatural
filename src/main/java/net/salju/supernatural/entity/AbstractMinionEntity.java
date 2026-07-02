@@ -53,7 +53,7 @@ public abstract class AbstractMinionEntity extends Monster implements OwnableEnt
 
     @Override
     protected boolean canReplaceCurrentItem(ItemStack drop, ItemStack hand, EquipmentSlot slot) {
-        if (drop.is(SupernaturalTags.DARK_ARMOR) || drop.is(Items.IRON_SWORD)) {
+        if (drop.is(SupernaturalTags.EBON) || drop.is(Items.IRON_SWORD)) {
             return hand.isEmpty() || this.canReplaceEqualItem(drop, hand);
         }
         return false;

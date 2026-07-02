@@ -5,9 +5,7 @@ import net.salju.supernatural.compat.*;
 import net.neoforged.fml.config.ModConfig;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.ModContainer;
-import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.bus.api.IEventBus;
-import net.neoforged.neoforge.event.tick.ServerTickEvent;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.fml.ModList;
 import net.neoforged.fml.loading.FMLEnvironment;
@@ -27,6 +25,10 @@ public class Supernatural {
 		SupernaturalTabs.REGISTRY.register(bus);
 		SupernaturalMobs.REGISTRY.register(bus);
 		SupernaturalEffects.REGISTRY.register(bus);
+        SupernaturalRecipes.TYPES.register(bus);
+        SupernaturalRecipes.SERIALS.register(bus);
+        SupernaturalRecipes.MENUS.register(bus);
+        SupernaturalRecipes.CATES.register(bus);
 		if (ModList.get().isLoaded("supplementaries")) {
 			Supplementaries.BLOCKS.register(bus);
 			Supplementaries.ITEMS.register(bus);

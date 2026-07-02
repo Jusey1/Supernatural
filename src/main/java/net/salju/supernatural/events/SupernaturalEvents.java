@@ -38,7 +38,7 @@ public class SupernaturalEvents {
 			if (player.level() instanceof ServerLevel lvl) {
 				SupernaturalManager.addVampireEffects(player);
                 ItemStack helmet = player.getItemBySlot(EquipmentSlot.HEAD);
-                if (!helmet.is(SupernaturalTags.DARK_ARMOR)) {
+                if (!helmet.is(SupernaturalTags.EBON)) {
                     if (SupernaturalManager.shouldVampireBurn(player, lvl) && !player.isCreative() && !player.isSpectator()) {
                         if (helmet.isEmpty()) {
                             if (player.getRemainingFireTicks() <= 20) {
