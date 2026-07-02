@@ -1,0 +1,36 @@
+{
+  "replace": false,
+  "values": [
+    "#supernatural:is_vampire",
+    "supernatural:angel",
+    "minecraft:snow_golem",
+    "minecraft:iron_golem",
+    "minecraft:shulker",
+    "minecraft:elder_guardian",
+    "minecraft:guardian",
+    {
+      "id": "alexscaves:mine_guardian",
+      "required": false
+    },
+    {
+      "id": "alexscaves:boundroid",
+      "required": false
+    },
+    {
+      "id": "alexscaves:magnetron",
+      "required": false
+    },
+    {
+      "id": "alexscaves:teletor",
+      "required": false
+    },
+    {
+      "id": "alexscaves:notor",
+      "required": false
+    },
+    {
+      "id": "alexsmobs:enderiophage",
+      "required": false
+    }
+  ]
+}

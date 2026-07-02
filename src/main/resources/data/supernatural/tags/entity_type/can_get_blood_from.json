@@ -1,0 +1,15 @@
+{
+  "replace": false,
+  "values": [
+    "minecraft:villager",
+    "minecraft:wandering_trader",
+    {
+      "id": "iwannaskate:wandering_skater",
+      "required": false
+    },
+    {
+      "id": "supplementaries:red_merchant",
+      "required": false
+    }
+  ]
+}

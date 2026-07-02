@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    "supernatural:plasmastone_bricks",
+    "supernatural:plasmastone_bricks_stairs",
+    "supernatural:plasmastone_bricks_slab",
+    "supernatural:plasmastone_bricks_wall"
+  ]
+}
