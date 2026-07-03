@@ -98,9 +98,7 @@ public class RitualRecipe implements Recipe<RitualRecipeInput> {
     }
 
     public ItemStack getResult(ItemStack stack, ItemStack offer) {
-        if (stack.is(SupernaturalTags.SAFE)) {
-            return stack.transmuteCopy(this.getResult().getItem());
-        } else if (this.getResult().is(SupernaturalItems.PLASMA) || this.getResult().is(SupernaturalItems.REVENANT_SPAWNER)) {
+        if (this.getResult().is(SupernaturalItems.PLASMA) || this.getResult().is(SupernaturalItems.REVENANT_SPAWNER)) {
             return offer.copy();
         } else if (this.getResult().is(SupernaturalItems.SOULGEM)) {
             ItemStack copy = this.getResult().copy();
@@ -108,6 +106,8 @@ public class RitualRecipe implements Recipe<RitualRecipeInput> {
             tag.putString("id", this.getEntityTarget());
             copy.set(SupernaturalData.SOULGEM, new SoulgemData(tag.buildResult(), "null"));
             return copy;
+        } else if (stack.is(SupernaturalTags.SAFE)) {
+            return stack.transmuteCopy(this.getResult().getItem());
         }
         return this.getResult();
     }
