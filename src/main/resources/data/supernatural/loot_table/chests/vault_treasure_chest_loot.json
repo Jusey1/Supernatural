@@ -2,13 +2,8 @@
   "type": "minecraft:chest",
   "pools": [
     {
-      "rolls": 2,
+      "rolls": 1,
       "entries": [
-        {
-          "type": "minecraft:item",
-          "name": "minecraft:air",
-          "weight": 21
-        },
         {
           "type": "minecraft:item",
           "name": "minecraft:diamond",
