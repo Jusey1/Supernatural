@@ -1,5 +1,8 @@
 package net.salju.supernatural.crafting;
 
+import net.minecraft.util.ProblemReporter;
+import net.minecraft.world.level.storage.TagValueOutput;
+import net.salju.supernatural.init.SupernaturalData;
 import net.salju.supernatural.init.SupernaturalItems;
 import net.salju.supernatural.init.SupernaturalRecipes;
 import net.salju.supernatural.init.SupernaturalTags;
@@ -13,6 +16,7 @@ import net.minecraft.world.item.SpawnEggItem;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.Level;
+import net.salju.supernatural.item.component.SoulgemData;
 import org.jspecify.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,16 +28,18 @@ public class RitualRecipe implements Recipe<RitualRecipeInput> {
     private final ItemStack result;
     private final int power;
     private final int soul;
+    private final String entity;
     private final Optional<ItemStack> offhand;
     private final Optional<ItemStack> block;
     private @Nullable PlacementInfo info;
 
-    public RitualRecipe(String group, Ingredient input, ItemStack result, int power, int soul, Optional<ItemStack> offhand, Optional<ItemStack> block) {
+    public RitualRecipe(String group, Ingredient input, ItemStack result, int power, int soul, String entity, Optional<ItemStack> offhand, Optional<ItemStack> block) {
         this.group = group;
         this.input = input;
         this.result = result;
         this.power = power;
         this.soul = soul;
+        this.entity = entity;
         this.offhand = offhand;
         this.block = block;
     }
@@ -96,6 +102,12 @@ public class RitualRecipe implements Recipe<RitualRecipeInput> {
             return stack.transmuteCopy(this.getResult().getItem());
         } else if (this.getResult().is(SupernaturalItems.PLASMA) || this.getResult().is(SupernaturalItems.REVENANT_SPAWNER)) {
             return offer.copy();
+        } else if (this.getResult().is(SupernaturalItems.SOULGEM)) {
+            ItemStack copy = this.getResult().copy();
+            TagValueOutput tag = TagValueOutput.createWithoutContext(ProblemReporter.DISCARDING);
+            tag.putString("id", this.getEntityTarget());
+            copy.set(SupernaturalData.SOULGEM, new SoulgemData(tag.buildResult(), "null"));
+            return copy;
         }
         return this.getResult();
     }
@@ -126,6 +138,10 @@ public class RitualRecipe implements Recipe<RitualRecipeInput> {
 
     public int getSoul() {
         return this.soul;
+    }
+
+    public String getEntityTarget() {
+        return this.entity;
     }
 
     public boolean checkBlockItem(Block blok) {

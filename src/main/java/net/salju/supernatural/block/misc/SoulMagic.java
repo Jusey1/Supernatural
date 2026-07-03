@@ -21,7 +21,6 @@ import net.minecraft.world.item.crafting.RecipeManager;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.SpawnEggItem;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.Spawner;
 import javax.annotation.Nullable;
@@ -39,7 +38,7 @@ public class SoulMagic {
                     if (recipe.getResult().getItem() instanceof BlockItem blok && recipe.getBlockItem().is(lvl.getBlockState(pos.above()).getBlock().asItem())) {
                         lvl.setBlock(pos.above(), blok.getBlock().defaultBlockState(), 3);
                         if (copy.is(SupernaturalItems.SOULGEM)) {
-                            Entity entity = EntityType.loadEntityRecursive(SupernaturalManager.getSoulTag(offer), lvl, EntitySpawnReason.LOAD, o -> o);
+                            Entity entity = EntityType.loadEntityRecursive(SupernaturalManager.getSoulTag(copy), lvl, EntitySpawnReason.MOB_SUMMONED, o -> o);
                             if (lvl.getBlockEntity(pos.above()) instanceof Spawner spawner && entity != null && entity.getType().is(SupernaturalTags.SPAWNER)) {
                                 spawner.setEntityId(entity.getType(), lvl.getRandom());
                             }
@@ -59,12 +58,7 @@ public class SoulMagic {
                     } else if (copy.is(SupernaturalItems.COMPASS)) {
                         target.setItem(0, RitualCompassItem.getRitualCompass(pos, lvl, copy.getCount()));
                     } else if (copy.is(SupernaturalItems.SOULGEM)) {
-                        Entity entity;
-                        if (recipe.getBlockItem().getItem() instanceof SpawnEggItem egg) {
-                            entity = egg.getType(copy).create(lvl, EntitySpawnReason.LOAD);
-                        } else {
-                            entity = EntityType.loadEntityRecursive(SupernaturalManager.getSoulTag(offer), lvl, EntitySpawnReason.LOAD, o -> o);
-                        }
+                        Entity entity = EntityType.loadEntityRecursive(SupernaturalManager.getSoulTag(copy), lvl, EntitySpawnReason.MOB_SUMMONED, o -> o);
                         if (entity != null) {
                             RitualManager.summonEntity(entity, player, lvl, BlockPos.containing(pos.above().getX() + 0.5, pos.above().getY() + 0.75, pos.above().getZ() + 0.5), pos.above());
                         }

@@ -5,11 +5,8 @@ import net.salju.supernatural.crafting.*;
 import net.neoforged.neoforge.common.extensions.IMenuTypeExtension;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.world.item.crafting.Recipe;
-import net.minecraft.world.item.crafting.RecipeBookCategory;
-import net.minecraft.world.item.crafting.RecipeType;
-import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.inventory.MenuType;
+import net.minecraft.world.item.crafting.*;
 import java.util.function.Supplier;
 
 public class SupernaturalRecipes {

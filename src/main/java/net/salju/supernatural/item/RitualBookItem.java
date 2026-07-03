@@ -1,7 +1,10 @@
 package net.salju.supernatural.item;
 
+import net.salju.supernatural.crafting.RitualBookMenu;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.SimpleMenuProvider;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.InteractionHand;
@@ -14,7 +17,13 @@ public class RitualBookItem extends Item {
 
     @Override
     public InteractionResult use(Level world, Player player, InteractionHand hand) {
-        ItemStack stack = player.getItemInHand(hand);
+        if (!world.isClientSide()) {
+            player.openMenu(this.getMenuProvider());
+        }
         return super.use(world, player, hand);
+    }
+
+    public MenuProvider getMenuProvider() {
+        return new SimpleMenuProvider((id, inventory, player) -> new RitualBookMenu(id, inventory), Component.translatable("item.supernatural.ritual_book"));
     }
 }

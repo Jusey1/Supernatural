@@ -65,7 +65,7 @@ public class SupernaturalClient {
 
     @SubscribeEvent
     public static void registerMenuScreens(RegisterMenuScreensEvent event) {
-        //event.register(SupernaturalRecipes.RITUAL_BOOK.get(), RitualBookScreen::new);
+        event.register(SupernaturalRecipes.RITUAL_BOOK.get(), RitualBookScreen::new);
     }
 
     @SubscribeEvent

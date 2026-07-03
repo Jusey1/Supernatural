@@ -17,6 +17,7 @@ public class RitualRecipeSerializer implements RecipeSerializer<RitualRecipe> {
                             ItemStack.STRICT_CODEC.fieldOf("result").forGetter(RitualRecipe::getResult),
                             Codec.INT.fieldOf("candle_power").forGetter(RitualRecipe::getPower),
                             Codec.INT.fieldOf("soul_power").forGetter(RitualRecipe::getSoul),
+                            Codec.STRING.optionalFieldOf("entity", "minecraft:pig").forGetter(RitualRecipe::getEntityTarget),
                             ItemStack.STRICT_CODEC.optionalFieldOf("offhand").forGetter(RitualRecipe::getOffhandTarget),
                             ItemStack.STRICT_CODEC.optionalFieldOf("block").forGetter(RitualRecipe::getBlockTarget))
                     .apply(codec, RitualRecipe::new));
@@ -42,9 +43,10 @@ public class RitualRecipeSerializer implements RecipeSerializer<RitualRecipe> {
         ItemStack.STREAM_CODEC.encode(buffer, recipe.getResult());
         buffer.writeInt(recipe.getPower());
         buffer.writeInt(recipe.getSoul());
+        buffer.writeUtf(recipe.getEntityTarget());
     }
 
     public static RitualRecipe fromNetwork(RegistryFriendlyByteBuf buffer) {
-        return new RitualRecipe(buffer.readUtf(32767), Ingredient.CONTENTS_STREAM_CODEC.decode(buffer), ItemStack.STREAM_CODEC.decode(buffer), buffer.readInt(), buffer.readInt(), Optional.empty(), Optional.empty());
+        return new RitualRecipe(buffer.readUtf(32767), Ingredient.CONTENTS_STREAM_CODEC.decode(buffer), ItemStack.STREAM_CODEC.decode(buffer), buffer.readInt(), buffer.readInt(), buffer.readUtf(32767), Optional.empty(), Optional.empty());
     }
 }

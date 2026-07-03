@@ -1,5 +1,6 @@
 package net.salju.supernatural.events;
 
+import net.minecraft.network.chat.Component;
 import net.salju.supernatural.Supernatural;
 import net.salju.supernatural.init.*;
 import net.salju.supernatural.block.entity.RitualAltarEntity;
@@ -128,6 +129,7 @@ public class SupernaturalManager {
 		TagValueOutput tag = TagValueOutput.createWithoutContext(ProblemReporter.DISCARDING);
         if (target.getEncodeId() != null) {
             tag.putString("id", target.getEncodeId());
+            stack.set(DataComponents.ITEM_NAME, Component.literal(target.getEncodeId()));
         }
 		stack.set(SupernaturalData.SOULGEM, new SoulgemData(tag.buildResult(), getSoulLevel(target)));
 		return stack;
