@@ -1,0 +1,10 @@
+{
+  "entries": [
+    {
+      "enum": "net/minecraft/world/inventory/RecipeBookType",
+      "name": "SUPERNATURAL_RITUALS",
+      "constructor": "()V",
+      "parameters": []
+    }
+  ]
+}
