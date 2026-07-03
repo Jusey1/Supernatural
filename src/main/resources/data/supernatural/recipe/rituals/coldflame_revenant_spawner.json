@@ -1,9 +1,7 @@
 {
   "type": "supernatural:ritual",
   "group": "spawner",
-  "ingredient": {
-    "item": "supernatural:ebonsteel_ingot"
-  },
+  "ingredient": "supernatural:ebonsteel_ingot",
   "result": {
     "id": "supernatural:revenant_spawner"
   },

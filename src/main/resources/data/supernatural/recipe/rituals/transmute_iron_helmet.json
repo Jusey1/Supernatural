@@ -1,9 +1,7 @@
 {
   "type": "supernatural:ritual",
   "group": "transmute_helmet",
-  "ingredient": {
-    "item": "minecraft:iron_helmet"
-  },
+  "ingredient": "minecraft:iron_helmet",
   "result": {
     "id": "supernatural:gothic_iron_helmet"
   },

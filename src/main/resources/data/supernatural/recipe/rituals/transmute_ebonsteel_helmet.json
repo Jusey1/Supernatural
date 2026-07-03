@@ -1,9 +1,7 @@
 {
   "type": "supernatural:ritual",
   "group": "transmute_helmet",
-  "ingredient": {
-    "item": "supernatural:ebonsteel_helmet"
-  },
+  "ingredient": "supernatural:ebonsteel_helmet",
   "result": {
     "id": "supernatural:gothic_ebonsteel_helmet"
   },

@@ -1,9 +1,7 @@
 {
   "type": "supernatural:ritual",
   "group": "summon",
-  "ingredient": {
-    "item": "minecraft:zombie_head"
-  },
+  "ingredient": "minecraft:zombie_head",
   "result": {
     "id": "supernatural:plasma"
   },

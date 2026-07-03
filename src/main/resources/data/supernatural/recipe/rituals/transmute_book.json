@@ -1,8 +1,6 @@
 {
   "type": "supernatural:ritual",
-  "ingredient": {
-    "item": "minecraft:writable_book"
-  },
+  "ingredient": "minecraft:writable_book",
   "result": {
     "id": "supernatural:ritual_book"
   },

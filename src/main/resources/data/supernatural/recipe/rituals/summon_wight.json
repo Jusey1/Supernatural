@@ -1,9 +1,7 @@
 {
   "type": "supernatural:ritual",
   "group": "summon",
-  "ingredient": {
-    "item": "minecraft:skeleton_skull"
-  },
+  "ingredient": "minecraft:skeleton_skull",
   "result": {
     "id": "supernatural:plasma"
   },

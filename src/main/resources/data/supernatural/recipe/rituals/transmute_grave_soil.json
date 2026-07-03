@@ -1,9 +1,7 @@
 {
   "type": "supernatural:ritual",
   "group": "grave",
-  "ingredient": {
-    "item": "minecraft:soul_soil"
-  },
+  "ingredient": "minecraft:soul_soil",
   "result": {
     "id": "supernatural:grave_soil"
   },

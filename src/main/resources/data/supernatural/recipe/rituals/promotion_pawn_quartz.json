@@ -1,9 +1,7 @@
 {
   "type": "supernatural:ritual",
   "group": "summon",
-  "ingredient": {
-    "item": "supernatural:grave_soil"
-  },
+  "ingredient": "supernatural:grave_soil",
   "result": {
     "id": "supernatural:plasma"
   },

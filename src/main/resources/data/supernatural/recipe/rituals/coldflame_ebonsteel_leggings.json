@@ -1,8 +1,6 @@
 {
   "type": "supernatural:ritual",
-  "ingredient": {
-    "item": "minecraft:iron_leggings"
-  },
+  "ingredient": "minecraft:iron_leggings",
   "result": {
     "id": "supernatural:ebonsteel_leggings"
   },

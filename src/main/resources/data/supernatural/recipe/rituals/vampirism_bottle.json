@@ -1,8 +1,6 @@
 {
   "type": "supernatural:ritual",
-  "ingredient": {
-    "item": "minecraft:glass_bottle"
-  },
+  "ingredient": "minecraft:glass_bottle",
   "result": {
     "id": "supernatural:blood_bottle"
   },

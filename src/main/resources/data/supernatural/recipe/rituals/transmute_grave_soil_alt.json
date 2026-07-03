@@ -1,9 +1,7 @@
 {
   "type": "supernatural:ritual",
   "group": "grave",
-  "ingredient": {
-    "item": "supernatural:vampire_dust"
-  },
+  "ingredient": "supernatural:vampire_dust",
   "result": {
     "id": "supernatural:grave_soil"
   },
