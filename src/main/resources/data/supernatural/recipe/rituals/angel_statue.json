@@ -5,5 +5,8 @@
     "id": "supernatural:angel_statue"
   },
   "candle_power": 42,
-  "soul_power": 5
+  "soul_power": 5,
+  "block": {
+    "id": "minecraft:stone"
+  }
 }

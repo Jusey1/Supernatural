@@ -3,11 +3,9 @@
   "group": "summon",
   "ingredient": "minecraft:skeleton_skull",
   "result": {
-    "id": "supernatural:plasma"
+    "id": "supernatural:soulgem"
   },
   "candle_power": 42,
   "soul_power": 5,
-  "block": {
-    "id": "supernatural:wight_spawn_egg"
-  }
+  "entity": "supernatural:wight"
 }
