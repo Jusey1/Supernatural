@@ -12,13 +12,13 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import net.minecraft.util.context.ContextMap;
 import net.minecraft.world.entity.player.StackedItemContents;
-import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.crafting.display.RecipeDisplay;
+import net.minecraft.world.inventory.Slot;
 import java.util.List;
 
 public class RitualRecipeBookComponent<T extends RitualBookMenu> extends RecipeBookComponent {
     public RitualRecipeBookComponent(T menu) {
-        this(menu, List.of(new RecipeBookComponent.TabInfo(SupernaturalItems.RITUAL_BOOK.get(), SupernaturalRecipes.RITUALS.get())));
+        this(menu, List.of(new RecipeBookComponent.TabInfo(SupernaturalItems.RITUAL_BOOK.get(), SupernaturalRecipes.RITUALS.get()), new RecipeBookComponent.TabInfo(SupernaturalItems.REVENANT_CORE.get(), SupernaturalRecipes.SPECIAL.get()), new RecipeBookComponent.TabInfo(SupernaturalItems.SOULGEM.get(), SupernaturalRecipes.SUMMONS.get())));
     }
 
     public RitualRecipeBookComponent(T menu, List<TabInfo> tabs) {
@@ -26,7 +26,7 @@ public class RitualRecipeBookComponent<T extends RitualBookMenu> extends RecipeB
     }
 
     @Override
-    public boolean isCraftingSlot(Slot var1) {
+    public boolean isCraftingSlot(Slot slot) {
         return false;
     }
 
@@ -41,8 +41,8 @@ public class RitualRecipeBookComponent<T extends RitualBookMenu> extends RecipeB
     }
 
     @Override
-    public void selectMatchingRecipes(RecipeCollection var1, StackedItemContents var2) {
-        //
+    public void selectMatchingRecipes(RecipeCollection collection, StackedItemContents contents) {
+        collection.selectRecipes(contents, this::canDisplay);
     }
 
     @Override
@@ -53,5 +53,9 @@ public class RitualRecipeBookComponent<T extends RitualBookMenu> extends RecipeB
     @Override
     public WidgetSprites getFilterButtonTextures() {
         return new WidgetSprites(Identifier.withDefaultNamespace("recipe_book/filter_enabled"), Identifier.withDefaultNamespace("recipe_book/filter_disabled"), Identifier.withDefaultNamespace("recipe_book/filter_enabled_highlighted"), Identifier.withDefaultNamespace("recipe_book/filter_disabled_highlighted"));
+    }
+
+    private boolean canDisplay(RecipeDisplay recipeDisplay) {
+        return true;
     }
 }

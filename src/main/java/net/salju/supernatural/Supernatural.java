@@ -29,6 +29,7 @@ public class Supernatural {
         SupernaturalRecipes.SERIALS.register(bus);
         SupernaturalRecipes.MENUS.register(bus);
         SupernaturalRecipes.CATES.register(bus);
+        SupernaturalRecipes.DISPLAYS.register(bus);
 		if (ModList.get().isLoaded("supplementaries")) {
 			Supplementaries.BLOCKS.register(bus);
 			Supplementaries.ITEMS.register(bus);

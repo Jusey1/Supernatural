@@ -52,7 +52,7 @@ public class RitualBookScreen extends AbstractContainerScreen<RitualBookMenu> im
             this.recipeBookComponent.render(gui, i, e, f);
         }
         this.renderTooltip(gui, i, e);
-        this.recipeBookComponent.renderTooltip(gui, this.leftPos, this.topPos, null);
+        this.recipeBookComponent.renderTooltip(gui, i, e, null);
     }
 
     @Override

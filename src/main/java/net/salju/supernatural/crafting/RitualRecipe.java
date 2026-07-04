@@ -1,29 +1,28 @@
 package net.salju.supernatural.crafting;
 
-import net.minecraft.util.ProblemReporter;
-import net.minecraft.world.level.storage.TagValueOutput;
 import net.salju.supernatural.init.SupernaturalData;
 import net.salju.supernatural.init.SupernaturalItems;
 import net.salju.supernatural.init.SupernaturalRecipes;
 import net.salju.supernatural.init.SupernaturalTags;
+import net.salju.supernatural.item.component.SoulgemData;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.util.ProblemReporter;
 import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.item.crafting.display.RecipeDisplay;
-import net.minecraft.world.item.crafting.display.ShapelessCraftingRecipeDisplay;
 import net.minecraft.world.item.crafting.display.SlotDisplay;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.SpawnEggItem;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.TagValueOutput;
 import net.minecraft.world.level.Level;
-import net.salju.supernatural.item.component.SoulgemData;
 import org.jspecify.annotations.Nullable;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 public class RitualRecipe implements Recipe<RitualRecipeInput> {
     private final String group;
+    private final String category;
     private final Ingredient input;
     private final ItemStack result;
     private final int power;
@@ -33,8 +32,9 @@ public class RitualRecipe implements Recipe<RitualRecipeInput> {
     private final Optional<ItemStack> block;
     private @Nullable PlacementInfo info;
 
-    public RitualRecipe(String group, Ingredient input, ItemStack result, int power, int soul, String entity, Optional<ItemStack> offhand, Optional<ItemStack> block) {
+    public RitualRecipe(String group, String category, Ingredient input, ItemStack result, int power, int soul, String entity, Optional<ItemStack> offhand, Optional<ItemStack> block) {
         this.group = group;
+        this.category = category;
         this.input = input;
         this.result = result;
         this.power = power;
@@ -57,18 +57,23 @@ public class RitualRecipe implements Recipe<RitualRecipeInput> {
     @Override
     public PlacementInfo placementInfo() {
         if (this.info == null) {
-            this.info = PlacementInfo.create(this.getIngredients());
+            this.info = PlacementInfo.create(List.of(this.getInput()));
         }
         return this.info;
     }
 
     @Override
     public List<RecipeDisplay> display() {
-        return List.of(new ShapelessCraftingRecipeDisplay(this.getIngredients().stream().map(Ingredient::display).toList(), new SlotDisplay.ItemStackSlotDisplay(this.getResult()), new SlotDisplay.ItemSlotDisplay(SupernaturalItems.RITUAL_BOOK)));
+        return List.of(new RitualRecipeDisplay(this.getInput().display(), new SlotDisplay.ItemStackSlotDisplay(this.getResult()), new SlotDisplay.ItemSlotDisplay(SupernaturalItems.RITUAL_BOOK)));
     }
 
     @Override
     public RecipeBookCategory recipeBookCategory() {
+        if (this.category.contains("special")) {
+            return SupernaturalRecipes.SPECIAL.get();
+        } else if (this.category.contains("summon")) {
+            return SupernaturalRecipes.SUMMONS.get();
+        }
         return SupernaturalRecipes.RITUALS.get();
     }
 
@@ -87,18 +92,16 @@ public class RitualRecipe implements Recipe<RitualRecipeInput> {
         return this.group;
     }
 
+    public String category() {
+        return this.category;
+    }
+
     public Ingredient getInput() {
         return this.input;
     }
 
-    public List<Ingredient> getIngredients() {
-        List<Ingredient> list = new ArrayList<>();
-        list.add(this.input);
-        return list;
-    }
-
     public ItemStack getResult(ItemStack stack, ItemStack offer) {
-        if (this.getResult().is(SupernaturalItems.PLASMA) || this.getResult().is(SupernaturalItems.REVENANT_SPAWNER)) {
+        if (this.getResult().is(SupernaturalItems.REVENANT_SPAWNER)) {
             return offer.copy();
         } else if (this.getResult().is(SupernaturalItems.SOULGEM)) {
             ItemStack copy = this.getResult().copy();
