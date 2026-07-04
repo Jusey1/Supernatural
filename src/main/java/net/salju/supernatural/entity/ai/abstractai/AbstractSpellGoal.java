@@ -18,9 +18,6 @@ public abstract class AbstractSpellGoal extends Goal {
 
 	@Override
 	public boolean canUse() {
-		if (this.user instanceof Spellcaster target) {
-        	return !target.isCastingSpell();
-        }
         return this.user.tickCount >= this.nextAttackTickCount;
 	}
 
