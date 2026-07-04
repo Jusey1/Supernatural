@@ -1,5 +1,6 @@
 {
   "type": "supernatural:ritual",
+  "group": "ebonsteel",
   "ingredient": "minecraft:iron_boots",
   "result": {
     "id": "supernatural:ebonsteel_boots"

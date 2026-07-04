@@ -1,5 +1,6 @@
 {
   "type": "supernatural:ritual",
+  "group": "transmute_ingot",
   "ingredient": "minecraft:copper_ingot",
   "result": {
     "id": "minecraft:iron_ingot"

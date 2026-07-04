@@ -1,6 +1,6 @@
 {
   "type": "supernatural:ritual",
-  "group": "summon",
+  "category": "summon",
   "ingredient": "minecraft:zombie_head",
   "result": {
     "id": "supernatural:soulgem"

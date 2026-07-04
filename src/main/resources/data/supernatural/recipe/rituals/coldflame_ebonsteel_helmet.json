@@ -1,5 +1,6 @@
 {
   "type": "supernatural:ritual",
+  "group": "ebonsteel",
   "ingredient": "minecraft:iron_helmet",
   "result": {
     "id": "supernatural:ebonsteel_helmet"

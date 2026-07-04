@@ -1,5 +1,6 @@
 {
   "type": "supernatural:ritual",
+  "group": "transmute_ingot",
   "ingredient": "minecraft:iron_ingot",
   "result": {
     "id": "minecraft:gold_ingot"

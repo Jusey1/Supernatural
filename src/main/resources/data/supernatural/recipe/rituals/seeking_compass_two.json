@@ -1,6 +1,6 @@
 {
   "type": "supernatural:ritual",
-  "group": "seeker",
+  "category": "special",
   "ingredient": "supernatural:ritual_compass",
   "result": {
     "id": "supernatural:ritual_compass",
