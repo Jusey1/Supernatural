@@ -1,6 +1,8 @@
 {
   "replace": false,
   "values": [
+    "supernatural:spectral_core",
+    "supernatural:ebonsteel_mirror",
     "supernatural:ebonsteel_helmet",
     "supernatural:gothic_iron_helmet",
     "minecraft:copper_helmet",
