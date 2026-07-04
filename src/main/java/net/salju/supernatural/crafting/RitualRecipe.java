@@ -101,7 +101,7 @@ public class RitualRecipe implements Recipe<RitualRecipeInput> {
     }
 
     public ItemStack getResult(ItemStack stack, ItemStack offer) {
-        if (this.getResult().is(SupernaturalItems.REVENANT_SPAWNER)) {
+        if (this.getEntityTarget().contains("soulgem")) {
             return offer.copy();
         } else if (this.getResult().is(SupernaturalItems.SOULGEM)) {
             ItemStack copy = this.getResult().copy();
