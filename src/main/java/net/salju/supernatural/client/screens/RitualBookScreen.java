@@ -22,9 +22,9 @@ public class RitualBookScreen extends AbstractContainerScreen<RitualBookMenu> im
     private final RitualRecipeBookComponent<?> recipeBookComponent;
     private boolean check;
 
-    public RitualBookScreen(RitualBookMenu menu, RitualRecipeBookComponent<?> book, Inventory inventory, Component title) {
+    public RitualBookScreen(RitualBookMenu menu, Inventory inventory, Component title) {
         super(menu, inventory, title);
-        this.recipeBookComponent = book;
+        this.recipeBookComponent = new RitualRecipeBookComponent<>(menu);
     }
 
     @Override
@@ -33,10 +33,10 @@ public class RitualBookScreen extends AbstractContainerScreen<RitualBookMenu> im
         this.check = this.width < 379;
         this.recipeBookComponent.init(this.width, this.height, this.minecraft, this.check);
         this.leftPos = this.recipeBookComponent.updateScreenPosition(this.width, this.imageWidth);
-        this.addRenderableWidget(new ImageButton(this.leftPos + 5, this.height / 2 - 49, 20, 18, RecipeBookComponent.RECIPE_BUTTON_SPRITES, (target) -> {
+        this.addRenderableWidget(new ImageButton(this.leftPos + 6, this.height / 2 - 76, 20, 18, RecipeBookComponent.RECIPE_BUTTON_SPRITES, (target) -> {
             this.recipeBookComponent.toggleVisibility();
             this.leftPos = this.recipeBookComponent.updateScreenPosition(this.width, this.imageWidth);
-            target.setPosition(this.leftPos + 5, this.height / 2 - 49);
+            target.setPosition(this.leftPos + 6, this.height / 2 - 76);
         }));
         this.addWidget(this.recipeBookComponent);
         this.titleLabelX = 53;

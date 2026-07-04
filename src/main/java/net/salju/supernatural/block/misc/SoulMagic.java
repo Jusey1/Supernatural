@@ -43,17 +43,16 @@ public class SoulMagic {
                                 spawner.setEntityId(entity.getType(), lvl.getRandom());
                             }
                         }
-                    } else if (copy.is(SupernaturalItems.REVENANT_CORE)) {
-                        if (i == 12) {
-                            AnchorballData data = copy.get(SupernaturalData.ANCHOR.get());
-                            if (RitualManager.canTeleportTo(data, lvl)) {
-                                lvl.playSound(null, pos, SoundEvents.PLAYER_TELEPORT, SoundSource.PLAYERS, 1.0F, (float) (0.8F + (Math.random() * 0.2)));
-                                lvl.sendParticles(ParticleTypes.SOUL_FIRE_FLAME, pos.getX(), pos.getY() + 0.75, pos.getZ(), 12, 0.5, 0.5, 0.5, 0.65);
-                                RitualManager.teleportUser(data, player, lvl);
-                            }
-                        } else {
-                            copy.set(SupernaturalData.ANCHOR.get(), new AnchorballData(GlobalPos.of(lvl.dimension(), pos)));
+                    } else if (copy.has(SupernaturalData.ANCHOR.get())) {
+                        AnchorballData data = copy.get(SupernaturalData.ANCHOR.get());
+                        if (RitualManager.canTeleportTo(data, lvl)) {
+                            lvl.playSound(null, pos, SoundEvents.PLAYER_TELEPORT, SoundSource.PLAYERS, 1.0F, (float) (0.8F + (Math.random() * 0.2)));
+                            lvl.sendParticles(ParticleTypes.SOUL_FIRE_FLAME, pos.getX(), pos.getY() + 0.75, pos.getZ(), 12, 0.5, 0.5, 0.5, 0.65);
+                            RitualManager.teleportUser(data, player, lvl);
                         }
+                        target.setItem(0, copy);
+                    } else if (copy.is(SupernaturalItems.REVENANT_CORE)) {
+                        copy.set(SupernaturalData.ANCHOR.get(), new AnchorballData(GlobalPos.of(lvl.dimension(), pos)));
                         target.setItem(0, copy);
                     } else if (copy.is(SupernaturalItems.COMPASS)) {
                         target.setItem(0, RitualCompassItem.getRitualCompass(pos, lvl, copy.getCount()));

@@ -1,5 +1,7 @@
 package net.salju.supernatural.client.screens;
 
+import net.salju.supernatural.init.SupernaturalItems;
+import net.salju.supernatural.init.SupernaturalRecipes;
 import net.salju.supernatural.crafting.RitualBookMenu;
 import net.minecraft.client.gui.components.WidgetSprites;
 import net.minecraft.client.gui.screens.recipebook.GhostSlots;
@@ -15,6 +17,10 @@ import net.minecraft.world.item.crafting.display.RecipeDisplay;
 import java.util.List;
 
 public class RitualRecipeBookComponent<T extends RitualBookMenu> extends RecipeBookComponent {
+    public RitualRecipeBookComponent(T menu) {
+        this(menu, List.of(new RecipeBookComponent.TabInfo(SupernaturalItems.RITUAL_BOOK.get(), SupernaturalRecipes.RITUALS.get())));
+    }
+
     public RitualRecipeBookComponent(T menu, List<TabInfo> tabs) {
         super(menu, tabs);
     }
@@ -41,7 +47,7 @@ public class RitualRecipeBookComponent<T extends RitualBookMenu> extends RecipeB
 
     @Override
     public Component getRecipeFilterName() {
-        return Component.empty();
+        return Component.translatable("gui.recipebook.toggleRecipes.craftable");
     }
 
     @Override
