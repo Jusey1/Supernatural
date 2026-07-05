@@ -1,5 +1,6 @@
 package net.salju.supernatural.block;
 
+import net.salju.supernatural.init.SupernaturalTags;
 import net.salju.supernatural.block.entity.WeaponEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -28,8 +29,6 @@ import net.minecraft.world.InteractionResult;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
 import com.mojang.serialization.MapCodec;
-import net.salju.supernatural.init.SupernaturalTags;
-
 import javax.annotation.Nullable;
 import java.util.Map;
 
