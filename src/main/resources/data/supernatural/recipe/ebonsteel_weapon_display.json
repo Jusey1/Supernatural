@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "R": "supernatural:ebonsteel_ingot",
+    "S": "supernatural:ebonsteel_scrap"
+  },
+  "pattern": [
+    "SRS"
+  ],
+  "result": {
+    "id": "supernatural:ebonsteel_weapon_display"
+  }
+}
