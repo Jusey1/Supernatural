@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "supernatural:block/ebonsteel_weapon_display",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "supernatural:block/ebonsteel_weapon_display"
+    },
+    "facing=south": {
+      "model": "supernatural:block/ebonsteel_weapon_display",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "supernatural:block/ebonsteel_weapon_display",
+      "y": 270
+    }
+  }
+}
