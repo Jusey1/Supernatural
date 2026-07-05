@@ -42,9 +42,9 @@ public class VampireRenderer extends IllagerRenderer<Vampire, VampireRenderState
 		return new VampireRenderState();
 	}
 
-    @Override
-    public void extractRenderState(Vampire target, VampireRenderState state, float f1) {
-        super.extractRenderState(target, state, f1);
-        state.type = "textures/entity/vampires/vampire" + (target.isNecromancer() ? "_necromancer.png" : ".png");
-    }
+	@Override
+	public void extractRenderState(Vampire target, VampireRenderState state, float f1) {
+		super.extractRenderState(target, state, f1);
+		state.type = "textures/entity/vampires/vampire" + (target.isNecromancer() ? "_necromancer.png" : ".png");
+	}
 }

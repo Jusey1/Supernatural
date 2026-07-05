@@ -40,22 +40,24 @@ public class WeaponDisplayRenderer implements BlockEntityRenderer<WeaponEntity, 
 		state.main = f1;
 		state.item = target.getItem(0);
 		state.time = target.getLevel().getGameTime();
-		this.item.updateForTopItem(state.itemState, state.item, state.item.is(ItemTags.SPEARS) ? ItemDisplayContext.THIRD_PERSON_RIGHT_HAND : ItemDisplayContext.FIXED, target.getLevel(), null, 0);
-        if (target.getLevel() != null && target.getLevel().getBlockState(target.getBlockPos()).is(SupernaturalBlocks.EBONSTEEL_WEAPON_DISPLAY)) {
-            state.direction = target.getLevel().getBlockState(target.getBlockPos()).getValue(EbonsteelWeaponBlock.FACING);
-            state.check = this.isClearForSpear(target.getLevel(), target.getBlockPos());
-        }
+		this.item.updateForTopItem(state.itemState, state.item, state.item.is(ItemTags.SPEARS) || state.item.is(Items.SHIELD) ? ItemDisplayContext.THIRD_PERSON_RIGHT_HAND : ItemDisplayContext.FIXED, target.getLevel(), null, 0);
+		if (target.getLevel() != null && target.getLevel().getBlockState(target.getBlockPos()).is(SupernaturalBlocks.EBONSTEEL_WEAPON_DISPLAY)) {
+			state.direction = target.getLevel().getBlockState(target.getBlockPos()).getValue(EbonsteelWeaponBlock.FACING);
+			state.check = this.isClearForSpear(target.getLevel(), target.getBlockPos());
+		}
 	}
 
 	@Override
 	public void submit(SupernaturalBlockState state, PoseStack pose, SubmitNodeCollector buffer, CameraRenderState c) {
-        if (state.direction != null) {
-            if (state.item.is(ItemTags.SPEARS)) {
-                this.renderSpearItem(state, pose, buffer);
-            } else {
-                this.renderItem(state, pose, buffer);
-            }
-        }
+		if (state.direction != null) {
+			if (state.item.is(Items.SHIELD)) {
+				this.renderShieldItem(state, pose, buffer);
+			}else if (state.item.is(ItemTags.SPEARS)) {
+				this.renderSpearItem(state, pose, buffer);
+			} else {
+				this.renderItem(state, pose, buffer);
+			}
+		}
 	}
 
 	public void renderItem(SupernaturalBlockState state, PoseStack pose, SubmitNodeCollector buffer) {
@@ -63,7 +65,7 @@ public class WeaponDisplayRenderer implements BlockEntityRenderer<WeaponEntity, 
 		pose.translate(this.getX(state.item, state.direction), this.getY(state.item), this.getZ(state.item, state.direction));
 		pose.mulPose(Axis.YN.rotationDegrees(this.getYRotation(state.direction)));
 		pose.mulPose(Axis.ZN.rotationDegrees(this.getZRotation(state.item)));
-        state.itemState.submit(pose, buffer, state.lightCoords, OverlayTexture.NO_OVERLAY, state.outlineColor);
+		state.itemState.submit(pose, buffer, state.lightCoords, OverlayTexture.NO_OVERLAY, state.outlineColor);
 		pose.popPose();
 	}
 
@@ -71,15 +73,23 @@ public class WeaponDisplayRenderer implements BlockEntityRenderer<WeaponEntity, 
 		pose.pushPose();
 		pose.translate(this.getX(state.item, state.direction), state.check ? -0.15F : 0.15F, this.getZ(state.item, state.direction));
 		pose.mulPose(Axis.YN.rotationDegrees(this.getYRotation(state.direction) + 90.0F));
-        state.itemState.submit(pose, buffer, state.lightCoords, OverlayTexture.NO_OVERLAY, state.outlineColor);
+		state.itemState.submit(pose, buffer, state.lightCoords, OverlayTexture.NO_OVERLAY, state.outlineColor);
+		pose.popPose();
+	}
+
+	public void renderShieldItem(SupernaturalBlockState state, PoseStack pose, SubmitNodeCollector buffer) {
+		pose.pushPose();
+		pose.translate(this.getX(state.item, state.direction), 0.625F, this.getZ(state.item, state.direction));
+		pose.mulPose(Axis.YN.rotationDegrees(this.getYRotation(state.direction) + 90.0F));
+		state.itemState.submit(pose, buffer, state.lightCoords, OverlayTexture.NO_OVERLAY, state.outlineColor);
 		pose.popPose();
 	}
 
 	private float getX(ItemStack stack, Direction dir) {
 		if (dir.equals(Direction.EAST)) {
-			return 0.05F;
+			return stack.is(Items.SHIELD) ? 0.15F : 0.05F;
 		} else if (dir.equals(Direction.WEST)) {
-			return 0.95F;
+			return stack.is(Items.SHIELD) ? 0.85F : 0.95F;
 		}
 		return this.getPositionByItem(stack, dir);
 	}
@@ -97,9 +107,9 @@ public class WeaponDisplayRenderer implements BlockEntityRenderer<WeaponEntity, 
 
 	private float getZ(ItemStack stack, Direction dir) {
 		if (dir.equals(Direction.SOUTH)) {
-			return 0.05F;
+			return stack.is(Items.SHIELD) ? 0.15F : 0.05F;
 		} else if (dir.equals(Direction.NORTH)) {
-			return 0.95F;
+			return stack.is(Items.SHIELD) ? 0.85F : 0.95F;
 		}
 		return this.getPositionByItem(stack, dir);
 	}
@@ -109,6 +119,8 @@ public class WeaponDisplayRenderer implements BlockEntityRenderer<WeaponEntity, 
 			return this.isOpposite(dir) ? 0.54F : 0.46F;
 		} else if (stack.is(Items.BOW)) {
 			return this.isOpposite(dir) ? 0.3F : 0.7F;
+		} else if (stack.is(Items.SHIELD)) {
+			return this.isOpposite(dir) ? 0.75F : 0.25F;
 		} else if (stack.is(ItemTags.SPEARS)) {
 			return this.isOpposite(dir) ? 0.62F : 0.38F;
 		} else if (stack.getItem().getDescriptionId().contains("supplementaries") || stack.getItem().getDescriptionId().contains("suppsquared")) {
