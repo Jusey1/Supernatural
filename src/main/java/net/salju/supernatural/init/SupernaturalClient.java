@@ -41,7 +41,8 @@ public class SupernaturalClient {
         event.registerEntityRenderer(SupernaturalMobs.THRALL.get(), ThrallRenderer::new);
         event.registerEntityRenderer(SupernaturalMobs.WIGHT.get(), WightRenderer::new);
         event.registerEntityRenderer(SupernaturalMobs.SCOURGE.get(), ScourgeRenderer::new);
-		event.registerBlockEntityRenderer(SupernaturalBlocks.RITUAL.get(), RitualBlockRenderer::new);
+        event.registerBlockEntityRenderer(SupernaturalBlocks.RITUAL.get(), RitualBlockRenderer::new);
+        event.registerBlockEntityRenderer(SupernaturalBlocks.WEAPON.get(), WeaponDisplayRenderer::new);
         event.registerBlockEntityRenderer(SupernaturalBlocks.RP.get(), TreasureSpawnerRenderer::new);
         event.registerBlockEntityRenderer(SupernaturalBlocks.RV.get(), TreasureVaultRenderer::new);
 	}

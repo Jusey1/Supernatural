@@ -37,6 +37,8 @@ public class SupernaturalTags {
 	public static final TagKey<Item> KEPT = ItemTags.create(Identifier.fromNamespaceAndPath(Supernatural.MODID, "altar_kept_items"));
     public static final TagKey<Item> EBON = ItemTags.create(Identifier.fromNamespaceAndPath(Supernatural.MODID, "ebonsteel_armor"));
     public static final TagKey<Item> SAFE = ItemTags.create(Identifier.fromNamespaceAndPath(Supernatural.MODID, "ritual_retains_data"));
+    public static final TagKey<Item> DISPLAY_ITEMS = ItemTags.create(Identifier.fromNamespaceAndPath(Supernatural.MODID, "displayable_items"));
+    public static final TagKey<Item> DISPLAY_ZERO_ITEMS = ItemTags.create(Identifier.fromNamespaceAndPath(Supernatural.MODID, "displayable_zero_items"));
 	public static final TagKey<Structure> RUINS = TagKey.create(Registries.STRUCTURE, Identifier.fromNamespaceAndPath(Supernatural.MODID, "ritual_compass_01"));
 	public static final TagKey<Structure> LIFE = TagKey.create(Registries.STRUCTURE, Identifier.fromNamespaceAndPath(Supernatural.MODID, "ritual_compass_02"));
 	public static final TagKey<Structure> ANCIENT = TagKey.create(Registries.STRUCTURE, Identifier.fromNamespaceAndPath(Supernatural.MODID, "ritual_compass_03"));

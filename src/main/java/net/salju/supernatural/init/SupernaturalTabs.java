@@ -43,11 +43,12 @@ public class SupernaturalTabs {
                 tabData.accept(SupernaturalItems.PLASMA.get());
                 tabData.accept(SupernaturalItems.VAMPIRE_DUST.get());
                 tabData.accept(SupernaturalItems.BLOOD.get());
-                //tabData.accept(SupernaturalItems.EBONSTEEL_PAWN.get());
-                //tabData.accept(SupernaturalItems.QUARTZ_PAWN.get());
+                tabData.accept(SupernaturalItems.EBONSTEEL_PAWN.get());
+                tabData.accept(SupernaturalItems.QUARTZ_PAWN.get());
                 tabData.accept(SupernaturalItems.EBONSTEEL_BARS.get());
                 tabData.accept(SupernaturalItems.EBONSTEEL_DOOR.get());
                 tabData.accept(SupernaturalItems.EBONSTEEL_TRAPDOOR.get());
+                tabData.accept(SupernaturalItems.EBONSTEEL_WEAPON_DISPLAY.get());
                 tabData.accept(SupernaturalItems.EBONSTEEL_CHAIN.get());
                 tabData.accept(SupernaturalItems.EBONSTEEL_LANTERN.get());
                 if (ModList.get().isLoaded("supplementaries")) {
@@ -57,8 +58,8 @@ public class SupernaturalTabs {
                 tabData.accept(SupernaturalItems.RITUAL_ALTAR.get());
                 tabData.accept(SupernaturalItems.REVENANT_SPAWNER.get());
                 tabData.accept(SupernaturalItems.REVENANT_VAULT.get());
-                //tabData.accept(SupernaturalItems.EBONSTEEL_BOARD_TILE.get());
-                //tabData.accept(SupernaturalItems.QUARTZ_BOARD_TILE.get());
+                tabData.accept(SupernaturalItems.EBONSTEEL_BOARD_TILE.get());
+                tabData.accept(SupernaturalItems.QUARTZ_BOARD_TILE.get());
                 tabData.accept(SupernaturalItems.EBONSTEEL_BLOCK.get());
                 tabData.accept(SupernaturalItems.GRAVE_SOIL.get());
                 tabData.accept(SupernaturalItems.PLASMASTONE_BRICKS.get());

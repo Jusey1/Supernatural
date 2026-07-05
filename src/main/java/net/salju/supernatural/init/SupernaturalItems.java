@@ -21,11 +21,16 @@ public class SupernaturalItems {
     public static final DeferredHolder<Item, Item> WIGHT_SPAWN_EGG = REGISTRY.register("wight_spawn_egg", () -> new SpawnEggItem(createBaseProps("wight_spawn_egg").spawnEgg(SupernaturalMobs.WIGHT.get())));
     public static final DeferredHolder<Item, Item> SCOURGE_SPAWN_EGG = REGISTRY.register("scourge_spawn_egg", () -> new SpawnEggItem(createBaseProps("scourge_spawn_egg").spawnEgg(SupernaturalMobs.SCOURGE.get())));
     public static final DeferredHolder<Item, Item> ANGEL_STATUE = REGISTRY.register("angel_statue", () -> new AngelStatueItem(createBaseProps("angel_statue").stacksTo(1)));
+    public static final DeferredHolder<Item, Item> EBONSTEEL_PAWN = block(SupernaturalBlocks.EBONSTEEL_PAWN, "ebonsteel_pawn");
+    public static final DeferredHolder<Item, Item> QUARTZ_PAWN = block(SupernaturalBlocks.QUARTZ_PAWN, "quartz_pawn");
+    public static final DeferredHolder<Item, Item> EBONSTEEL_BOARD_TILE = block(SupernaturalBlocks.EBONSTEEL_BOARD_TILE, "ebonsteel_board_tile");
+    public static final DeferredHolder<Item, Item> QUARTZ_BOARD_TILE = block(SupernaturalBlocks.QUARTZ_BOARD_TILE, "quartz_board_tile");
     public static final DeferredHolder<Item, Item> EBONSTEEL_BARS = block(SupernaturalBlocks.EBONSTEEL_BARS, "ebonsteel_bars");
     public static final DeferredHolder<Item, Item> EBONSTEEL_DOOR = block(SupernaturalBlocks.EBONSTEEL_DOOR, "ebonsteel_door");
-    public static final DeferredHolder<Item, Item> EBONSTEEL_TRAPDOOR = block(SupernaturalBlocks.EBONSTEEL_TRAPDOOR, "ebonsteel_trapdoor");
     public static final DeferredHolder<Item, Item> EBONSTEEL_CHAIN = block(SupernaturalBlocks.EBONSTEEL_CHAIN, "ebonsteel_chain");
     public static final DeferredHolder<Item, Item> EBONSTEEL_LANTERN = block(SupernaturalBlocks.EBONSTEEL_LANTERN, "ebonsteel_lantern");
+    public static final DeferredHolder<Item, Item> EBONSTEEL_TRAPDOOR = block(SupernaturalBlocks.EBONSTEEL_TRAPDOOR, "ebonsteel_trapdoor");
+    public static final DeferredHolder<Item, Item> EBONSTEEL_WEAPON_DISPLAY = block(SupernaturalBlocks.EBONSTEEL_WEAPON_DISPLAY, "ebonsteel_weapon_display");
     public static final DeferredHolder<Item, Item> RITUAL_CANDLE = block(SupernaturalBlocks.RITUAL_CANDLE, "ritual_candle");
     public static final DeferredHolder<Item, Item> RITUAL_ALTAR = block(SupernaturalBlocks.RITUAL_ALTAR, "ritual_altar");
     public static final DeferredHolder<Item, Item> REVENANT_SPAWNER = block(SupernaturalBlocks.REVENANT_SPAWNER, "revenant_spawner");
