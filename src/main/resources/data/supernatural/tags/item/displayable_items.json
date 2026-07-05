@@ -1,0 +1,39 @@
+{
+  "replace": false,
+  "values": [
+    "#supernatural:displayable_zero_items",
+    "supernatural:ebonsteel_mirror",
+    "#minecraft:swords",
+    "#minecraft:axes",
+    "#minecraft:pickaxes",
+    "#minecraft:shovels",
+    "#minecraft:hoes",
+    "minecraft:bow",
+    "minecraft:crossbow",
+    "minecraft:mace",
+    "minecraft:trident",
+    "minecraft:brush",
+    "minecraft:fishing_rod",
+    "minecraft:spyglass",
+    {
+      "id": "#minecraft:spears",
+      "required": false
+    },
+    {
+      "id": "#tide:fishing_rods",
+      "required": false
+    },
+    {
+      "id": "supplementaries:bubble_blower",
+      "required": false
+    },
+    {
+      "id": "supplementaries:flute",
+      "required": false
+    },
+    {
+      "id": "supplementaries:wrench",
+      "required": false
+    }
+  ]
+}

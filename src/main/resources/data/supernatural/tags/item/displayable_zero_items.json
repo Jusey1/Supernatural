@@ -1,0 +1,26 @@
+{
+  "replace": false,
+  "values": [
+    "supernatural:ebonsteel_key",
+    "supernatural:ebonsteel_pawn",
+    "supernatural:quartz_pawn",
+    "minecraft:trial_key",
+    "minecraft:ominous_trial_key",
+    {
+      "id": "supplementaries:slingshot",
+      "required": false
+    },
+    {
+      "id": "supplementaries:goblet",
+      "required": false
+    },
+    {
+      "id": "supplementaries:key",
+      "required": false
+    },
+    {
+      "id": "suppsquared:heavy_key",
+      "required": false
+    }
+  ]
+}
