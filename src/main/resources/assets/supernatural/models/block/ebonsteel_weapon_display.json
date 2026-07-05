@@ -1,0 +1,91 @@
+{
+	"ambientocclusion": false,
+	"render_type": "cutout",
+	"textures": {
+		"0": "supernatural:block/ebonsteel_board_tile",
+		"particle": "supernatural:block/ebonsteel_board_tile"
+	},
+	"elements": [
+		{
+			"name": "front",
+			"from": [4, 7, 12],
+			"to": [12, 9, 14],
+			"rotation": {"angle": 0, "axis": "y", "origin": [4, 7, 12]},
+			"color": 5,
+			"faces": {
+				"north": {"uv": [4, 6, 12, 8], "texture": "#0"},
+				"east": {"uv": [10, 10, 12, 12], "texture": "#0"},
+				"south": {"uv": [4, 4, 12, 6], "texture": "#0"},
+				"west": {"uv": [4, 10, 6, 12], "texture": "#0"},
+				"up": {"uv": [4, 8, 12, 10], "texture": "#0"},
+				"down": {"uv": [4, 6, 12, 8], "texture": "#0"}
+			}
+		},
+		{
+			"name": "side",
+			"from": [4, 7, 14],
+			"to": [6, 9, 16],
+			"rotation": {"angle": 0, "axis": "y", "origin": [4, 7, 14]},
+			"color": 5,
+			"faces": {
+				"north": {"uv": [6, 10, 8, 12], "texture": "#0"},
+				"east": {"uv": [10, 10, 12, 12], "texture": "#0"},
+				"south": {"uv": [8, 10, 10, 12], "texture": "#0"},
+				"west": {"uv": [4, 10, 6, 12], "texture": "#0"},
+				"up": {"uv": [6, 12, 8, 14], "texture": "#0"},
+				"down": {"uv": [8, 12, 10, 14], "texture": "#0"}
+			}
+		},
+		{
+			"name": "side",
+			"from": [10, 7, 14],
+			"to": [12, 9, 16],
+			"rotation": {"angle": 0, "axis": "y", "origin": [10, 7, 14]},
+			"color": 5,
+			"faces": {
+				"north": {"uv": [6, 10, 8, 12], "texture": "#0"},
+				"east": {"uv": [10, 10, 12, 12], "texture": "#0"},
+				"south": {"uv": [8, 10, 10, 12], "texture": "#0"},
+				"west": {"uv": [4, 10, 6, 12], "texture": "#0"},
+				"up": {"uv": [6, 12, 8, 14], "texture": "#0"},
+				"down": {"uv": [8, 12, 10, 14], "texture": "#0"}
+			}
+		}
+	],
+	"display": {
+		"thirdperson_righthand": {
+			"rotation": [0, 0, 90],
+			"translation": [0, -2, -6]
+		},
+		"thirdperson_lefthand": {
+			"rotation": [0, 0, 90],
+			"translation": [0, -2, -6]
+		},
+		"firstperson_righthand": {
+			"translation": [-1.5, 2.5, 0]
+		},
+		"firstperson_lefthand": {
+			"translation": [-1.5, 2.5, 0]
+		},
+		"gui": {
+			"rotation": [25, 135, 0],
+			"translation": [-4, -2, 0]
+		},
+		"head": {
+			"rotation": [90, 0, 0],
+			"translation": [0, 14, 0]
+		},
+		"fixed": {
+			"translation": [0, 0, -6]
+		}
+	},
+	"groups": [
+		{
+			"name": "weapon_display",
+			"origin": [0, 0, 0],
+			"scope": 0,
+			"color": 0,
+			"children": [0, 1, 2]
+		}
+	]
+}
