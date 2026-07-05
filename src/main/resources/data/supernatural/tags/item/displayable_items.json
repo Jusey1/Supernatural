@@ -15,6 +15,7 @@
     "minecraft:brush",
     "minecraft:fishing_rod",
     "minecraft:spyglass",
+    "minecraft:shield",
     {
       "id": "#minecraft:spears",
       "required": false
