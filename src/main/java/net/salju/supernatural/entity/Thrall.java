@@ -68,8 +68,9 @@ public class Thrall extends AbstractMinionEntity {
 	@Override
 	protected void registerGoals() {
 		super.registerGoals();
-        this.goalSelector.addGoal(2, new ThrallAltarGoal(this, 1.2, 12, 3));
-		this.goalSelector.addGoal(3, new MeleeAttackGoal(this, 1.2, true));
+        this.goalSelector.addGoal(0, new ThrallAltarGoal(this, 1.2, 12, 3));
+        this.goalSelector.addGoal(2, new MeleeAttackGoal(this, 1.2, true));
+        this.goalSelector.addGoal(3, new ThrallFollowGoal(this, 1.2, 10.0F, 2.0F));
 		this.goalSelector.addGoal(4, new RandomStrollGoal(this, 1));
 		this.goalSelector.addGoal(4, new LookAtPlayerGoal(this, LivingEntity.class, 8));
 		this.goalSelector.addGoal(4, new RandomLookAroundGoal(this));

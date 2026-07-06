@@ -23,6 +23,7 @@ public class SupernaturalTabs {
                 tabData.accept(SupernaturalItems.ANGEL_STATUE.get());
                 tabData.accept(SupernaturalItems.RITUAL_BOOK.get());
                 tabData.accept(SupernaturalItems.SOULGEM.get());
+                tabData.accept(SupernaturalItems.COMMANDER_WAND.get());
                 tabData.accept(SupernaturalItems.EBONSTEEL_HELMET.get());
                 tabData.accept(SupernaturalItems.EBONSTEEL_CHESTPLATE.get());
                 tabData.accept(SupernaturalItems.EBONSTEEL_LEGGINGS.get());
@@ -48,6 +49,7 @@ public class SupernaturalTabs {
                 tabData.accept(SupernaturalItems.EBONSTEEL_BARS.get());
                 tabData.accept(SupernaturalItems.EBONSTEEL_DOOR.get());
                 tabData.accept(SupernaturalItems.EBONSTEEL_TRAPDOOR.get());
+                tabData.accept(SupernaturalItems.EBONSTEEL_PRESSURE_PLATE.get());
                 tabData.accept(SupernaturalItems.EBONSTEEL_WEAPON_DISPLAY.get());
                 tabData.accept(SupernaturalItems.EBONSTEEL_CHAIN.get());
                 tabData.accept(SupernaturalItems.EBONSTEEL_LANTERN.get());

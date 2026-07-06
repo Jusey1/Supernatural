@@ -1,20 +1,20 @@
 package net.salju.supernatural.block.chess;
 
-import net.salju.supernatural.init.SupernaturalBlocks;
-import net.salju.supernatural.init.SupernaturalDamageTypes;
-import net.salju.supernatural.init.SupernaturalData;
-import net.salju.supernatural.init.SupernaturalTags;
+import net.salju.supernatural.init.*;
+import net.salju.supernatural.block.misc.RevenantVault;
 import net.salju.supernatural.block.BoardTileBlock;
 import net.salju.supernatural.item.component.CommanderWandData;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.GlobalPos;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.item.FallingBlockEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.*;
@@ -32,6 +32,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraft.world.InteractionResult;
 import com.google.common.collect.Lists;
 import java.util.List;
+import java.util.Optional;
 
 public abstract class AbstractChessBlock extends FallingBlock {
     public static final EnumProperty<Direction> FACING = HorizontalDirectionalBlock.FACING;
@@ -51,16 +52,16 @@ public abstract class AbstractChessBlock extends FallingBlock {
 
     @Override
     public InteractionResult useItemOn(ItemStack stack, BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult rez) {
-        if (stack.has(SupernaturalData.COMMANDER)) {
+        if (stack.is(SupernaturalItems.COMMANDER_WAND)) {
             CommanderWandData data = stack.get(SupernaturalData.COMMANDER);
             if (data != null) {
-                stack.set(SupernaturalData.COMMANDER, new CommanderWandData(data.getPromotionType(), GlobalPos.of(world.dimension(), pos), this.getValidMoves(state, world, pos)));
+                stack.set(SupernaturalData.COMMANDER, new CommanderWandData(data.getPromotionType(), Optional.of(GlobalPos.of(world.dimension(), pos))));
             } else {
-                stack.set(SupernaturalData.COMMANDER, new CommanderWandData(GlobalPos.of(world.dimension(), pos), this.getValidMoves(state, world, pos)));
+                stack.set(SupernaturalData.COMMANDER, new CommanderWandData(0, Optional.of(GlobalPos.of(world.dimension(), pos))));
             }
             return InteractionResult.SUCCESS;
         }
-        return InteractionResult.PASS;
+        return super.useItemOn(stack, state, world, pos, player, hand, rez);
     }
 
     @Override
@@ -69,17 +70,12 @@ public abstract class AbstractChessBlock extends FallingBlock {
             world.destroyBlock(pos.below(), true);
         } else if (world.getBlockState(pos.below()).getBlock() instanceof BoardTileBlock) {
             if (BoardTileBlock.isCursed(world, pos.below())) {
-                world.setBlock(pos, getPawn(state).defaultBlockState().setValue(FACING, state.getValue(FACING)), 3);
-            } else if (BoardTileBlock.isDestructive(world, pos.below())) {
-                world.destroyBlock(pos, true);
-                world.destroyBlock(pos.below(), true);
+                world.destroyBlock(pos, false);
+                if (world instanceof ServerLevel lvl) {
+                    RevenantVault.ejectItem(lvl, pos, new ItemStack(getPawn(state)));
+                }
             }
         }
-    }
-
-    @Override
-    public void onBrokenAfterFall(Level world, BlockPos pos, FallingBlockEntity target) {
-        //
     }
 
     @Override
@@ -89,7 +85,7 @@ public abstract class AbstractChessBlock extends FallingBlock {
 
     @Override
     public DamageSource getFallDamageSource(Entity target) {
-        return SupernaturalDamageTypes.getCheckmated(target.level().registryAccess());
+        return SupernaturalDamageTypes.getCheckmated(target.level().registryAccess(), null);
     }
 
     @Override
@@ -149,7 +145,7 @@ public abstract class AbstractChessBlock extends FallingBlock {
         return world.getBlockState(pos.below()).is(SupernaturalTags.CHESSBOARD);
     }
 
-    public static Block getPawn(BlockState state) {
-        return state.is(SupernaturalTags.EBONSTEEL_PIECES) ? SupernaturalBlocks.EBONSTEEL_PAWN.get() : SupernaturalBlocks.QUARTZ_PAWN.get();
+    public static Item getPawn(BlockState state) {
+        return state.is(SupernaturalTags.EBONSTEEL_PIECES) ? SupernaturalItems.EBONSTEEL_PAWN.get() : SupernaturalItems.QUARTZ_PAWN.get();
     }
 }

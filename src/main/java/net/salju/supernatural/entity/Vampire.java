@@ -120,7 +120,7 @@ public class Vampire extends AbstractIllager implements Spellcaster {
             if (SupernaturalManager.shouldVampireBurn(this, lvl) && this.getItemBySlot(EquipmentSlot.HEAD).isEmpty()) {
                 if (this.getRemainingFireTicks() <= 20) {
                     this.setRemainingFireTicks(120);
-                    this.hurt(SupernaturalDamageTypes.causeSunDamage(this.level().registryAccess()), 3);
+                    this.hurt(SupernaturalDamageTypes.getSun(this.level().registryAccess(), null), 3.0F);
                 }
             }
         }

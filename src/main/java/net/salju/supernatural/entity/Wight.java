@@ -57,8 +57,9 @@ public class Wight extends AbstractMinionEntity implements CrossbowAttackMob, Ra
 	@Override
 	protected void registerGoals() {
 		super.registerGoals();
-		this.goalSelector.addGoal(2, new WightCrossbowGoal<>(this, 1.0D, 12.0F));
-		this.goalSelector.addGoal(3, new WightMeleeAttackGoal(this, 1.2, true));
+        this.goalSelector.addGoal(1, new WightCrossbowGoal<>(this, 1.0D, 12.0F));
+        this.goalSelector.addGoal(2, new WightMeleeAttackGoal(this, 1.2, true));
+        this.goalSelector.addGoal(3, new WightFollowGoal(this, 1.2, 10.0F, 2.0F));
 		this.goalSelector.addGoal(4, new RandomStrollGoal(this, 1));
 		this.goalSelector.addGoal(4, new LookAtPlayerGoal(this, LivingEntity.class, 8));
 		this.goalSelector.addGoal(4, new RandomLookAroundGoal(this));

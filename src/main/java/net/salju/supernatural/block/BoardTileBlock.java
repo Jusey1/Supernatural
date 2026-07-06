@@ -51,16 +51,4 @@ public class BoardTileBlock extends Block {
     public static boolean isCursed(Level world, BlockPos pos) {
         return world.getBlockState(pos.below()).is(SupernaturalTags.CURSED);
     }
-
-    public static boolean isDestructive(Level world, BlockPos pos) {
-        return world.getBlockState(pos.below()).is(SupernaturalTags.DESTRUCTIVE);
-    }
-
-    public static boolean isProtective(Level world, BlockPos pos) {
-        return world.getBlockState(pos.below()).is(SupernaturalTags.PROTECTIVE);
-    }
-
-    public static boolean isTrap(Level world, BlockPos pos) {
-        return world.getBlockState(pos.below()).is(SupernaturalTags.TRAP);
-    }
 }

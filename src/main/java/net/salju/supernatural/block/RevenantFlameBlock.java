@@ -1,12 +1,12 @@
 package net.salju.supernatural.block;
 
+import net.salju.supernatural.init.SupernaturalDamageTypes;
 import net.salju.supernatural.entity.Angel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.EntityTypeTags;
 import net.minecraft.util.RandomSource;
-import net.minecraft.world.Difficulty;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.InsideBlockEffectApplier;
 import net.minecraft.world.entity.LivingEntity;
@@ -63,7 +63,7 @@ public class RevenantFlameBlock extends BaseFireBlock {
         if (target instanceof LivingEntity mob && target.level() instanceof ServerLevel lvl) {
             if (mob.getTicksFrozen() <= 5) {
                 mob.setTicksFrozen(mob.getTicksFrozen() + 25);
-                mob.heal(getDamage(lvl));
+                mob.heal(2.5F);
             }
         }
     }
@@ -72,17 +72,8 @@ public class RevenantFlameBlock extends BaseFireBlock {
         if (target.level() instanceof ServerLevel lvl) {
             if (target.getTicksFrozen() <= 25) {
                 target.setTicksFrozen(target.getTicksFrozen() + 50);
-                target.hurt(lvl.damageSources().magic(), getDamage(lvl));
+                target.hurt(SupernaturalDamageTypes.getColdflame(lvl.registryAccess(), null), 3.0F);
             }
         }
-    }
-
-    public static float getDamage(ServerLevel lvl) {
-        if (lvl.getDifficulty().equals(Difficulty.HARD)) {
-            return 3.0F;
-        } else if (lvl.getDifficulty().equals(Difficulty.NORMAL)) {
-            return 2.0F;
-        }
-        return 1.0F;
     }
 }

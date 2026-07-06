@@ -43,7 +43,7 @@ public class SupernaturalEvents {
                         if (helmet.isEmpty()) {
                             if (player.getRemainingFireTicks() <= 20) {
                                 player.setRemainingFireTicks(120);
-                                player.hurt(SupernaturalDamageTypes.causeSunDamage(player.level().registryAccess()), 3);
+                                player.hurt(SupernaturalDamageTypes.getSun(player.level().registryAccess(), null), 3.0F);
                             }
                         } else if (Mth.nextInt(player.getRandom(), 0, 25) <= 2) {
                             helmet.hurtAndBreak(1, player, EquipmentSlot.HEAD);

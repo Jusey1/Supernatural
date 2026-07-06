@@ -1,11 +1,8 @@
 package net.salju.supernatural.entity;
 
-import net.minecraft.tags.ItemTags;
-import net.minecraft.world.level.storage.ValueInput;
-import net.minecraft.world.level.storage.ValueOutput;
+import net.salju.supernatural.init.SupernaturalDamageTypes;
 import net.salju.supernatural.init.SupernaturalItems;
 import net.salju.supernatural.init.SupernaturalConfig;
-import net.salju.supernatural.events.SupernaturalManager;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.particles.BlockParticleOption;
 import net.minecraft.core.BlockPos;
@@ -17,9 +14,12 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.EntityTypeTags;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.entity.player.Player;
@@ -114,7 +114,7 @@ public class Angel extends Mob {
 					if (player.isCloseEnough(this, 1)) {
 						if (player.isAlive()) {
 							this.getEntityData().set(POSE, 0);
-							player.hurt(this.damageSources().mobAttack(this), 6.0F);
+							player.hurt(SupernaturalDamageTypes.getAngel(this.level().registryAccess(), null), 5.0F);
 						} else {
 							this.getEntityData().set(POSE, 7);
 						}
