@@ -1,6 +1,7 @@
 {
   "type": "minecraft:crafting_shaped",
   "category": "misc",
+  "group": "ebonsteel_ingot",
   "key": {
     "R": "minecraft:iron_ingot",
     "P": "supernatural:plasma",

@@ -1,6 +1,7 @@
 {
   "type": "minecraft:crafting_shaped",
   "category": "misc",
+  "group": "ebonsteel_ingot",
   "key": {
     "R": "supernatural:ebonsteel_block"
   },
