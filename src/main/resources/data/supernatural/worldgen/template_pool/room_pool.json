@@ -11,7 +11,7 @@
       }
     },
     {
-      "weight": 4,
+      "weight": 2,
       "element": {
         "location": "supernatural:dungeon/room/dungeon_room_02",
         "processors": "minecraft:empty",
@@ -20,7 +20,7 @@
       }
     },
     {
-      "weight": 4,
+      "weight": 2,
       "element": {
         "location": "supernatural:dungeon/room/dungeon_room_03",
         "processors": "minecraft:empty",
@@ -29,7 +29,7 @@
       }
     },
     {
-      "weight": 4,
+      "weight": 2,
       "element": {
         "location": "supernatural:dungeon/room/dungeon_room_04",
         "processors": "minecraft:empty",
@@ -38,7 +38,7 @@
       }
     },
     {
-      "weight": 3,
+      "weight": 2,
       "element": {
         "location": "supernatural:dungeon/room/dungeon_room_05",
         "processors": "minecraft:empty",
