@@ -1,6 +1,7 @@
 {
   "replace": false,
   "values": [
+    "supernatural:coldflame",
     "supernatural:sun"
   ]
 }
