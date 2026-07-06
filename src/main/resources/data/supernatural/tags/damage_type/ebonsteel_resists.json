@@ -1,7 +1,20 @@
 {
   "replace": false,
   "values": [
+    "supernatural:coldflame",
+    "minecraft:dragon_breath",
+    "minecraft:indirect_magic",
     "minecraft:magic",
-    "minecraft:indirect_magic"
+    "minecraft:sonic_boom",
+    "minecraft:wither",
+    "minecraft:wither_skull",
+    {
+      "id": "twilightforest:lich_bolt",
+      "required": false
+    },
+    {
+      "id": "twilightforest:lich_bomb",
+      "required": false
+    }
   ]
 }
