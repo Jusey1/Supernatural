@@ -86,6 +86,14 @@ public class EbonsteelWeaponBlock extends BaseEntityBlock {
 	}
 
     @Override
+    public ItemStack getCloneItemStack(LevelReader world, BlockPos pos, BlockState state, boolean check, Player player) {
+        if (world.getBlockEntity(pos) instanceof WeaponEntity target && !target.isEmpty()) {
+            return target.getItem(0);
+        }
+        return super.getCloneItemStack(world, pos, state, check, player);
+    }
+
+    @Override
     protected BlockState updateShape(BlockState state, LevelReader world, ScheduledTickAccess access, BlockPos pos, Direction dir, BlockPos poz, BlockState ztate, RandomSource randy) {
         return dir.getOpposite().equals(state.getValue(FACING)) && !state.canSurvive(world, pos) ? Blocks.AIR.defaultBlockState() : state;
     }
