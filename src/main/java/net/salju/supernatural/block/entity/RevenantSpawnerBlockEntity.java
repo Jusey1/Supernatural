@@ -3,6 +3,7 @@ package net.salju.supernatural.block.entity;
 import net.salju.supernatural.init.SupernaturalBlocks;
 import net.salju.supernatural.block.misc.SoulSpawner;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
@@ -89,7 +90,7 @@ public class RevenantSpawnerBlockEntity extends BlockEntity implements Spawner {
     }
 
     public static void serverTick(Level world, BlockPos pos, BlockState state, RevenantSpawnerBlockEntity target) {
-        if (world instanceof ServerLevel lvl && !lvl.hasNeighborSignal(pos)) {
+        if (world instanceof ServerLevel lvl && !lvl.hasSignal(pos.below(), Direction.DOWN) && !lvl.hasSignal(pos.below(2), Direction.DOWN)) {
             target.spawner.serverTick(lvl, pos);
         }
     }
