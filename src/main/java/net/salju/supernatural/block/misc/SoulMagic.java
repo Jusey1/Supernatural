@@ -6,11 +6,7 @@ import net.salju.supernatural.init.*;
 import net.salju.supernatural.events.RitualEvent;
 import net.salju.supernatural.events.SupernaturalManager;
 import net.salju.supernatural.block.entity.RitualAltarEntity;
-import net.salju.supernatural.item.component.AnchorballData;
-import net.salju.supernatural.item.RitualCompassItem;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.GlobalPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.sounds.SoundEvents;
@@ -43,19 +39,10 @@ public class SoulMagic {
                                 spawner.setEntityId(entity.getType(), lvl.getRandom());
                             }
                         }
-                    } else if (copy.has(SupernaturalData.ANCHOR.get())) {
-                        AnchorballData data = copy.get(SupernaturalData.ANCHOR.get());
-                        if (RitualManager.canTeleportTo(data, lvl)) {
-                            lvl.playSound(null, pos, SoundEvents.PLAYER_TELEPORT, SoundSource.PLAYERS, 1.0F, (float) (0.8F + (Math.random() * 0.2)));
-                            lvl.sendParticles(ParticleTypes.SOUL_FIRE_FLAME, pos.getX(), pos.getY() + 0.75, pos.getZ(), 12, 0.5, 0.5, 0.5, 0.65);
-                            RitualManager.teleportUser(data, player, lvl);
-                        }
-                        target.setItem(0, copy);
-                    } else if (copy.is(SupernaturalItems.REVENANT_CORE)) {
-                        copy.set(SupernaturalData.ANCHOR.get(), new AnchorballData(GlobalPos.of(lvl.dimension(), pos)));
-                        target.setItem(0, copy);
+                    } else if (copy.is(SupernaturalItems.EBONSTEEL_MIRROR)) {
+                        target.setItem(0, RitualManager.createMirror(new ItemStack(recipe.getInput().getValues().get(0).value()), copy, lvl, player, pos));
                     } else if (copy.is(SupernaturalItems.COMPASS)) {
-                        target.setItem(0, RitualCompassItem.getRitualCompass(pos, lvl, copy.getCount()));
+                        target.setItem(0, RitualManager.getRitualCompass(pos, lvl, recipe.getPower() / 12));
                     } else if (copy.is(SupernaturalItems.SOULGEM)) {
                         Entity entity = EntityType.loadEntityRecursive(SupernaturalManager.getSoulTag(copy), lvl, EntitySpawnReason.MOB_SUMMONED, o -> o);
                         if (entity != null) {

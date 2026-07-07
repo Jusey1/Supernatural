@@ -1,10 +1,14 @@
 package net.salju.supernatural.block;
 
+import net.salju.supernatural.init.SupernaturalData;
+import net.salju.supernatural.init.SupernaturalItems;
 import net.salju.supernatural.init.SupernaturalTags;
 import net.salju.supernatural.block.entity.WeaponEntity;
+import net.salju.supernatural.block.misc.RitualManager;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.RandomSource;
@@ -67,9 +71,13 @@ public class EbonsteelWeaponBlock extends BaseEntityBlock {
 				}
 				return InteractionResult.SUCCESS;
 			} else if (!target.isEmpty()) {
-				if (world instanceof ServerLevel lvl) {
-                    target.dropItem(0);
-				}
+                if (world instanceof ServerLevel lvl && player instanceof ServerPlayer ply) {
+                    if (target.getItem(0).is(SupernaturalItems.EBONSTEEL_MIRROR) && !ply.isCrouching() && RitualManager.canTeleportTo(target.getItem(0).get(SupernaturalData.ANCHOR), lvl, ply)) {
+                        RitualManager.teleportUser(target.getItem(0).get(SupernaturalData.ANCHOR), lvl, ply);
+                    } else {
+                        target.dropItem(0);
+                    }
+                }
 				return InteractionResult.SUCCESS;
 			}
 		}
