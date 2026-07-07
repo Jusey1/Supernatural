@@ -1,0 +1,10 @@
+{
+  "type": "supernatural:ritual",
+  "category": "special",
+  "ingredient": "supernatural:ebonsteel_mirror",
+  "result": {
+    "id": "supernatural:ebonsteel_mirror"
+  },
+  "candle_power": 35,
+  "soul_power": 4
+}

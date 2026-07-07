@@ -3,9 +3,8 @@
   "category": "special",
   "ingredient": "supernatural:ritual_compass",
   "result": {
-    "id": "supernatural:ritual_compass",
-    "count": 3
+    "id": "supernatural:ritual_compass"
   },
-  "candle_power": 28,
+  "candle_power": 36,
   "soul_power": 5
 }

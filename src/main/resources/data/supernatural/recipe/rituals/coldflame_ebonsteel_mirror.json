@@ -1,10 +1,11 @@
 {
   "type": "supernatural:ritual",
+  "category": "special",
   "ingredient": "supernatural:spectral_core",
   "result": {
     "id": "supernatural:ebonsteel_mirror"
   },
-  "candle_power": 38,
+  "candle_power": 32,
   "soul_power": 5,
   "offhand": {
     "id": "supernatural:ebonsteel_ingot"
