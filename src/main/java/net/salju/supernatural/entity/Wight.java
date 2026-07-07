@@ -8,9 +8,7 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
-import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
@@ -20,8 +18,6 @@ import net.minecraft.world.entity.monster.*;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.level.storage.ValueInput;
-import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.DifficultyInstance;
@@ -29,29 +25,15 @@ import javax.annotation.Nullable;
 
 public class Wight extends AbstractMinionEntity implements CrossbowAttackMob, RangedAttackMob {
 	private static final EntityDataAccessor<Boolean> DATA_CHARGING_STATE = SynchedEntityData.defineId(Wight.class, EntityDataSerializers.BOOLEAN);
-	private static final EntityDataAccessor<Boolean> CAPTAIN = SynchedEntityData.defineId(Wight.class, EntityDataSerializers.BOOLEAN);
 
 	public Wight(EntityType<Wight> type, Level world) {
 		super(type, world);
 	}
 
 	@Override
-	public void addAdditionalSaveData(ValueOutput tag) {
-		super.addAdditionalSaveData(tag);
-		tag.putBoolean("Captain", this.isCaptain());
-	}
-
-	@Override
-	public void readAdditionalSaveData(ValueInput tag) {
-		super.readAdditionalSaveData(tag);
-		this.getEntityData().set(CAPTAIN, tag.getBooleanOr("Captain", false));
-	}
-
-	@Override
 	protected void defineSynchedData(SynchedEntityData.Builder builder) {
 		super.defineSynchedData(builder);
 		builder.define(DATA_CHARGING_STATE, false);
-		builder.define(CAPTAIN, false);
 	}
 
 	@Override
@@ -97,18 +79,7 @@ public class Wight extends AbstractMinionEntity implements CrossbowAttackMob, Ra
 	}
 
 	@Override
-	protected void dropCustomDeathLoot(ServerLevel lvl, DamageSource source, boolean check) {
-		super.dropCustomDeathLoot(lvl, source, check);
-		if (this.isCaptain()) {
-			this.spawnAtLocation(lvl, new ItemStack(SupernaturalItems.EBONSTEEL_KEY.get()));
-		}
-	}
-
-	@Override
 	public SpawnGroupData finalizeSpawn(ServerLevelAccessor lvl, DifficultyInstance difficulty, EntitySpawnReason reason, @Nullable SpawnGroupData data) {
-		if (Mth.nextInt(this.getRandom(), 1, 100) >= 85) {
-			this.getEntityData().set(CAPTAIN, true);
-		}
 		this.populateDefaultEquipmentSlots(lvl.getRandom(), difficulty);
         this.setCanPickUpLoot(true);
 		return super.finalizeSpawn(lvl, difficulty, reason, data);
@@ -119,11 +90,7 @@ public class Wight extends AbstractMinionEntity implements CrossbowAttackMob, Ra
         this.setItemSlot(EquipmentSlot.MAINHAND, new ItemStack(Items.IRON_SWORD));
         this.setItemSlot(EquipmentSlot.OFFHAND, new ItemStack(Items.CROSSBOW));
         this.getOffhandItem().enchant(SupernaturalManager.getEnchantment(this.level(), "minecraft", "quick_charge"), 2);
-		if (this.isCaptain()) {
-			this.setItemSlot(EquipmentSlot.HEAD, SupernaturalManager.dyeHelmet(SupernaturalItems.GOTHIC_EBONSTEEL_HELMET.get()));
-		} else {
-			this.setItemSlot(EquipmentSlot.HEAD, new ItemStack(SupernaturalItems.EBONSTEEL_HELMET.get()));
-		}
+        this.setItemSlot(EquipmentSlot.HEAD, new ItemStack(SupernaturalItems.EBONSTEEL_HELMET.get()));
 		this.setItemSlot(EquipmentSlot.CHEST, new ItemStack(SupernaturalItems.EBONSTEEL_CHESTPLATE.get()));
 		this.setItemSlot(EquipmentSlot.LEGS, new ItemStack(SupernaturalItems.EBONSTEEL_LEGGINGS.get()));
 		this.setItemSlot(EquipmentSlot.FEET, new ItemStack(SupernaturalItems.EBONSTEEL_BOOTS.get()));
@@ -148,10 +115,6 @@ public class Wight extends AbstractMinionEntity implements CrossbowAttackMob, Ra
 	@Override
 	public SoundEvent getDeathSound() {
 		return SupernaturalSounds.WIGHT_DEATH.get();
-	}
-
-	public boolean isCaptain() {
-		return this.getEntityData().get(CAPTAIN);
 	}
 
     public boolean shouldUseCrossbow() {
