@@ -2,7 +2,7 @@
   "fallback": "minecraft:empty",
   "elements": [
     {
-      "weight": 2,
+      "weight": 3,
       "element": {
         "location": "supernatural:dungeon/room/dungeon_barracks_01",
         "processors": "minecraft:empty",
@@ -20,9 +20,18 @@
       }
     },
     {
-      "weight": 3,
+      "weight": 4,
       "element": {
         "location": "supernatural:dungeon/room/dungeon_barracks_03",
+        "processors": "minecraft:empty",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "location": "supernatural:dungeon/room/dungeon_barracks_04",
         "processors": "minecraft:empty",
         "projection": "rigid",
         "element_type": "minecraft:single_pool_element"
