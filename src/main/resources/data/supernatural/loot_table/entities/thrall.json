@@ -73,9 +73,6 @@
       ],
       "conditions": [
         {
-          "condition": "minecraft:killed_by_player"
-        },
-        {
           "condition": "minecraft:random_chance_with_enchanted_bonus",
           "enchanted_chance": {
             "type": "minecraft:linear",
@@ -96,9 +93,6 @@
         }
       ],
       "conditions": [
-        {
-          "condition": "minecraft:killed_by_player"
-        },
         {
           "condition": "minecraft:random_chance_with_enchanted_bonus",
           "enchanted_chance": {
