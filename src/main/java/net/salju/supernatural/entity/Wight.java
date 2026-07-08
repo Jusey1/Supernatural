@@ -23,9 +23,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.ProjectileWeaponItem;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.DifficultyInstance;
-import javax.annotation.Nullable;
 
 public class Wight extends AbstractMinionEntity implements RangedAttackMob {
 	public Wight(EntityType<Wight> type, Level world) {
@@ -73,12 +71,6 @@ public class Wight extends AbstractMinionEntity implements RangedAttackMob {
 				this.level().addParticle(ParticleTypes.SOUL_FIRE_FLAME, this.getRandomX(0.5), this.getRandomY(), this.getRandomZ(0.5), 0.0, 0.0, 0.0);
 			}
 		}
-	}
-
-	@Override
-	public SpawnGroupData finalizeSpawn(ServerLevelAccessor lvl, DifficultyInstance difficulty, EntitySpawnReason reason, @Nullable SpawnGroupData data) {
-		this.populateDefaultEquipmentSlots(lvl.getRandom(), difficulty);
-		return super.finalizeSpawn(lvl, difficulty, reason, data);
 	}
 
 	@Override

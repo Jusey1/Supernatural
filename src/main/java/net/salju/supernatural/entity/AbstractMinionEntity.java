@@ -14,6 +14,8 @@ import net.minecraft.world.level.pathfinder.PathType;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import javax.annotation.Nullable;
@@ -25,7 +27,6 @@ public abstract class AbstractMinionEntity extends Monster implements OwnableEnt
 
 	public AbstractMinionEntity(EntityType<? extends AbstractMinionEntity> type, Level world) {
 		super(type, world);
-        this.xpReward = 10;
         this.setPathfindingMalus(PathType.WATER, -1.0F);
 	}
 
@@ -54,6 +55,14 @@ public abstract class AbstractMinionEntity extends Monster implements OwnableEnt
 		builder.define(OWNER, Optional.empty());
         builder.define(FOLLOW, false);
 	}
+
+    @Override
+    public SpawnGroupData finalizeSpawn(ServerLevelAccessor lvl, DifficultyInstance difficulty, EntitySpawnReason reason, @Nullable SpawnGroupData data) {
+        this.populateDefaultEquipmentSlots(lvl.getRandom(), difficulty);
+        this.populateDefaultEquipmentEnchantments(lvl, lvl.getRandom(), difficulty);
+        this.setBaby(lvl.getRandom().nextFloat() < 0.05F);
+        return super.finalizeSpawn(lvl, difficulty, reason, data);
+    }
 
     @Override
     public InteractionResult mobInteract(Player player, InteractionHand hand) {
