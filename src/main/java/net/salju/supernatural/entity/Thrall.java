@@ -91,7 +91,7 @@ public class Thrall extends AbstractMinionEntity {
 	@Override
 	public SpawnGroupData finalizeSpawn(ServerLevelAccessor lvl, DifficultyInstance difficulty, EntitySpawnReason reason, @Nullable SpawnGroupData data) {
         this.setBaby(lvl.getRandom().nextFloat() < 0.05F);
-        this.setCanPickUpLoot(true);
+        this.populateDefaultEquipmentSlots(lvl.getRandom(), difficulty);
 		return super.finalizeSpawn(lvl, difficulty, reason, data);
 	}
 
@@ -100,22 +100,17 @@ public class Thrall extends AbstractMinionEntity {
         this.setItemSlot(EquipmentSlot.MAINHAND, new ItemStack(Items.IRON_SWORD));
         this.getMainHandItem().enchant(SupernaturalManager.getEnchantment(this.level(), Supernatural.MODID, "soulbinding"), 1);
         this.setItemSlot(EquipmentSlot.HEAD, new ItemStack(SupernaturalItems.EBONSTEEL_HELMET.get()));
-        this.setDropChance(EquipmentSlot.MAINHAND, 0.15F);
         if (randy.nextFloat() < 0.12F) {
             this.setItemSlot(EquipmentSlot.OFFHAND, new ItemStack(Items.AMETHYST_SHARD));
         }
         this.setDropChance(EquipmentSlot.OFFHAND, 1.0F);
         this.setDropChance(EquipmentSlot.HEAD, 0.0F);
-        this.setDropChance(EquipmentSlot.CHEST, 0.0F);
-        this.setDropChance(EquipmentSlot.LEGS, 0.0F);
-        this.setDropChance(EquipmentSlot.FEET, 0.0F);
 	}
 
     @Override
     public void setBaby(boolean check) {
         this.getEntityData().set(BABY, check);
         if (this.level() instanceof ServerLevel lvl) {
-            this.populateDefaultEquipmentSlots(this.getRandom(), lvl.getCurrentDifficultyAt(this.blockPosition()));
             AttributeInstance ats = this.getAttribute(Attributes.MOVEMENT_SPEED);
             if (ats != null) {
                 ats.removeModifier(SPEED_BABY_ID);

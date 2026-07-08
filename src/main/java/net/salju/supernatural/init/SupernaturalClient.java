@@ -29,6 +29,7 @@ public class SupernaturalClient {
     public static final ModelLayerLocation MERFOLK = registerModel("merfolk", "main");
     public static final ModelLayerLocation THRALL = registerModel("thrall", "main");
     public static final ModelLayerLocation WIGHT = registerModel("wight", "main");
+    public static final ModelLayerLocation WIGHT_CLOTHING = registerModel("wight", "clothing");
     public static final ModelLayerLocation SCOURGE = registerModel("scourge", "main");
     public static final ModelLayerLocation SCOURGE_ARMOR = registerModel("scourge", "armor");
 	public static final ArmorModelSet<ModelLayerLocation> GOTHIC = registerArmorSet("gothic");
@@ -53,6 +54,7 @@ public class SupernaturalClient {
         event.registerLayerDefinition(MERFOLK, MerfolkModel::createBodyLayer);
         event.registerLayerDefinition(THRALL, ThrallModel::createBodyLayer);
         event.registerLayerDefinition(WIGHT, WightModel::createBodyLayer);
+        event.registerLayerDefinition(WIGHT_CLOTHING, WightModel::createClothingLayer);
         event.registerLayerDefinition(SCOURGE, ScourgeModel::createBodyLayer);
         event.registerLayerDefinition(SCOURGE_ARMOR, ScourgeModel::createBodyLayer);
         event.registerLayerDefinition(GOTHIC.head(), GothicArmorModel::createHeadLayer);

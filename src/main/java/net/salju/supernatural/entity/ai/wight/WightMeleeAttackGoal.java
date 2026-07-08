@@ -2,6 +2,7 @@ package net.salju.supernatural.entity.ai.wight;
 
 import net.salju.supernatural.entity.Wight;
 import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
+import net.minecraft.world.item.Items;
 
 public class WightMeleeAttackGoal extends MeleeAttackGoal {
 	private final Wight target;
@@ -13,6 +14,6 @@ public class WightMeleeAttackGoal extends MeleeAttackGoal {
 
     @Override
     public boolean canUse() {
-        return super.canUse() && !this.target.shouldUseCrossbow();
+        return super.canUse() && !this.target.isHolding(Items.BOW);
     }
 }

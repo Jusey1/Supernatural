@@ -2,6 +2,7 @@ package net.salju.supernatural.client.model;
 
 import net.salju.supernatural.client.renderer.SupernaturalRenderState;
 import net.minecraft.client.model.monster.skeleton.SkeletonModel;
+import net.minecraft.client.model.geom.builders.CubeDeformation;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.HumanoidModel;
@@ -17,6 +18,10 @@ public class WightModel<T extends SupernaturalRenderState> extends HumanoidModel
 	public static LayerDefinition createBodyLayer() {
 		return SkeletonModel.createBodyLayer();
 	}
+
+    public static LayerDefinition createClothingLayer() {
+        return LayerDefinition.create(HumanoidModel.createMesh(new CubeDeformation(0.25F), 0.0F), 64, 32);
+    }
 
 	@Override
 	public void translateToHand(SupernaturalRenderState state, HumanoidArm arm, PoseStack pose) {
@@ -79,11 +84,15 @@ public class WightModel<T extends SupernaturalRenderState> extends HumanoidModel
 	protected void poseArms(T target, ModelPart mainArm, ModelPart offArm) {
 		if (target.isAggressive) {
             if (target.isCastingSpell) {
-				if (target.isCharging) {
-					offArm.xRot = -2.4876F;
-				} else {
-					offArm.xRot = -1.4399F;
-				}
+                if (target.isLeftHanded) {
+                    mainArm.yRot = 0.1F + this.head.yRot;
+                    offArm.yRot = -0.1F + this.head.yRot - 0.4F;
+                } else {
+                    mainArm.yRot = -0.1F + this.head.yRot;
+                    offArm.yRot = 0.1F + this.head.yRot + 0.4F;
+                }
+                mainArm.xRot = (-(float) Math.PI / 2F) + this.head.xRot;
+                offArm.xRot = (-(float) Math.PI / 2F) + this.head.xRot;
 			} else {
 				 mainArm.xRot = -2.0944F;
 				 mainArm.yRot = 0.1745F;

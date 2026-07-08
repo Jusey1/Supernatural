@@ -25,11 +25,12 @@ public class Supernatural {
 		SupernaturalTabs.REGISTRY.register(bus);
 		SupernaturalMobs.REGISTRY.register(bus);
 		SupernaturalEffects.REGISTRY.register(bus);
-        SupernaturalRecipes.TYPES.register(bus);
-        SupernaturalRecipes.SERIALS.register(bus);
-        SupernaturalRecipes.MENUS.register(bus);
-        SupernaturalRecipes.CATES.register(bus);
-        SupernaturalRecipes.DISPLAYS.register(bus);
+		SupernaturalPotions.REGISTRY.register(bus);
+		SupernaturalRecipes.TYPES.register(bus);
+		SupernaturalRecipes.SERIALS.register(bus);
+		SupernaturalRecipes.MENUS.register(bus);
+		SupernaturalRecipes.CATES.register(bus);
+		SupernaturalRecipes.DISPLAYS.register(bus);
 		if (ModList.get().isLoaded("supplementaries")) {
 			Supplementaries.BLOCKS.register(bus);
 			Supplementaries.ITEMS.register(bus);
