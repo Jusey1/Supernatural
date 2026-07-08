@@ -90,8 +90,7 @@
       "entries": [
 	{
           "type": "minecraft:item",
-          "name": "minecraft:nautilus_shell",
-          "weight": 2
+          "name": "minecraft:nautilus_shell"
         }
       ],
       "conditions": [
@@ -99,7 +98,7 @@
           "condition": "minecraft:random_chance_with_enchanted_bonus",
           "enchanted_chance": {
             "type": "minecraft:linear",
-            "base": 0.01,
+            "base": 0.03,
             "per_level_above_first": 0.005
           },
           "enchantment": "minecraft:looting",
