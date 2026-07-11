@@ -127,17 +127,17 @@ public class Thrall extends AbstractMinionEntity {
 
 	@Override
 	public SoundEvent getAmbientSound() {
-		return SupernaturalSounds.WIGHT_IDLE.get();
+		return SupernaturalSounds.THRALL_IDLE.get();
 	}
 
 	@Override
 	public SoundEvent getHurtSound(DamageSource source) {
-		return SupernaturalSounds.WIGHT_HURT.get();
+		return SupernaturalSounds.THRALL_HURT.get();
 	}
 
 	@Override
 	public SoundEvent getDeathSound() {
-		return SupernaturalSounds.WIGHT_DEATH.get();
+		return SupernaturalSounds.THRALL_DEATH.get();
 	}
 
     @Override
@@ -148,7 +148,7 @@ public class Thrall extends AbstractMinionEntity {
     @Override
     protected int getBaseExperienceReward(ServerLevel lvl) {
         if (this.isBaby()) {
-            this.xpReward = this.xpReward * 2;
+            this.xpReward = this.xpReward * 3;
         }
         return super.getBaseExperienceReward(lvl);
     }

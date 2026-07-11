@@ -76,7 +76,7 @@ public class SpectralMirrorItem extends Item {
 	@Override
 	public boolean releaseUsing(ItemStack stack, Level world, LivingEntity target, int i) {
         AnchorballData data = stack.get(SupernaturalData.ANCHOR.get());
-        if (i <= 10 && data != null && target instanceof ServerPlayer ply && world instanceof ServerLevel lvl && RitualManager.canTeleportTo(data, lvl, ply)) {
+        if (i <= 10 && target instanceof ServerPlayer ply && world instanceof ServerLevel lvl && RitualManager.canTeleportTo(data, lvl)) {
 			RitualManager.teleportUser(data, lvl, ply);
 			ply.getCooldowns().addCooldown(stack, 200);
 		}

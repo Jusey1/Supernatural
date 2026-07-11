@@ -77,7 +77,18 @@ public class Wight extends AbstractMinionEntity implements RangedAttackMob {
 	protected void populateDefaultEquipmentSlots(RandomSource randy, DifficultyInstance difficulty) {
         this.setItemSlot(EquipmentSlot.MAINHAND, new ItemStack(Items.BOW));
         this.setItemSlot(EquipmentSlot.HEAD, new ItemStack(SupernaturalItems.EBONSTEEL_HELMET.get()));
-		this.setDropChance(EquipmentSlot.HEAD, 0.0F);
+        double d = Math.random();
+        if (d <= 0.05 || d >= 0.95) {
+            this.setItemSlot(EquipmentSlot.CHEST, new ItemStack(SupernaturalItems.EBONSTEEL_CHESTPLATE.get()));
+        }
+        if (d <= 0.15) {
+            this.setItemSlot(EquipmentSlot.LEGS, new ItemStack(SupernaturalItems.EBONSTEEL_LEGGINGS.get()));
+            this.setItemSlot(EquipmentSlot.FEET, new ItemStack(SupernaturalItems.EBONSTEEL_BOOTS.get()));
+        }
+        this.setDropChance(EquipmentSlot.HEAD, 0.0F);
+        this.setDropChance(EquipmentSlot.CHEST, 0.0F);
+        this.setDropChance(EquipmentSlot.LEGS, 0.0F);
+        this.setDropChance(EquipmentSlot.FEET, 0.0F);
 	}
 
 	@Override
