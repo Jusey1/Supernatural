@@ -89,6 +89,65 @@
       }
     ]
   },
+  "thrall_death": {
+    "subtitle": "subtitles.thrall_death",
+    "sounds": [
+      {
+        "name": "supernatural:thrall/thrall_death_1",
+        "stream": false
+      },
+      {
+        "name": "supernatural:thrall/thrall_death_2",
+        "stream": false
+      },
+      {
+        "name": "supernatural:thrall/thrall_death_3",
+        "stream": false
+      }
+    ]
+  },
+  "thrall_hurt": {
+    "subtitle": "subtitles.thrall_hurt",
+    "sounds": [
+      {
+        "name": "supernatural:thrall/thrall_hurt_1",
+        "stream": false
+      },
+      {
+        "name": "supernatural:thrall/thrall_hurt_2",
+        "stream": false
+      },
+      {
+        "name": "supernatural:thrall/thrall_hurt_3",
+        "stream": false
+      },
+      {
+        "name": "supernatural:thrall/thrall_hurt_4",
+        "stream": false
+      }
+    ]
+  },
+  "thrall_idle": {
+    "subtitle": "subtitles.thrall_idle",
+    "sounds": [
+      {
+        "name": "supernatural:thrall/thrall_idle_1",
+        "stream": false
+      },
+      {
+        "name": "supernatural:thrall/thrall_idle_2",
+        "stream": false
+      },
+      {
+        "name": "supernatural:thrall/thrall_idle_3",
+        "stream": false
+      },
+      {
+        "name": "supernatural:thrall/thrall_idle_4",
+        "stream": false
+      }
+    ]
+  },
   "vampire_celebrate": {
     "subtitle": "subtitles.vampire_celebrate",
     "sounds": [
