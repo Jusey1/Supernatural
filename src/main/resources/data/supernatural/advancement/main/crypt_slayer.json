@@ -1,0 +1,91 @@
+{
+  "parent": "supernatural:main/crypt_hunter",
+  "criteria": {
+    "thrall": {
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type": "supernatural:thrall"
+            }
+          }
+        ]
+      },
+      "trigger": "minecraft:player_killed_entity"
+    },
+    "wight": {
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type": "supernatural:wight"
+            }
+          }
+        ]
+      },
+      "trigger": "minecraft:player_killed_entity"
+    },
+    "vampire": {
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type": "supernatural:vampire"
+            }
+          }
+        ]
+      },
+      "trigger": "minecraft:player_killed_entity"
+    },
+    "angel": {
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type": "supernatural:angel"
+            }
+          }
+        ]
+      },
+      "trigger": "minecraft:player_killed_entity"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancement.supernatural.crypt_slayer.desc"
+    },
+    "icon": {
+      "id": "minecraft:iron_sword"
+    },
+    "title": {
+      "translate": "advancement.supernatural.crypt_slayer.title"
+    },
+    "frame": "goal"
+  },
+  "requirements": [
+    [
+      "thrall"
+    ],
+    [
+      "wight"
+    ],
+    [
+      "vampire"
+    ],
+    [
+      "angel"
+    ]
+  ],
+  "rewards": {
+    "experience": 5
+  },
+  "sends_telemetry_event": true
+}

@@ -1,0 +1,32 @@
+{
+  "parent": "supernatural:main/seeker",
+  "criteria": {
+    "commander": {
+      "conditions": {
+        "items": [
+          {
+            "items": "supernatural:commander_wand"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancement.supernatural.commander.desc"
+    },
+    "icon": {
+      "id": "supernatural:commander_wand"
+    },
+    "title": {
+      "translate": "advancement.supernatural.commander.title"
+    }
+  },
+  "requirements": [
+    [
+      "commander"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

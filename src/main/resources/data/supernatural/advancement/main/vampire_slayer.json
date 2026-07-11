@@ -1,5 +1,5 @@
 {
-  "parent": "supernatural:main/plasmacrypt",
+  "parent": "supernatural:main/crypt_slayer",
   "criteria": {
     "slayer": {
       "conditions": {
