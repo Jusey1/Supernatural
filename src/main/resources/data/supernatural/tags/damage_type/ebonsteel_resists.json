@@ -1,11 +1,20 @@
 {
   "replace": false,
   "values": [
-    "supernatural:coldflame",
+    "supernatural:revenant",
     "minecraft:dragon_breath",
+    "minecraft:fireball",
+    "minecraft:freeze",
+    "minecraft:hot_floor",
+    "minecraft:in_fire",
     "minecraft:indirect_magic",
+    "minecraft:lava",
+    "minecraft:lightning_bolt",
     "minecraft:magic",
+    "minecraft:on_fire",
     "minecraft:sonic_boom",
+    "minecraft:unattributed_fireball",
+    "minecraft:wind_charge",
     "minecraft:wither",
     "minecraft:wither_skull",
     {
