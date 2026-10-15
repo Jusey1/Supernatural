@@ -65,18 +65,6 @@ public abstract class AbstractMinionEntity extends Monster implements OwnableEnt
     }
 
     @Override
-    public InteractionResult mobInteract(Player player, InteractionHand hand) {
-        if (this.getOwner() != null && this.getOwner().is(player)) {
-            ItemStack stack = player.getItemInHand(hand);
-            if (stack.is(SupernaturalItems.COMMANDER_WAND)) {
-                this.setFollowing(this.isFollowing() ? false : true);
-                return InteractionResult.SUCCESS;
-            }
-        }
-        return super.mobInteract(player, hand);
-    }
-
-    @Override
     public boolean canFreeze() {
         return false;
     }

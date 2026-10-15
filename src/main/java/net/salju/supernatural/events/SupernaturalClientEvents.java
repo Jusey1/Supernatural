@@ -33,7 +33,7 @@ public class SupernaturalClientEvents {
 	@SubscribeEvent(receiveCanceled = true)
 	public static void onGui(RenderGuiLayerEvent.Pre event) {
 		Player player = Minecraft.getInstance().player;
-		if (player != null && SupernaturalManager.hasVampirism(player, 1)) {
+		if (player != null && SupernaturalManager.hasVampirism(player)) {
 			if (event.getName().equals(VanillaGuiLayers.FOOD_LEVEL)) {
 				event.setCanceled(true);
 			}

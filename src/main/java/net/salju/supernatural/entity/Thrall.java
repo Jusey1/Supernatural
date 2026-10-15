@@ -91,6 +91,14 @@ public class Thrall extends AbstractMinionEntity {
         this.setItemSlot(EquipmentSlot.MAINHAND, new ItemStack(Items.IRON_SWORD));
         this.getMainHandItem().enchant(SupernaturalManager.getEnchantment(this.level(), Supernatural.MODID, "soulbinding"), 1);
         this.setItemSlot(EquipmentSlot.HEAD, new ItemStack(SupernaturalItems.EBONSTEEL_HELMET.get()));
+        double d = Math.random();
+        if (d <= 0.05 || d >= 0.95) {
+            this.setItemSlot(EquipmentSlot.CHEST, new ItemStack(SupernaturalItems.EBONSTEEL_CHESTPLATE.get()));
+        }
+        if (d <= 0.15) {
+            this.setItemSlot(EquipmentSlot.LEGS, new ItemStack(SupernaturalItems.EBONSTEEL_LEGGINGS.get()));
+            this.setItemSlot(EquipmentSlot.FEET, new ItemStack(SupernaturalItems.EBONSTEEL_BOOTS.get()));
+        }
         if (randy.nextFloat() < 0.12F) {
             this.setItemSlot(EquipmentSlot.OFFHAND, new ItemStack(Items.AMETHYST_SHARD));
         }
@@ -110,19 +118,6 @@ public class Thrall extends AbstractMinionEntity {
                 }
             }
         }
-    }
-
-    @Override
-    public boolean doHurtTarget(ServerLevel lvl, Entity target) {
-        if (super.doHurtTarget(lvl, target)) {
-            if (target.canFreeze()) {
-                if (target instanceof LivingEntity bob) {
-                    SupernaturalManager.hurtWithFrostbite(bob, 125);
-                }
-            }
-            return true;
-        }
-        return false;
     }
 
 	@Override

@@ -64,13 +64,13 @@ public class SupernaturalManager {
 			if (player.getPersistentData().getCompound(Player.PERSISTED_NBT_TAG).isPresent()) {
 				return player.getPersistentData().getCompound(Player.PERSISTED_NBT_TAG).get().getBooleanOr("isVampire", false);
 			}
-			return false;
+			return hasVampirism(player);
 		}
 		return target.getType().is(SupernaturalTags.VAMPIRE);
 	}
 
-	public static boolean hasVampirism(LivingEntity target, int i) {
-		return target.hasEffect(SupernaturalEffects.VAMPIRISM) && target.getEffect(SupernaturalEffects.VAMPIRISM).getAmplifier() >= i;
+	public static boolean hasVampirism(LivingEntity target) {
+		return target.hasEffect(SupernaturalEffects.VAMPIRISM) && target.getEffect(SupernaturalEffects.VAMPIRISM).getAmplifier() >= 1;
 	}
 
 	public static void setVampire(Player player, boolean check) {
@@ -112,11 +112,6 @@ public class SupernaturalManager {
 
     public static boolean canSoulbind(LivingEntity target) {
         return isVampire(target) || getEnchantmentLevel(target.getWeaponItem(), target.level(), Supernatural.MODID, "soulbinding") > 0;
-    }
-
-    public static void hurtWithFrostbite(LivingEntity target, int i) {
-        target.setTicksFrozen(target.getTicksFrozen() + i);
-        target.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 300, 0));
     }
 
 	public static ItemStack dyeHelmet(Item item) {

@@ -3,6 +3,7 @@ package net.salju.supernatural.item;
 import net.salju.supernatural.init.SupernaturalData;
 import net.salju.supernatural.block.chess.AbstractChessBlock;
 import net.salju.supernatural.init.SupernaturalItems;
+import net.salju.supernatural.init.SupernaturalTags;
 import net.salju.supernatural.item.component.CommanderWandData;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.BlockPos;
@@ -78,8 +79,7 @@ public class CommanderWandItem extends Item {
     public InteractionResult useOn(UseOnContext context) {
         CommanderWandData data = context.getItemInHand().get(SupernaturalData.COMMANDER);
         if (data != null && data.getCommandingPiecePosition() != null) {
-            List<BlockPos> list = this.getPlacements(context.getLevel(), data.getCommandingPiecePosition());
-            if (list.contains(context.getClickedPos().above())) {
+            if (this.isValidBoard(context.getLevel(), context.getClickedPos())) {
                 int i = 0;
                 BlockPos target = context.getClickedPos().above(3);
                 BlockState state = context.getLevel().getBlockState(data.getCommandingPiecePosition());
@@ -107,15 +107,11 @@ public class CommanderWandItem extends Item {
         return super.useOn(context);
     }
 
-    public List<BlockPos> getPlacements(Level world, BlockPos pos) {
-        BlockState state = world.getBlockState(pos);
-        if (state.getBlock() instanceof AbstractChessBlock target) {
-            return target.getValidMoves(state, world, pos);
-        }
-        return Lists.newArrayList();
-    }
-
     public boolean isValidBlock(Level world, BlockPos pos) {
         return world.getBlockState(pos).isEmpty() || world.getBlockState(pos).getBlock() instanceof AbstractChessBlock;
+    }
+
+    public boolean isValidBoard(Level world, BlockPos pos) {
+        return world.getBlockState(pos).is(SupernaturalTags.CHESSBOARD);
     }
 }

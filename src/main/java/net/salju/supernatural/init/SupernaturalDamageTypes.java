@@ -13,8 +13,8 @@ import javax.annotation.Nullable;
 
 public class SupernaturalDamageTypes {
     public static final ResourceKey<DamageType> ANGEL = ResourceKey.create(Registries.DAMAGE_TYPE, Identifier.fromNamespaceAndPath(Supernatural.MODID, "angel"));
-    public static final ResourceKey<DamageType> CHECKMATE = ResourceKey.create(Registries.DAMAGE_TYPE, Identifier.fromNamespaceAndPath(Supernatural.MODID, "checkmate"));
-    public static final ResourceKey<DamageType> COLDFLAME = ResourceKey.create(Registries.DAMAGE_TYPE, Identifier.fromNamespaceAndPath(Supernatural.MODID, "coldflame"));
+    public static final ResourceKey<DamageType> CHESS = ResourceKey.create(Registries.DAMAGE_TYPE, Identifier.fromNamespaceAndPath(Supernatural.MODID, "chess"));
+    public static final ResourceKey<DamageType> REVENANT = ResourceKey.create(Registries.DAMAGE_TYPE, Identifier.fromNamespaceAndPath(Supernatural.MODID, "revenant"));
     public static final ResourceKey<DamageType> SUN = ResourceKey.create(Registries.DAMAGE_TYPE, Identifier.fromNamespaceAndPath(Supernatural.MODID, "sun"));
 
     public static DamageSource getAngel(RegistryAccess ra, @Nullable Entity target) {
@@ -24,18 +24,18 @@ public class SupernaturalDamageTypes {
         return new DamageSource(ra.lookupOrThrow(Registries.DAMAGE_TYPE).getOrThrow(ANGEL));
     }
 
-    public static DamageSource getCheckmated(RegistryAccess ra, @Nullable Entity target) {
+    public static DamageSource getTaken(RegistryAccess ra, @Nullable Entity target) {
         if (target != null) {
-            return new DamageSource(ra.lookupOrThrow(Registries.DAMAGE_TYPE).getOrThrow(CHECKMATE), target);
+            return new DamageSource(ra.lookupOrThrow(Registries.DAMAGE_TYPE).getOrThrow(CHESS), target);
         }
-        return new DamageSource(ra.lookupOrThrow(Registries.DAMAGE_TYPE).getOrThrow(CHECKMATE));
+        return new DamageSource(ra.lookupOrThrow(Registries.DAMAGE_TYPE).getOrThrow(CHESS));
     }
 
-    public static DamageSource getColdflame(RegistryAccess ra, @Nullable Entity target) {
+    public static DamageSource getRevenant(RegistryAccess ra, @Nullable Entity target) {
         if (target != null) {
-            return new DamageSource(ra.lookupOrThrow(Registries.DAMAGE_TYPE).getOrThrow(COLDFLAME), target);
+            return new DamageSource(ra.lookupOrThrow(Registries.DAMAGE_TYPE).getOrThrow(REVENANT), target);
         }
-        return new DamageSource(ra.lookupOrThrow(Registries.DAMAGE_TYPE).getOrThrow(COLDFLAME));
+        return new DamageSource(ra.lookupOrThrow(Registries.DAMAGE_TYPE).getOrThrow(REVENANT));
     }
 
     public static DamageSource getSun(RegistryAccess ra, @Nullable Entity target) {
