@@ -52,13 +52,9 @@ public class RitualManager {
         }
     }
 
-    public static boolean canTeleportTo(AnchorballData data, ServerLevel lvl, ServerPlayer ply) {
+    public static boolean canTeleportTo(AnchorballData data, ServerLevel lvl) {
         if (data != null) {
-            boolean check = true;
-            if (ply.getLastDeathLocation().isPresent() && data.target() != ply.getLastDeathLocation().get()) {
-                check = lvl.getPoiManager().existsAtPosition(SupernaturalBlocks.RITUAL_POI.getKey(), data.getPos());
-            }
-            return lvl.isInWorldBounds(data.getPos()) && check;
+            return lvl.isInWorldBounds(data.getPos());
         }
         return false;
     }

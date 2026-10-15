@@ -1,20 +1,16 @@
 package net.salju.supernatural.block.chess;
 
 import net.salju.supernatural.init.*;
-import net.salju.supernatural.block.misc.RevenantVault;
-import net.salju.supernatural.block.BoardTileBlock;
 import net.salju.supernatural.item.component.CommanderWandData;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.GlobalPos;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.item.FallingBlockEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.*;
@@ -30,8 +26,6 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraft.world.InteractionResult;
-import com.google.common.collect.Lists;
-import java.util.List;
 import java.util.Optional;
 
 public abstract class AbstractChessBlock extends FallingBlock {
@@ -68,13 +62,6 @@ public abstract class AbstractChessBlock extends FallingBlock {
     public void onLand(Level world, BlockPos pos, BlockState state, BlockState air, FallingBlockEntity target) {
         if (world.getBlockState(pos.below()).getBlock() instanceof AbstractChessBlock) {
             world.destroyBlock(pos.below(), true);
-        } else if (world.getBlockState(pos.below()).getBlock() instanceof BoardTileBlock) {
-            if (BoardTileBlock.isCursed(world, pos.below())) {
-                world.destroyBlock(pos, false);
-                if (world instanceof ServerLevel lvl) {
-                    RevenantVault.ejectItem(lvl, pos, new ItemStack(getPawn(state)));
-                }
-            }
         }
     }
 
@@ -85,7 +72,7 @@ public abstract class AbstractChessBlock extends FallingBlock {
 
     @Override
     public DamageSource getFallDamageSource(Entity target) {
-        return SupernaturalDamageTypes.getCheckmated(target.level().registryAccess(), null);
+        return SupernaturalDamageTypes.getTaken(target.level().registryAccess(), null);
     }
 
     @Override
@@ -133,10 +120,6 @@ public abstract class AbstractChessBlock extends FallingBlock {
         return state.getMapColor(world, pos).col;
     }
 
-    public List<BlockPos> getValidMoves(BlockState state, Level world, BlockPos pos) {
-        return Lists.newArrayList();
-    }
-
     public boolean isPromoted(BlockState state) {
         return state.getValue(PROMOTED);
     }
@@ -146,16 +129,4 @@ public abstract class AbstractChessBlock extends FallingBlock {
     public abstract int getChessDamage();
 
     public abstract int getChessHeight();
-
-    public static boolean canTake(BlockState state, BlockState target) {
-        return state.is(SupernaturalTags.EBONSTEEL_PIECES) ? target.is(SupernaturalTags.QUARTZ_PIECES) : target.is(SupernaturalTags.EBONSTEEL_PIECES);
-    }
-
-    public static boolean isValidBoard(Level world, BlockPos pos) {
-        return world.getBlockState(pos.below()).is(SupernaturalTags.CHESSBOARD);
-    }
-
-    public static Item getPawn(BlockState state) {
-        return state.is(SupernaturalTags.EBONSTEEL_PIECES) ? SupernaturalItems.EBONSTEEL_PAWN.get() : SupernaturalItems.QUARTZ_PAWN.get();
-    }
 }

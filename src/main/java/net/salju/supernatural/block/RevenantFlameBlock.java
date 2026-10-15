@@ -61,19 +61,13 @@ public class RevenantFlameBlock extends BaseFireBlock {
 
     public static void applyUndead(Entity target) {
         if (target instanceof LivingEntity mob && target.level() instanceof ServerLevel lvl) {
-            if (mob.getTicksFrozen() <= 5) {
-                mob.setTicksFrozen(mob.getTicksFrozen() + 25);
-                mob.heal(2.5F);
-            }
+            mob.heal(2.5F);
         }
     }
 
     public static void applyLiving(Entity target) {
         if (target.level() instanceof ServerLevel lvl) {
-            if (target.getTicksFrozen() <= 25) {
-                target.setTicksFrozen(target.getTicksFrozen() + 50);
-                target.hurt(SupernaturalDamageTypes.getColdflame(lvl.registryAccess(), null), 3.0F);
-            }
+            target.hurt(SupernaturalDamageTypes.getRevenant(lvl.registryAccess(), null), 3.0F);
         }
     }
 }

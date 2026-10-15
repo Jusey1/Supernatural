@@ -38,7 +38,7 @@ import java.util.Map;
 
 public class EbonsteelWeaponBlock extends BaseEntityBlock {
     public static final EnumProperty<Direction> FACING = HorizontalDirectionalBlock.FACING;
-    private static final Map<Direction, VoxelShape> BOXES = Maps.newEnumMap(ImmutableMap.of(Direction.NORTH, Block.box(4.0, 7.0, 12.0, 12.0, 9.0, 16.0), Direction.SOUTH, Block.box(4.0, 7.0, 0.0, 12.0, 9.0, 4.0), Direction.WEST, Block.box(12.0, 7.0, 4.0, 16.0, 9.0, 12.0), Direction.EAST, Block.box(0.0, 7.0, 4.0, 4.0, 9.0, 12.0)));
+    private static final Map<Direction, VoxelShape> BOXES = Maps.newEnumMap(ImmutableMap.of(Direction.NORTH, Block.box(4.0, 3.0, 12.0, 12.0, 13.0, 16.0), Direction.SOUTH, Block.box(4.0, 3.0, 0.0, 12.0, 13.0, 4.0), Direction.WEST, Block.box(12.0, 3.0, 4.0, 16.0, 13.0, 12.0), Direction.EAST, Block.box(0.0, 3.0, 4.0, 4.0, 13.0, 12.0)));
 	public static final MapCodec<EbonsteelWeaponBlock> CODEC = simpleCodec(EbonsteelWeaponBlock::new);
 
 	public EbonsteelWeaponBlock(BlockBehaviour.Properties props) {
@@ -72,7 +72,7 @@ public class EbonsteelWeaponBlock extends BaseEntityBlock {
 				return InteractionResult.SUCCESS;
 			} else if (!target.isEmpty()) {
                 if (world instanceof ServerLevel lvl && player instanceof ServerPlayer ply) {
-                    if (target.getItem(0).is(SupernaturalItems.EBONSTEEL_MIRROR) && !ply.isCrouching() && RitualManager.canTeleportTo(target.getItem(0).get(SupernaturalData.ANCHOR), lvl, ply)) {
+                    if (target.getItem(0).is(SupernaturalItems.EBONSTEEL_MIRROR) && !ply.isCrouching() && RitualManager.canTeleportTo(target.getItem(0).get(SupernaturalData.ANCHOR), lvl)) {
                         RitualManager.teleportUser(target.getItem(0).get(SupernaturalData.ANCHOR), lvl, ply);
                     } else {
                         target.dropItem(0);
