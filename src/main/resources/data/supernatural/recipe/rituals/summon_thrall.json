@@ -1,11 +1,16 @@
 {
   "type": "supernatural:ritual",
   "category": "summon",
-  "ingredient": "minecraft:zombie_head",
+  "ingredient": {
+    "item": "minecraft:zombie_head"
+  },
   "result": {
     "id": "supernatural:soulgem"
   },
   "candle_power": 42,
   "soul_power": 5,
-  "entity": "supernatural:thrall"
+  "entity": "supernatural:thrall",
+  "block": {
+    "id": "supernatural:ebonsteel_rook"
+  }
 }

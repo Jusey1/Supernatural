@@ -1,11 +1,16 @@
 {
   "type": "supernatural:ritual",
   "category": "summon",
-  "ingredient": "minecraft:skeleton_skull",
+  "ingredient": {
+    "item": "minecraft:skeleton_skull"
+  },
   "result": {
     "id": "supernatural:soulgem"
   },
   "candle_power": 42,
   "soul_power": 5,
-  "entity": "supernatural:wight"
+  "entity": "supernatural:wight",
+  "block": {
+    "id": "supernatural:ebonsteel_rook"
+  }
 }
