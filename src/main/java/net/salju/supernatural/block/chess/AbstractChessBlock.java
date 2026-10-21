@@ -120,10 +120,6 @@ public abstract class AbstractChessBlock extends FallingBlock {
         return state.getMapColor(world, pos).col;
     }
 
-    public boolean isPromoted(BlockState state) {
-        return state.getValue(PROMOTED);
-    }
-
     public abstract int getAnalogOutputSignal();
 
     public abstract int getChessDamage();

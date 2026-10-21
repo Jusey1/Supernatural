@@ -27,6 +27,6 @@ public class KingBlock extends AbstractChessBlock {
 
     @Override
     public int getChessHeight() {
-        return 32;
+        return 31;
     }
 }

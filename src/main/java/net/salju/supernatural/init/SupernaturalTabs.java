@@ -35,6 +35,7 @@ public class SupernaturalTabs {
                 tabData.accept(SupernaturalManager.dyeHelmet(SupernaturalItems.GOTHIC_NETHERITE_HELMET.get()));
                 tabData.accept(SupernaturalManager.dyeHelmet(SupernaturalItems.GOTHIC_EBONSTEEL_HELMET.get()));
                 tabData.accept(SupernaturalItems.EBONSTEEL_HORSE_ARMOR.get());
+                tabData.accept(SupernaturalItems.EBONSTEEL_SPEAR.get());
                 tabData.accept(SupernaturalItems.EBONSTEEL_INGOT.get());
                 tabData.accept(SupernaturalItems.EBONSTEEL_SCRAP.get());
                 tabData.accept(SupernaturalItems.EBONSTEEL_KEY.get());
@@ -45,7 +46,17 @@ public class SupernaturalTabs {
                 tabData.accept(SupernaturalItems.VAMPIRE_DUST.get());
                 tabData.accept(SupernaturalItems.BLOOD.get());
                 tabData.accept(SupernaturalItems.EBONSTEEL_PAWN.get());
+                tabData.accept(SupernaturalItems.EBONSTEEL_KNIGHT.get());
+                tabData.accept(SupernaturalItems.EBONSTEEL_BISHOP.get());
+                tabData.accept(SupernaturalItems.EBONSTEEL_ROOK.get());
+                tabData.accept(SupernaturalItems.EBONSTEEL_QUEEN.get());
+                tabData.accept(SupernaturalItems.EBONSTEEL_KING.get());
                 tabData.accept(SupernaturalItems.QUARTZ_PAWN.get());
+                tabData.accept(SupernaturalItems.QUARTZ_KNIGHT.get());
+                tabData.accept(SupernaturalItems.QUARTZ_BISHOP.get());
+                tabData.accept(SupernaturalItems.QUARTZ_ROOK.get());
+                tabData.accept(SupernaturalItems.QUARTZ_QUEEN.get());
+                tabData.accept(SupernaturalItems.QUARTZ_KING.get());
                 tabData.accept(SupernaturalItems.EBONSTEEL_BARS.get());
                 tabData.accept(SupernaturalItems.EBONSTEEL_DOOR.get());
                 tabData.accept(SupernaturalItems.EBONSTEEL_TRAPDOOR.get());

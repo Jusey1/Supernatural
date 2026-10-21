@@ -7,6 +7,7 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.Identifier;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.item.component.*;
@@ -23,6 +24,16 @@ public class SupernaturalItems {
     public static final DeferredHolder<Item, Item> ANGEL_STATUE = REGISTRY.register("angel_statue", () -> new AngelStatueItem(createBaseProps("angel_statue").stacksTo(1)));
     public static final DeferredHolder<Item, Item> EBONSTEEL_PAWN = block(SupernaturalBlocks.EBONSTEEL_PAWN, "ebonsteel_pawn");
     public static final DeferredHolder<Item, Item> QUARTZ_PAWN = block(SupernaturalBlocks.QUARTZ_PAWN, "quartz_pawn");
+    public static final DeferredHolder<Item, Item> EBONSTEEL_KNIGHT = block(SupernaturalBlocks.EBONSTEEL_KNIGHT, "ebonsteel_knight");
+    public static final DeferredHolder<Item, Item> QUARTZ_KNIGHT = block(SupernaturalBlocks.QUARTZ_KNIGHT, "quartz_knight");
+    public static final DeferredHolder<Item, Item> EBONSTEEL_BISHOP = block(SupernaturalBlocks.EBONSTEEL_BISHOP, "ebonsteel_bishop");
+    public static final DeferredHolder<Item, Item> QUARTZ_BISHOP = block(SupernaturalBlocks.QUARTZ_BISHOP, "quartz_bishop");
+    public static final DeferredHolder<Item, Item> EBONSTEEL_ROOK = block(SupernaturalBlocks.EBONSTEEL_ROOK, "ebonsteel_rook");
+    public static final DeferredHolder<Item, Item> QUARTZ_ROOK = block(SupernaturalBlocks.QUARTZ_ROOK, "quartz_rook");
+    public static final DeferredHolder<Item, Item> EBONSTEEL_QUEEN = block(SupernaturalBlocks.EBONSTEEL_QUEEN, "ebonsteel_queen");
+    public static final DeferredHolder<Item, Item> QUARTZ_QUEEN = block(SupernaturalBlocks.QUARTZ_QUEEN, "quartz_queen");
+    public static final DeferredHolder<Item, Item> EBONSTEEL_KING = block(SupernaturalBlocks.EBONSTEEL_KING, "ebonsteel_king");
+    public static final DeferredHolder<Item, Item> QUARTZ_KING = block(SupernaturalBlocks.QUARTZ_KING, "quartz_king");
     public static final DeferredHolder<Item, Item> EBONSTEEL_BOARD_TILE = block(SupernaturalBlocks.EBONSTEEL_BOARD_TILE, "ebonsteel_board_tile");
     public static final DeferredHolder<Item, Item> QUARTZ_BOARD_TILE = block(SupernaturalBlocks.QUARTZ_BOARD_TILE, "quartz_board_tile");
     public static final DeferredHolder<Item, Item> EBONSTEEL_BARS = block(SupernaturalBlocks.EBONSTEEL_BARS, "ebonsteel_bars");
@@ -49,6 +60,7 @@ public class SupernaturalItems {
     public static final DeferredHolder<Item, Item> EBONSTEEL_LEGGINGS = REGISTRY.register("ebonsteel_leggings", () -> new Item(createBaseProps("ebonsteel_leggings").durability(ArmorType.LEGGINGS.getDurability(21)).humanoidArmor(SupernaturalArmors.EBONSTEEL, ArmorType.LEGGINGS).rarity(Rarity.UNCOMMON)));
     public static final DeferredHolder<Item, Item> EBONSTEEL_BOOTS = REGISTRY.register("ebonsteel_boots", () -> new Item(createBaseProps("ebonsteel_boots").durability(ArmorType.BOOTS.getDurability(21)).humanoidArmor(SupernaturalArmors.EBONSTEEL, ArmorType.BOOTS).rarity(Rarity.UNCOMMON)));
     public static final DeferredHolder<Item, Item> EBONSTEEL_HORSE_ARMOR = REGISTRY.register("ebonsteel_horse_armor", () -> new Item(createBaseProps("ebonsteel_horse_armor").horseArmor(SupernaturalArmors.EBONSTEEL).rarity(Rarity.UNCOMMON)));
+    public static final DeferredHolder<Item, Item> EBONSTEEL_SPEAR = REGISTRY.register("ebonsteel_spear", () -> new Item(createBaseProps("ebonsteel_spear").spear(SupernaturalItems.EBONSTEEL, 0.85F, 0.95F, 0.6F, 2.5F, 8.0F, 6.75F, 5.1F, 11.25F, 4.6F)));
     public static final DeferredHolder<Item, Item> GOTHIC_COPPER_HELMET = REGISTRY.register("gothic_copper_helmet", () -> new Item(createBaseProps("gothic_copper_helmet").durability(ArmorType.HELMET.getDurability(11)).humanoidArmor(SupernaturalArmors.COPPER, ArmorType.HELMET)));
     public static final DeferredHolder<Item, Item> GOTHIC_IRON_HELMET = REGISTRY.register("gothic_iron_helmet", () -> new Item(createBaseProps("gothic_iron_helmet").durability(ArmorType.HELMET.getDurability(15)).humanoidArmor(SupernaturalArmors.IRON, ArmorType.HELMET)));
 	public static final DeferredHolder<Item, Item> GOTHIC_DIAMOND_HELMET = REGISTRY.register("gothic_diamond_helmet", () -> new Item(createBaseProps("gothic_diamond_helmet").durability(ArmorType.HELMET.getDurability(33)).humanoidArmor(SupernaturalArmors.DIAMOND, ArmorType.HELMET)));
@@ -67,6 +79,8 @@ public class SupernaturalItems {
     public static final DeferredHolder<Item, Item> EBONSTEEL_KEY = REGISTRY.register("ebonsteel_key", () -> new Item(createBaseProps("ebonsteel_key").rarity(Rarity.UNCOMMON)));
     public static final DeferredHolder<Item, Item> VAMPIRE_DUST = REGISTRY.register("vampire_dust", () -> new Item(createBaseProps("vampire_dust")));
     public static final DeferredHolder<Item, Item> PLASMA = REGISTRY.register("plasma", () -> new Item(createBaseProps("plasma")));
+
+    public static final ToolMaterial EBONSTEEL = new ToolMaterial(BlockTags.INCORRECT_FOR_NETHERITE_TOOL, 2032, 8.0F, 5.0F, 25, SupernaturalTags.REPAIRS_EBONSTEEL);
 
 	private static DeferredHolder<Item, Item> block(DeferredHolder<Block, Block> block, String name) {
 		return REGISTRY.register(block.getId().getPath(), () -> new BlockItem(block.get(), createBaseProps(name)));
