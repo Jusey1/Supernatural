@@ -1,0 +1,38 @@
+{
+  "replace": false,
+  "values": [
+    "supernatural:ritual_altar",
+    "supernatural:revenant_spawner",
+    "supernatural:revenant_vault",
+    "supernatural:plasmastone_bricks",
+    "supernatural:plasmastone_bricks_stairs",
+    "supernatural:plasmastone_bricks_slab",
+    "supernatural:plasmastone_bricks_wall",
+    "supernatural:cut_plasmastone_bricks",
+    "supernatural:cut_plasmastone_bricks_slab",
+    "supernatural:ebonsteel_bars",
+    "supernatural:ebonsteel_block",
+    "supernatural:ebonsteel_chain",
+    "supernatural:ebonsteel_door",
+    "supernatural:ebonsteel_trapdoor",
+    "supernatural:ebonsteel_lantern",
+    "supernatural:ebonsteel_pawn",
+    "supernatural:ebonsteel_knight",
+    "supernatural:ebonsteel_bishop",
+    "supernatural:ebonsteel_rook",
+    "supernatural:ebonsteel_queen",
+    "supernatural:ebonsteel_king",
+    "supernatural:ebonsteel_board_tile",
+    "supernatural:quartz_pawn",
+    "supernatural:quartz_knight",
+    "supernatural:quartz_bishop",
+    "supernatural:quartz_rook",
+    "supernatural:quartz_queen",
+    "supernatural:quartz_king",
+    "supernatural:quartz_board_tile",
+    {
+      "id": "supernatural:ebonsteel_candle_holder",
+      "required": false
+    }
+  ]
+}

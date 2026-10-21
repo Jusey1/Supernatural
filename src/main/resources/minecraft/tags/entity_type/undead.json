@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    "#supernatural:is_vampire",
+    "supernatural:thrall",
+    "supernatural:wight",
+    "supernatural:scourge"
+  ]
+}

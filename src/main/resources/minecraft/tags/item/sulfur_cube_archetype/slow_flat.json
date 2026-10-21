@@ -1,0 +1,8 @@
+{
+  "replace": false,
+  "values": [
+    "supernatural:ebonsteel_block",
+    "supernatural:ebonsteel_board_tile",
+    "supernatural:quartz_board_tile"
+  ]
+}
