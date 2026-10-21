@@ -43,6 +43,10 @@
         {
           "type": "minecraft:item",
           "name": "supernatural:ebonsteel_scrap"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "supernatural:vyrefruit"
         }
       ],
       "conditions": [
