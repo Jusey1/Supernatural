@@ -8,7 +8,6 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.Identifier;
 import net.minecraft.tags.BlockTags;
-import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.item.component.*;
 import net.minecraft.world.item.equipment.*;
@@ -72,12 +71,12 @@ public class SupernaturalItems {
     public static final DeferredHolder<Item, Item> SOULGEM = REGISTRY.register("soulgem", () -> new SoulgemItem(createBaseProps("soulgem").stacksTo(16).rarity(Rarity.UNCOMMON)));
 	public static final DeferredHolder<Item, Item> COMPASS = REGISTRY.register("ritual_compass", () -> new RitualCompassItem(createBaseProps("ritual_compass").rarity(Rarity.UNCOMMON)));
 	public static final DeferredHolder<Item, Item> REVENANT_CORE = REGISTRY.register("spectral_core", () -> new Item(createBaseProps("spectral_core").rarity(Rarity.RARE)));
-	public static final DeferredHolder<Item, Item> BLOOD = REGISTRY.register("blood_bottle", () -> new VampireBottleItem(createBaseProps("blood_bottle").stacksTo(16).food(new FoodProperties(1, 0.1F, true), Consumables.HONEY_BOTTLE).craftRemainder(Items.GLASS_BOTTLE).usingConvertsTo(Items.GLASS_BOTTLE)));
     public static final DeferredHolder<Item, Item> EBONSTEEL_MIRROR = REGISTRY.register("ebonsteel_mirror", () -> new SpectralMirrorItem(createBaseProps("ebonsteel_mirror").stacksTo(1).rarity(Rarity.UNCOMMON)));
     public static final DeferredHolder<Item, Item> EBONSTEEL_INGOT = REGISTRY.register("ebonsteel_ingot", () -> new Item(createBaseProps("ebonsteel_ingot").rarity(Rarity.UNCOMMON)));
     public static final DeferredHolder<Item, Item> EBONSTEEL_SCRAP = REGISTRY.register("ebonsteel_scrap", () -> new Item(createBaseProps("ebonsteel_scrap").rarity(Rarity.UNCOMMON)));
     public static final DeferredHolder<Item, Item> EBONSTEEL_KEY = REGISTRY.register("ebonsteel_key", () -> new Item(createBaseProps("ebonsteel_key").rarity(Rarity.UNCOMMON)));
     public static final DeferredHolder<Item, Item> VAMPIRE_DUST = REGISTRY.register("vampire_dust", () -> new Item(createBaseProps("vampire_dust")));
+    public static final DeferredHolder<Item, Item> VYREFRUIT = REGISTRY.register("vyrefruit", () -> new VyrefruitItem(createBaseProps("vyrefruit")));
     public static final DeferredHolder<Item, Item> PLASMA = REGISTRY.register("plasma", () -> new Item(createBaseProps("plasma")));
 
     public static final ToolMaterial EBONSTEEL = new ToolMaterial(BlockTags.INCORRECT_FOR_NETHERITE_TOOL, 2032, 8.0F, 5.0F, 25, SupernaturalTags.REPAIRS_EBONSTEEL);
