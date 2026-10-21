@@ -1,0 +1,7 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": "supernatural:ebonsteel_pawn",
+  "result": {
+    "id": "supernatural:ebonsteel_king"
+  }
+}

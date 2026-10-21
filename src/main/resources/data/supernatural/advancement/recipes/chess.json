@@ -19,6 +19,16 @@
   ],
   "rewards": {
     "recipes": [
+      "supernatural:stonecut/ebonsteel_knight",
+      "supernatural:stonecut/ebonsteel_bishop",
+      "supernatural:stonecut/ebonsteel_rook",
+      "supernatural:stonecut/ebonsteel_queen",
+      "supernatural:stonecut/ebonsteel_king",
+      "supernatural:stonecut/quartz_knight",
+      "supernatural:stonecut/quartz_bishop",
+      "supernatural:stonecut/quartz_rook",
+      "supernatural:stonecut/quartz_queen",
+      "supernatural:stonecut/quartz_king",
       "supernatural:ebonsteel_board_tile",
       "supernatural:quartz_board_tile",
       "supernatural:quartz_pawn"

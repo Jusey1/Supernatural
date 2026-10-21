@@ -1,0 +1,7 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": "supernatural:quartz_pawn",
+  "result": {
+    "id": "supernatural:quartz_queen"
+  }
+}
