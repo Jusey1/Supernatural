@@ -3,7 +3,17 @@
   "values": [
     "supernatural:ebonsteel_key",
     "supernatural:ebonsteel_pawn",
+    "supernatural:ebonsteel_knight",
+    "supernatural:ebonsteel_bishop",
+    "supernatural:ebonsteel_rook",
+    "supernatural:ebonsteel_queen",
+    "supernatural:ebonsteel_king",
     "supernatural:quartz_pawn",
+    "supernatural:quartz_knight",
+    "supernatural:quartz_bishop",
+    "supernatural:quartz_rook",
+    "supernatural:quartz_queen",
+    "supernatural:quartz_king",
     "minecraft:trial_key",
     "minecraft:ominous_trial_key",
     {
