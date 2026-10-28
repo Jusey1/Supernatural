@@ -30,8 +30,6 @@ public class SupernaturalClient {
     public static final ModelLayerLocation THRALL = registerModel("thrall", "main");
     public static final ModelLayerLocation WIGHT = registerModel("wight", "main");
     public static final ModelLayerLocation WIGHT_CLOTHING = registerModel("wight", "clothing");
-    public static final ModelLayerLocation SCOURGE = registerModel("scourge", "main");
-    public static final ModelLayerLocation SCOURGE_ARMOR = registerModel("scourge", "armor");
 	public static final ArmorModelSet<ModelLayerLocation> GOTHIC = registerArmorSet("gothic");
 
 	@SubscribeEvent
@@ -41,7 +39,6 @@ public class SupernaturalClient {
         event.registerEntityRenderer(SupernaturalMobs.MERFOLK.get(), MerfolkRenderer::new);
         event.registerEntityRenderer(SupernaturalMobs.THRALL.get(), ThrallRenderer::new);
         event.registerEntityRenderer(SupernaturalMobs.WIGHT.get(), WightRenderer::new);
-        event.registerEntityRenderer(SupernaturalMobs.SCOURGE.get(), ScourgeRenderer::new);
         event.registerBlockEntityRenderer(SupernaturalBlocks.RITUAL.get(), RitualBlockRenderer::new);
         event.registerBlockEntityRenderer(SupernaturalBlocks.WEAPON.get(), WeaponDisplayRenderer::new);
         event.registerBlockEntityRenderer(SupernaturalBlocks.RP.get(), TreasureSpawnerRenderer::new);
@@ -55,8 +52,6 @@ public class SupernaturalClient {
         event.registerLayerDefinition(THRALL, ThrallModel::createBodyLayer);
         event.registerLayerDefinition(WIGHT, WightModel::createBodyLayer);
         event.registerLayerDefinition(WIGHT_CLOTHING, WightModel::createClothingLayer);
-        event.registerLayerDefinition(SCOURGE, ScourgeModel::createBodyLayer);
-        event.registerLayerDefinition(SCOURGE_ARMOR, ScourgeModel::createBodyLayer);
         event.registerLayerDefinition(GOTHIC.head(), GothicArmorModel::createHeadLayer);
         event.registerLayerDefinition(GOTHIC.chest(), GothicArmorModel::createBodyLayer);
         event.registerLayerDefinition(GOTHIC.legs(), GothicArmorModel::createLegsLayer);

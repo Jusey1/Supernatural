@@ -104,6 +104,9 @@ public class Thrall extends AbstractMinionEntity {
         }
         this.setDropChance(EquipmentSlot.OFFHAND, 1.0F);
         this.setDropChance(EquipmentSlot.HEAD, 0.0F);
+        this.setDropChance(EquipmentSlot.CHEST, 0.0F);
+        this.setDropChance(EquipmentSlot.LEGS, 0.0F);
+        this.setDropChance(EquipmentSlot.FEET, 0.0F);
 	}
 
     @Override
