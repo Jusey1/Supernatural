@@ -122,10 +122,10 @@ public class RitualAltarBlock extends BaseEntityBlock {
 		return createTickerHelper(type, SupernaturalBlocks.RITUAL.get(), RitualAltarEntity::tick);
 	}
 
-	@Override
-	public VoxelShape getShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext context) {
-		return Shapes.or(box(2, 0, 2, 14, 8, 14), box(0, 0, 0, 4, 16, 4), box(12, 0, 12, 16, 16, 16), box(0, 0, 12, 4, 16, 16), box(12, 0, 0, 16, 16, 4));
-	}
+    @Override
+    public VoxelShape getShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext context) {
+        return Shapes.or(box(0, 0, 0, 16, 8, 16), box(0, 8, 0, 3, 16, 3), box(13, 8, 13, 16, 16, 16), box(0, 8, 13, 3, 16, 16), box(13, 8, 0, 16, 16, 3));
+    }
 
 	@Override
 	public RenderShape getRenderShape(BlockState state) {
