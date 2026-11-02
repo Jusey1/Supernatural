@@ -3,7 +3,7 @@
   "category": "building",
   "key": {
     "#": "minecraft:deepslate_bricks",
-    "C": "minecraft:iron_chain",
+    "C": "supernatural:ebonsteel_chain",
     "G": "supernatural:plasma"
   },
   "pattern": [
