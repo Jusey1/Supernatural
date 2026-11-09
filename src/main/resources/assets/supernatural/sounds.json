@@ -148,94 +148,94 @@
       }
     ]
   },
-  "vampire_celebrate": {
-    "subtitle": "subtitles.vampire_celebrate",
+  "vampyre_celebrate": {
+    "subtitle": "subtitles.vampyre_celebrate",
     "sounds": [
       {
-        "name": "supernatural:vampire/vampire_celebrate_1",
+        "name": "supernatural:vampyre/vampyre_celebrate_1",
         "stream": false
       },
       {
-        "name": "supernatural:vampire/vampire_celebrate_2",
+        "name": "supernatural:vampyre/vampyre_celebrate_2",
         "stream": false
       },
       {
-        "name": "supernatural:vampire/vampire_celebrate_3",
+        "name": "supernatural:vampyre/vampyre_celebrate_3",
         "stream": false
       },
       {
-        "name": "supernatural:vampire/vampire_celebrate_4",
+        "name": "supernatural:vampyre/vampyre_celebrate_4",
         "stream": false
       }
     ]
   },
-  "vampire_death": {
-    "subtitle": "subtitles.vampire_death",
+  "vampyre_death": {
+    "subtitle": "subtitles.vampyre_death",
     "sounds": [
       {
-        "name": "supernatural:vampire/vampire_death_1",
+        "name": "supernatural:vampyre/vampyre_death_1",
         "stream": false
       },
       {
-        "name": "supernatural:vampire/vampire_death_2",
+        "name": "supernatural:vampyre/vampyre_death_2",
         "stream": false
       },
       {
-        "name": "supernatural:vampire/vampire_death_3",
+        "name": "supernatural:vampyre/vampyre_death_3",
         "stream": false
       },
       {
-        "name": "supernatural:vampire/vampire_death_4",
+        "name": "supernatural:vampyre/vampyre_death_4",
         "stream": false
       }
     ]
   },
-  "vampire_hurt": {
-    "subtitle": "subtitles.vampire_hurt",
+  "vampyre_hurt": {
+    "subtitle": "subtitles.vampyre_hurt",
     "sounds": [
       {
-        "name": "supernatural:vampire/vampire_hurt_1",
+        "name": "supernatural:vampyre/vampyre_hurt_1",
         "stream": false
       },
       {
-        "name": "supernatural:vampire/vampire_hurt_2",
+        "name": "supernatural:vampyre/vampyre_hurt_2",
         "stream": false
       },
       {
-        "name": "supernatural:vampire/vampire_hurt_3",
+        "name": "supernatural:vampyre/vampyre_hurt_3",
         "stream": false
       },
       {
-        "name": "supernatural:vampire/vampire_hurt_4",
+        "name": "supernatural:vampyre/vampyre_hurt_4",
         "stream": false
       }
     ]
   },
-  "vampire_idle": {
-    "subtitle": "subtitles.vampire_idle",
+  "vampyre_idle": {
+    "subtitle": "subtitles.vampyre_idle",
     "sounds": [
       {
-        "name": "supernatural:vampire/vampire_idle_1",
+        "name": "supernatural:vampyre/vampyre_idle_1",
         "stream": false
       },
       {
-        "name": "supernatural:vampire/vampire_idle_2",
+        "name": "supernatural:vampyre/vampyre_idle_2",
         "stream": false
       },
       {
-        "name": "supernatural:vampire/vampire_idle_3",
+        "name": "supernatural:vampyre/vampyre_idle_3",
         "stream": false
       },
       {
-        "name": "supernatural:vampire/vampire_idle_4",
+        "name": "supernatural:vampyre/vampyre_idle_4",
         "stream": false
       },
       {
-        "name": "supernatural:vampire/vampire_idle_5",
+        "name": "supernatural:vampyre/vampyre_idle_5",
         "stream": false
       },
       {
-        "name": "supernatural:vampire/vampire_idle_6",
+        "name": "supernatural:vampyre/vampyre_idle_6",
         "stream": false
       }
     ]
