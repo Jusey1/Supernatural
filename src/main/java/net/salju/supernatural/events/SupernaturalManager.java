@@ -59,43 +59,58 @@ public class SupernaturalManager {
 		return Mob.createMobAttributes().add(Attributes.MAX_HEALTH, h).add(Attributes.ATTACK_DAMAGE, d).add(Attributes.ARMOR, a).add(Attributes.MOVEMENT_SPEED, s);
 	}
 
-	public static boolean isVampire(LivingEntity target) {
+    @Deprecated
+    public static boolean isVampire(LivingEntity target) {
+        return isVampyre(target);
+    }
+
+    @Deprecated
+    public static boolean hasVampirism(LivingEntity target) {
+        return hasVampyrism(target);
+    }
+
+    @Deprecated
+    public static void setVampire(Player player, boolean check) {
+        setVampyre(player, check);
+    }
+
+	public static boolean isVampyre(LivingEntity target) {
 		if (target instanceof Player player) {
 			if (player.getPersistentData().getCompound(Player.PERSISTED_NBT_TAG).isPresent()) {
-				return player.getPersistentData().getCompound(Player.PERSISTED_NBT_TAG).get().getBooleanOr("isVampire", false);
+				return player.getPersistentData().getCompound(Player.PERSISTED_NBT_TAG).get().getBooleanOr("isVampyre", false);
 			}
-			return hasVampirism(player);
+			return hasVampyrism(player);
 		}
-		return target.getType().is(SupernaturalTags.VAMPIRE);
+		return target.getType().is(SupernaturalTags.VAMPYRE);
 	}
 
-	public static boolean hasVampirism(LivingEntity target) {
-		return target.hasEffect(SupernaturalEffects.VAMPIRISM) && target.getEffect(SupernaturalEffects.VAMPIRISM).getAmplifier() >= 1;
+	public static boolean hasVampyrism(LivingEntity target) {
+		return target.hasEffect(SupernaturalEffects.VAMPYRISM) && target.getEffect(SupernaturalEffects.VAMPYRISM).getAmplifier() >= 1;
 	}
 
-	public static void setVampire(Player player, boolean check) {
+	public static void setVampyre(Player player, boolean check) {
 		if (player.getPersistentData().getCompound(Player.PERSISTED_NBT_TAG).isEmpty()) {
 			player.getPersistentData().put(Player.PERSISTED_NBT_TAG, new CompoundTag());
 		}
 		CompoundTag data = player.getPersistentData().getCompound(Player.PERSISTED_NBT_TAG).get();
         if (check) {
-            data.putBoolean("isVampire", true);
+            data.putBoolean("isVampyre", true);
             player.getPersistentData().put(Player.PERSISTED_NBT_TAG, data);
-            addVampireEffects(player);
+            addVampyreEffects(player);
         } else {
-            data.remove("isVampire");
+            data.remove("isVampyre");
             player.getPersistentData().put(Player.PERSISTED_NBT_TAG, data);
             player.getAttributes().removeAttributeModifiers(createSupernatural());
-            if (player.hasEffect(SupernaturalEffects.VAMPIRISM)) {
-                player.removeEffect(SupernaturalEffects.VAMPIRISM);
+            if (player.hasEffect(SupernaturalEffects.VAMPYRISM)) {
+                player.removeEffect(SupernaturalEffects.VAMPYRISM);
             }
         }
 	}
 
-    public static void addVampireEffects(Player player) {
+    public static void addVampyreEffects(Player player) {
         player.getAttributes().addTransientAttributeModifiers(createSupernatural());
-        if (!player.hasEffect(SupernaturalEffects.VAMPIRISM)) {
-            player.addEffect(new MobEffectInstance(SupernaturalEffects.VAMPIRISM, -1, 4, false, false, false));
+        if (!player.hasEffect(SupernaturalEffects.VAMPYRISM)) {
+            player.addEffect(new MobEffectInstance(SupernaturalEffects.VAMPYRISM, -1, 4, false, false, false));
         }
     }
 
@@ -111,7 +126,7 @@ public class SupernaturalManager {
 	}
 
     public static boolean canSoulbind(LivingEntity target) {
-        return isVampire(target) || getEnchantmentLevel(target.getWeaponItem(), target.level(), Supernatural.MODID, "soulbinding") > 0;
+        return isVampyre(target) || getEnchantmentLevel(target.getWeaponItem(), target.level(), Supernatural.MODID, "soulbinding") > 0;
     }
 
 	public static ItemStack dyeHelmet(Item item) {

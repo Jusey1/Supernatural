@@ -5,13 +5,11 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.event.entity.living.*;
 import net.neoforged.neoforge.event.entity.EntityJoinLevelEvent;
-import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.EntityTypeTags;
-import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.entity.monster.illager.SpellcasterIllager;
 import net.minecraft.world.entity.monster.illager.Vindicator;
 import net.minecraft.world.entity.monster.Vex;
@@ -22,7 +20,6 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.effect.MobEffects;
-import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.util.Mth;
@@ -32,11 +29,11 @@ public class SupernaturalEvents {
 	@SubscribeEvent
 	public static void onPlayerTick(PlayerTickEvent.Post event) {
 		Player player = event.getEntity();
-		if (SupernaturalManager.isVampire(player)) {
+		if (SupernaturalManager.isVampyre(player)) {
 			player.getFoodData().setSaturation(1);
 			player.getFoodData().setFoodLevel(18);
 			if (player.level() instanceof ServerLevel lvl) {
-				SupernaturalManager.addVampireEffects(player);
+				SupernaturalManager.addVampyreEffects(player);
                 ItemStack helmet = player.getItemBySlot(EquipmentSlot.HEAD);
                 if (!helmet.is(SupernaturalTags.EBON)) {
                     if (SupernaturalManager.shouldVampireBurn(player, lvl) && !player.isCreative() && !player.isSpectator()) {
@@ -56,36 +53,20 @@ public class SupernaturalEvents {
 
 	@SubscribeEvent
 	public static void onHeal(LivingHealEvent event) {
-		if (event.getAmount() <= 1.0F && SupernaturalManager.isVampire(event.getEntity())) {
+		if (event.getAmount() <= 1.0F && SupernaturalManager.isVampyre(event.getEntity())) {
 			event.setAmount(event.getAmount() * (event.getEntity().hasEffect(MobEffects.REGENERATION) ? 0.45F : 0.15F));
 		}
 	}
 
 	@SubscribeEvent
-	public static void onRightClickEntity(PlayerInteractEvent.EntityInteract event) {
-		if (SupernaturalManager.isVampire(event.getEntity()) && event.getTarget() instanceof LivingEntity target && event.getEntity().isCrouching()) {
-			if (!SupernaturalManager.isVampire(target) && target.isSleeping() && (target instanceof Player || target.getType().is(SupernaturalTags.BLOODY))) {
-				event.getEntity().heal(6.0F);
-				if (Math.random() <= SupernaturalConfig.BITE.get()) {
-					target.hurt(target.damageSources().source(DamageTypes.PLAYER_ATTACK, event.getEntity()), 3.0F);
-					if (target instanceof Player) {
-						target.addEffect(new MobEffectInstance(SupernaturalEffects.VAMPIRISM, 24000, 0));
-					}
-				}
-				event.setCanceled(true);
-			}
-		}
-	}
-
-	@SubscribeEvent
 	public static void onUseItemFinish(LivingEntityUseItemEvent.Finish event) {
-		if (event.getEntity() instanceof Player player && SupernaturalManager.isVampire(player)) {
+		if (event.getEntity() instanceof Player player && SupernaturalManager.isVampyre(player)) {
             if (event.getItem().has(DataComponents.FOOD)) {
                 player.getFoodData().setFoodLevel(0);
             }
 			if (event.getItem().is(Items.ENCHANTED_GOLDEN_APPLE) && player.getOffhandItem().is(Items.TOTEM_OF_UNDYING)) {
 				player.level().broadcastEntityEvent(player, (byte) 35);
-				SupernaturalManager.setVampire(player, false);
+				SupernaturalManager.setVampyre(player, false);
 				if (!player.isCreative()) {
 					player.getOffhandItem().shrink(1);
 				}
@@ -95,7 +76,7 @@ public class SupernaturalEvents {
 
 	@SubscribeEvent
 	public static void onEffectAdded(MobEffectEvent.Applicable event) {
-		if (SupernaturalManager.isVampire(event.getEntity())) {
+		if (SupernaturalManager.isVampyre(event.getEntity())) {
 			if (event.getEffectInstance().is(MobEffects.POISON) || event.getEffectInstance().is(MobEffects.HUNGER)) {
 				event.setResult(MobEffectEvent.Applicable.Result.DO_NOT_APPLY);
 			}
@@ -107,7 +88,7 @@ public class SupernaturalEvents {
 		LivingEntity target = event.getEntity();
 		if (event.getSource().getDirectEntity() instanceof LivingEntity source) {
 			ItemStack weapon = source.getMainHandItem();
-			if (SupernaturalManager.isVampire(target)) {
+			if (SupernaturalManager.isVampyre(target)) {
 				int i = SupernaturalManager.getEnchantmentLevel(weapon, target.level(), "minecraft", "smite");
 				if (weapon.is(Items.WOODEN_SWORD) && target.getHealth() <= target.getMaxHealth() * SupernaturalConfig.WOOD.get().floatValue()) {
 					event.setAmount(target.getMaxHealth() * 10.0F);
@@ -122,7 +103,7 @@ public class SupernaturalEvents {
 					event.setAmount(event.getAmount() * SupernaturalConfig.DR.get().floatValue());
 				}
 			}
-            if (SupernaturalManager.isVampire(source) && !SupernaturalManager.isVampire(target)) {
+            if (SupernaturalManager.isVampyre(source) && !SupernaturalManager.isVampyre(target)) {
                 if (!target.getType().is(EntityTypeTags.UNDEAD) && !target.getType().is(SupernaturalTags.IMMUNITY)) {
                     source.heal(SupernaturalConfig.LEECH.get().floatValue() + 1.25F);
                 }
@@ -173,7 +154,7 @@ public class SupernaturalEvents {
 			if (event.getLevel() instanceof ServerLevel lvl && event.getEntity() instanceof Vindicator target) {
 				if (SupernaturalConfig.RAIDERS.get() && lvl.isDarkOutside() && target.getCurrentRaid() != null && !(target.isPassenger() || target.isPatrolLeader())) {
 					if (Math.random() <= SupernaturalConfig.VAMPIRER.get()) {
-						SupernaturalMobs.VAMPIRE.get().spawn(lvl, target.blockPosition(), EntitySpawnReason.EVENT);
+						SupernaturalMobs.VAMPYRE.get().spawn(lvl, target.blockPosition(), EntitySpawnReason.EVENT);
 						target.getCurrentRaid().removeFromRaid(lvl, target, true);
 						event.setCanceled(true);
 					}

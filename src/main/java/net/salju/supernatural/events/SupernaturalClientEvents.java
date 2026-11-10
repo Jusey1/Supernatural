@@ -1,6 +1,6 @@
 package net.salju.supernatural.events;
 
-import net.salju.supernatural.item.SpectralMirrorItem;
+import net.salju.supernatural.item.RevenantMirrorItem;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -21,7 +21,7 @@ public class SupernaturalClientEvents {
         if (player != null) {
             if (player.isUsingItem() && event.getItemStack().is(player.getUseItem().getItem())) {
                 boolean check = event.getHand().equals(InteractionHand.MAIN_HAND);
-                if (event.getItemStack().getItem() instanceof SpectralMirrorItem) {
+                if (event.getItemStack().getItem() instanceof RevenantMirrorItem) {
                     event.getPoseStack().translate(check ? 0.245F : -0.245F, 0.035F, 0.14F);
                     event.getPoseStack().mulPose(Axis.YP.rotationDegrees(check ? 32.0F : -32.0F));
                     event.getPoseStack().mulPose(Axis.ZP.rotationDegrees(check ? 4.0F : -4.0F));
@@ -33,7 +33,7 @@ public class SupernaturalClientEvents {
 	@SubscribeEvent(receiveCanceled = true)
 	public static void onGui(RenderGuiLayerEvent.Pre event) {
 		Player player = Minecraft.getInstance().player;
-		if (player != null && SupernaturalManager.hasVampirism(player)) {
+		if (player != null && SupernaturalManager.hasVampyrism(player)) {
 			if (event.getName().equals(VanillaGuiLayers.FOOD_LEVEL)) {
 				event.setCanceled(true);
 			}
