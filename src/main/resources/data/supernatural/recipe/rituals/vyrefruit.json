@@ -1,9 +1,0 @@
-{
-  "type": "supernatural:ritual",
-  "ingredient": "supernatural:vampire_dust",
-  "result": {
-    "id": "supernatural:vyrefruit"
-  },
-  "candle_power": 32,
-  "soul_power": 4
-}
