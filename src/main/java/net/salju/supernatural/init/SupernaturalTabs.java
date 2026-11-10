@@ -15,7 +15,7 @@ public class SupernaturalTabs {
 	public static final DeferredRegister<CreativeModeTab> REGISTRY = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, Supernatural.MODID);
 	public static final DeferredHolder<CreativeModeTab, CreativeModeTab> SUPERNATURAL = REGISTRY.register("supernatural",
 			() -> CreativeModeTab.builder().title(Component.translatable("itemGroup.supernatural")).icon(() -> new ItemStack(SupernaturalItems.SOULGEM.get())).displayItems((parameters, tabData) -> {
-                tabData.accept(SupernaturalItems.VAMPIRE_SPAWN_EGG.get());
+                tabData.accept(SupernaturalItems.VAMPYRE_SPAWN_EGG.get());
                 tabData.accept(SupernaturalItems.MERFOLK_SPAWN_EGG.get());
                 tabData.accept(SupernaturalItems.THRALL_SPAWN_EGG.get());
                 tabData.accept(SupernaturalItems.WIGHT_SPAWN_EGG.get());
@@ -40,10 +40,10 @@ public class SupernaturalTabs {
                 tabData.accept(SupernaturalItems.EBONSTEEL_SCRAP.get());
                 tabData.accept(SupernaturalItems.EBONSTEEL_KEY.get());
                 tabData.accept(SupernaturalItems.COMPASS.get());
-                tabData.accept(SupernaturalItems.EBONSTEEL_MIRROR.get());
+                tabData.accept(SupernaturalItems.REVENANT_MIRROR.get());
                 tabData.accept(SupernaturalItems.REVENANT_CORE.get());
                 tabData.accept(SupernaturalItems.PLASMA.get());
-                tabData.accept(SupernaturalItems.VAMPIRE_DUST.get());
+                tabData.accept(SupernaturalItems.VYRE_DUST.get());
                 tabData.accept(SupernaturalItems.VYREFRUIT.get());
                 tabData.accept(SupernaturalItems.EBONSTEEL_PAWN.get());
                 tabData.accept(SupernaturalItems.EBONSTEEL_KNIGHT.get());

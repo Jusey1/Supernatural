@@ -14,12 +14,11 @@ import net.minecraft.world.level.levelgen.structure.Structure;
 
 public class SupernaturalTags {
     public static final TagKey<EntityType<?>> MERFOLK = TagKey.create(Registries.ENTITY_TYPE, Identifier.fromNamespaceAndPath(Supernatural.MODID, "merfolk_targets"));
-    public static final TagKey<EntityType<?>> WIGHT = TagKey.create(Registries.ENTITY_TYPE, Identifier.fromNamespaceAndPath(Supernatural.MODID, "wight_targets"));
+    public static final TagKey<EntityType<?>> REVENANT = TagKey.create(Registries.ENTITY_TYPE, Identifier.fromNamespaceAndPath(Supernatural.MODID, "revenant_targets"));
     public static final TagKey<EntityType<?>> MINION = TagKey.create(Registries.ENTITY_TYPE, Identifier.fromNamespaceAndPath(Supernatural.MODID, "minion_targets"));
     public static final TagKey<EntityType<?>> IGNORE = TagKey.create(Registries.ENTITY_TYPE, Identifier.fromNamespaceAndPath(Supernatural.MODID, "minion_ignores"));
-	public static final TagKey<EntityType<?>> VAMPIRE = TagKey.create(Registries.ENTITY_TYPE, Identifier.fromNamespaceAndPath(Supernatural.MODID, "is_vampire"));
+	public static final TagKey<EntityType<?>> VAMPYRE = TagKey.create(Registries.ENTITY_TYPE, Identifier.fromNamespaceAndPath(Supernatural.MODID, "is_vampyre"));
 	public static final TagKey<EntityType<?>> IMMUNITY = TagKey.create(Registries.ENTITY_TYPE, Identifier.fromNamespaceAndPath(Supernatural.MODID, "immunity"));
-	public static final TagKey<EntityType<?>> BLOODY = TagKey.create(Registries.ENTITY_TYPE, Identifier.fromNamespaceAndPath(Supernatural.MODID, "can_get_blood_from"));
     public static final TagKey<EntityType<?>> SPAWNER = TagKey.create(Registries.ENTITY_TYPE, Identifier.fromNamespaceAndPath(Supernatural.MODID, "spawnerables"));
     public static final TagKey<EntityType<?>> GAMBIT = TagKey.create(Registries.ENTITY_TYPE, Identifier.fromNamespaceAndPath(Supernatural.MODID, "gambit"));
     public static final TagKey<EntityType<?>> GRAND = TagKey.create(Registries.ENTITY_TYPE, Identifier.fromNamespaceAndPath(Supernatural.MODID, "grand_soul"));
@@ -35,8 +34,8 @@ public class SupernaturalTags {
     public static final TagKey<Item> DISPLAY_ITEMS = ItemTags.create(Identifier.fromNamespaceAndPath(Supernatural.MODID, "displayable_items"));
     public static final TagKey<Item> DISPLAY_ZERO_ITEMS = ItemTags.create(Identifier.fromNamespaceAndPath(Supernatural.MODID, "displayable_zero_items"));
     public static final TagKey<Item> REPAIRS_EBONSTEEL = ItemTags.create(Identifier.fromNamespaceAndPath(Supernatural.MODID, "repairs_ebonsteel"));
-	public static final TagKey<Structure> RUINS = TagKey.create(Registries.STRUCTURE, Identifier.fromNamespaceAndPath(Supernatural.MODID, "ritual_compass_01"));
-	public static final TagKey<Structure> LIFE = TagKey.create(Registries.STRUCTURE, Identifier.fromNamespaceAndPath(Supernatural.MODID, "ritual_compass_02"));
-	public static final TagKey<Structure> ANCIENT = TagKey.create(Registries.STRUCTURE, Identifier.fromNamespaceAndPath(Supernatural.MODID, "ritual_compass_03"));
+	public static final TagKey<Structure> RUINS = TagKey.create(Registries.STRUCTURE, Identifier.fromNamespaceAndPath(Supernatural.MODID, "revenant_compass_01"));
+	public static final TagKey<Structure> LIFE = TagKey.create(Registries.STRUCTURE, Identifier.fromNamespaceAndPath(Supernatural.MODID, "revenant_compass_02"));
+	public static final TagKey<Structure> ANCIENT = TagKey.create(Registries.STRUCTURE, Identifier.fromNamespaceAndPath(Supernatural.MODID, "revenant_compass_03"));
 	public static final TagKey<DamageType> MAGIC = TagKey.create(Registries.DAMAGE_TYPE, Identifier.fromNamespaceAndPath(Supernatural.MODID, "ebonsteel_resists"));
 }

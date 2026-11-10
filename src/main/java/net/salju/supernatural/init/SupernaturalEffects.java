@@ -10,5 +10,5 @@ import net.minecraft.world.effect.MobEffect;
 
 public class SupernaturalEffects {
 	public static final DeferredRegister<MobEffect> REGISTRY = DeferredRegister.create(Registries.MOB_EFFECT, Supernatural.MODID);
-	public static final DeferredHolder<MobEffect, MobEffect> VAMPIRISM = REGISTRY.register("vampirism", () -> new Vampirism(MobEffectCategory.NEUTRAL, -6750208));
+	public static final DeferredHolder<MobEffect, MobEffect> VAMPYRISM = REGISTRY.register("vampyrism", () -> new Vampyrism(MobEffectCategory.NEUTRAL, -6750208));
 }

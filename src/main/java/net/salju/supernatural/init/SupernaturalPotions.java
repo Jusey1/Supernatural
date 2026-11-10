@@ -19,6 +19,6 @@ public class SupernaturalPotions {
 
 	@SubscribeEvent
 	public static void registerBrewingRecipes(RegisterBrewingRecipesEvent event) {
-		event.getBuilder().addMix(Potions.AWKWARD, SupernaturalItems.VAMPIRE_DUST.get(), BLINDNESS);
+		event.getBuilder().addMix(Potions.AWKWARD, SupernaturalItems.VYRE_DUST.get(), BLINDNESS);
 	}
 }

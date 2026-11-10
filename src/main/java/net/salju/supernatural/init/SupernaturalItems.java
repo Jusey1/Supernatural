@@ -9,17 +9,16 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.Identifier;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.item.component.*;
 import net.minecraft.world.item.equipment.*;
 import net.minecraft.world.item.*;
 
 public class SupernaturalItems {
 	public static final DeferredRegister<Item> REGISTRY = DeferredRegister.createItems(Supernatural.MODID);
-	public static final DeferredHolder<Item, Item> VAMPIRE_SPAWN_EGG = REGISTRY.register("vampire_spawn_egg", () -> new SpawnEggItem(createBaseProps("vampire_spawn_egg").spawnEgg(SupernaturalMobs.VAMPIRE.get())));
+	public static final DeferredHolder<Item, Item> VAMPYRE_SPAWN_EGG = REGISTRY.register("vampyre_spawn_egg", () -> new SpawnEggItem(createBaseProps("vampyre_spawn_egg").spawnEgg(SupernaturalMobs.VAMPYRE.get())));
     public static final DeferredHolder<Item, Item> MERFOLK_SPAWN_EGG = REGISTRY.register("merfolk_spawn_egg", () -> new SpawnEggItem(createBaseProps("merfolk_spawn_egg").spawnEgg(SupernaturalMobs.MERFOLK.get())));
     public static final DeferredHolder<Item, Item> THRALL_SPAWN_EGG = REGISTRY.register("thrall_spawn_egg", () -> new SpawnEggItem(createBaseProps("thrall_spawn_egg").spawnEgg(SupernaturalMobs.THRALL.get())));
     public static final DeferredHolder<Item, Item> WIGHT_SPAWN_EGG = REGISTRY.register("wight_spawn_egg", () -> new SpawnEggItem(createBaseProps("wight_spawn_egg").spawnEgg(SupernaturalMobs.WIGHT.get())));
-    //public static final DeferredHolder<Item, Item> REVENANT_LICH_SPAWN_EGG = REGISTRY.register("revenant_lich_spawn_egg", () -> new SpawnEggItem(createBaseProps("revenant_lich_spawn_egg").spawnEgg(SupernaturalMobs..get())));
+    public static final DeferredHolder<Item, Item> SCOURGE_SPAWN_EGG = REGISTRY.register("scourge_spawn_egg", () -> new SpawnEggItem(createBaseProps("scourge_spawn_egg").spawnEgg(SupernaturalMobs.SCOURGE.get())));
     public static final DeferredHolder<Item, Item> ANGEL_STATUE = REGISTRY.register("angel_statue", () -> new AngelStatueItem(createBaseProps("angel_statue").stacksTo(1)));
     public static final DeferredHolder<Item, Item> EBONSTEEL_PAWN = block(SupernaturalBlocks.EBONSTEEL_PAWN, "ebonsteel_pawn");
     public static final DeferredHolder<Item, Item> QUARTZ_PAWN = block(SupernaturalBlocks.QUARTZ_PAWN, "quartz_pawn");
@@ -69,13 +68,13 @@ public class SupernaturalItems {
 	public static final DeferredHolder<Item, Item> RITUAL_BOOK = REGISTRY.register("ritual_book", () -> new RitualBookItem(createBaseProps("ritual_book").stacksTo(1).rarity(Rarity.UNCOMMON)));
     public static final DeferredHolder<Item, Item> COMMANDER_WAND = REGISTRY.register("commander_wand", () -> new CommanderWandItem(createBaseProps("commander_wand").stacksTo(1).rarity(Rarity.UNCOMMON)));
     public static final DeferredHolder<Item, Item> SOULGEM = REGISTRY.register("soulgem", () -> new SoulgemItem(createBaseProps("soulgem").stacksTo(16).rarity(Rarity.UNCOMMON)));
-	public static final DeferredHolder<Item, Item> COMPASS = REGISTRY.register("ritual_compass", () -> new RitualCompassItem(createBaseProps("ritual_compass").rarity(Rarity.UNCOMMON)));
-	public static final DeferredHolder<Item, Item> REVENANT_CORE = REGISTRY.register("spectral_core", () -> new Item(createBaseProps("spectral_core").rarity(Rarity.RARE)));
-    public static final DeferredHolder<Item, Item> EBONSTEEL_MIRROR = REGISTRY.register("ebonsteel_mirror", () -> new SpectralMirrorItem(createBaseProps("ebonsteel_mirror").stacksTo(1).rarity(Rarity.UNCOMMON)));
+	public static final DeferredHolder<Item, Item> COMPASS = REGISTRY.register("revenant_compass", () -> new RevenantCompassItem(createBaseProps("revenant_compass").rarity(Rarity.UNCOMMON)));
+	public static final DeferredHolder<Item, Item> REVENANT_CORE = REGISTRY.register("revenant_core", () -> new Item(createBaseProps("revenant_core").rarity(Rarity.RARE)));
+    public static final DeferredHolder<Item, Item> REVENANT_MIRROR = REGISTRY.register("revenant_mirror", () -> new RevenantMirrorItem(createBaseProps("revenant_mirror").stacksTo(1).rarity(Rarity.UNCOMMON)));
     public static final DeferredHolder<Item, Item> EBONSTEEL_INGOT = REGISTRY.register("ebonsteel_ingot", () -> new Item(createBaseProps("ebonsteel_ingot").rarity(Rarity.UNCOMMON)));
     public static final DeferredHolder<Item, Item> EBONSTEEL_SCRAP = REGISTRY.register("ebonsteel_scrap", () -> new Item(createBaseProps("ebonsteel_scrap").rarity(Rarity.UNCOMMON)));
     public static final DeferredHolder<Item, Item> EBONSTEEL_KEY = REGISTRY.register("ebonsteel_key", () -> new Item(createBaseProps("ebonsteel_key").rarity(Rarity.UNCOMMON)));
-    public static final DeferredHolder<Item, Item> VAMPIRE_DUST = REGISTRY.register("vampire_dust", () -> new Item(createBaseProps("vampire_dust")));
+    public static final DeferredHolder<Item, Item> VYRE_DUST = REGISTRY.register("vyre_dust", () -> new Item(createBaseProps("vyre_dust")));
     public static final DeferredHolder<Item, Item> VYREFRUIT = REGISTRY.register("vyrefruit", () -> new VyrefruitItem(createBaseProps("vyrefruit")));
     public static final DeferredHolder<Item, Item> PLASMA = REGISTRY.register("plasma", () -> new Item(createBaseProps("plasma")));
 

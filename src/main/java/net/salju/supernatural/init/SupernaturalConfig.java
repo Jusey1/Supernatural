@@ -15,24 +15,20 @@ public class SupernaturalConfig {
 	public static final ModConfigSpec.BooleanValue SUN;
 	public static final ModConfigSpec.DoubleValue WOOD;
 	public static final ModConfigSpec.DoubleValue DR;
-	public static final ModConfigSpec.DoubleValue ATTACKED;
-	public static final ModConfigSpec.DoubleValue BITE;
 
 	public static final ModConfigSpec.IntValue SOULPOWER;
 	public static final ModConfigSpec.BooleanValue FURIA;
 
     static {
         BUILDER.push("Supernatural");
-        DAMAGE = BUILDER.comment("Extra damage that a vampire player can do").defineInRange("Damage", 3, 0, Integer.MAX_VALUE);
-        SPEED = BUILDER.comment("Extra speed that a vampire player have in percentage").defineInRange("Speed", 15, 0, Integer.MAX_VALUE);
-        RAIDERS = BUILDER.comment("Should vampires spawn within raids at night?").define("Raider", true);
-        VAMPIRER = BUILDER.comment("Chance of a Vindicator being replaced with a Vampire during a raid at night?").defineInRange("Vindicator", 0.25, 0.0, 1.0);
-        LEECH = BUILDER.comment("How strong is the heal effect for vampires when they attack valid targets?").defineInRange("Leech", 1.0, 0.0, Double.MAX_VALUE);
-        SUN = BUILDER.comment("Should vampires be immune to sun damage?").define("Sunlight", false);
-        WOOD = BUILDER.comment("How much health does a Vampire needs to be at in percentage to die instantly to a Wooden Sword?").defineInRange("Weakness", 0.6, 0.0, 1.0);
-        DR = BUILDER.comment("How much damage does a Vampire takes from all sources?").defineInRange("Damage-Reduction", 0.85, 0.0, 1.0);
-        ATTACKED = BUILDER.comment("Chance of being infected by a Vampire Illager's attack").defineInRange("Vampire-Infection", 0.15, 0.0, 1.0);
-        BITE = BUILDER.comment("Chance of being infected by a Vampire Player's bite").defineInRange("Player-Infection", 0.35, 0.0, 1.0);
+        DAMAGE = BUILDER.comment("Extra damage that a Vampyre can do").defineInRange("Damage", 3, 0, Integer.MAX_VALUE);
+        SPEED = BUILDER.comment("Extra speed that a Vampyre have in percentage").defineInRange("Speed", 15, 0, Integer.MAX_VALUE);
+        RAIDERS = BUILDER.comment("Should Vampyres spawn within raids at night?").define("Raider", true);
+        VAMPIRER = BUILDER.comment("Chance of a Vindicator being replaced with a Vampyre during a raid at night?").defineInRange("Vindicator", 0.25, 0.0, 1.0);
+        LEECH = BUILDER.comment("How strong is the heal effect for Vampyres when they attack valid targets?").defineInRange("Leech", 1.0, 0.0, Double.MAX_VALUE);
+        SUN = BUILDER.comment("Should Vampyres be immune to sun damage?").define("Sunlight", false);
+        WOOD = BUILDER.comment("How much health does a Vampyre needs to be at in percentage to die instantly to a Wooden Sword?").defineInRange("Weakness", 0.6, 0.0, 1.0);
+        DR = BUILDER.comment("How much damage does a Vampyre takes from all sources?").defineInRange("DR", 0.85, 0.0, 1.0);
         BUILDER.pop();
         BUILDER.push("Misc");
         SOULPOWER = BUILDER.comment("Base Power for soul enchanting").defineInRange("Ritual-Soulpower", 3, 0, Integer.MAX_VALUE);
