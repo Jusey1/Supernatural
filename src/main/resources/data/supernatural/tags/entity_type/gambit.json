@@ -1,9 +1,0 @@
-{
-  "replace": false,
-  "values": [
-    {
-      "id": "minecraft:sulfur_cube",
-      "required": false
-    }
-  ]
-}
