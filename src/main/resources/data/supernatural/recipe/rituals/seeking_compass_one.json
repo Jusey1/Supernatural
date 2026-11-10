@@ -1,9 +1,9 @@
 {
   "type": "supernatural:ritual",
   "category": "special",
-  "ingredient": "supernatural:ritual_compass",
+  "ingredient": "supernatural:revenant_compass",
   "result": {
-    "id": "supernatural:ritual_compass"
+    "id": "supernatural:revenant_compass"
   },
   "candle_power": 12,
   "soul_power": 3

@@ -1,9 +1,9 @@
 {
   "type": "supernatural:ritual",
   "category": "special",
-  "ingredient": "supernatural:ebonsteel_mirror",
+  "ingredient": "supernatural:revenant_mirror",
   "result": {
-    "id": "supernatural:ebonsteel_mirror"
+    "id": "supernatural:revenant_mirror"
   },
   "candle_power": 35,
   "soul_power": 4
