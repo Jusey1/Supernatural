@@ -29,14 +29,14 @@
       },
       "trigger": "minecraft:player_killed_entity"
     },
-    "vampire": {
+    "vampyre": {
       "conditions": {
         "entity": [
           {
             "condition": "minecraft:entity_properties",
             "entity": "this",
             "predicate": {
-              "type": "supernatural:vampire"
+              "type": "supernatural:vampyre"
             }
           }
         ]
@@ -78,7 +78,7 @@
       "wight"
     ],
     [
-      "vampire"
+      "vampyre"
     ],
     [
       "angel"
