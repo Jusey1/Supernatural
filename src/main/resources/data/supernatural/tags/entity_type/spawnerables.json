@@ -1,0 +1,15 @@
+{
+  "replace": false,
+  "values": [
+    "supernatural:thrall",
+    "supernatural:wight",
+    "#minecraft:skeletons",
+    "#minecraft:zombies",
+    "minecraft:blaze",
+    "minecraft:breeze",
+    "minecraft:cave_spider",
+    "minecraft:pig",
+    "minecraft:silverfish",
+    "minecraft:spider"
+  ]
+}

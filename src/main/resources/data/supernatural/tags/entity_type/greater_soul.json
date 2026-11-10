@@ -1,0 +1,50 @@
+{
+  "replace": false,
+  "values": [
+    "supernatural:merfolk",
+    "supernatural:thrall",
+    "supernatural:wight",
+    "#minecraft:illager",
+    "minecraft:allay",
+    "minecraft:blaze",
+    "minecraft:breeze",
+    "minecraft:creaking",
+    "minecraft:enderman",
+    "minecraft:happy_ghast",
+    "minecraft:piglin_brute",
+    "minecraft:vex",
+    "minecraft:witch",
+    {
+      "id": "alexscaves:atlatitan",
+      "required": false
+    },
+    {
+      "id": "alexscaves:deep_one",
+      "required": false
+    },
+    {
+      "id": "alexscaves:deep_one_knight",
+      "required": false
+    },
+    {
+      "id": "alexscaves:deep_one_mage",
+      "required": false
+    },
+    {
+      "id": "alexscaves:ferrouslime",
+      "required": false
+    },
+    {
+      "id": "alexsmobs:mimicube",
+      "required": false
+    },
+    {
+      "id": "alexsmobs:bone_serpent",
+      "required": false
+    },
+    {
+      "id": "alexsmobs:farseer",
+      "required": false
+    }
+  ]
+}

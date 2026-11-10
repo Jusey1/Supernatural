@@ -1,0 +1,21 @@
+{
+  "replace": false,
+  "values": [
+    "#minecraft:illager",
+    "minecraft:villager",
+    "minecraft:wandering_trader",
+    "supernatural:merfolk",
+    {
+      "id": "iwannaskate:wandering_skater",
+      "required": false
+    },
+    {
+      "id": "#kobolds:kobolds",
+      "required": false
+    },
+    {
+      "id": "supplementaries:red_merchant",
+      "required": false
+    }
+  ]
+}

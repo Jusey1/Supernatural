@@ -1,0 +1,50 @@
+{
+  "replace": false,
+  "values": [
+    "minecraft:villager",
+    "minecraft:wandering_trader",
+    "minecraft:ender_dragon",
+    "minecraft:wither",
+    "minecraft:warden",
+    {
+      "id": "alexscaves:forsaken",
+      "required": false
+    },
+    {
+      "id": "alexscaves:luxtructosaurus",
+      "required": false
+    },
+    {
+      "id": "alexscaves:tremorzilla",
+      "required": false
+    },
+    {
+      "id": "alexsmobs:warped_mosco",
+      "required": false
+    },
+    {
+      "id": "alexsmobs:void_worm",
+      "required": false
+    },
+    {
+      "id": "galosphere:berserker",
+      "required": false
+    },
+    {
+      "id": "iwannaskate:wandering_skater",
+      "required": false
+    },
+    {
+      "id": "#kobolds:kobolds",
+      "required": false
+    },
+    {
+      "id": "revotedwildfire:wildfire",
+      "required": false
+    },
+    {
+      "id": "supplementaries:red_merchant",
+      "required": false
+    }
+  ]
+}
