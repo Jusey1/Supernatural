@@ -1,8 +1,9 @@
 {
   "replace": false,
   "values": [
-    "supernatural:vampire",
+    "supernatural:vampyre",
     "supernatural:thrall",
-    "supernatural:wight"
+    "supernatural:wight",
+    "supernatural:scourge"
   ]
 }
