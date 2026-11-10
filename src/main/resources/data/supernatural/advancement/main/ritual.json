@@ -1,0 +1,43 @@
+{
+  "parent": "supernatural:main/soulgem",
+  "criteria": {
+    "ritual": {
+      "conditions": {
+        "location": [
+          {
+            "condition": "minecraft:location_check",
+            "predicate": {
+              "block": {
+                "blocks": "supernatural:ritual_altar"
+              }
+            }
+          },
+          {
+            "condition": "minecraft:match_tool",
+            "predicate": {
+              "items": "supernatural:soulgem"
+            }
+          }
+        ]
+      },
+      "trigger": "minecraft:item_used_on_block"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancement.supernatural.ritual.desc"
+    },
+    "icon": {
+      "id": "supernatural:ritual_altar"
+    },
+    "title": {
+      "translate": "advancement.supernatural.ritual.title"
+    }
+  },
+  "requirements": [
+    [
+      "ritual"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

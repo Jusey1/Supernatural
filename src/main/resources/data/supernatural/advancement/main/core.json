@@ -1,0 +1,32 @@
+{
+  "parent": "supernatural:main/plunder",
+  "criteria": {
+    "core": {
+      "conditions": {
+        "items": [
+          {
+            "items": "supernatural:revenant_core"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancement.supernatural.core.desc"
+    },
+    "icon": {
+      "id": "supernatural:revenant_core"
+    },
+    "title": {
+      "translate": "advancement.supernatural.core.title"
+    }
+  },
+  "requirements": [
+    [
+      "core"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

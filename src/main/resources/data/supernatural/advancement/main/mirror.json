@@ -1,0 +1,32 @@
+{
+  "parent": "supernatural:main/spectral",
+  "criteria": {
+    "mirror": {
+      "conditions": {
+        "items": [
+          {
+            "items": "supernatural:ebonsteel_mirror"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancement.supernatural.mirror.desc"
+    },
+    "icon": {
+      "id": "supernatural:ebonsteel_mirror"
+    },
+    "title": {
+      "translate": "advancement.supernatural.mirror.title"
+    }
+  },
+  "requirements": [
+    [
+      "mirror"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

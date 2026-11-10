@@ -1,0 +1,32 @@
+{
+  "parent": "supernatural:main/plunder",
+  "criteria": {
+    "seeker": {
+      "conditions": {
+        "items": [
+          {
+            "items": "supernatural:ritual_compass"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancement.supernatural.seeker.desc"
+    },
+    "icon": {
+      "id": "supernatural:ritual_compass"
+    },
+    "title": {
+      "translate": "advancement.supernatural.seeker.title"
+    }
+  },
+  "requirements": [
+    [
+      "seeker"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

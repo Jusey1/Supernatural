@@ -1,0 +1,43 @@
+{
+  "parent": "supernatural:main/soulgem",
+  "criteria": {
+    "candle": {
+      "conditions": {
+        "location": [
+          {
+            "condition": "minecraft:location_check",
+            "predicate": {
+              "block": {
+                "blocks": "supernatural:ritual_altar"
+              }
+            }
+          },
+          {
+            "condition": "minecraft:match_tool",
+            "predicate": {
+              "items": "supernatural:ritual_candle"
+            }
+          }
+        ]
+      },
+      "trigger": "minecraft:item_used_on_block"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancement.supernatural.candle.desc"
+    },
+    "icon": {
+      "id": "supernatural:ritual_candle"
+    },
+    "title": {
+      "translate": "advancement.supernatural.candle.title"
+    }
+  },
+  "requirements": [
+    [
+      "candle"
+    ]
+  ],
+  "sends_telemetry_event": true
+}
