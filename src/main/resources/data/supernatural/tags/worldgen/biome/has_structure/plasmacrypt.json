@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    "minecraft:dark_forest",
+    {
+      "id": "goodending:oak_hammock_forest",
+      "required": false
+    }
+  ]
+}
