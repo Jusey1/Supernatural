@@ -6,7 +6,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "supernatural:ritual_compass",
+          "name": "supernatural:revenant_compass",
           "weight": 7
         },
         {
