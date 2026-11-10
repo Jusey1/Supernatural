@@ -1,9 +1,7 @@
 package net.salju.supernatural.entity;
 
-import net.salju.supernatural.init.SupernaturalEffects;
 import net.salju.supernatural.init.SupernaturalSounds;
 import net.salju.supernatural.init.SupernaturalDamageTypes;
-import net.salju.supernatural.init.SupernaturalConfig;
 import net.salju.supernatural.events.SupernaturalManager;
 import net.salju.supernatural.entity.ai.abstractai.AbstractSpellcasterGoal;
 import net.salju.supernatural.entity.ai.vampyre.*;
@@ -15,11 +13,9 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.raid.Raider;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.monster.illager.AbstractIllager;
 import net.minecraft.world.entity.ai.util.GoalUtils;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
@@ -91,16 +87,6 @@ public class Vampyre extends AbstractIllager implements Spellcaster {
             this.goalSelector.addGoal(1, new NecromancerBoltSpellGoal(this));
         }
         return super.finalizeSpawn(world, difficulty, reason, data);
-    }
-
-    @Override
-    public boolean doHurtTarget(ServerLevel lvl, Entity entity) {
-        if (entity instanceof Player player && !SupernaturalManager.isVampire(player)) {
-            if (Math.random() <= SupernaturalConfig.ATTACKED.get()) {
-                player.addEffect(new MobEffectInstance(SupernaturalEffects.VAMPYRISM, 24000, 0));
-            }
-        }
-        return super.doHurtTarget(lvl, entity);
     }
 
     @Override
