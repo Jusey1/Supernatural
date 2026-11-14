@@ -1,0 +1,43 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "rolls": 1.0,
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "supernatural:ebonsteel_pawn",
+          "conditions": [
+            {
+              "block": "supernatural:ebonsteel_king",
+              "condition": "minecraft:block_state_property",
+              "properties": {
+                "promoted": "true"
+              }
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "name": "supernatural:ebonsteel_king",
+          "conditions": [
+            {
+              "block": "supernatural:ebonsteel_king",
+              "condition": "minecraft:block_state_property",
+              "properties": {
+                "promoted": "false"
+              }
+            }
+          ]
+        }
+      ],
+      "conditions": [
+        {
+          "condition": "minecraft:survives_explosion"
+        }
+      ],
+      "functions": []
+    }
+  ]
+}
