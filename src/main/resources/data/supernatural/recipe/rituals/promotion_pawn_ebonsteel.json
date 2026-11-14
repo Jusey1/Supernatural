@@ -1,6 +1,6 @@
 {
   "type": "supernatural:ritual",
-  "category": "summon",
+  "category": "special",
   "ingredient": "supernatural:grave_soil",
   "result": {
     "id": "supernatural:soulgem"
