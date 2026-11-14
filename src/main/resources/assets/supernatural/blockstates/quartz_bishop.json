@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "supernatural:block/chess/quartz_bishop",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "supernatural:block/chess/quartz_bishop"
+    },
+    "facing=south": {
+      "model": "supernatural:block/chess/quartz_bishop",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "supernatural:block/chess/quartz_bishop",
+      "y": 270
+    }
+  }
+}
