@@ -2,8 +2,10 @@
   "replace": false,
   "values": [
     "supernatural:vampyre",
+    "supernatural:vyrebat",
     "supernatural:thrall",
     "supernatural:wight",
+    "supernatural:revenant_lich",
     "supernatural:scourge"
   ]
 }

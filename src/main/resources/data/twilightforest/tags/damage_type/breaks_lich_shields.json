@@ -1,6 +1,7 @@
 {
   "replace": false,
   "values": [
+    "supernatural:chess",
     "supernatural:revenant"
   ]
 }
