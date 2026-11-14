@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "supernatural:item/revenant_crown",
+    "layer1": "supernatural:item/crown_trim_copper"
+  }
+}
