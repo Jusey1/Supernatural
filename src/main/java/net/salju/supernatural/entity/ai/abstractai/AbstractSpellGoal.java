@@ -8,17 +8,17 @@ import net.minecraft.sounds.SoundEvent;
 import javax.annotation.Nullable;
 
 public abstract class AbstractSpellGoal extends Goal {
-	public final Mob user;
+	public final Mob caster;
 	protected int attackWarmupDelay;
 	protected int nextAttackTickCount;
 
 	public AbstractSpellGoal(Mob target) {
-		this.user = target;
+		this.caster = target;
 	}
 
 	@Override
 	public boolean canUse() {
-        return this.user.tickCount >= this.nextAttackTickCount;
+        return this.caster.tickCount >= this.nextAttackTickCount && this.getSpellTick() <= 0;
 	}
 
 	@Override
@@ -29,12 +29,12 @@ public abstract class AbstractSpellGoal extends Goal {
 	@Override
 	public void start() {
 		this.attackWarmupDelay = this.adjustedTickDelay(this.getCastWarmupTime());
-		this.nextAttackTickCount = this.user.tickCount + this.getCastingInterval();
-		if (this.user instanceof Spellcaster target) {
+		this.nextAttackTickCount = this.caster.tickCount + this.getCastingInterval();
+		if (this.caster instanceof Spellcaster target) {
             target.setSpellTick(this.getCastingTime());
         }
 		if (this.getSpellPrepareSound() != null) {
-			this.user.playSound(this.getSpellPrepareSound(), 1.0F, 1.0F);
+			this.caster.playSound(this.getSpellPrepareSound(), 1.0F, 1.0F);
 		}
 	}
 
@@ -43,18 +43,25 @@ public abstract class AbstractSpellGoal extends Goal {
 		--this.attackWarmupDelay;
 		if (this.attackWarmupDelay == 0) {
 			this.performSpellCasting();
-			if (this.user instanceof Spellcaster target) {
-                this.user.playSound(target.getCastingSoundEvent(), 1.0F, 1.0F);
+			if (this.caster instanceof Spellcaster target) {
+                this.caster.playSound(target.getCastingSoundEvent(), 1.0F, 1.0F);
             }
 		}
 	}
 
     @Nullable
     public LivingEntity getTarget() {
-        if (this.user.getTarget() != null) {
-            return this.user.getTarget();
+        if (this.caster.getTarget() != null) {
+            return this.caster.getTarget();
         }
-        return this.user.getLastHurtMob();
+        return this.caster.getLastHurtMob();
+    }
+
+    private int getSpellTick() {
+        if (this.caster instanceof Spellcaster target) {
+            return target.getSpellTick();
+        }
+        return 0;
     }
 
 	protected abstract void performSpellCasting();

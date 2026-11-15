@@ -23,7 +23,7 @@ public class VampyreAttackSelector implements TargetingConditions.Selector {
 			if (this.vyre.getCurrentRaid() != null) {
 				return true;
 			}
-			return !(SupernaturalManager.isVampire(target));
+			return !(SupernaturalManager.isVampyre(target));
 		}
 		return (target instanceof AbstractVillager || target instanceof IronGolem);
 	}

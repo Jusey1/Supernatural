@@ -18,14 +18,15 @@ public class MinionAttackSelector implements TargetingConditions.Selector {
 
     @Override
 	public boolean test(@Nullable LivingEntity target, ServerLevel lvl) {
-        if (mob.getOwner() != null && target != null) {
+        if (mob.getOwner() != null) {
             if (this.isValidTargetByHurt(target, mob.getOwner().getLastHurtByMob()) || this.isValidTargetByHurt(target, mob.getOwner().getLastHurtMob())) {
                 return this.isValidTarget(target);
-            } else if (mob.getOwner() instanceof Player) {
-                return this.isValidTarget(target) && target.getType().is(SupernaturalTags.MINION);
             }
         }
-        return target instanceof Player;
+        if (mob.isPlayerOwned()) {
+            return this.isValidTarget(target) && target.getType().is(SupernaturalTags.MINION);
+        }
+        return target instanceof Player || target.getType().is(SupernaturalTags.REVENANT);
 	}
 
     public boolean isValidTargetByHurt(LivingEntity target, LivingEntity hurt) {

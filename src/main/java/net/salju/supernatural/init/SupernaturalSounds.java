@@ -9,6 +9,14 @@ import net.minecraft.resources.Identifier;
 
 public class SupernaturalSounds {
 	public static final DeferredRegister<SoundEvent> REGISTRY = DeferredRegister.create(Registries.SOUND_EVENT, Supernatural.MODID);
+    public static final DeferredHolder<SoundEvent, SoundEvent> LICH_CASTS_SPELL = REGISTRY.register("lich_casts_spell", () -> SoundEvent.createVariableRangeEvent(Identifier.fromNamespaceAndPath(Supernatural.MODID, "lich_casts_spell")));
+    public static final DeferredHolder<SoundEvent, SoundEvent> LICH_CHESS_EFFECT = REGISTRY.register("lich_chess_effect", () -> SoundEvent.createVariableRangeEvent(Identifier.fromNamespaceAndPath(Supernatural.MODID, "lich_chess_effect")));
+    public static final DeferredHolder<SoundEvent, SoundEvent> LICH_DEATH = REGISTRY.register("lich_death", () -> SoundEvent.createVariableRangeEvent(Identifier.fromNamespaceAndPath(Supernatural.MODID, "lich_death")));
+    public static final DeferredHolder<SoundEvent, SoundEvent> LICH_HURT = REGISTRY.register("lich_hurt", () -> SoundEvent.createVariableRangeEvent(Identifier.fromNamespaceAndPath(Supernatural.MODID, "lich_hurt")));
+    public static final DeferredHolder<SoundEvent, SoundEvent> LICH_IDLE = REGISTRY.register("lich_idle", () -> SoundEvent.createVariableRangeEvent(Identifier.fromNamespaceAndPath(Supernatural.MODID, "lich_idle")));
+    public static final DeferredHolder<SoundEvent, SoundEvent> LICH_LAUGH = REGISTRY.register("lich_laugh", () -> SoundEvent.createVariableRangeEvent(Identifier.fromNamespaceAndPath(Supernatural.MODID, "lich_laugh")));
+    public static final DeferredHolder<SoundEvent, SoundEvent> LICH_PREPARE_SPELL = REGISTRY.register("lich_prepare_spell", () -> SoundEvent.createVariableRangeEvent(Identifier.fromNamespaceAndPath(Supernatural.MODID, "lich_prepare_spell")));
+    public static final DeferredHolder<SoundEvent, SoundEvent> LICH_TELEPORT = REGISTRY.register("lich_teleport", () -> SoundEvent.createVariableRangeEvent(Identifier.fromNamespaceAndPath(Supernatural.MODID, "lich_teleport")));
     public static final DeferredHolder<SoundEvent, SoundEvent> MERFOLK_DEATH = REGISTRY.register("merfolk_death", () -> SoundEvent.createVariableRangeEvent(Identifier.fromNamespaceAndPath(Supernatural.MODID, "merfolk_death")));
     public static final DeferredHolder<SoundEvent, SoundEvent> MERFOLK_HURT = REGISTRY.register("merfolk_hurt", () -> SoundEvent.createVariableRangeEvent(Identifier.fromNamespaceAndPath(Supernatural.MODID, "merfolk_hurt")));
     public static final DeferredHolder<SoundEvent, SoundEvent> MERFOLK_IDLE = REGISTRY.register("merfolk_idle", () -> SoundEvent.createVariableRangeEvent(Identifier.fromNamespaceAndPath(Supernatural.MODID, "merfolk_idle")));
@@ -18,10 +26,12 @@ public class SupernaturalSounds {
     public static final DeferredHolder<SoundEvent, SoundEvent> THRALL_DEATH = REGISTRY.register("thrall_death", () -> SoundEvent.createVariableRangeEvent(Identifier.fromNamespaceAndPath(Supernatural.MODID, "thrall_death")));
     public static final DeferredHolder<SoundEvent, SoundEvent> THRALL_HURT = REGISTRY.register("thrall_hurt", () -> SoundEvent.createVariableRangeEvent(Identifier.fromNamespaceAndPath(Supernatural.MODID, "thrall_hurt")));
     public static final DeferredHolder<SoundEvent, SoundEvent> THRALL_IDLE = REGISTRY.register("thrall_idle", () -> SoundEvent.createVariableRangeEvent(Identifier.fromNamespaceAndPath(Supernatural.MODID, "thrall_idle")));
+    public static final DeferredHolder<SoundEvent, SoundEvent> VAMPYRE_CASTS_SPELL = REGISTRY.register("vampyre_casts_spell", () -> SoundEvent.createVariableRangeEvent(Identifier.fromNamespaceAndPath(Supernatural.MODID, "vampyre_casts_spell")));
     public static final DeferredHolder<SoundEvent, SoundEvent> VAMPYRE_CELEBRATE = REGISTRY.register("vampyre_celebrate", () -> SoundEvent.createVariableRangeEvent(Identifier.fromNamespaceAndPath(Supernatural.MODID, "vampyre_celebrate")));
     public static final DeferredHolder<SoundEvent, SoundEvent> VAMPYRE_DEATH = REGISTRY.register("vampyre_death", () -> SoundEvent.createVariableRangeEvent(Identifier.fromNamespaceAndPath(Supernatural.MODID, "vampyre_death")));
     public static final DeferredHolder<SoundEvent, SoundEvent> VAMPYRE_HURT = REGISTRY.register("vampyre_hurt", () -> SoundEvent.createVariableRangeEvent(Identifier.fromNamespaceAndPath(Supernatural.MODID, "vampyre_hurt")));
     public static final DeferredHolder<SoundEvent, SoundEvent> VAMPYRE_IDLE = REGISTRY.register("vampyre_idle", () -> SoundEvent.createVariableRangeEvent(Identifier.fromNamespaceAndPath(Supernatural.MODID, "vampyre_idle")));
+    public static final DeferredHolder<SoundEvent, SoundEvent> VAMPYRE_PREPARE_SPELL = REGISTRY.register("vampyre_prepare_spell", () -> SoundEvent.createVariableRangeEvent(Identifier.fromNamespaceAndPath(Supernatural.MODID, "vampyre_prepare_spell")));
     public static final DeferredHolder<SoundEvent, SoundEvent> WIGHT_DEATH = REGISTRY.register("wight_death", () -> SoundEvent.createVariableRangeEvent(Identifier.fromNamespaceAndPath(Supernatural.MODID, "wight_death")));
     public static final DeferredHolder<SoundEvent, SoundEvent> WIGHT_HURT = REGISTRY.register("wight_hurt", () -> SoundEvent.createVariableRangeEvent(Identifier.fromNamespaceAndPath(Supernatural.MODID, "wight_hurt")));
     public static final DeferredHolder<SoundEvent, SoundEvent> WIGHT_IDLE = REGISTRY.register("wight_idle", () -> SoundEvent.createVariableRangeEvent(Identifier.fromNamespaceAndPath(Supernatural.MODID, "wight_idle")));

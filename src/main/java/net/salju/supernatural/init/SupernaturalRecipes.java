@@ -22,7 +22,6 @@ public class SupernaturalRecipes {
     public static final Supplier<MenuType<RitualBookMenu>> RITUAL_BOOK = MENUS.register("ritual_book", () -> IMenuTypeExtension.create(RitualBookMenu::new));
     public static final Supplier<RecipeBookCategory> RITUALS = CATES.register("rituals", RecipeBookCategory::new);
     public static final Supplier<RecipeBookCategory> SPECIAL = CATES.register("special", RecipeBookCategory::new);
-    public static final Supplier<RecipeBookCategory> SUMMONS = CATES.register("summon", RecipeBookCategory::new);
     public static final Supplier<RecipeDisplay.Type<RitualRecipeDisplay>> RITUAL_DISPLAY = DISPLAYS.register("ritual_display", () -> new RecipeDisplay.Type<>(RitualRecipeDisplay.CODEC, RitualRecipeDisplay.STREAM_CODEC));
 
     public static <T extends Recipe<?>> RecipeType<T> registerRecipeType(String str) {

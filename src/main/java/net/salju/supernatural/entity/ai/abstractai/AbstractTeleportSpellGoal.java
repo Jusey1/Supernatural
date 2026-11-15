@@ -40,25 +40,25 @@ public abstract class AbstractTeleportSpellGoal extends AbstractSpellGoal {
 
     protected void performTeleport(int i) {
         if (this.wantsToTeleport() && i <= 10) {
-            double x = this.getX() + (this.user.getRandom().nextDouble() - 0.5) * this.getRadius();
-            double y = this.getY() + (double) (this.user.getRandom().nextInt(this.getHeight()) - this.getHeight() / 2);
-            double z = this.getZ() + (this.user.getRandom().nextDouble() - 0.5) * this.getRadius();
+            double x = this.getX() + (this.caster.getRandom().nextDouble() - 0.5) * this.getRadius();
+            double y = this.getY() + (double) (this.caster.getRandom().nextInt(this.getHeight()) - this.getHeight() / 2);
+            double z = this.getZ() + (this.caster.getRandom().nextDouble() - 0.5) * this.getRadius();
             this.teleport(x, y, z, i + 1);
         }
     }
 
     private void teleport(double x, double y, double z, int i) {
         BlockPos.MutableBlockPos pos = new BlockPos.MutableBlockPos(x, y, z);
-        while(pos.getY() > this.user.level().getMinY() && this.user.level().isEmptyBlock(pos.below())) {
+        while(pos.getY() > this.caster.level().getMinY() && this.caster.level().isEmptyBlock(pos.below())) {
             pos.move(Direction.DOWN);
         }
-        while(pos.getY() > this.user.level().getMinY() && this.user.level().getBlockState(pos).isSolid()) {
+        while(pos.getY() > this.caster.level().getMinY() && this.caster.level().getBlockState(pos).isSolid()) {
             pos.move(Direction.UP);
         }
         if (this.canTeleport(pos)) {
-            this.user.teleportTo(pos.getBottomCenter().x(), pos.getBottomCenter().y(), pos.getBottomCenter().z());
-            this.user.playSound(this.getTeleportSound(), 1.0F, 1.0F);
-            if (this.user.level() instanceof ServerLevel lvl) {
+            this.caster.teleportTo(pos.getBottomCenter().x(), pos.getBottomCenter().y(), pos.getBottomCenter().z());
+            this.caster.playSound(this.getTeleportSound(), 1.0F, 1.0F);
+            if (this.caster.level() instanceof ServerLevel lvl) {
                 lvl.sendParticles(ParticleTypes.SOUL_FIRE_FLAME, pos.getX(), pos.getY() + 0.75, pos.getZ(), 12, 0.5, 0.5, 0.5, 0.65);
             }
         } else {

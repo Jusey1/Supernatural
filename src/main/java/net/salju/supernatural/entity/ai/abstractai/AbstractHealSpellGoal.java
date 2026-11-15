@@ -10,15 +10,15 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.Difficulty;
 
-public class AbstractHealSpellGoal extends AbstractTargetSpellGoal {
+public abstract class AbstractHealSpellGoal extends AbstractTargetSpellGoal {
 	public AbstractHealSpellGoal(Mob target) {
 		super(target);
 	}
 
 	@Override
 	public boolean canUse() {
-		if (this.getTarget() != null && !this.getTarget().getType().is(EntityTypeTags.UNDEAD) && !this.getTarget().getType().is(SupernaturalTags.IMMUNITY) && !SupernaturalManager.isVampire(this.getTarget())) {
-			if (super.canUse() && this.user.getHealth() <= this.user.getMaxHealth() * 0.45F && this.user.hasLineOfSight(this.getTarget())) {
+		if (this.getTarget() != null && !this.getTarget().getType().is(EntityTypeTags.UNDEAD) && !this.getTarget().getType().is(SupernaturalTags.IMMUNITY) && !SupernaturalManager.isVampyre(this.getTarget())) {
+			if (super.canUse() && this.caster.getHealth() <= this.caster.getMaxHealth() * 0.45F && this.caster.hasLineOfSight(this.getTarget())) {
 				this.getTarget().addEffect(new MobEffectInstance(MobEffects.LEVITATION, 30, 0, false, false));
 				return true;
 			}
@@ -30,7 +30,7 @@ public class AbstractHealSpellGoal extends AbstractTargetSpellGoal {
 	protected void performSpellCasting() {
         if (this.getTarget() != null) {
             this.getTarget().hurt(this.getTarget().damageSources().magic(), this.getDamage());
-            this.user.heal(this.getDamage() * 1.5F);
+            this.caster.heal(this.getDamage() * 1.5F);
         }
 	}
 
@@ -44,13 +44,8 @@ public class AbstractHealSpellGoal extends AbstractTargetSpellGoal {
 		return 480;
 	}
 
-	@Override
-	protected SoundEvent getSpellPrepareSound() {
-		return SoundEvents.EVOKER_PREPARE_ATTACK;
-	}
-
     private float getDamage() {
-        if (this.user.level().getDifficulty().equals(Difficulty.HARD)) {
+        if (this.caster.level().getDifficulty().equals(Difficulty.HARD)) {
             return 4.5F;
         }
         return 3.0F;

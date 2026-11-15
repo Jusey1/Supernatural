@@ -1,14 +1,11 @@
 package net.salju.supernatural.entity;
 
-import net.salju.supernatural.init.SupernaturalItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.monster.Monster;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.pathfinder.WalkNodeEvaluator;
 import net.minecraft.world.level.pathfinder.PathType;
 import net.minecraft.world.level.storage.ValueInput;
@@ -16,14 +13,13 @@ import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.DifficultyInstance;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResult;
 import javax.annotation.Nullable;
 import java.util.Optional;
 
 public abstract class AbstractMinionEntity extends Monster implements OwnableEntity {
 	private static final EntityDataAccessor<Optional<EntityReference<LivingEntity>>> OWNER = SynchedEntityData.defineId(AbstractMinionEntity.class, EntityDataSerializers.OPTIONAL_LIVING_ENTITY_REFERENCE);
     private static final EntityDataAccessor<Boolean> FOLLOW = SynchedEntityData.defineId(AbstractMinionEntity.class, EntityDataSerializers.BOOLEAN);
+    private static final EntityDataAccessor<Boolean> PLAYER = SynchedEntityData.defineId(AbstractMinionEntity.class, EntityDataSerializers.BOOLEAN);
 
 	public AbstractMinionEntity(EntityType<? extends AbstractMinionEntity> type, Level world) {
 		super(type, world);
@@ -34,6 +30,7 @@ public abstract class AbstractMinionEntity extends Monster implements OwnableEnt
 	public void addAdditionalSaveData(ValueOutput tag) {
 		super.addAdditionalSaveData(tag);
         tag.putBoolean("Following", this.isFollowing());
+        tag.putBoolean("PlayerOwned", this.isPlayerOwned());
         this.entityData.get(OWNER).ifPresent(target -> target.store(tag, "Owner"));
     }
 
@@ -41,6 +38,7 @@ public abstract class AbstractMinionEntity extends Monster implements OwnableEnt
 	public void readAdditionalSaveData(ValueInput tag) {
 		super.readAdditionalSaveData(tag);
         this.setFollowing(tag.getBooleanOr("Following", false));
+        this.setPlayerOwned(tag.getBooleanOr("PlayerOwned", false));
 		EntityReference<LivingEntity> target = EntityReference.readWithOldOwnerConversion(tag, "Owner", this.level());
 		if (target != null) {
             this.entityData.set(OWNER, Optional.of(target));
@@ -70,21 +68,16 @@ public abstract class AbstractMinionEntity extends Monster implements OwnableEnt
     }
 
     @Override
-    public boolean removeWhenFarAway(double d) {
-        return this.isNatural() ? super.removeWhenFarAway(d) : false;
-    }
-
-    @Override
     public EntityReference<LivingEntity> getOwnerReference() {
         return this.entityData.get(OWNER).orElse(null);
     }
 
-    public boolean isNatural() {
-        return this.getOwnerReference() == null;
-    }
-
     public boolean isFollowing() {
         return this.getEntityData().get(FOLLOW);
+    }
+
+    public boolean isPlayerOwned() {
+        return this.getEntityData().get(PLAYER);
     }
 
     public boolean unableToMove() {
@@ -135,5 +128,10 @@ public abstract class AbstractMinionEntity extends Monster implements OwnableEnt
 
 	public void setOwner(@Nullable LivingEntity target) {
 		this.entityData.set(OWNER, Optional.ofNullable(target).map(EntityReference::of));
+        this.setPersistenceRequired();
 	}
+
+    public void setPlayerOwned(boolean check) {
+        this.entityData.set(PLAYER, check);
+    }
 }

@@ -1,7 +1,7 @@
 package net.salju.supernatural.entity;
 
-import net.salju.supernatural.init.SupernaturalSounds;
 import net.salju.supernatural.init.SupernaturalDamageTypes;
+import net.salju.supernatural.init.SupernaturalSounds;
 import net.salju.supernatural.events.SupernaturalManager;
 import net.salju.supernatural.entity.ai.abstractai.AbstractSpellcasterGoal;
 import net.salju.supernatural.entity.ai.vampyre.*;
@@ -9,7 +9,6 @@ import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.DamageSource;
@@ -164,7 +163,7 @@ public class Vampyre extends AbstractIllager implements Spellcaster {
 
     @Override
     public SoundEvent getCastingSoundEvent() {
-        return SoundEvents.EVOKER_CAST_SPELL;
+        return SupernaturalSounds.VAMPYRE_CASTS_SPELL.get();
     }
 
     @Override

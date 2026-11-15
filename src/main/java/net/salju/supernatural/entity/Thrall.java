@@ -13,6 +13,8 @@ import net.minecraft.resources.Identifier;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.util.RandomSource;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
@@ -21,6 +23,7 @@ import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.monster.*;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -85,6 +88,22 @@ public class Thrall extends AbstractMinionEntity {
 			}
 		}
 	}
+
+    @Override
+    public InteractionResult mobInteract(Player player, InteractionHand hand) {
+        if (this.getOffhandItem().is(SupernaturalItems.SOULGEM.get())) {
+            player.addItem(this.getOffhandItem());
+            this.setItemSlot(EquipmentSlot.OFFHAND, ItemStack.EMPTY);
+            return InteractionResult.SUCCESS;
+        } else if (this.getOffhandItem().isEmpty() && player.getItemInHand(hand).is(Items.AMETHYST_SHARD)) {
+            if (!player.isCreative()) {
+                player.getItemInHand(hand).shrink(1);
+            }
+            this.setItemSlot(EquipmentSlot.OFFHAND, new ItemStack(Items.AMETHYST_SHARD));
+            return InteractionResult.SUCCESS;
+        }
+        return super.mobInteract(player, hand);
+    }
 
 	@Override
 	protected void populateDefaultEquipmentSlots(RandomSource randy, DifficultyInstance difficulty) {
