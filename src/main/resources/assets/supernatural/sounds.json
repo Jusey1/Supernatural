@@ -1,4 +1,112 @@
 {
+  "lich_casts_spell": {
+    "subtitle": "subtitles.lich_casts_spell",
+    "sounds": [
+      {
+        "name": "supernatural:lich/lich_casts_spell_1",
+        "stream": false
+      },
+      {
+        "name": "supernatural:lich/lich_casts_spell_2",
+        "stream": false
+      }
+    ]
+  },
+  "lich_chess_effect": {
+    "subtitle": "subtitles.lich_chess_effect",
+    "sounds": [
+      {
+        "name": "supernatural:lich/lich_chess_effect_1",
+        "stream": false
+      }
+    ]
+  },
+  "lich_death": {
+    "subtitle": "subtitles.lich_death",
+    "sounds": [
+      {
+        "name": "supernatural:lich/lich_death_1",
+        "stream": false
+      },
+      {
+        "name": "supernatural:lich/lich_death_2",
+        "stream": false
+      }
+    ]
+  },
+  "lich_hurt": {
+    "subtitle": "subtitles.lich_hurt",
+    "sounds": [
+      {
+        "name": "supernatural:lich/lich_hurt_1",
+        "stream": false
+      },
+      {
+        "name": "supernatural:lich/lich_hurt_2",
+        "stream": false
+      },
+      {
+        "name": "supernatural:lich/lich_hurt_3",
+        "stream": false
+      },
+      {
+        "name": "supernatural:lich/lich_hurt_4",
+        "stream": false
+      }
+    ]
+  },
+  "lich_idle": {
+    "subtitle": "subtitles.lich_idle",
+    "sounds": [
+      {
+        "name": "supernatural:lich/lich_idle_1",
+        "stream": false
+      },
+      {
+        "name": "supernatural:lich/lich_idle_2",
+        "stream": false
+      },
+      {
+        "name": "supernatural:lich/lich_idle_3",
+        "stream": false
+      }
+    ]
+  },
+  "lich_laugh": {
+    "subtitle": "subtitles.lich_laugh",
+    "sounds": [
+      {
+        "name": "supernatural:lich/lich_laugh_1",
+        "stream": false
+      },
+      {
+        "name": "supernatural:lich/lich_laugh_2",
+        "stream": false
+      }
+    ]
+  },
+  "lich_prepare_spell": {
+    "subtitle": "subtitles.lich_prepare_spell",
+    "sounds": [
+      {
+        "name": "supernatural:lich/lich_prepare_spell_1",
+        "stream": false
+      }
+    ]
+  },
+  "lich_teleport": {
+    "subtitle": "subtitles.lich_teleport",
+    "sounds": [
+      {
+        "name": "supernatural:lich/lich_teleport_1",
+        "stream": false
+      },
+      {
+        "name": "supernatural:lich/lich_teleport_2",
+        "stream": false
+      }
+    ]
+  },
   "merfolk_death": {
     "subtitle": "subtitles.merfolk_death",
     "sounds": [
@@ -148,6 +256,19 @@
       }
     ]
   },
+  "vampyre_casts_spell": {
+    "subtitle": "subtitles.vampyre_casts_spell",
+    "sounds": [
+      {
+        "name": "supernatural:vampyre/vampyre_casts_spell_1",
+        "stream": false
+      },
+      {
+        "name": "supernatural:vampyre/vampyre_casts_spell_2",
+        "stream": false
+      }
+    ]
+  },
   "vampyre_celebrate": {
     "subtitle": "subtitles.vampyre_celebrate",
     "sounds": [
@@ -236,6 +357,15 @@
       },
       {
         "name": "supernatural:vampyre/vampyre_idle_6",
+        "stream": false
+      }
+    ]
+  },
+  "vampyre_prepare_spell": {
+    "subtitle": "subtitles.vampyre_prepare_spell",
+    "sounds": [
+      {
+        "name": "supernatural:vampyre/vampyre_prepare_spell_1",
         "stream": false
       }
     ]
